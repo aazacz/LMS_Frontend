@@ -1,8 +1,22 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+
+const colors = require('tailwindcss/colors')
+export default  {
   content: [
-    './pages/**/*.{html,js}',
-    './components/**/*.{html,js}',
+    './src/**/*.{js,jsx,ts,tsx}',
   ],
-  // ...
+  theme: {
+    extend: {},
+    fontFamily: {
+      Roboto: ['Roboto', 'sans-serif'],
+      poppins: ['Poppins', 'sans-serif'],
+ 
+    },
+    colors: {
+      ...colors,
+      transparent: 'transparent',
+      current: 'currentColor',
+            "MediumBlue":"#E7ECFF"
+    },
+  },
+  plugins: [],
 }

@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import profile from "/profile.jpeg"
 
 const initialState = {
   userName: "Abhilash Abin",
-  email: "",
-  userImg: "",
+  email: "abhilashabinz@gmail.com",
+  userImg: 'profile.jpeg',
   departments: [],
 };
 
@@ -14,8 +15,8 @@ const userDetailsSlice = createSlice({
       setUserDetails: (state, action) => {
         const { userName, email, userImg } =  action.payload;
         state.userName = "Abhilash Abin"
-        state.email = email;
-        state.userImg = userImg;
+        state.email = "abhilashabinz@gmail.com";
+        state.userImg = 'profile.jpeg';
           },
       clearUserDetails: (state) => {
         Object.assign(state, initialState);

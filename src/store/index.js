@@ -3,12 +3,13 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 import loginSlice from './reducers/loginSlice'
+import { persistStore } from "redux-persist";
+
 
 
 //Root Reducer function for Persisting 
 const rootReducer = combineReducers({
-    // form: formReducer,
-    // token: tokenSlice,
+ 
       userDetails: loginSlice,
   });
 
@@ -26,3 +27,5 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
     reducer: persistedReducer,
   });
+
+  export const persistor = persistStore(store);

@@ -6,19 +6,19 @@ import Homepage from '../pages/admin/Homepage';
 
 const HomeRoutes = () => {
     return (
-        <>
-
-            <Routes>
-
-                <Route path="/*" element={<Homepage />} />
-
-            </Routes>
 
 
+        <Routes>
+
+            <Route path="/*" element={<Homepage />} />
+
+        </Routes>
 
 
 
-        </>
+
+
+
     )
 }
 

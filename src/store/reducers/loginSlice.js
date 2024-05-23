@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import profile from "/profile.jpeg"
 
 const initialState = {
   userName: "Abhilash Abin",

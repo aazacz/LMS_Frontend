@@ -66,7 +66,7 @@ const Sidebar = () => {
         <div className="bg-white w-64 h-screen shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px]  px-2">
 
             {/*LOGO*/}
-            <div className='md:h-10  flex border-b-2 py-8 relative'>
+            <div className='md:h-10  flex border-b-2 py-8 relative mb-4'>
                 <img src={mindsatlogo} className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-40' alt="" />
             </div>
 
@@ -76,15 +76,16 @@ const Sidebar = () => {
 
                     <Link key={link.title}
                         to={link.path}
-                        className={`flex items-center rounded-lg font-poppins p-2 text-gray-700 hover:bg-gray-200  
+                        className={`flex items-center px-3 mb-3 rounded-lg font-poppins p-2 text-gray-700 hover:bg-gray-200  
                         ${location.pathname === link.path
                                 ? "bg-blue-200 text-blue-900"
                                 : "bg-transparent text-gray-500"
                             }`}>
-                        <PiCirclesFourFill className={`mr-2 text-xl text-gray-300  ${location.pathname === link.path
+                        <PiCirclesFourFill className={`mr-2 text-xl   ${location.pathname === link.path
                             ? " text-white"
-                            : " text-gray-500"
-                            }`} /> {link.title}
+                            : " text-gray-300"
+                        }`} /> 
+                        <p className='text-black text-sm font-poppins font-medium'>{link.title}</p>
                     </Link>
                 )
 

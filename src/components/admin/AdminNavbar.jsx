@@ -2,27 +2,35 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { FaBell } from "react-icons/fa6";
 import { FaBars } from "react-icons/fa6";
-
 import { IoIosArrowForward } from "react-icons/io";
+import { FiBookOpen, FiBook } from "react-icons/fi";
 
-const AdminNavbar = () => {
+
+const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
   const [show, setShow] = useState(false)
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userDetails);
 
+
   console.log(user);
+  const [open, setOpen] = useState(false)
+
+
   return (
     <>
 
 
       {/* ___________________NAVBAR STARTS HERE________________________  */}
 
-      <div className='px-4 flex-1 w-full md:h-10  border-b-[1px] flex items-center py-8         '>
+      <div className='md:px-4 px-2 flex-1 w-full h-14  border-b-[1px] flex items-center md:py-8 py-5  -z-10     '>
 
         {/*_________________ left side____________________ */}
-        <div className='w-[60%]  font-poppins'>
-          <p className='text-sm'>   Welcome Back!</p>
-          <p className='md:text-sm font-bold block md:hidden'>   {user.userName}</p>
+        <div className='w-[60%]  font-poppins relative'>
+        {isSidebarOpen ? <FiBookOpen onClick={() => toggleSidebar()} className='block md:hidden z-30 absolute left-0 text-2xl top-1/2 -translate-y-1/2' />
+                    : <FiBook onClick={() => toggleSidebar()} className='block md:hidden z-30 absolute left-0 text-2xl top-1/2 -translate-y-1/2' />
+                }
+          <p className=' pl-9 md:pl-0 text-sm z-10'>   Welcome Back!</p>
+          <p className=' pl-9 md:pl-0 md:text-sm font-bold block md:hidden z-20'>   {user.userName}</p>
         </div>
 
         {/* _________________right side__________________ */}

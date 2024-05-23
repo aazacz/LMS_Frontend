@@ -1,12 +1,16 @@
-import React from 'react'
-import { FaBars } from "react-icons/fa6";
+import React, { useState } from 'react'
+import { FaBars, FaBedPulse } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
 import { PiCirclesFourFill } from "react-icons/pi";
 import { clearUserDetails } from '../../store/reducers/loginSlice';
 import { persistor } from "../../store/index"
 import { useDispatch } from 'react-redux';
 import mindsatlogo from "../../assets/mindsatlogo.webp"
-const Sidebar = () => {
+
+
+
+
+const Sidebar = ({ isOpen }) => {
 
     const location = useLocation();
     const dispatch = useDispatch();
@@ -63,11 +67,12 @@ const Sidebar = () => {
 
     return (
 
-        <div className="bg-white w-64 h-screen shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px]  px-2">
+        <div className={`z-30 absolute md:relative bg-white md:w-64 w-[50%] h-screen  px-2   transition-transform duration-200 transform ${isOpen ? 'translate-x-0 md:translate-x-0 shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px] ' : '-translate-x-full md:translate-x-0 shadow-none md:shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px]'}`}>
 
             {/*LOGO*/}
-            <div className='md:h-10  flex border-b-2 py-8 relative mb-4'>
-                <img src={mindsatlogo} className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-40' alt="" />
+            <div className='h-14   flex border-b-2 md:py-8 py-5 relative mb-4  '>
+              
+                <img src={mindsatlogo} className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-24 md:w-40' alt="" />
             </div>
 
 
@@ -76,7 +81,7 @@ const Sidebar = () => {
 
                     <Link key={link.title}
                         to={link.path}
-                        className={`flex items-center px-3 mb-3 rounded-lg font-poppins p-2 text-gray-700 hover:bg-gray-200  
+                        className={`flex items-center px-3 mb:mb-3 rounded-lg font-poppins p-2 text-gray-700 hover:bg-gray-200  
                         ${location.pathname === link.path
                                 ? "bg-blue-200 text-blue-900"
                                 : "bg-transparent text-gray-500"
@@ -84,8 +89,8 @@ const Sidebar = () => {
                         <PiCirclesFourFill className={`mr-2 text-xl   ${location.pathname === link.path
                             ? " text-white"
                             : " text-gray-300"
-                        }`} /> 
-                        <p className='text-black text-sm font-poppins font-medium'>{link.title}</p>
+                            }`} />
+                        <p className='text-black text-xs md:text-sm font-poppins font-medium'>{link.title}</p>
                     </Link>
                 )
 

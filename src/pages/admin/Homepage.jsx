@@ -3,6 +3,7 @@ import AdminNavbar from '../../components/admin/AdminNavbar'
 import Sidebar from '../../components/admin/Sidebar'
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from '../ErrorPage';
+import CourseStructure from '../../components/admin/CourseStructure';
 
 const Homepage = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -22,6 +23,7 @@ const Homepage = () => {
 
                     <Routes>
                         <Route path="/" element={<div className='w-full h-10 bg-red-400'> hell hai da muthe</div>} />
+                        <Route path="/coursestructure" element={<CourseStructure/>} />
                         <Route path="*" element={<ErrorPage />} />
                     </Routes>
 

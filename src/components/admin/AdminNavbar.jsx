@@ -38,7 +38,6 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
 
           <div className='flex items-center'>
 
-
             {/* notification bell */}
             <div className=' w-16 flex h-9  justify-start px-2'>
               <div className='rounded-lg h-8 w-8   flex justify-center items-center text-black border-[1px] border-black mr-1 '>
@@ -57,8 +56,8 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
           
           
             {/* Admin NAME EMAIL AND PROFILE PHOTO */}
-            <div className='flex-1  h-auto md:flex md:flex-row  flex-col  hidden'>
-              <img className=' rounded-full object-cover  md:w-[42px] w-[20px] ' src={`${user.userImg}`} alt="" />
+            <div className='flex-1  h-auto md:flex md:flex-row  items-center flex-col  hidden'>
+              <img className=' rounded-full object-cover overflow-hidden md:w-[42px] md:h-[42px] w-[20px] ' src={`${user.userImg}`} alt="" />
               <div className='flex items-center'>
             
                 <div className='md:px-3'>

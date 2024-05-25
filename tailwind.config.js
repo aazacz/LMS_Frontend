@@ -9,6 +9,7 @@ export default  {
     fontFamily: {
       Roboto: ['Roboto', 'sans-serif'],
       poppins: ['Poppins', 'sans-serif'],
+      plusjakartasans: ['"Plus Jakarta Sans"', 'sans-serif'],
  
     },
     colors: {

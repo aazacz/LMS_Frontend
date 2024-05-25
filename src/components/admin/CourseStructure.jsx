@@ -1,17 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import { useForm, useFieldArray } from "react-hook-form"
-import { FcGoogle } from "react-icons/fc";
-import { Link } from 'react-router-dom';
+
+import {  useNavigate } from 'react-router-dom';
 import { FiPlusCircle } from "react-icons/fi";
+import Swal from 'sweetalert2'
+import {  toast } from 'react-toastify';
+import { coursestructureform } from "../../utils/adminSide/Formvalidation"
+import axios from "axios"
+
 
 const CourseStructure = () => {
 
-    const { register, control, handleSubmit, formState: { errors }, } = useForm();
+    const navigate = useNavigate();
 
-    const { fields, append, insert, prepend } = useFieldArray({
-        control,
-        name: 'modules'
-    });
+    const baseURL = process.env.REACT_APP_API_URL;
+    console.log(baseURL);
+    const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+      axios.get(`${baseURL}api/package/get-all-package?page=1&pageSize=1`, 
+      {
+          "user-agent": navigator.userAgent,
+      }
+  ).then((res)=>{
+    console.log(res.data);
+  })
+          
+    }, [])
+    
+
 
 
     const [course, setCourse] = useState({
@@ -36,30 +52,101 @@ const CourseStructure = () => {
         ]
     })
 
-    const onSubmit = (data) => {
-        console.log(data);
-    };
 
-    const submitHandler = async (formData) => {
-        console.log(formData);
-        // if (formData) {
-        //   axios
-        //     .post(`${apiURL}/auth/register`, formData)
-        //     .then((res) => {
-        //       toast.success("Sign Up Success");
-        //       setTimeout(() => {
-        //         navigate("/login");
-        //       }, 2000);
-        //     })
-        //     .catch((err) => {
-        //       toast.error("Invalid Credentials");
-        //       console.log(err);
-        //     });
-        // }
+    // function to add a new module
+    const addModule = () => {
+        setCourse(prevState => ({
+            ...prevState,
+            modules: [
+                ...prevState.modules,
+                {
+                    moduleName: "",
+                    moduleDescription: "",
+                    sessions: [
+                        {
+                            sessionName: "",
+                            sessionDescription: "",
+                            sessionDateTime: "",
+                            sessionLink: ""
+                        }
+                    ]
+                }
+            ]
+        }));
+    }
+
+    // function to add a new Session
+    const addSession = (moduleIndex) => {
+        const updatedModules = [...course.modules];
+        updatedModules[moduleIndex].sessions.push({
+            sessionName: "",
+            sessionDescription: "",
+            sessionDateTime: "",
+            sessionLink: ""
+        });
+        setCourse({ ...course, modules: updatedModules });
+    }
+
+
+    const handleModuleInputChange = (e, moduleIndex) => {
+        const { name, value } = e.target;
+        const updatedModules = [...course.modules];
+        updatedModules[moduleIndex][name] = value;
+        setCourse({ ...course, modules: updatedModules });
+    }
+
+
+    const handleSessionInputChange = (e, moduleIndex, sessionIndex) => {
+        const { name, value } = e.target;
+        const updatedModules = [...course.modules];
+        updatedModules[moduleIndex].sessions[sessionIndex][name] = value;
+        setCourse({ ...course, modules: updatedModules });
+    }
+
+
+    const submitHandler = async (event) => {
+        event.preventDefault();
+        console.log(course);
+        try {
+            await coursestructureform.validate(course, { abortEarly: false });
+
+
+            axios.post(`${baseURL}api/structure/create`, course,
+                {
+                    "user-agent": navigator.userAgent,
+                }
+            )
+                .then((res) => {
+                    toast.success(res.message)
+                    setTimeout(() => {
+                        navigate("/");
+                    }, 2000);
+                })
+
+
+            toast.success("Course created successfully!");
+
+        } catch (validationErrors) {
+            console.log(validationErrors);
+            const newErrors = {};
+            validationErrors.inner.forEach(error => {
+                newErrors[error.path] = error.message;
+            });
+            setErrors(newErrors);
+        }
+
+
+
+
+
+
+
+
+
+
     };
 
     const handleInputChange = (e) => {
-
         const { name, value } = e.target;
         setCourse(prevState => ({
             ...prevState,
@@ -72,23 +159,22 @@ const CourseStructure = () => {
 
     };
 
-    const addModule = ()=>{
-        
-            
-    }
-
 
     useEffect(() => {
         console.log(course);
+        console.log(errors);
 
-    }, [course])
+
+
+    }, [course, errors])
 
     return (
         <div className='flex-1 h-full p-5 bg-slate-200 rounded-2xl mt-5'>
+
             <h1 className='text-2xl font-poppins font-semibold'>Course Structure</h1>
 
             <div>
-                <form onSubmit={handleSubmit(submitHandler)} className="space-y-6">
+                <form onSubmit={(e) => submitHandler(e)} className="space-y-6">
                     <div className="flex flex-col md:flex-row md:space-x-4">
 
 
@@ -96,15 +182,16 @@ const CourseStructure = () => {
                         <div className="w-full md:w-1/2">
                             <label className="text-sm font-semibold">Course Name</label>
                             <input
+
                                 onChange={handleInputChange}
                                 name="courseName"
                                 value={course.courseName}
                                 type="text"
                                 placeholder="Course Name"
-                                className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
-                            {errors.coursename && (
+                                className="w-full  h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
+                            {errors.courseName && (
                                 <p className="text-red-500 text-xs">
-                                    {errors.firstname.message}
+                                    {errors.courseName}
                                 </p>
                             )}
                         </div>
@@ -113,21 +200,22 @@ const CourseStructure = () => {
 
                         <div className="w-full md:w-1/2">
                             <label className="text-sm font-semibold">Package</label>
-                            {errors.lastname && (
+                            {errors.package && (
                                 <p className="text-red-500 text-xs">
-                                    {errors.lastname.message}
+                                    {errors.package}
                                 </p>
                             )}
 
                             <select
+
                                 onChange={handleInputChange}
                                 name="package"
                                 value={course.package}
                                 className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900">
-                                <option value="Select a package" className='font-poppins opac text-slate-500'>Select a package</option>
-                                <option value="Comprehensive">Comprehensive</option>
-                                <option value="Standard">Standard</option>
-                                <option value="Fasttrack">Fasttrack</option>
+                                <option defaultValue="Select a package" className='font-poppins opac text-slate-500'>Select a package</option>
+                                <option >Comprehensive</option>
+                                <option >Standard</option>
+                                <option >Fasttrack</option>
                             </select>
 
 
@@ -138,17 +226,18 @@ const CourseStructure = () => {
                     <div className='flex gap-x-4'>
                         <div className='w-full md:w-1/2'>
                             <label className="text-sm font-semibold">Duration</label>
-                            <input 
-                             onChange={handleInputChange}
-                             name="duration"
-                             type="Number"
-                             value={course.duration}
-                             placeholder="Number of Weeks"
-                             className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"   />
+                            <input
+
+                                onChange={handleInputChange}
+                                name="duration"
+                                type="Number"
+                                value={course.duration}
+                                placeholder="Number of Weeks"
+                                className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
 
 
-                            {errors.email && (
-                                <p className="text-red-500 text-xs">{errors.email.message}</p>
+                            {errors.duration && (
+                                <p className="text-red-500 text-xs">{errors.duration}</p>
                             )}
                         </div>
 
@@ -163,9 +252,10 @@ const CourseStructure = () => {
                                 placeholder="Enter Price of the module"
                                 className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
                             />
-                                    
-                            {errors.password && (
-                                <p className="text-red-500 text-xs">{errors.password.message}</p>
+
+                            {errors.price && (<p className="text-red-500 text-xs">
+                                {errors.price}
+                            </p>
                             )}
                         </div>
 
@@ -176,115 +266,185 @@ const CourseStructure = () => {
                     <div className="relative flex flex-col">
                         <label className="text-sm font-semibold">Description</label>
 
-                        <textarea 
+                        <textarea
                             onChange={handleInputChange}
                             name="description"
                             placeholder="Description"
                             value={course.description}
                             className='w-full md:h-20 rounded mt-2 shadow-lg p-2' />
 
-                        {errors.confirmPassword && ( <p className="text-red-500 text-xs">
-                                                        {errors.confirmPassword.message}
-                                                    </p>
+                        {errors.description && (<p className="text-red-500 text-xs">
+                            {errors.description}
+                        </p>
                         )}
 
                     </div>
 
                     {/*________ ADD MODULE BUTTON_____________ */}
+                    <div className='border-b-[1px] border-gray-400 '>
 
-                    <button
-                        onClick={() => {
-                           addModule()
-                        }}
-                        className='flex gap-3  p-2 text-sm font-poppins content-center items-center rounded-lg bg-blue-900 text-white hover:bg-blue-800'><FiPlusCircle /> Add Module</button>
+                        <h1 className='text-xl font-semibold font-poppins' >Modules</h1>
+                    </div>
 
 
                     {course.modules.map((module, moduleIndex) => {
 
-                    console.log(module+"module");
+                        console.log(module + "module");
                         return (
 
-                            <div className='w-full h-[200px] bg-white rounded-lg p-4  flex flex-col gap-y-4 ' key={moduleIndex}>
+                            <div className=' w-full h-auto bg-white rounded-lg p-4  flex flex-col gap-y-4 border-2 border-blue-900' key={moduleIndex}>
 
+                                {/* Module Counter */}
+                                <div className=''>
+                                    <div className='w-7 h-7 border-2 border-blue-900 rounded-md flex justify-center items-center'>
+                                        <h1 className='font-Roboto font-medium text-blue-900'>{moduleIndex + 1} </h1>
+
+                                    </div>
+                                </div>
                                 {/* Module Name */}
                                 <div className="w-full ">
 
                                     <label className="text-sm font-semibold">Module Name</label>
-                                    <input 
-                                    type="text"
-                                    name="moduleName"
-                                    value={course.modules[0].moduleName}
-                                    placeholder="Course Name" 
-                                    className="w-full h-10 bg-slate-200 text-sm rounded px-3 mt-2 focus:outline-blue-900" />
-                                    {errors.coursename && (
+                                    <input
+                                        onChange={e => handleModuleInputChange(e, moduleIndex)}
+                                        type="text"
+                                        name="moduleName"
+                                        value={module.moduleName}
+                                        placeholder="Course Name"
+                                        className="w-full h-10 shadow-lg border-[1px] text-sm rounded px-3 mt-2 focus:outline-blue-900" />
+                                    {errors[`modules[${moduleIndex}].moduleName`] && (
                                         <p className="text-red-500 text-xs">
-                                            {errors.firstname.message}
+                                            {errors[`modules[${moduleIndex}].moduleName`]}
                                         </p>
                                     )}
-                               </div>
+                                </div>
                                 <div className="w-full ">
                                     <label className="text-sm font-semibold">Description</label>
-                                    <textarea 
-                                        onChange={handleInputChange}
-                                        placeholder="Description"  
+                                    <textarea
+                                        onChange={e => handleModuleInputChange(e, moduleIndex)}
+                                        placeholder="Description"
                                         name="moduleDescription"
-                                        value={course.modules[0].moduleDescription}
-                                        className='w-full md:h-20 rounded mt-2 shadow-lg p-2' />
-                                   
-                                    {errors.coursename && (<p className="text-red-500 text-xs"> {errors.firstname.message} </p>
+                                        value={module.moduleDescription}
+                                        className='w-full md:h-20 rounded mt-2 shadow-lg border-[1px] p-2 ' />
+
+                                    {errors[`modules[${moduleIndex}].moduleDescription`] && (<p className="text-red-500 text-xs">
+                                        {errors[`modules[${moduleIndex}].moduleDescription`]}
+                                    </p>
                                     )}
                                 </div>
-                                
 
-                                {/* <button onClick={() => appendResource({ resourceName: "", resourceLink: "" })}
-                                    className='flex gap-3 w-32 p-2 text-sm font-poppins content-center items-center rounded-lg bg-blue-900 text-white hover:bg-blue-800'><FiPlusCircle /> Add Session</button>
+                                {/* Session Starts Here */}
+                                <div className='border-b-2'>
+                                    <h1 className='text-base font-semibold font-poppins' >Session</h1>
+
+                                </div>
+
+                                {module.sessions.map((session, sessionIndex) => (
+                                    <div key={sessionIndex} className=' border-2 border-blue-200 p-6  rounded-xl'>
+                                        <div className=''>
+                                            <div className='w-5 h-5 border-[1px] border-gray-700 flex justify-center items-center'>
+                                                <h1 className='font-Roboto font-extralight '>{sessionIndex + 1} </h1>
+
+                                            </div>
+
+                                        </div>
+                                        <div className="w-full ">
+                                            <label className="text-sm font-semibold">Session Name</label>
+                                            <input
+                                                onChange={e => handleSessionInputChange(e, moduleIndex, sessionIndex)}
+                                                type="text"
+                                                name="sessionName"
+                                                value={session.sessionName}
+                                                placeholder="Session Name"
+                                                className="w-full h-10 shadow-lg border-[1px] text-sm rounded px-3 mt-2 focus:outline-blue-900" />
+                                            {errors[`modules[${moduleIndex}].sessions[${sessionIndex}].sessionName`] && (<p className="text-red-500 text-xs">
+                                                {errors[`modules[${moduleIndex}].sessions[${sessionIndex}].sessionName`]}
+                                            </p>
+                                            )}
+                                        </div>
 
 
-                                {module.resources.map((resource, resourceIndex) => (
-                                    <div key={resourceIndex}>
-                                        <input
-                                            {...register(`modules.${moduleIndex}.resources.${resourceIndex}.resourceName`)}
-                                            placeholder="Resource Name"
-                                        />
-                                        <input
-                                            {...register(`modules.${moduleIndex}.resources.${resourceIndex}.resourceLink`)}
-                                            placeholder="Resource Link"
-                                        />
+                                        <div className="w-full mt-4 ">
+                                            <label className="text-sm font-semibold">Session Description</label>
+                                            <textarea
+                                                onChange={e => handleSessionInputChange(e, moduleIndex, sessionIndex)}
+                                                placeholder="Description"
+                                                name="sessionDescription"
+                                                value={session.sessionDescription}
+                                                className='w-full md:h-20 rounded mt-2 shadow-lg border-[1px] p-2' />
+
+                                            {errors[`modules[${moduleIndex}].sessions[${sessionIndex}].sessionDescription`] && (<p className="text-red-500 text-xs">
+                                                {errors[`modules[${moduleIndex}].sessions[${sessionIndex}].sessionDescription`]}
+                                            </p>
+                                            )}
+                                        </div>
+
+                                        <div className='w-full grid grid-flow-row grid-cols-2 gap-x-4 mt-3'>
+
+                                            {/* session Date */}
+                                            <div className="w-full ">
+                                                <label className="text-sm font-semibold">Session Date</label>
+                                                <input
+                                                    onChange={e => handleSessionInputChange(e, moduleIndex, sessionIndex)}
+                                                    type="date"
+                                                    name="sessionDateTime"
+                                                    value={course.modules[moduleIndex].sessions[sessionIndex].sessionDateTime}
+                                                    placeholder="Session Date"
+                                                    className="w-full h-10 shadow-lg border-[1px] text-sm rounded px-3 mt-2 focus:outline-blue-900" />
+                                                {errors[`modules[${moduleIndex}].sessions[${sessionIndex}].sessionDateTime`] && (<p className="text-red-500 text-xs">
+                                                    {errors[`modules[${moduleIndex}].sessions[${sessionIndex}].sessionDateTime`]}
+                                                </p>
+                                                )}
+                                            </div>
+
+                                            <div className="w-full ">
+                                                <label className="text-sm font-semibold">Session Date</label>
+                                                <input
+                                                    onChange={e => handleSessionInputChange(e, moduleIndex, sessionIndex)}
+                                                    type="text"
+                                                    name="sessionLink"
+                                                    value={course.modules[moduleIndex].sessions[sessionIndex].sessionLink}
+                                                    placeholder="Session Link"
+                                                    className="w-full h-10 shadow-lg border-[1px] text-sm rounded px-3 mt-2 focus:outline-blue-900" />
+                                                {errors[`modules[${moduleIndex}].sessions[${sessionIndex}].sessionLink`] && (<p className="text-red-500 text-xs">
+                                                    {errors[`modules[${moduleIndex}].sessions[${sessionIndex}].sessionLink`]}
+                                                </p>
+                                                )}
+                                            </div>
+
+
+                                        </div>
+
+
+
                                     </div>
-                                ))} */}
+                                ))}
 
-                                {/* <h3>Module {moduleIndex + 1}</h3>
-                            <input
 
-                                {...register(`modules.${moduleIndex}.moduleName`)}
-                                placeholder="Module Name"
-                            /> */}
-
+                                {/* Button to Add New Sessions */}
+                                <div className='flex justify-end mt-3'>
+                                    <button onClick={() => addSession(moduleIndex)}
+                                        className='flex gap-3  p-2 text-sm font-poppins content-center items-center rounded-lg bg-slate-600 text-white hover:bg-blue-800'><FiPlusCircle /> Add Session</button>
+                                </div>
                             </div>
                         )
                     })
                     }
 
+                    {/* Button to Add new Module */}
+                    <div className='flex justify-end px-4'>
+                        <button onClick={() => {
+                            addModule()
+                        }}
+                            className='flex gap-3  p-2 text-sm font-poppins content-center items-center rounded-lg bg-blue-900 text-white hover:bg-blue-800'><FiPlusCircle /> Add Module</button>
+                    </div>
 
-                    <button type="submit">Submit</button>
+                    <div className='flex justify-center'>
+                        <button className='px-20 py-2 bg-green-600 rounded-md text-white font-poppins' type="submit">create course</button>
+                    </div>
                 </form>
 
-
-
-
-
             </div>
-
-
-
-
-
-
-
-
-
-
-
 
         </div>
     )

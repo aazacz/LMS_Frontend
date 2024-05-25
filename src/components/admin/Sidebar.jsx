@@ -67,7 +67,7 @@ const Sidebar = ({ isOpen }) => {
 
     return (
 
-        <div className={`z-30 absolute md:relative bg-white md:w-64 w-[50%] h-screen  px-2   transition-transform duration-200 transform ${isOpen ? 'translate-x-0 md:translate-x-0 shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px] ' : '-translate-x-full md:translate-x-0 shadow-none md:shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px]'}`}>
+        <div className={`z-30  absolute md:relative bg-white md:w-64 w-[50%] h-screen  px-2   transition-transform duration-200 transform ${isOpen ? 'translate-x-0 md:translate-x-0 shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px] ' : '-translate-x-full md:translate-x-0 shadow-none md:shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px]'}`}>
 
             {/*LOGO*/}
             <div className='h-14   flex border-b-2 md:py-8 py-5 relative mb-4  '>
@@ -81,7 +81,7 @@ const Sidebar = ({ isOpen }) => {
 
                     <Link key={link.title}
                         to={link.path}
-                        className={`flex items-center px-3 mb:mb-3 rounded-lg font-poppins p-2 text-gray-700 hover:bg-gray-200  
+                        className={`flex items-center px-3 my-4 mb:mb-3 rounded-lg font-poppins p-2 text-gray-700 hover:bg-gray-200  
                         ${location.pathname === link.path
                                 ? "bg-blue-200 text-blue-900"
                                 : "bg-transparent text-gray-500"

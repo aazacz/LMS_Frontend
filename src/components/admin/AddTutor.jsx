@@ -1,30 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import generator from 'generate-password-browser'
 import { IoMdKey } from "react-icons/io";
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
+import usePasswordToggle from '../../hooks/usePasswordToggle';
+
 
 const AddTutor = () => {
 
-    const passwordGenerator = () => {
+    const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
-        let password = generator.generate({
-            length: 10,
-            numbers: true
-        });
-        console.log(password);
 
-    }
-
-    const navigate = useNavigate();
-    const baseURL = process.env.REACT_APP_API_URL;
-
-    const [isClicked, setIsClicked] = useState(false);
-    const [errors, setErrors] = useState({});
     const [tutor, setTutor] = useState({
         tutorAddress: {
             country: "",
@@ -44,6 +33,37 @@ const AddTutor = () => {
         educations: [],
         awards: []
     });
+
+
+
+    const passwordGenerator = () => {
+
+        let password = generator.generate({
+            length: 10,
+            numbers: true
+        });
+
+        setTutor(prevState => ({
+            ...prevState,
+            password: password
+        }));
+        console.log(password);
+
+    }
+
+    useEffect(() => {
+      console.log(tutor);
+    
+      
+    }, [tutor])
+    
+
+    const navigate = useNavigate();
+    const baseURL = process.env.REACT_APP_API_URL;
+
+    const [isClicked, setIsClicked] = useState(false);
+    const [errors, setErrors] = useState({});
+ 
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -136,23 +156,25 @@ const AddTutor = () => {
                 {/* Password */}
                 <div className="w-full">
                     <label className="text-sm font-semibold">Password</label>
-                    <div className='flex items-center  gap-x-2'>
+                    <div className='flex items-center  gap-x-2 relative'>
 
                     <input
                         onChange={handleInputChange}
                         name="password"
                         value={tutor.password}
-                        type="password"
+                        type={PasswordInputType}
                         placeholder="Password"
                         className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
 
+                         <span className="absolute top-1/2 -translate-x-1/2 bg-transparent  right-16  flex items-center text-sm leading-5">
+                          {ToggleIcon}
+                         </span>
                     <div
                         onClick={() => passwordGenerator()}
                         onMouseDown={handleMouseDown}
                         onMouseUp={handleMouseUp}
                         data-tooltip-id="my-tooltip" data-tooltip-content="Hello world!"
                         className={`p-2 px-3  bg-slate-400 h-10 mt-2 flex justify-center rounded-md items-center ${isClicked? "scale-95 bg-bg-slate-300":"" }`}>
-
                         <IoMdKey />
                     </div>
                     <Tooltip id="my-tooltip" place="top" type="dark" effect="solid" />

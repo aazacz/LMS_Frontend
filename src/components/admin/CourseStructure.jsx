@@ -13,7 +13,7 @@ const CourseStructure = () => {
     const navigate = useNavigate();
 
     const baseURL = process.env.REACT_APP_API_URL;
-    console.log(baseURL);
+
     const [errors, setErrors] = useState({});
 
     useEffect(() => {

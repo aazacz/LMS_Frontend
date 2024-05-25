@@ -13,6 +13,20 @@ const AddTutor = () => {
 
     const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
+useEffect(() => {
+  axios.get('https://api.countrystatecity.in/v1/countries',  {
+    'X-CSCAPI-KEY': 'API_KEY'
+  }).then(function (response) {
+    console.log(JSON.stringify(response.data));
+    
+  }).catch(function (error) {
+    console.log(error);
+  });
+
+  return () => {
+    second
+  }
+}, [third])
 
     const [tutor, setTutor] = useState({
         tutorAddress: {
@@ -52,18 +66,18 @@ const AddTutor = () => {
     }
 
     useEffect(() => {
-      console.log(tutor);
-    
-      
+        console.log(tutor);
+
+
     }, [tutor])
-    
+
 
     const navigate = useNavigate();
     const baseURL = process.env.REACT_APP_API_URL;
 
     const [isClicked, setIsClicked] = useState(false);
     const [errors, setErrors] = useState({});
- 
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -99,7 +113,7 @@ const AddTutor = () => {
         try {
             // Perform validation here if necessary
 
-            const response = await axios.post(`${baseURL}api/tutors/create`, tutor, {
+            const response = await axios.post(`${baseURL}api/tutor/create-tutor`, tutor, {
                 "user-agent": navigator.userAgent,
             });
 
@@ -158,28 +172,28 @@ const AddTutor = () => {
                     <label className="text-sm font-semibold">Password</label>
                     <div className='flex items-center  gap-x-2 relative'>
 
-                    <input
-                        onChange={handleInputChange}
-                        name="password"
-                        value={tutor.password}
-                        type={PasswordInputType}
-                        placeholder="Password"
-                        className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
+                        <input
+                            onChange={handleInputChange}
+                            name="password"
+                            value={tutor.password}
+                            type={PasswordInputType}
+                            placeholder="Password"
+                            className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
 
-                         <span className="absolute top-1/2 -translate-x-1/2 bg-transparent  right-16  flex items-center text-sm leading-5">
-                          {ToggleIcon}
-                         </span>
-                    <div
-                        onClick={() => passwordGenerator()}
-                        onMouseDown={handleMouseDown}
-                        onMouseUp={handleMouseUp}
-                        data-tooltip-id="my-tooltip" data-tooltip-content="Hello world!"
-                        className={`p-2 px-3  bg-slate-400 h-10 mt-2 flex justify-center rounded-md items-center ${isClicked? "scale-95 bg-bg-slate-300":"" }`}>
-                        <IoMdKey />
+                        <span className="absolute top-1/2 -translate-x-1/2 bg-transparent  right-16  flex items-center text-sm leading-5">
+                            {ToggleIcon}
+                        </span>
+                        <div
+                            onClick={() => passwordGenerator()}
+                            onMouseDown={handleMouseDown}
+                            onMouseUp={handleMouseUp}
+                            data-tooltip-id="my-tooltip" data-tooltip-content="Hello world!"
+                            className={`p-2 px-3  bg-slate-400 h-10 mt-2 flex justify-center rounded-md items-center ${isClicked ? "scale-95 bg-bg-slate-300" : ""}`}>
+                            <IoMdKey />
+                        </div>
+                        <Tooltip id="my-tooltip" place="top" type="dark" effect="solid" />
+
                     </div>
-                    <Tooltip id="my-tooltip" place="top" type="dark" effect="solid" />
-
-                            </div>
 
                     {errors.password && (
                         <p className="text-red-500 text-xs">

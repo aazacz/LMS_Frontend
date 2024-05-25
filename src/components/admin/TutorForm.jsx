@@ -7,10 +7,10 @@ const SideBar = ({ link, title }) => {
     <div className="w-full mx-auto px-5 py-8 flex items-center justify-between">
 
       <div className='flex items-center gap-3'>
-        <a className='font-poppins uppercase text-gray-500' href="#">ABOUT ME</a>
+        <a className='font-poppins uppercase text-sm text-gray-500' href="#">ABOUT ME</a>
       </div>
       <span class="icon">
-        <FaArrowAltCircleRight className='text-green-700' />
+        <FaArrowAltCircleRight className='text-black' />
       </span>
 
     </div>

@@ -3,6 +3,7 @@ import profile from "/profile.jpeg"
 import { FaStar } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { FaCirclePlus } from "react-icons/fa6";
 
 
 
@@ -150,9 +151,18 @@ const TutorCard = ({ tutor }) => {
 
 const TutorListing = () => {
     return (
-        <div className=" mx-4 ">
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-2 ">
+        <div className=" m-4 ">
+            <div className='flex justify-end mx-4'>
+                
+            <Link replace to={`/tutors/addtutor`} className='bg-[#F5F1F1]' >
+                <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
+                                    p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
+                    <FaCirclePlus className='text-slate-600 ' />
+                    Add Tutor
+                </button>
+            </Link>
+                                        </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  gap-x-2 ">
                 {tutors.map((tutor) => (
                     <TutorCard key={tutor.name} tutor={tutor} />
                 ))}

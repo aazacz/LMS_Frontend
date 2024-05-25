@@ -18,3 +18,40 @@ input[type="number"] {
 textarea {
     resize: none;
   }
+
+
+  .table-container {
+    margin-top: 10px;
+    overflow-x: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 60vh;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0px;
+  }
+  
+  .responsive-table th,
+  .responsive-table td {
+    padding: 5px 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 12px;
+  }
+  
+  .responsive-table th {
+    background-color: #fcfdfd;
+    color:#36383a;
+  }
+  
+  .responsive-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .responsive-table tbody tr:hover {
+    background-color: #e0e0e0;
+  }

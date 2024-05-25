@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@hookform/resolvers": "^3.4.2",
+    "@mui/icons-material": "^5.15.18",
+    "@mui/material": "^5.15.18",
     "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.7.2",
     "country-state-city": "^3.2.1",

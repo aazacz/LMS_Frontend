@@ -11,8 +11,8 @@ const HomeRoutes = () => {
 
         <Routes>
 
-            <Route path="/*" element={<AdminLogin />} />
-            {/* <Route path="/*" element={<Homepage />} /> */}
+            {/* <Route path="/*" element={<AdminLogin />} /> */}
+            <Route path="/*" element={<Homepage />} />
 
         </Routes>
 

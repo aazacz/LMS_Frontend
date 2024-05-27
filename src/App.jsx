@@ -1,20 +1,21 @@
 import { useState } from 'react'
 import './App.css'
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
-import HomeRoutes from './routes/HomeRoutes';
+import { useSelector } from 'react-redux';
+import AdminRoutes from './routes/AdminRoutes';
+import { setUserDetails } from './store/reducers/loginSlice';
+import { setToken } from './store/reducers/tokenSlice'; 
 
 function App() {
-  const [count, setCount] = useState(0)
-
-
-
+  const token = useSelector((state)=>state.token)
+  console.log(token);
 
 
   return (
     <>
       <Router>
         <Routes>
-          <Route path='/*' element={<HomeRoutes/>} />
+          <Route path='/admin/*' element={<AdminRoutes/>} />
         </Routes>
 
       </Router>

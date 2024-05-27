@@ -13,8 +13,8 @@ const userDetailsSlice = createSlice({
     reducers: {
       setUserDetails: (state, action) => {
         const { userName, email, userImg } =  action.payload;
-        state.userName = "Abhilash Abin"
-        state.email = "abhilashabinz@gmail.com";
+        state.userName = "ADMIN"
+        state.email = email
         state.userImg = 'profile.jpeg';
           },
       clearUserDetails: (state) => {

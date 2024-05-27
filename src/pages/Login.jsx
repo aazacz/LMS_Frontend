@@ -1,38 +1,66 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
 import usePasswordToggle from '../hooks/usePasswordToggle';
-
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from 'react';
+import { setUserDetails } from '../store/reducers/loginSlice';
+import { setToken } from '../store/reducers/tokenSlice';
 
 const AdminLogin = () => {
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [PasswordInputType, ToggleIcon] = usePasswordToggle();
     const baseURL = process.env.REACT_APP_API_URL;
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const onSubmit = async (data) => {
 
+    // SUBMITTING THE LOGIN FUNCTION 
+    const onSubmit = async (data, e) => {
+        e.preventDefault()
         try {
-            axios.post(`${baseURL}api/admin/login`,
+
+
+            setIsSubmitting(true);
+
+            const res = await axios.post(`${baseURL}api/admin/login`, data,
+
                 {
                     "user-agent": navigator.userAgent,
-                }
-            ).then((res) => {
-                console.log(res.data);
-                toast.success('Login successful!');
-            })
-            console.log(data);
-    
-        } catch (error) {
-            console.log(error);
+                },
+            )
+            console.log(res.data);
+            toast.success("Login Successful")
+            dispatch(setToken(res.data))   //Saving the token in redux  
+            dispatch(
+                setUserDetails({ ...data || [] }) //Saving the USER DETAILS in redux  
+            )
+            if (role === "admin") {
+                navigate("/admin/home")
+            }
 
+
+        } catch (error) {
+            setIsSubmitting(false);
+            toast.error(error.response.data.error)
+            console.log(error.response.data.error);
+            console.log(error.message);
+            console.log(error.response);
         }
 
-
-
     };
+
+    useEffect(() => {
+
+    }, [isSubmitting])
+
+
 
     return (
         <>
@@ -66,14 +94,7 @@ const AdminLogin = () => {
                                     type={PasswordInputType}
                                     {...register('password', {
                                         required: 'Password is required',
-                                        minLength: {
-                                            value: 6,
-                                            message: 'Password must be at least 6 characters long'
-                                        },
-                                        pattern: {
-                                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
-                                            message: 'Password must contain at least one letter and one number'
-                                        }
+
                                     })}
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                 />
@@ -85,10 +106,14 @@ const AdminLogin = () => {
                         </div>
                         <div>
                             <button
+                                disabled={isSubmitting}
                                 type="submit"
-                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                className={`w-full ${isSubmitting ? "bg-gray-600" : "bg-blue-600"}
+                                 flex justify-center py-2 px-4 border border-transparent rounded-md 
+                                 shadow-sm text-sm font-medium text-white  hover:bg-blue-700 
+                                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
                             >
-                                Login
+                                {isSubmitting ? "Verifying...":"Login"}
                             </button>
                         </div>
                     </form>

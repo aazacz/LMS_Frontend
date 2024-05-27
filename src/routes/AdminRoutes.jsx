@@ -2,17 +2,20 @@ import React from 'react'
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Homepage from '../pages/admin/Homepage';
 import AdminLogin from '../pages/Login';
+import { useSelector } from 'react-redux';
 
 
 
 const HomeRoutes = () => {
+    const user = useSelector((state)=>state.token.user)
+
     return (
 
 
         <Routes>
 
-            {/* <Route path="/*" element={<AdminLogin />} /> */}
-            <Route path="/*" element={<Homepage />} />
+            <Route path="/" element={!user ? <AdminLogin/>:<Homepage/>}/>
+            {/* <Route path="/home/*" element={<Homepage />} /> */}
 
         </Routes>
 

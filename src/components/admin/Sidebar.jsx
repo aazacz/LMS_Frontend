@@ -3,6 +3,7 @@ import { FaBars, FaBedPulse } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
 import { PiCirclesFourFill } from "react-icons/pi";
 import { clearUserDetails } from '../../store/reducers/loginSlice';
+import { clearToken } from '../../store/reducers/tokenSlice';
 import { persistor } from "../../store/index"
 import { useDispatch } from 'react-redux';
 import mindsatlogo from "../../assets/mindsatlogo.webp"
@@ -16,8 +17,7 @@ const Sidebar = ({ isOpen }) => {
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        dispatch(clearUserDetails());
-
+        dispatch(clearToken());
     };
 
 
@@ -71,7 +71,7 @@ const Sidebar = ({ isOpen }) => {
 
             {/*LOGO*/}
             <div className='h-14   flex border-b-2 md:py-8 py-5 relative mb-4  '>
-              
+
                 <img src={mindsatlogo} className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-24 md:w-40' alt="" />
             </div>
 

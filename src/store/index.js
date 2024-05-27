@@ -4,6 +4,7 @@ import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 import loginSlice from './reducers/loginSlice'
 import { persistStore } from "redux-persist";
+import tokenSlice from "./reducers/tokenSlice";
 
 
 
@@ -11,6 +12,7 @@ import { persistStore } from "redux-persist";
 const rootReducer = combineReducers({
  
       userDetails: loginSlice,
+      token: tokenSlice,
   });
 
 

@@ -25,13 +25,13 @@ const Homepage = () => {
                 <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
                     <Routes>
-                        <Route path="/*" element={<div className='w-full h-10 bg-red-400'> hell hai da muthe</div>} />
-                        <Route path="/coursestructure" element={<CourseStructure/>} />
-                        <Route path="/students" element={<StudentList/>} />
-                        <Route path="/tutors/addtutor" element={<AddTutor/>} />
-                        <Route path="/tutors/tutorform" element={<TutorForm/>} />
-                        <Route path="/tutors/*" element={<TutorListing/>} />
-                        <Route path="*" element={<ErrorPage />} />
+                    <Route path="/*" element={<div className='w-full h-10 bg-red-400'>Welcome to the Admin Dashboard</div>} />
+                    <Route path="/coursestructure" element={<CourseStructure />} />
+                    <Route path="/students" element={<StudentList />} />
+                    <Route path="/tutors/addtutor" element={<AddTutor />} />
+                    <Route path="/tutors/tutorform" element={<TutorForm />} />
+                    <Route path="/tutors" element={<TutorListing />} />
+                    <Route path="*" element={<ErrorPage />} />
                     </Routes>
 
                 </div>

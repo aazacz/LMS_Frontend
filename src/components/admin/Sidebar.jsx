@@ -24,43 +24,42 @@ const Sidebar = ({ isOpen }) => {
     const navLinks = [
         {
             title: "Dashboard",
-            path: "/",
+            path: "/admin/home/dashboard",
             icon: <PiCirclesFourFill />
-
         },
         {
             title: "Courses",
-            path: "/courses",
+            path: "/admin/home/courses",
             icon: <PiCirclesFourFill />
         },
         {
             title: "Course Structure",
-            path: "/courseStructure",
+            path: "/admin/home/courseStructure",
             icon: <PiCirclesFourFill />
         },
         {
             title: "Students",
-            path: "/students",
+            path: "/admin/home/students",
             icon: <PiCirclesFourFill />
         },
         {
             title: "Tutors",
-            path: "/tutors",
+            path: "/admin/home/tutors",
             icon: <PiCirclesFourFill />
         },
         {
             title: "Diagnosis Test",
-            path: "/diagnosistest",
+            path: "/admin/home/diagnosistest",
             icon: <PiCirclesFourFill />
         },
         {
             title: "Library",
-            path: "/library",
+            path: "/admin/home/library",
             icon: <PiCirclesFourFill />
         },
         {
             title: "Settings",
-            path: "/settings",
+            path: "/admin/home/settings",
             icon: <PiCirclesFourFill />
         },
     ];

@@ -298,9 +298,7 @@ const AddTutor = () => {
         console.log(tutor);
         try {
 
-            const response = await axios.post(`${baseURL}api/tutor/create-tutor`, tutor, {
-                "user-agent": navigator.userAgent,
-            });
+            const response = await axios.post(`${baseURL}api/tutor/create-tutor`, tutor);
 
             toast.success(response.data.message);
             console.log(response.data);

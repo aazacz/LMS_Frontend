@@ -1,114 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import profile from "/profile.jpeg"
 import { FaStar } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { FaCirclePlus } from "react-icons/fa6";
+import axios from "axios"
+import { useState } from 'react';
 
 
+const baseURL = process.env.REACT_APP_API_URL;
 
-const tutors = [
-    {
-        name: 'Emerson Levin',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Eleanor Pena',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Wade Warren',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Guy Hawkins',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Carter Dorwart',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Arlene McCoy',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Bessie Cooper',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Theresa Webb',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Savannah Nguyen',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Annette Black',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Kathryn Murphy',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Jenny Wilson',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Dianne Russell',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Darlene Robertson',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Brooklyn Simmons',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-    {
-        name: 'Cameron Williamson',
-        sessionsAttended: 5,
-        rating: 4.5,
-        reviews: 1200,
-    },
-];
 
 const TutorCard = ({ tutor }) => {
+    
     return (
-        <Link replace to={`/tutors/tutorform`}>
+        <Link to={`/admin/home/tutors/${tutor._id}`}>
             <div className="bg-[#F5F1F1] rounded-md border-[1px] shadow-lg border-gray-500  px-3 py-2 m-4 flex flex-row  cursor-pointer">
 
                 <div className='w-[90%] '>
@@ -116,13 +22,13 @@ const TutorCard = ({ tutor }) => {
 
                         <div className="w-10 h-10  rounded-full overflow-hidden">
                             {/* Placeholder for tutor image */}
-                            <img src={profile} className='object-' alt={tutor.name} />
+                            <img src={profile} className='object-' alt="tutor-image" />
                         </div>
 
                         <div className="ml-4">
-                            <h3 className="font-bold text-sm  font-plusjakartasans">{tutor.name}</h3>
+                            <h3 className="font-bold text-sm line-clamp-1 w-full font-plusjakartasans">{tutor?.name} </h3>
                             <p className="text-gray-600 text-xs font-plusjakartasans">
-                                {tutor.sessionsAttended} Sessions attended
+                                {2} Sessions attended
                             </p>
                         </div>
 
@@ -133,9 +39,9 @@ const TutorCard = ({ tutor }) => {
                             <span className="text-xs text-gray-500">SAT adv</span>
                             <div className="ml-2 flex items-center ">
                                 <FaStar className='text-xs text-[#FFBB54] mr-1' />
-                                <span className=" font-semibold pr-2">{tutor.rating}</span>
+                                <span className=" font-semibold pr-2">{1}</span>
                                 <span className="text-xs text-gray-600">
-                                    ({tutor.reviews} Review)
+                                    ({1} Review)
                                 </span>
                             </div>
                         </div>
@@ -150,22 +56,47 @@ const TutorCard = ({ tutor }) => {
 };
 
 const TutorListing = () => {
+
+const [TutorList,setTutorList] = useState([])
+
+    useEffect( () => {
+      axios.get(`${baseURL}api/tutor/tutors?page=1&pageSize=5&search=`,
+            {
+                "user-agent": navigator.userAgent,
+            }
+        ).then((res) => {
+            console.log(res.data.data)
+            setTutorList(res.data.data)
+
+        }).catch((error) => {
+            console.error("Error fetching tutors:", error);
+        });
+    
+    
+    }, [])
+    
+
     return (
         <div className=" m-4 ">
             <div className='flex justify-end mx-4'>
-                
-            <Link replace to={`/admin/home/tutors/addtutor`} className='bg-[#F5F1F1]' >
-                <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
+
+                <Link replace to={`/admin/home/tutors/addtutor`} className='bg-[#F5F1F1]' >
+                    <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
                                     p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
-                    <FaCirclePlus className='text-slate-600 ' />
-                    Add Tutor
-                </button>
-            </Link>
-                                        </div>
+                        <FaCirclePlus className='text-slate-600 ' />
+                        Add Tutor
+                    </button>
+                </Link>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  gap-x-2 ">
-                {tutors.map((tutor) => (
-                    <TutorCard key={tutor.name} tutor={tutor} />
-                ))}
+                {TutorList.map((tutor,index) => {
+                    return(
+
+                        <TutorCard key={index}  tutor={tutor}  />
+                    )
+                    }
+                    
+                )}
             </div>
         </div>
     );

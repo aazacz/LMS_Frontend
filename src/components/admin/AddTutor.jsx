@@ -8,11 +8,11 @@ import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
 import usePasswordToggle from '../../hooks/usePasswordToggle';
 import { FiPlusCircle } from "react-icons/fi";
-
+import { useSelector } from 'react-redux';
 const AddTutor = () => {
     const navigate = useNavigate();
     const baseURL = process.env.REACT_APP_API_URL;
-
+    const token = useSelector((state)=>state.token.token)
 
     // STATES USED 
     const [isClicked, setIsClicked] = useState(false);
@@ -298,17 +298,22 @@ const AddTutor = () => {
         console.log(tutor);
         try {
 
-            const response = await axios.post(`${baseURL}api/tutor/create-tutor`, tutor);
+            const response = await axios.post(`${baseURL}api/tutor/create-tutor`, tutor,{
+                headers:{authorization:`Bearer ${token}`}
+            });
 
             toast.success(response.data.message);
             console.log(response.data);
 
         } catch (error) {
             console.log(error);
-            if (error.response && error.response.data.errors) {
-                setErrors(error.response.data.errors);
+            if (error?.response?.data?.action === "logout") {
+                setErrors(error.response.data.error)
+                toast.error("Session Expired")
+
             } else {
-                toast.error("An error occurred while creating the tutor.");
+                setErrors(error.response.data.error)
+                toast.error(error.response.data.error);
             }
         }
     };
@@ -581,7 +586,7 @@ const AddTutor = () => {
                                 <input
                                     onChange={(e) => setTempEducation(prev => ({
                                         ...prev,
-                                        File: e.target.files[0]
+                                        File:e.target.files[0]
                                     }))}
                                     name="File"
                                     // value={tempEducation.File.name}

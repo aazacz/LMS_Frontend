@@ -2,6 +2,12 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { useParams } from 'react-router-dom';
+import profile from '/profile.jpeg'
+import { CiLocationOn } from "react-icons/ci";
+import { LuPhone } from "react-icons/lu";
+import { CiMail } from "react-icons/ci";
+import { HiOutlineMail } from "react-icons/hi";
+
 const SideBar = ({ link, title }) => {
   return (
     <div className="w-full mx-auto px-5 py-8 flex items-center justify-between">
@@ -65,12 +71,26 @@ const TutorDetails = () => {
 
 <div className='px-5'>
 
-      <div className='w-full h-20 flex mt-2 bg-[#F4F6F7]' >
+      <div className='w-full h-auto p-3 flex mt-2 bg-[#F4F6F7]' >
         <div className='w-[10%] '>
 
-          <img src=""  alt="" />
+          <img src={profile} className='border-2 rounded-full w-20 h-20' alt="" />
         </div>
-        <div className='w-[90%] '></div>
+        <div className='w-[90%] '>
+        <h1 className='text-2xl font-poppins capitalize '>Emerson Levin</h1>
+        <h1 className='text-sm text-[#999999]  font-poppins capitalize '>Chennai, India</h1>
+        <div className='flex gap-6'>   
+        <span className='text-sm text-[#454545]  font-poppins capitalize flex items-center gap-x-2'><LuPhone />
+        +91 89392 13115</span>
+
+
+        </div>
+        <span className='text-sm text-[#454545]  font-poppins capitalize flex items-center gap-x-2'><CiMail />
+        emersonever@gmail.com</span>
+
+
+
+        </div>
 
 
 
@@ -82,7 +102,7 @@ const TutorDetails = () => {
         <div className='w-[20%] '>
 
           <SideBar />
-          htyhthtyhtyhtyh
+          
         </div>
 
         <div className='flex-1 w-[90%] p-4 h-auto '>

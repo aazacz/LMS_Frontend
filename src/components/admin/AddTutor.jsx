@@ -10,11 +10,17 @@ import usePasswordToggle from '../../hooks/usePasswordToggle';
 import { FiPlusCircle } from "react-icons/fi";
 
 const AddTutor = () => {
+    const navigate = useNavigate();
+    const baseURL = process.env.REACT_APP_API_URL;
 
+
+    // STATES USED 
+    const [isClicked, setIsClicked] = useState(false);
+    const [errors, setErrors] = useState({});
     const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-
     const [states, setStates] = useState([])
-
+    const [cities, setCities] = useState([])
+    const [selectedState, setSelectedState] = useState("")
     const [tutor, setTutor] = useState({
         tutorAddress: {
             state: "",
@@ -30,23 +36,27 @@ const AddTutor = () => {
         skills: [],
         projects: [],
         status: "active",
-        educations: [
-            {
-                name: "",
-                file: ""
-            },
-        ],
-        awards: [
-            {
-                title: "",
-                file: ""
-            }
-        ],
+        cv: {},
+        educations: [],
+        awards: [],
         status: "active"
     });
 
+    const [tempEducation, setTempEducation] = useState({
+        name: "",
+        File: null
+    });
+
+    const [tempAward, setTempAward] = useState({
+        title: "",
+        File: null
+    });
+
+    const [tempProject, setTempProjects] = useState();
+    const [tempSkill, setTempSkill] = useState();
 
 
+    // USE EFFECTS  ---- 1
     useEffect(() => {
         const config = {
             method: 'get',
@@ -58,7 +68,7 @@ const AddTutor = () => {
 
         axios(config).then(function (response) {
             setStates(response.data)
-            console.log(response.data);
+            // console.log(response.data);
 
         })
             .catch(function (error) {
@@ -67,12 +77,30 @@ const AddTutor = () => {
 
     }, [])
 
-    const [cities, setCities] = useState([])
-    const [selectedState, setSelectedState] = useState("")
+    // USE EFFECTS  ---- 2
+    useEffect(() => {
+        if (selectedState) {
+            getCities();
+        }
+    }, [selectedState])
+
+    // USE EFFECTS  ---- 3
+    useEffect(() => {
+        console.log(tutor);
 
 
 
+    }, [tutor])
 
+
+    // USE EFFECTS  ---- 4
+    useEffect(() => {
+        console.log(selectedState + "selectedCity");
+    }, [selectedState])
+
+
+
+    // function to get cities dropdown
     const getCities = async () => {
         setCities([])
         console.log("getcities funciton called");
@@ -92,7 +120,6 @@ const AddTutor = () => {
                 const citieslist = response.data
 
                 const names = citieslist.map(item => item.name);
-                console.log(names);
                 setCities(names);
 
 
@@ -104,21 +131,23 @@ const AddTutor = () => {
 
     }
 
-    useEffect(() => {
-        getCities()
-
-    }, [selectedState])
-
 
     const handleUpload = (e) => {
-        const file = e.target.files[0]; // Get the uploaded file
-        const fileName = file.name; // Get the name of the file
-    }
+        const { name } = e.target;
+        const File = e.target.files[0]; // Get the uploaded file
+
+
+        if (name === 'cv' && File) {
+            setTutor(prevState => ({
+                ...prevState,
+                cv: { File } // Append the new file to existing files array
+            }));
+        }
+    };
 
 
 
-
-
+    //  HELPER FUNCTION to generate password
     const passwordGenerator = () => {
 
         let password = generator.generate({
@@ -134,19 +163,8 @@ const AddTutor = () => {
 
     }
 
-    useEffect(() => {
-        console.log(tutor);
 
-    }, [tutor])
-
-
-    const navigate = useNavigate();
-    const baseURL = process.env.REACT_APP_API_URL;
-
-    const [isClicked, setIsClicked] = useState(false);
-    const [errors, setErrors] = useState({});
-
-
+    //  HELPER FUNCTION to handle input change
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setTutor(prevState => ({
@@ -156,6 +174,7 @@ const AddTutor = () => {
     };
 
 
+    //  HELPER FUNCTION to handle address input in address array
     const handleAddressChange = (e) => {
         const { name, value } = e.target;
         setTutor(prevState => ({
@@ -168,33 +187,123 @@ const AddTutor = () => {
     };
 
 
+    //  HELPER FUNCTION to add Education
+    const addEducation = (e) => {
+
+        if (!tempEducation.name.trim() || !tempEducation.File) {
+            return
+        } else {
+            setTutor(prevState => ({
+                ...prevState,
+                educations: [...prevState.educations, tempEducation]
+            }));
+            setTempEducation({
+                name: "",
+                file: null
+            });
+        }
 
 
 
+    };
+
+
+    //  HELPER FUNCTION to add skill
+    const addSkill = (e) => {
+        if (!tempSkill.trim()) {
+            return
+        } else {
+
+
+
+            setTutor(prevState => ({
+                ...prevState,
+                skills: [...prevState.skills, tempSkill]
+            }))
+
+            setTempSkill("")
+
+        }
+    }
+
+
+    //  HELPER FUNCTION to add project
+    const addProject = () => {
+        if (!tempProject.trim()) {
+            return
+        } else {
+            setTutor(prevState => ({
+                ...prevState,
+                projects: [...prevState.projects, tempProject]
+            }));
+
+            setTempProjects("")
+        }
+
+
+    };
+
+    //  HELPER FUNCTION to add award
+    const addAward = () => {
+
+        if (!tempAward.title.trim() || !tempAward.File) {
+            return
+        } else {
+            setTutor(prevState => ({
+                ...prevState,
+                awards: [tempAward, ...prevState.awards]
+            }));
+
+
+
+            setTempAward({
+                title: "",
+                file: null
+            });
+        }
+
+    };
+
+
+    //  HELPER FUNCTION to do some visual effects, when clicked the generate password button 
     const handleMouseDown = () => {
         setIsClicked(true);
     };
 
+    //  HELPER FUNCTION to do some visual effects, when clicked the generate password button 
     const handleMouseUp = () => {
         setIsClicked(false);
     };
 
 
+    //  HELPER FUNCTION to handle the state for further calling the cities function 
+    const handleState = (e) => {
+        console.log(e.target.value);
+        const { value, name } = e.target
+        setSelectedState(e.target.value)
+        setTutor(prevState => ({
+            ...prevState,
+            tutorAddress: {
+                ...prevState.tutorAddress,
+                [name]: value
+            }
+        }));
 
+    }
+
+    //  MAIN FUNCTION to submit the form ==============================
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log("tutor Before Submit");
         console.log(tutor);
         try {
-            // Perform validation here if necessary
 
             const response = await axios.post(`${baseURL}api/tutor/create-tutor`, tutor, {
                 "user-agent": navigator.userAgent,
             });
 
             toast.success(response.data.message);
-            setTimeout(() => {
-                navigate("/");
-            }, 2000);
+            console.log(response.data);
 
         } catch (error) {
             console.log(error);
@@ -207,16 +316,8 @@ const AddTutor = () => {
     };
 
 
-    useEffect(() => {
-        console.log(selectedState + "selectedCity");
-    }, [selectedState])
 
-    //selecting the state
-    const handleState = (e) => {
-        console.log(e.target.value);
-        setSelectedState(e.target.value)
 
-    }
 
     return (
         <div className='flex-1 h-full p-5 bg-slate-200 rounded-2xl mt-5'>
@@ -235,10 +336,9 @@ const AddTutor = () => {
                             type="text"
                             placeholder="Name"
                             className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
-                        {errors.name && (
-                            <p className="text-red-500 text-xs">
-                                {errors.name}
-                            </p>
+                        {errors.name && (<p className="text-red-500 text-xs">
+                            {errors.name}
+                        </p>
                         )}
                     </div>
 
@@ -289,7 +389,6 @@ const AddTutor = () => {
                             </p>
                         )}
                     </div>
-
                     {/* Number */}
                     <div className="w-full">
                         <label className="text-sm font-semibold">Number</label>
@@ -299,7 +398,7 @@ const AddTutor = () => {
                             value={tutor.number}
                             type="text"
                             placeholder="Number"
-                            className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
+                            className="w-full h-10  bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
                         {errors.number && (
                             <p className="text-red-500 text-xs">
                                 {errors.number}
@@ -313,14 +412,11 @@ const AddTutor = () => {
                     <div className="w-full">
                         <label className="text-sm font-semibold">Address</label>
                         <input
-                            onChange={(e) => {
-                                handleAddressChange
-                            }}
+                            onChange={handleAddressChange}
                             name="address"
-
                             value={tutor.tutorAddress.address}
-                            type="text"
                             placeholder="Address"
+                            type='text'
                             className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
                         {errors['tutorAddress.address'] && (
                             <p className="text-red-500 text-xs">
@@ -336,7 +432,7 @@ const AddTutor = () => {
                         <select
                             onChange={(e) => handleState(e)}
                             name="state"
-                            value={selectedState}
+                            value={tutor.tutorAddress.state}
                             id=""
                             className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900">
 
@@ -367,7 +463,11 @@ const AddTutor = () => {
                     <div className="w-full">
                         <label className="text-sm font-semibold">City</label>
 
-                        <select name="city" id="" className='w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2'>
+                        <select
+                            onChange={handleAddressChange}
+                            name="city"
+                            value={tutor.tutorAddress.city}
+                            className='w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2'>
 
                             <option value="">Select City</option>
                             {/* Mapping the cities */}
@@ -429,17 +529,15 @@ const AddTutor = () => {
                             <input
                                 onChange={handleUpload}
                                 name="cv"
-                                value={tutor.cv}
+                                value={tutor.cv[0]?.file?.name}
                                 type="file"
                                 className=" focus:outline-blue-900 cursor-pointer"
                                 id="file-upload" />
-                            <label htmlFor="file-upload" className="text-blue-500 text-sm cursor-pointer font-plusjakartasans absolute right-2 top-1/2 -translate-y-1/2">
+                            <label htmlFor="file-upload" className="text-blue-500  font-semibold text-sm cursor-pointer font-plusjakartasans absolute right-2 top-1/2 -translate-y-1/2">
                                 Upload
                             </label>
                         </div>
-                        {tutor.cv && (
-                            <p className="text-gray-500 text-sm mt-1">Uploaded file: {tutor.cv}</p>
-                        )}
+
                         {errors.experience && (<p className="text-red-500 text-xs">{errors.experience}</p>)}
                     </div>
 
@@ -451,23 +549,24 @@ const AddTutor = () => {
 
 
                 {/*Education  */}
-                <div className="w-full mt-5 border-[1px] rounded-md p-2 pt-2 relative  border-black  " >
+                <div className="w-full mt-5 border-[1px] rounded-md p-2 pt-2 relative  shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]  " >
 
 
                     <label className="text-sm font-semibold  ">Educational Qualificatons</label>
 
-                    <button onClick={() => addEducation(moduleIndex)} type='button'
-                        className='absolute right-3  top-3  flex gap-3  p-1 text-sm font-poppins content-center items-center rounded-[10px] px-3 bg-slate-600 text-white hover:bg-blue-800'><FiPlusCircle /> Add</button>
+                    <button onClick={addEducation} type='button'
+                        className='absolute right-3  top-3  flex gap-3  py-2 text-sm font-poppins content-center items-center rounded-[10px] px-3 bg-blue-600 text-white hover:bg-blue-800'><FiPlusCircle /> Add</button>
+
                     <div className='grid grid-flow-row grid-cols-2  mt-4 gap-4 border-2  relative'>
-
-
-
                         <div className=''>
                             <label className="text-sm font-semibold text-gray-500">Institute/University/Certification*</label>
                             <input
-                                onChange={handleInputChange}
-                                name="education"
-                                value={tutor.experience}
+                                onChange={(e) => setTempEducation(prev => ({
+                                    ...prev,
+                                    name: e.target.value
+                                }))}
+                                value={tempEducation.name}
+                                name="name"
                                 type="text"
                                 placeholder="Qualification"
                                 className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-1 focus:outline-blue-900" />
@@ -482,20 +581,21 @@ const AddTutor = () => {
                             <label className="text-sm font-semibold text-gray-500">Add Supporting Document</label>
                             <div className="w-full relative overflow-hidden h-10 bg-white text-sm rounded shadow-lg px-3  mt-1 flex items-center">
                                 <input
-                                    onChange={handleUpload}
-                                    name="cv"
-                                    value={tutor.cv}
+                                    onChange={(e) => setTempEducation(prev => ({
+                                        ...prev,
+                                        File: e.target.files[0]
+                                    }))}
+                                    name="File"
+                                    // value={tempEducation.File.name}
                                     type="file"
                                     className=" focus:outline-blue-900 cursor-pointer"
                                     id="file-upload" />
-                                <label htmlFor="file-upload" className="text-blue-500 text-sm cursor-pointer font-plusjakartasans absolute right-2 top-1/2 -translate-y-1/2">
+                                <label htmlFor="file-upload" className="text-blue-500 font-semibold  text-sm cursor-pointer font-plusjakartasans absolute right-2 top-1/2 -translate-y-1/2">
                                     Upload
                                 </label>
                             </div>
 
-                            {tutor.cv && (
-                                <p className="text-gray-500 text-sm mt-1">Uploaded file: {tutor.cv}</p>
-                            )}
+
                             {errors.experience && (<p className="text-red-500 text-xs">{errors.experience}</p>)}
 
                         </div>
@@ -503,29 +603,45 @@ const AddTutor = () => {
 
 
                     </div>
+
+                    {tutor.educations.length >= 1 && (
+                        <div className='w-full h-auto grid grid-flow-row'>
+                            {tutor.educations.map((value, index) => (
+                                <div key={index} className='w-full flex gap-4  py-2'>
+                                    <div className='w-full bg-slate-600 text-white py-1 px-2 rounded-md  '>{value.name}</div>
+                                    {value.File &&
+                                        (<div className='w-full  bg-slate-600 text-white py-1 px-2 rounded-md '>{value.File.name}</div>
+                                        )}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
                 </div>
 
 
-                <div className='w-full pt-4 '>
+                <div className='w-full pt-4 mt-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-3 '>
 
                     <label className="text-sm font-semibold bg">Skills</label>
 
                     <div className='w-full h-10 flex items-center gap-10 mt-2 '>
 
                         <input
-                            value={tutor.experience}
-                            onChange={handleInputChange}
+                            value={tempSkill}
+                            onChange={(e) => setTempSkill(e.target.value)}
                             type="text"
                             placeholder="Add Skill"
-                            name="experience"
+                            name="skill"
                             className="w-[90%] h-full bg-white text-sm rounded shadow-lg px-3  focus:outline-blue-900" />
 
 
-                        <button onClick={() => addEducation(moduleIndex)} type='button'
+                        <button onClick={addSkill} type='button'
                             className=' flex gap-x-3 h-full text-sm font-poppins  items-center 
-                                            rounded-[10px] px-3 bg-slate-600 text-white hover:bg-blue-800'>
+                                            rounded-[10px] px-3 bg-blue-600 text-white hover:bg-blue-800'>
                             <FiPlusCircle />     Add
                         </button>
+
+
 
                     </div>
 
@@ -534,39 +650,40 @@ const AddTutor = () => {
                     <div className="w-full mt-4 grid grid-flow-row grid-cols-4 gap-2">
 
                         {tutor.skills.map((value, index) => (
-                            <div className='w-full h-10 bg-gray-400 rounded-md flex items-center text-sm font-plusjakartasans pl-2' value={value} key={index}>   {value}   </div>
+                            <div className='w-full h-10 bg-slate-600 text-white rounded-md flex items-center text-sm font-plusjakartasans pl-2' value={value} key={index}>   {value}   </div>
                         )
                         )}
 
-                        {errors.experience && (<p className="text-red-500 text-xs">{errors.experience}</p>)}
 
                     </div>
 
+                    {errors.experience && (<p className="text-red-500 text-xs">{errors.experience}</p>)}
 
 
                 </div>
 
 
-                <div className='w-full pt-4 '>
+                <div className='w-full pt-4 mt-4 shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] p-3  '>
 
                     <label className="text-sm font-semibold bg">Projects</label>
 
                     <div className='w-full h-10 flex items-center gap-10 mt-2 '>
 
                         <input
-                            value={tutor.experience}
-                            onChange={handleInputChange}
+                            value={tempProject}
+                            onChange={(e) => setTempProjects(e.target.value)}
                             type="text"
                             placeholder="Add Projects"
-                            name="experience"
+                            name="name"
                             className="w-[90%] h-full bg-white text-sm rounded shadow-lg px-3  focus:outline-blue-900" />
 
 
-                        <button onClick={() => addEducation(moduleIndex)} type='button'
+                        <button onClick={addProject} type='button'
                             className=' flex gap-x-3 h-full text-sm font-poppins  items-center 
-                        rounded-[10px] px-3 bg-slate-600 text-white hover:bg-blue-800'>
+                                         rounded-[10px] px-3 bg-blue-600 text-white hover:bg-blue-800'>
                             <FiPlusCircle />     Add
                         </button>
+
 
                     </div>
 
@@ -574,39 +691,36 @@ const AddTutor = () => {
 
                     <div className="w-full mt-4 grid grid-flow-row grid-cols-4 gap-2">
 
-                        {tutor.skills.map((value, index) => (
-                            <div className='w-full h-10 bg-gray-400 rounded-md flex items-center text-sm font-plusjakartasans pl-2' value={value} key={index}>   {value}   </div>
+                        {tutor.projects.map((value, index) => (
+                            <div className='w-full h-10 bg-slate-600 text-white rounded-md flex items-center text-sm font-plusjakartasans pl-2' value={value} key={index}>   {value}   </div>
                         )
                         )}
 
                         {errors.experience && (<p className="text-red-500 text-xs">{errors.experience}</p>)}
 
                     </div>
-
-
-
                 </div>
 
 
-
-                {/*Education  */}
+                {/* Awards  */}
                 <div className="w-full mt-5 border-[1px] rounded-md p-2 pt-2 relative  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]  " >
 
 
                     <label className="text-sm font-semibold  ">Awards</label>
 
-                    <button onClick={() => addEducation(moduleIndex)} type='button'
-                        className='absolute right-3  top-3  flex gap-3  p-1 text-sm font-poppins content-center items-center rounded-[10px] px-3 bg-slate-600 text-white hover:bg-blue-800'><FiPlusCircle /> Add</button>
-                    <div className='grid grid-flow-row grid-cols-2  mt-4 gap-4 border-2  relative'>
-
-
+                    <button onClick={addAward} type='button'
+                        className='absolute right-3 h-10 top-3  flex gap-3  py-2 text-sm font-poppins content-center items-center rounded-[10px] px-3 bg-blue-600 text-white hover:bg-blue-800'><FiPlusCircle /> Add</button>
+                    <div className='grid grid-flow-row grid-cols-2  mt-4 gap-4  relative'>
 
                         <div className=''>
                             <label className="text-sm font-semibold text-gray-500">Title</label>
                             <input
-                                onChange={handleInputChange}
-                                name="title"
-                                value={tutor.experience}
+                                onChange={(e) => setTempAward(prevState => ({
+                                    ...prevState,
+                                    title: e.target.value
+                                }))}
+                                value={tempAward?.name}
+                                name="name"
                                 type="text"
                                 placeholder="Title of Award"
                                 className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-1 focus:outline-blue-900" />
@@ -621,20 +735,23 @@ const AddTutor = () => {
                             <label className="text-sm font-semibold text-gray-500">Add Supporting Document</label>
                             <div className="w-full relative overflow-hidden h-10 bg-white text-sm rounded shadow-lg px-3  mt-1 flex items-center">
                                 <input
-                                    onChange={handleUpload}
-                                    name="cv"
-                                    value={tutor.cv}
+                                    onChange={(e) => setTempAward(prevState => ({
+                                        ...prevState,
+                                        File: e.target.files[0]
+                                    }))}
+                                    value={tempAward[0]?.File?.name}
+                                    name="File"
                                     type="file"
                                     className=" focus:outline-blue-900 cursor-pointer"
                                     id="file-upload" />
-                                <label htmlFor="file-upload" className="text-blue-500 text-sm cursor-pointer font-plusjakartasans absolute right-2 top-1/2 -translate-y-1/2">
+                                <label htmlFor="file-upload" className="text-blue-500 font-semibold text-sm cursor-pointer font-plusjakartasans absolute right-2 top-1/2 -translate-y-1/2">
                                     Upload
                                 </label>
                             </div>
 
-                            {tutor.cv && (
-                                <p className="text-gray-500 text-sm mt-1">Uploaded file: {tutor.cv}</p>
-                            )}
+
+
+
                             {errors.experience && (<p className="text-red-500 text-xs">{errors.experience}</p>)}
 
                         </div>
@@ -642,14 +759,26 @@ const AddTutor = () => {
 
 
                     </div>
+
+
+                    {tutor.awards.length >= 1 && (
+                        <div className='w-full h-auto grid grid-flow-row'>
+                            {tutor.awards.map((value, index) => (
+
+                                <div key={index} className='w-full flex gap-4  py-2'>
+                                    <div className='w-full bg-slate-600 text-white py-1 px-2 rounded-md  '>{value.title}</div>
+
+                                    {value.File && (
+
+                                        <div className='w-full  bg-slate-600 text-white py-1 px-2 rounded-md '>{value.File.name}</div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+
                 </div>
-
-
-
-
-
-
-
 
 
 

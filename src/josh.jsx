@@ -188,7 +188,7 @@ const tutorSchema = new Schema({
                 trim: true,
             },
             file: {
-                type: String,
+                type: String,//file
             },
         },
     ],
@@ -211,7 +211,7 @@ const tutorSchema = new Schema({
                 trim: true,
             },
             file: {
-                type: String,
+                type: String,//file
             },
         },
     ],

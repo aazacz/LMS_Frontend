@@ -33,7 +33,8 @@ const CourseStructure = () => {
     const [course, setCourse] = useState({
         courseName: "",
         package: "",
-        duration: "",
+        trainingDuration: "",
+        hoursPerDay:"",
         price: "",
         description: "",
         modules: [
@@ -118,13 +119,12 @@ const CourseStructure = () => {
             )
                 .then((res) => {
                     toast.success(res.message)
-                    setTimeout(() => {
-                        navigate("/");
-                    }, 2000);
+                
+                }).catch((error)=>{
+                    toast.error(error.response.data.message)
                 })
 
 
-            toast.success("Course created successfully!");
 
         } catch (validationErrors) {
             console.log(validationErrors);
@@ -225,19 +225,36 @@ const CourseStructure = () => {
 
                     <div className='flex gap-x-4'>
                         <div className='w-full md:w-1/2'>
-                            <label className="text-sm font-semibold">Duration</label>
+                            <label className="text-sm font-semibold">Training Duration</label>
                             <input
 
                                 onChange={handleInputChange}
-                                name="duration"
+                                name="trainingDuration"
                                 type="Number"
-                                value={course.duration}
-                                placeholder="Number of Weeks"
+                                value={course.trainingDuration}
+                                placeholder="Total Hours"
                                 className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
 
 
-                            {errors.duration && (
-                                <p className="text-red-500 text-xs">{errors.duration}</p>
+                            {errors.trainingDuration && (
+                                <p className="text-red-500 text-xs">{errors.trainingDuration}</p>
+                            )}
+                        </div>
+                        
+                        <div className='w-full md:w-1/2'>
+                            <label className="text-sm font-semibold">Hours Per Day</label>
+                            <input
+
+                                onChange={handleInputChange}
+                                name="hoursPerDay"
+                                type="Number"
+                                value={course.hoursPerDay}
+                                placeholder="Hours Per Day"
+                                className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900" />
+
+
+                            {errors.hoursPerDay && (
+                                <p className="text-red-500 text-xs">{errors.hoursPerDay}</p>
                             )}
                         </div>
 

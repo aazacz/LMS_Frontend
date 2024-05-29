@@ -9,8 +9,6 @@ import { useDispatch } from 'react-redux';
 import mindsatlogo from "../../assets/mindsatlogo.webp"
 
 
-
-
 const Sidebar = ({ isOpen }) => {
 
     const location = useLocation();
@@ -19,7 +17,6 @@ const Sidebar = ({ isOpen }) => {
     const handleLogout = () => {
         dispatch(clearToken());
     };
-
 
     const navLinks = [
         {
@@ -66,7 +63,7 @@ const Sidebar = ({ isOpen }) => {
 
     return (
 
-        <div className={`z-30  fixed  md:relative bg-white md:w-64 w-[50%] h-screen  px-2   transition-transform duration-200 transform ${isOpen ? 'translate-x-0 md:translate-x-0 shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px] ' : '-translate-x-full md:translate-x-0 shadow-none md:shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px]'}`}>
+        <div className={`z-30  absolute  md:sticky bottom-0 top-0 bg-white md:w-64 w-[50%] h-screen  px-2   transition-transform duration-200 transform ${isOpen ? 'translate-x-0 md:translate-x-0 shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px] ' : '-translate-x-full md:translate-x-0 shadow-none md:shadow-[rgba(0,0,15,0.5)_5px_0px_10px_-5px]'}`}>
 
             {/*LOGO*/}
             <div className='h-14   flex border-b-2 md:py-8 py-5 relative mb-4  '>

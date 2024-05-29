@@ -11,6 +11,8 @@ import StudentList from '../../components/admin/StudentList';
 import TutorDetails from '../../components/admin/TutorDetails';
 import DiagnosisTest from '../../components/admin/DiagnosisTest';
 import Addiagnosistest from '../../components/admin/Addiagnosistest';
+import Courses from '../../components/admin/CourseList';
+import Coursedetails from '../../components/admin/Coursedetails';
 
 const Homepage = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -23,13 +25,21 @@ const Homepage = () => {
     return (
         <>
           <div className='flex w-full relative '>
-            <Sidebar isOpen={isSidebarOpen} />
+      
+            
+            <Sidebar  isOpen={isSidebarOpen} />
+      
                 <div className='w-full px-2 '>
+                    <div className='h-auto sticky top-0 '>
+
                 <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+                    </div>
 
                     <Routes>
 
                         <Route path="/*" element={<div className='w-full h-10 bg-red-400'>Welcome to the Admin Dashboard</div>} />
+                        <Route path="/courses" element={<CourseList />} />
+                        <Route path="/courses/:courseId" element={<Coursedetails />} />
                         <Route path="/coursestructure" element={<CourseStructure />} />
                         <Route path="/students" element={<StudentList />} />
                         <Route path="/tutors/addtutor" element={<AddTutor />} />

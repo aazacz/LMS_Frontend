@@ -11,9 +11,7 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userDetails);
 
-
   console.log(user);
-  const [open, setOpen] = useState(false)
 
 
   return (
@@ -22,15 +20,13 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
 
       {/* ___________________NAVBAR STARTS HERE________________________  */}
 
-      <div className='md:px-4  px-2 flex-1 w-full h-14  border-b-[1px] flex items-center md:py-8 py-5  -z-10     '>
+      <div className='md:px-4  px-2 flex-1 w-full h-14  border-b-[1px] flex items-center md:py-8 py-5  z-50 bg-white     '>
 
         {/*_________________ left side____________________ */}
         <div className='w-[60%]  font-poppins relative'>
-        {isSidebarOpen ? <FiBookOpen onClick={() => toggleSidebar()} className='block md:hidden z-30 absolute left-0 text-2xl top-1/2 -translate-y-1/2' />
-                    : <FiBook onClick={() => toggleSidebar()} className='block md:hidden z-30 absolute left-0 text-2xl top-1/2 -translate-y-1/2' />
-                }
-          <p className=' pl-9 md:pl-0 text-sm z-10'>   Welcome Back!</p>
-          <p className=' pl-9 md:pl-0 md:text-sm font-bold block md:hidden z-20'>   {user.userName}</p>
+       
+          <p className=' md:pl-0 text-sm z-10'>   Welcome Back!</p>
+          <p className='  md:pl-0 md:text-sm font-bold block md:hidden z-20'>   {user.userName}</p>
         </div>
 
         {/* _________________right side__________________ */}
@@ -51,9 +47,12 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
 
             </div>
 
+
             {/* hamburger button */}
-            <FaBars onClick={() => setShow(!show)} className="mr-3 md:hidden block" />
-          
+            {isSidebarOpen ? <FiBookOpen onClick={() => toggleSidebar()} className='block md:hidden z-30  text-2xl ' />
+                    : <FiBook onClick={() => toggleSidebar()} className='block md:hidden z-30  text-2xl ' />
+                  }          
+
           
             {/* Admin NAME EMAIL AND PROFILE PHOTO */}
             <div className='flex-1  h-auto md:flex md:flex-row  items-center flex-col  hidden'>

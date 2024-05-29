@@ -169,7 +169,7 @@ const CourseStructure = () => {
     }, [course, errors])
 
     return (
-        <div className='flex-1 h-full p-5 bg-slate-200 rounded-2xl mt-5'>
+        <div className='flex-1 p-5 bg-slate-200 rounded-2xl mt-5'>
 
             <h1 className='text-2xl font-poppins font-semibold'>Course Structure</h1>
 
@@ -259,7 +259,7 @@ const CourseStructure = () => {
                         </div>
 
 
-                        <div className="relative w-full md:w-1/2">
+                        <div className=" w-full md:w-1/2">
                             <label className="text-sm font-semibold">Price</label>
                             <input
                                 onChange={handleInputChange}
@@ -280,7 +280,7 @@ const CourseStructure = () => {
                     </div>
 
 
-                    <div className="relative flex flex-col">
+                    <div className=" flex flex-col ">
                         <label className="text-sm font-semibold">Description</label>
 
                         <textarea
@@ -288,7 +288,7 @@ const CourseStructure = () => {
                             name="description"
                             placeholder="Description"
                             value={course.description}
-                            className='w-full md:h-20 rounded mt-2 shadow-lg p-2' />
+                            className='w-full  md:h-20 rounded mt-2 shadow-lg p-2' />
 
                         {errors.description && (<p className="text-red-500 text-xs">
                             {errors.description}

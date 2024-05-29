@@ -144,8 +144,8 @@ const Addiagnosistest = () => {
 
 
     return (
-        <div className="flex-1 h-full p-5 bg-slate-200 rounded-2xl mt-5">
-            <h1 className="text-2xl font-poppins font-semibold">Create Test</h1>
+        <div className="flex-1 h-auto  p-5 bg-slate-200 rounded-2xl mt-5">
+            <h1 className="text-2xl font-poppins font-semibold mb-5">Create Diagnosis Test</h1>
            
             <form onSubmit={submitHandler} className="space-y-4">
                 <div className="flex flex-col md:flex-row md:space-x-4">

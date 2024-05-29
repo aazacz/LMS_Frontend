@@ -19,7 +19,6 @@ textarea {
     resize: none;
   }
 
-
   .table-container {
     margin-top: 10px;
     overflow-x: auto;
@@ -54,8 +53,4 @@ textarea {
   
   .responsive-table tbody tr:hover {
     background-color: #e0e0e0;
-  }
-
-  input[type=file] {
-    text-indent: -90px;
   }

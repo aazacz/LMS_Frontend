@@ -9,6 +9,8 @@ import TutorForm from '../../components/admin/TutorDetails';
 import AddTutor from '../../components/admin/AddTutor';
 import StudentList from '../../components/admin/StudentList';
 import TutorDetails from '../../components/admin/TutorDetails';
+import DiagnosisTest from '../../components/admin/DiagnosisTest';
+import Addiagnosistest from '../../components/admin/Addiagnosistest';
 
 const Homepage = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -31,6 +33,8 @@ const Homepage = () => {
                         <Route path="/coursestructure" element={<CourseStructure />} />
                         <Route path="/students" element={<StudentList />} />
                         <Route path="/tutors/addtutor" element={<AddTutor />} />
+                        <Route path="/diagnosistest/addiagnosistest" element={<Addiagnosistest />} />
+                        <Route path="/diagnosistest" element={<DiagnosisTest />} />
                         <Route path="/tutors/:tutorId" element={<TutorDetails />} />
                         {/* <Route path="/tutors/tutorform/" element={<TutorForm />} /> */}
                         <Route path="/tutors" element={<TutorListing />} />

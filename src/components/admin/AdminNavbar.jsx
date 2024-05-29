@@ -22,7 +22,7 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
 
       {/* ___________________NAVBAR STARTS HERE________________________  */}
 
-      <div className='md:px-4 px-2 flex-1 w-full h-14  border-b-[1px] flex items-center md:py-8 py-5  -z-10     '>
+      <div className='md:px-4  px-2 flex-1 w-full h-14  border-b-[1px] flex items-center md:py-8 py-5  -z-10     '>
 
         {/*_________________ left side____________________ */}
         <div className='w-[60%]  font-poppins relative'>

@@ -55,6 +55,11 @@ const Sidebar = ({ isOpen }) => {
             icon: <PiCirclesFourFill />
         },
         {
+            title: "Access Management",
+            path: "/admin/home/accessmanagement",
+            icon: <PiCirclesFourFill />
+        },
+        {
             title: "Settings",
             path: "/admin/home/settings",
             icon: <PiCirclesFourFill />

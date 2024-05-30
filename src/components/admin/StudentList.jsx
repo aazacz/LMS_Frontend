@@ -1,15 +1,12 @@
 import React from "react";
-import axios from "axios";
 import { useState, useEffect} from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SearchIcon from "@mui/icons-material/Search";
 import Pagination from "@mui/material/Pagination";
 import CloseIcon from "@mui/icons-material/Close";
 import Check from "@mui/icons-material/Check";
+import axios from "axios";
 // import "./StudentList.css" 
 
 const CustomTooltip = ({ title, children }) => {

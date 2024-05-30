@@ -78,8 +78,9 @@ const [TutorList,setTutorList] = useState([])
 
     return (
         <div className=" m-4 ">
-            <div className='flex justify-end mx-4'>
 
+        {/*Add Button */}
+            <div className='flex justify-end mx-4'>
                 <Link replace to={`/admin/home/tutors/addtutor`} className='bg-[#F5F1F1]' >
                     <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
                                     p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
@@ -88,6 +89,8 @@ const [TutorList,setTutorList] = useState([])
                     </button>
                 </Link>
             </div>
+
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  gap-x-2 ">
                 {TutorList.map((tutor,index) => {
                     return(

@@ -3,6 +3,7 @@ import coursephoto from "/coursephoto.jpeg";
 import { BiSpreadsheet } from "react-icons/bi";
 import { LuTimer } from "react-icons/lu";
 import { Link } from 'react-router-dom';
+import { FaCirclePlus } from 'react-icons/fa6';
 
 const CourseList = () => {
     const courses = [
@@ -26,6 +27,21 @@ const CourseList = () => {
 
     return (
         <div className='p-4'>
+               
+            {/*Add Button */}
+            <div className='flex justify-end mx-4'>
+                <Link replace to={`/admin/home/tutors/addtutor`} className='bg-[#F5F1F1]' >
+                    <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
+                                    p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
+                        <FaCirclePlus className='text-slate-600 ' />
+                        Add Tutor
+                    </button>
+                </Link>
+            </div>
+
+
+
+
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {courses.map((course, index) => (
                     <Link key={index} to={`/admin/home/courses/1`}>

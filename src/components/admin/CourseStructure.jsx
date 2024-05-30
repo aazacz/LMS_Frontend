@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-
-import {  useNavigate } from 'react-router-dom';
-import { FiPlusCircle } from "react-icons/fi";
-import Swal from 'sweetalert2'
-import {  toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'
+import { FiPlusCircle } from "react-icons/fi"
+import { toast } from 'react-toastify'
 import { coursestructureform } from "../../utils/adminSide/Formvalidation"
 import axios from "axios"
 
@@ -17,16 +15,16 @@ const CourseStructure = () => {
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
-      axios.get(`${baseURL}api/package/get-all-package?page=1&pageSize=1`, 
-      {
-          "user-agent": navigator.userAgent,
-      }
-  ).then((res)=>{
-    console.log(res.data);
-  })
-          
+        axios.get(`${baseURL}api/package/get-all-package?page=1&pageSize=1`,
+            {
+                "user-agent": navigator.userAgent,
+            }
+        ).then((res) => {
+            console.log(res.data);
+        })
+
     }, [])
-    
+
 
 
 
@@ -34,7 +32,7 @@ const CourseStructure = () => {
         courseName: "",
         package: "",
         trainingDuration: "",
-        hoursPerDay:"",
+        hoursPerDay: "",
         price: "",
         description: "",
         modules: [
@@ -119,8 +117,8 @@ const CourseStructure = () => {
             )
                 .then((res) => {
                     toast.success(res.message)
-                
-                }).catch((error)=>{
+
+                }).catch((error) => {
                     toast.error(error.response.data.message)
                 })
 
@@ -136,15 +134,7 @@ const CourseStructure = () => {
         }
 
 
-
-
-
-
-
-
-
-
-    };
+    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -240,7 +230,7 @@ const CourseStructure = () => {
                                 <p className="text-red-500 text-xs">{errors.trainingDuration}</p>
                             )}
                         </div>
-                        
+
                         <div className='w-full md:w-1/2'>
                             <label className="text-sm font-semibold">Hours Per Day</label>
                             <input

@@ -37,7 +37,7 @@ const CourseList = () => {
     );
 };
 
-export default Courses;
+export default CourseList;
 
 const CourseCard = ({ title }) => {
     return (

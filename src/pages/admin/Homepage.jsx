@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef,useEffect } from 'react'
 import AdminNavbar from '../../components/admin/AdminNavbar'
 import Sidebar from '../../components/admin/Sidebar'
 import { Route, Routes } from "react-router-dom";
@@ -11,35 +11,40 @@ import StudentList from '../../components/admin/StudentList';
 import TutorDetails from '../../components/admin/TutorDetails';
 import DiagnosisTest from '../../components/admin/DiagnosisTest';
 import Addiagnosistest from '../../components/admin/Addiagnosistest';
-import Courses from '../../components/admin/CourseList';
 import Coursedetails from '../../components/admin/Coursedetails';
+import CourseList from '../../components/admin/CourseList';
+import Library from '../../components/admin/Library';
+
 
 const Homepage = () => {
+    const divRef = useRef(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+    const [Ref, SetRef] = useState()
 
+ 
 
     return (
         <>
-          <div className='flex w-full relative '>
-      
-            
-            <Sidebar  isOpen={isSidebarOpen} />
-      
+            <div className='flex w-full relative '>
+
+
+                <Sidebar isOpen={isSidebarOpen} />
+
                 <div className='w-full px-2 '>
                     <div className='h-auto sticky top-0 '>
 
-                <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+                        <AdminNavbar  toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
                     </div>
 
                     <Routes>
 
                         <Route path="/*" element={<div className='w-full h-10 bg-red-400'>Welcome to the Admin Dashboard</div>} />
                         <Route path="/courses" element={<CourseList />} />
-                        <Route path="/courses/:courseId" element={<Coursedetails />} />
+                        <Route path="/courses/:courseId" element={<Coursedetails height={Ref} />} />
                         <Route path="/coursestructure" element={<CourseStructure />} />
                         <Route path="/students" element={<StudentList />} />
                         <Route path="/tutors/addtutor" element={<AddTutor />} />
@@ -48,8 +53,9 @@ const Homepage = () => {
                         <Route path="/tutors/:tutorId" element={<TutorDetails />} />
                         {/* <Route path="/tutors/tutorform/" element={<TutorForm />} /> */}
                         <Route path="/tutors" element={<TutorListing />} />
+                        <Route path="/library" element={<Library />} />
                         <Route path="*" element={<ErrorPage />} />
-                        
+
                     </Routes>
 
                 </div>

@@ -27,14 +27,14 @@ const CourseList = () => {
 
     return (
         <div className='p-4'>
-               
+
             {/*Add Button */}
-            <div className='flex justify-end mx-4'>
-                <Link replace to={`/admin/home/tutors/addtutor`} className='bg-[#F5F1F1]' >
+            <div className='flex justify-end py-4'>
+                <Link replace to={`/admin/home/courses/addcourse`} className='bg-[#F5F1F1]' >
                     <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
                                     p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
                         <FaCirclePlus className='text-slate-600 ' />
-                        Add Tutor
+                        Add Course
                     </button>
                 </Link>
             </div>
@@ -45,8 +45,8 @@ const CourseList = () => {
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {courses.map((course, index) => (
                     <Link key={index} to={`/admin/home/courses/1`}>
-                    <CourseCard  title={course.title} />
-                  </Link>
+                        <CourseCard title={course.title} />
+                    </Link>
                 ))}
             </div>
         </div>

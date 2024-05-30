@@ -24,6 +24,16 @@ class ErrorBoundary extends React.Component {
         });
     }
 
+    resetErrorBoundary = () => {
+        this.setState({
+            hasError: false,
+            error: null,
+            info: null,
+            errorMessage: "",
+            componentStack: ""
+        });
+    };
+
     render() {
         if (this.state.hasError) {
 
@@ -57,6 +67,11 @@ class ErrorBoundary extends React.Component {
                             </div>
                         )}
                     </div>
+
+                    <button onClick={this.resetErrorBoundary} className="mt-4 p-2 bg-blue-500 text-white rounded">
+                        Retry
+                    </button>
+                    
                 </div>
             );
         }

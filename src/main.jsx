@@ -28,10 +28,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           theme="light"
           transition="Bounce"
 />
-
         <App />
-        
-        <ToastContainer />
+       <ToastContainer />
       </PersistGate>
     </Provider>
     </ErrorBoundary>

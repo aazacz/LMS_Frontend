@@ -94,7 +94,7 @@ console.log(newDropDownOptions)
 
         <div className='w-full  grid grid-flow-row grid-cols-2 gap-x-4'>
 
-
+     
           <div className="w-full ">
             <label className="text-sm font-semibold">Course Type</label>
 

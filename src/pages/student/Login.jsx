@@ -3,12 +3,13 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
-import usePasswordToggle from '../hooks/usePasswordToggle';
+import usePasswordToggle from '../../hooks/usePasswordToggle';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
-import { setUserDetails } from '../store/reducers/loginSlice';
-import { setToken } from '../store/reducers/tokenSlice';
+import { setUserDetails } from '../../store/reducers/loginSlice';
+import { setToken } from '../../store/reducers/tokenSlice';
+import studentLoginimage from "/studentLoginimage.png";
 
 const AdminLogin = () => {
 
@@ -64,16 +65,24 @@ const AdminLogin = () => {
 
     return (
         <>
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400">
-                <div className=" bg-white  rounded-lg shadow-lg w-full max-w-md">
-                    <div className=' h-[20%] py-3 bg-rose-900 rounded-t-lg flex items-center justify-center' >
-                        <h2 className="text-2xl font-plusjakartasans font-bold  text-white text-center">Admin Login</h2>
-                    </div>
+            <div className="min-h-screen flex items-center justify-center ">
 
+
+
+                <div className=" bg-white  rounded-3xl border-[1px] border-[#0066de] shadow-lg w-full max-w-md">
+
+                    <div className='  w-full flex  justify-center items-center'>
+                        <img src={studentLoginimage} className='w-18 ' alt="" />
+                    </div>
+                    <div className='w-full px-10 grid grid-flow-row grid-cols-2'>
+<button className='bg-[#0066de] text-white font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md'>Login</button>
+<button className='bg-white text-[#0066de] font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md' >Signup</button>
+
+                    </div>
                     <form onSubmit={handleSubmit(onSubmit)} className="p-10 space-y-6 h-[90%]">
                         <div className="relative">
-                            <label className="block text-sm font-medium text-gray-700">Email</label>
                             <input
+                            placeholder='Email'
                                 type="email"
                                 {...register('email', {
                                     required: 'Email is required',
@@ -87,10 +96,10 @@ const AdminLogin = () => {
                             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                         </div>
                         <div className="relative">
-                            <label className="block text-sm font-medium text-gray-700">Password</label>
                             <div className='relative'>
 
                                 <input
+                                placeholder='Password'
                                     type={PasswordInputType}
                                     {...register('password', {
                                         required: 'Password is required',
@@ -104,16 +113,16 @@ const AdminLogin = () => {
                                 {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
                             </div>
                         </div>
-                        <div>
+                        <div className='w-full px-20'>
                             <button
                                 disabled={isSubmitting}
                                 type="submit"
-                                className={`w-full ${isSubmitting ? "bg-gray-600" : "bg-blue-600"}
+                                className={`w-full ${isSubmitting ? "bg-gray-600" : "bg-[#0066de]"}
                                  flex justify-center py-2 px-4 border border-transparent rounded-md 
                                  shadow-sm text-sm font-medium text-white  hover:bg-blue-700 
                                  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
                             >
-                                {isSubmitting ? "Verifying...":"Login"}
+                                {isSubmitting ? "Verifying..." : "Login"}
                             </button>
                         </div>
                     </form>

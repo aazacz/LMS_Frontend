@@ -7,6 +7,7 @@ const ReusableTable = ({ columns, data, link }) => {
 
   const [Active, SetActive] = useState(false)
 
+  
   const formatDate = (date) => {
     const options = {
       timeZone: 'Asia/Kolkata',
@@ -21,6 +22,8 @@ const ReusableTable = ({ columns, data, link }) => {
     const formattedDate = new Date(date).toLocaleString('en-IN', options);
     return formattedDate;
   }
+
+
 
   return (
     <div className="table-container">
@@ -45,11 +48,15 @@ const ReusableTable = ({ columns, data, link }) => {
                       <Check />
                       <CloseIcon onClick={() => console.log("Action clicked")} />
                     </div>
-                  ) : (row[column.field])}
+                  ) :<></>}
 
 
                   {column.field === "packageName" ? (
                     <span className="action-container text-sm font-semibold">Diagnose Test {indexrow +1}</span>
+                  ) : ( <></> )}
+
+                  {column.field === "createdAt" ? (
+                    <span className="action-container text-sm font-semibold">{formatDate(row[column.field])} </span>
                   ) : ( <></> )}
 
 

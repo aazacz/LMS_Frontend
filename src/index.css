@@ -43,12 +43,13 @@ textarea {
   }
   
   .responsive-table th {
-    background-color: #fcfdfd;
-    color:#36383a;
+    background-color: #03729b;
+    color:#ffffff;
+    
   }
   
   .responsive-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #03729b1e
   }
   
   .responsive-table tbody tr:hover {

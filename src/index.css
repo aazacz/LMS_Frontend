@@ -149,3 +149,14 @@ textarea {
 .slide-content.right {
   transform: translateX(100%);
 }
+
+
+/* Diagnosis Test - Student Side*/
+.Test::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+
+.Test {
+  -ms-overflow-style: none;  /* for Internet Explorer and Edge */
+  scrollbar-width: none;  /* for Firefox */
+}

@@ -1,6 +1,9 @@
-import React from 'react';
-import kidLeft1 from '/Group1.png';
-import kidLeft2 from '/Group2.png';
+import React from "react";
+import kidLeft1 from "/Group1.png";
+import kidLeft2 from "/Group2.png";
+import Animation_Methodolgy from "./Animation_Methodology/Animation_Methodolgy";
+import Animation_ReviewPage from "./Animation_ReviewPage/Animation_ReviewPage";
+import Animation_Courses from "./Animation_Courses/Animation_Courses";
 
 const AnimationScreen = () => {
     return (

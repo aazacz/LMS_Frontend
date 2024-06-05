@@ -25,7 +25,14 @@ import { useSelector } from 'react-redux';
 import Login from '../pages/student/Login';
 import Homepage from '../pages/student/HomePage';
 import Signup from '../components/User/Signup';
+<<<<<<< HEAD
+import SignupPersonalDetails from '../components/User/SignupPersonalDetails/SignupPersonalDetails';
+import SignupOtp from '../components/User/SignupOtp/SignupOtp';
+import SignupSat from '../components/User/SignupSat/SignupSat';
+import SignupEducation from '../components/User/SignupEducation/SignupEducation';
+=======
 import StudentHomepage from '../pages/student/StudentHomepage';
+>>>>>>> fd2eee2427fc4ad38156d23b0ce77539469cd421
 
 const UserRoutes = () => {
 
@@ -72,6 +79,19 @@ const UserRoutes = () => {
     <Route path="/login" element={user ? <Navigate to="/home" /> : <Login />} />
     <Route path="/Signup" element={user ? <Navigate to="/home" /> : <Signup />} />
     {/* <Route path="/home/*" element={user ? <Homepage /> : <Navigate to="/admin" />} /> */}
+<<<<<<< HEAD
+    <Route path='/SignupPersonalDetails' element={<SignupPersonalDetails />}></Route>
+    <Route path='/SignupOtp' element={<SignupOtp />}></Route>
+    <Route path='/SignupSat' element={<SignupSat />}></Route>
+    <Route path='/SignupEducation' element={<SignupEducation />}></Route>
+
+</Routes>
+  )
+}
+
+export default UserRoutes
+=======
 >>>>>>> c47d8d5d0a8990cd8b71e1bb3b527dc11be15b34
 
 export default UserRoutes;
+>>>>>>> fd2eee2427fc4ad38156d23b0ce77539469cd421

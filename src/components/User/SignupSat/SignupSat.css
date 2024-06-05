@@ -1,0 +1,230 @@
+.satcontainer {
+  border: 2px solid #0066de;
+  width: 60%;
+  border-radius: 50px;
+  background: #ffffff4d;
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 1.5%;
+  /* margin-bottom: 1%; */
+}
+
+.satphoto {
+  display: flex;
+  flex-direction: row;
+  margin-left: 5%;
+  align-items: center;
+}
+
+.satimage {
+  width: 25%;
+  height: 25%;
+}
+
+.sat-content-container {
+  margin-left: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.sat-content {
+  font-family: "Poppins";
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 30px;
+}
+
+.sat-sub-content {
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 21px;
+}
+
+.sat-heading {
+  display: flex;
+  width: fit-content;
+  flex-direction: column;
+  margin-left: 5%;
+  margin-top: 2%;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+.sat-sub-heading {
+  font-family: "Poppins";
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 28px;
+  text-align: left;
+}
+
+.sat-sub-sub-heading {
+  font-family: "Poppins";
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: left;
+  color: #555;
+}
+
+.sat-exam p {
+  font-family: "Poppins";
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 28px;
+  margin-left: 5%;
+}
+
+.sat-date {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 20px 5%;
+  width: 80%;
+  position: relative;
+}
+
+.react-datepicker-wrapper {
+  flex-grow: 1;
+}
+
+.react-datepicker__input-container input {
+  width: 200px;
+  height: 30px;
+  padding: 0 10px;
+  font-size: 12px;
+  border: none;
+  outline: none;
+}
+
+.calendar-icon {
+  color: #007bff;
+  font-size: 18px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.react-datepicker-popper {
+  z-index: 2;
+  width: fit-content;
+}
+
+.react-datepicker {
+  width: fit-content;
+  height: 300px;
+}
+
+.react-datepicker__month-dropdown-container,
+.react-datepicker__year-dropdown-container {
+  display: inline-block;
+}
+
+.sat-exam-given{
+  font-family: "Poppins";
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 28px;
+  margin-left: 5%;
+}
+
+.sat-radio {
+  display: flex;
+  margin: 10px 0;
+  gap: 100px;
+}
+
+.sat-radio label {
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.sat-button-container {
+  display: flex;
+  justify-content: center; 
+  margin-top: 20px;
+  margin-left: -50%;
+}
+
+.sat-request {
+  width: 30%;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sat-request:hover {
+  background-color: #0062cc;
+}
+
+@media (max-width: 800px) {
+  .satphoto {
+    flex-direction: column;
+  }
+  .satimage {
+    width: 50%;
+    height: 50%;
+  }
+}
+
+@media (max-width: 490px) {
+  .calendar-icon {
+    font-size: 20px;
+    margin-right: 1px;
+  }
+  .react-datepicker__input-container input {
+    width: 100px;
+    height: 20px;
+    font-size: 16px;
+  }
+  .satimage {
+    width: 90%;
+    height: 90%;
+  }
+}
+
+@media (max-width: 470px) {
+  .calendar-icon {
+    font-size: 20px;
+    margin-right: 1px;
+  }
+  .react-datepicker__input-container input {
+    width: 100px;
+    height: 20px;
+    font-size: 16px;
+  }
+  .otpimage {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (max-width:450px){
+  .sat-button-container {
+    margin-left: 5%;
+  }
+  .satimage {
+    width: 80%;
+    height: 80%;
+  }
+}
+
+@media (max-width:335px){
+  .sat-button-container {
+    margin-left: -10%;
+  }
+  .satimage {
+    width: 70%;
+    height: 70%;
+  }
+}

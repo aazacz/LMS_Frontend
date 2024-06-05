@@ -1,0 +1,218 @@
+.personaldetailscontainer {
+  border: 2px solid #0066de;
+  width: 60%;
+  border-radius: 50px;
+  padding: 4px;
+  margin: 0 auto;
+  margin-top: 2.5%;
+  margin-bottom: 1%;
+}
+
+.personaldetailsphoto {
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: row;
+  margin-left: 5%;
+  align-items: center;
+}
+
+.detailphoto {
+  width: 25%;
+  height: 25%;
+}
+
+.details-content-container {
+  /* border: 1px solid black; */
+  margin-left: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.details-content {
+  /* border: 1px solid black; */
+  font-family: "Poppins";
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 30px;
+}
+
+.details-sub-content {
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 21px;
+  /* border: 1px solid black; */
+}
+
+.details-heading {
+  /* border: 1px solid black; */
+  display: flex;
+  width: fit-content;
+  flex-direction: column;
+  margin-left: 5%;
+  margin-top: 2%;
+  gap: 10px;
+  padding-bottom: 15px;
+}
+
+.deatils-sub-heading {
+  font-family: "Poppins";
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 28px;
+  text-align: left;
+}
+
+.details-sub-sub-heading {
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: left;
+  color: #555;
+}
+
+.detail-section {
+  margin-bottom: 15px;
+  /* border: 1px solid black; */
+  width: 90%;
+  margin-left: 5%;
+}
+
+.input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+
+.detail-input {
+  flex: 1;
+  padding: 8px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  border: 1.5px solid #666666;
+}
+
+.location-section {
+  text-align: left;
+  padding-bottom: 30px;
+}
+
+.location-section p {
+  font-size: 12px;
+  color: black;
+  margin-bottom: 0;
+}
+
+.location-section a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+button[type="submit"] {
+  margin-left: 35%;
+  width: 30%;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0062cc;
+}
+
+@media (max-width: 800px) {
+  .personaldetailsphoto {
+    flex-direction: column;
+  }
+  .details-content-container {
+    margin-left: 5%;
+  }
+  .details-content {
+    font-size: 16px;
+    line-height: 30px;
+  }
+  .detailphoto {
+    width: 70%;
+    height: 70%;
+  }
+  .details-heading {
+    margin-left: 9%;
+  }
+  .deatils-sub-heading {
+    font-size: 16px;
+  }
+  .details-sub-sub-heading {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 450px) {
+  button[type="submit"] {
+    width: 100%;
+    margin-left: 0%;
+  }
+  .detailphoto {
+    width: 120%;
+    height: 120%;
+  }
+}
+
+@media (max-width: 350px) {
+  .detail-section {
+    margin-left: 5%;
+  }
+  .detailphoto {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (max-width: 335px) {
+  .detail-section {
+    margin-left: 5%;
+  }
+  button[type="submit"] {
+    width: 100%;
+    margin-left: 1%;
+  }
+  .detailphoto {
+    width: 90%;
+    height: 90%;
+  }
+}
+
+@media (max-width: 320px) {
+  .personaldetailscontainer {
+    width: 75%;
+  }
+  .detailphoto {
+    width: 80%;
+    height: 80%;
+  }
+}
+
+@media (max-width: 300px) {
+  button[type="submit"] {
+    width: 100%;
+    margin-left: 1%;
+  }
+  .detail-section {
+    margin-left: 3%;
+  }
+  .detailphoto {
+    width: 70%;
+    height: 70%;
+  }
+}

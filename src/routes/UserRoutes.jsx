@@ -21,28 +21,20 @@ const UserRoutes = () => {
 
 
   return (
+    
     <Routes>
-      <Route path="/" element={<Homepage />} />
-      <Route path="/login" element={user ? <Navigate to="/home" /> : <Login />} />
-      <Route path="/Signup" element={user ? <Navigate to="/home" /> : <Signup />} />
-      <Route path="/review" element={user ? <Navigate to="/home" /> : <Animation_ReviewPage />} />
-
-      <Route path="/courses" element={user ? <Navigate to="/home" /> : <Animation_Courses />} />
-      <Route path="/tutor" element={user ? <Navigate to="/home " /> : <Animation_Tutor />} />
-      <Route
-        path="/methodology"
-        element={user ? <Navigate to="/home " /> : <Animation_Methodolgy />}
-      />
-      <Route path="/" element={<Homepage />} />
-      <Route path="/student/*" element={<StudentHomepage />} />
-      <Route path="/login" element={user ? <Navigate to="/home" /> : <Login />} />
-      <Route path="/Signup" element={user ? <Navigate to="/home" /> : <Signup />} />
-
-
-      <Route path='/SignupPersonalDetails' element={<SignupPersonalDetails />}></Route>
-      <Route path='/SignupOtp' element={<SignupOtp />}></Route>
-      <Route path='/SignupSat' element={<SignupSat />}></Route>
-      <Route path='/SignupEducation' element={<SignupEducation />}></Route>
+      <Route path="/"            element={<Homepage />} />
+      <Route path="/login"       element={user ? <Navigate to="/home" /> : <Login />} />
+      <Route path="/Signup"      element={user ? <Navigate to="/home" /> : <Signup />} />
+      <Route path="/review"      element={user ? <Navigate to="/home" /> : <Animation_ReviewPage />} />
+      <Route path="/courses"     element={user ? <Navigate to="/home" /> : <Animation_Courses />} />
+      <Route path="/tutor"       element={user ? <Navigate to="/home " /> : <Animation_Tutor />} />
+      <Route path="/methodology" element={user ? <Navigate to="/home " /> : <Animation_Methodolgy />}  />
+      <Route path="/student/*"   element={<StudentHomepage />}  />
+      <Route path='/SignupPersonalDetails' element={<SignupPersonalDetails />}/>
+      <Route path='/SignupOtp'   element={<SignupOtp />}/>
+      <Route path='/SignupSat'   element={<SignupSat />}/>
+      <Route path='/SignupEducation' element={<SignupEducation />}/>
     </Routes>
 
   )

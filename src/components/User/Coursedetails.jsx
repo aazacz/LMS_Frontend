@@ -33,7 +33,7 @@ const Coursedetails = ({ height }) => {
                         </div>
                     </div>
 
-                    <div className='w-full bg-blue-400 mt-4 relative'>
+                    <div className='w-full  mt-4 relative'>
                         <div className='flex w-full gap-x-4'>
                             {['about', 'module', 'tests', 'review'].map((tab, index) => (
                                 <button

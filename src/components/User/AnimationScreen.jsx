@@ -1,14 +1,13 @@
 import React from "react";
 import kidLeft1 from "/Group1.png";
 import kidLeft2 from "/Group2.png";
-import Animation_Methodolgy from "./Animation_Methodology/Animation_Methodolgy";
-import Animation_ReviewPage from "./Animation_ReviewPage/Animation_ReviewPage";
-import Animation_Courses from "./Animation_Courses/Animation_Courses";
+
+
 
 const AnimationScreen = () => {
     return (
-        <div className='w-screen h-[87vh] flex flex-col justify-center items-center bg-slate-400'>
-            <div className='w-[70%] h-2/3 flex flex-col gap-4 justify-center'>
+        <div className='w-screen h-[87vh] flex flex-col justify-center items-center bg-slate-400 Test'>
+            <div className='w-[70%] h-2/3  flex flex-col gap-4 justify-center '>
                 <div className='w-full flex gap-x-4 px-12'>
                     <h1 className='text-left text-6xl font-poppins font-black text-[#0066de] '>1600/1600  </h1><span className='animate-SlidefromRight text-left text-6xl font-poppins font-black text-[#0066de]'> Can Be Achieved</span>
                 </div>

@@ -137,8 +137,6 @@ body::-webkit-scrollbar-track {
   animation: slide-right-enter 0.3s forwards;
 }
 
-<<<<<<< HEAD
-=======
 @keyframes slide-left-enter {
   from {
     transform: translateX(100%);
@@ -168,4 +166,3 @@ body::-webkit-scrollbar-track {
   -ms-overflow-style: none;  /* for Internet Explorer and Edge */
   scrollbar-width: none;  /* for Firefox */
 }
->>>>>>> fd2eee2427fc4ad38156d23b0ce77539469cd421

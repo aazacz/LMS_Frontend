@@ -65,8 +65,16 @@ const Signup = () => {
 
     return (
         <>
-            <div className="min-h-screen flex items-center justify-center ">
+            <div className="min-h-screen flex flex-col items-center justify-center ">
 
+                <div>
+
+                    <div className='w-full px-10 grid grid-flow-row grid-cols-2'>
+                        <button className='bg-[#0066de] text-white font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md'>Login</button>
+                        <button className='bg-white text-[#0066de] font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md' >Signup</button>
+
+                    </div>
+                </div>
 
 
                 <div className=" bg-white  rounded-3xl border-[1px] border-[#0066de] shadow-lg w-full max-w-md">
@@ -74,15 +82,10 @@ const Signup = () => {
                     <div className='  w-full flex  justify-center items-center'>
                         <img src={studentLoginimage} className='w-18 ' alt="" />
                     </div>
-                    <div className='w-full px-10 grid grid-flow-row grid-cols-2'>
-<button className='bg-[#0066de] text-white font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md'>Login</button>
-<button className='bg-white text-[#0066de] font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md' >Signup</button>
-
-                    </div>
                     <form onSubmit={handleSubmit(onSubmit)} className="p-10 space-y-6 h-[90%]">
                         <div className="relative">
                             <input
-                            placeholder='Email'
+                                placeholder='Email'
                                 type="email"
                                 {...register('email', {
                                     required: 'Email is required',
@@ -99,7 +102,7 @@ const Signup = () => {
                             <div className='relative'>
 
                                 <input
-                                placeholder='Password'
+                                    placeholder='Password'
                                     type={PasswordInputType}
                                     {...register('password', {
                                         required: 'Password is required',

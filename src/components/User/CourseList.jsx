@@ -39,7 +39,7 @@ const CourseList = () => {
 
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {courses.map((course, index) => (
-                    <Link key={index} to={`/admin/home/courses/1`}>
+                    <Link key={index} to={`/student/courses/1`}>
                         <CourseCard title={course.title} />
                     </Link>
                 ))}

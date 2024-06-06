@@ -95,23 +95,26 @@
   top: -15px; 
   left: 50%; 
   transform: translateX(-50%); 
-  background-color: rgb(188, 182, 182);
+  background-color: rgb(226, 221, 221);
+  
   line-height: 30px; 
   text-align: center; 
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+.animation-methodology-card-number{
+  color: #01729c;
+  
 }
 .animation-methodology-card-symbol {
-  width: 30px;
-  height: 30px;
+  width: auto;
+  height: 20px;
   display: flex;
-  flex-direction: column;
+  color: #01729c;
   justify-content: center;
   align-items: center;
-  /* border-radius: 60px;
-    background-color: rgb(90, 129, 198);
-    
-     */
+
 }
 .animation-methodology-card-title {
   display: flex;

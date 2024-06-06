@@ -67,8 +67,23 @@ const Assignments = () => {
                     </div>
 
                     <div className='w-[30%] max-w-[30%] p-5 bg-slate-200'>
-                        <h1 className='font-poppins font-semibold text-xl py-2'>Assignment Calendar</h1>
-                        <Calendar className="rounded-md border-white" />
+
+                        <div>
+                            <h1 className='font-poppins font-semibold text-xl py-2'>Assignment Calendar</h1>
+                            <Calendar className="rounded-md border-white" />
+                        </div>
+
+                        <div>
+                            <h1 className='font-poppins font-semibold text-xl py-2'>Assignment Grading</h1>
+
+                            <div className='flex flex-col '>
+
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>

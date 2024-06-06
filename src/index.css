@@ -57,34 +57,41 @@ textarea {
 }
 
 /* Scroll Bar Design  */
-.scroll {
+:root.scroll {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.scroll::-webkit-scrollbar {
+:root.scroll::-webkit-scrollbar {
   display: none;
 }
 
 /* Scroll Bar Design  */
-body::-webkit-scrollbar {
+.animationapart::-webkit-scrollbar {
+  display: none;
+  position: absolute;
+  width: 10px;
+}
+:root::-webkit-scrollbar {
+  /* display: none; */
+  position: absolute;
   width: 10px;
 }
 
 /* Track */
-body::-webkit-scrollbar-track {
+:root::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+:root::-webkit-scrollbar-thumb {
   background: #00729c;
   height: 30px;
   border-radius: 10px;
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+:root::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
@@ -167,4 +174,11 @@ body::-webkit-scrollbar-track {
 .Test {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+
+
+.maincontainer{
+  box-sizing: border-box;
+  overflow-x: hidden;
 }

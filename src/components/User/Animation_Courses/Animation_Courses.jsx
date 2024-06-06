@@ -1,53 +1,67 @@
 import { useState } from "react";
 import React from "react";
 import "./Animation_Courses.css";
+import PopularCourses from "/PopularCourses.png"
 
-const MathsSAT = () => 
-<div className="animation-courses-maths">
+
+const MathsSAT = () =>
+  <div className="animation-courses-maths">
+    <div className="animation-courses-maths-sub1">
+      <div className="maths-sat-title">MATHS SAT</div>
+      <div className="maths-sat-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis porro iure quo voluptate omnis alias praesentium qui reiciendis nobis.<br /> Corporis soluta eaque a accusamus neque provident et ab aliquam adipisci!</div>
+      <div className="maths-sat-review"> &#x275D; The course was bueatifully conceptualized and well presented .The videos were lucid,clear,articulate and informative.&#x275E;<div className="maths-sat-review-user">Charles,UK</div></div>
+      <button className="maths-sat-button">Explore Course</button>
+    </div>
+    <div className="animation-courses-maths-sub2">
+      <div className="maths-sat-programme1">
+      <div className="maths-sat-programme1-photo overflow-hidden">
+        <img src={PopularCourses} alt="Course Image" />
+        </div>
+        <div className="maths-sat-programme1-type">Self Assessnment Test</div>
+        <div className="maths-sat-programme1-title">MATHS SAT</div>
+        <div className="maths-sat-programme1-desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, perferendis? Non fugit expedita error consectetur! </div>
+        <div className="maths-sat-programme1-duration">Long Course</div>
+      </div>
+      <div className="maths-sat-programme2">
+        <div className="maths-sat-programme1-photo overflow-hidden">
+        <img src={PopularCourses} alt="Course Image" />
+        </div>
+        <div className="maths-sat-programme1-type">Self Assessnment Test</div>
+        <div className="maths-sat-programme1-title">MATHS SAT</div>
+        <div className="maths-sat-programme1-desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, perferendis? Non fugit expedita error consectetur! </div>
+        <div className="maths-sat-programme1-duration">Long Course</div>
+      </div>
+    </div>
+  </div>;
+const EnglishSAT = () => <div className="animation-courses-maths">
   <div className="animation-courses-maths-sub1">
-    <div className="maths-sat-title">MATHS SAT</div>
-    <div className="maths-sat-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis porro iure quo voluptate omnis alias praesentium qui reiciendis nobis.<br/> Corporis soluta eaque a accusamus neque provident et ab aliquam adipisci!</div>
-    <div className="maths-sat-review"> &#x275D; The course was bueatifully conceptualized and well presented .The videos were lucid,clear,articulate and informative.&#x275E;<div className="maths-sat-review-user">Charles,UK</div></div>
-    <button className="maths-sat-button">Explore Course</button> 
+    <div className="maths-sat-title">ENGLISH SAT</div>
+    <div className="maths-sat-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis porro iure quo voluptate omnis alias praesentium qui reiciendis nobis.<br /> Corporis soluta eaque a accusamus neque provident et ab aliquam adipisci!</div>
+    <div className="maths-sat-review"> &#x275D; The course was bueatifully conceptualized and well presented .The videos were lucid,clear,articulate and informative.&#x275E;<div className="maths-sat-review-user">Linda,USA</div></div>
+    <button className="maths-sat-button">Explore Course</button>
   </div>
   <div className="animation-courses-maths-sub2">
     <div className="maths-sat-programme1">
-      <div className="maths-sat-programme1-photo"></div>
-      <div className="maths-sat-programme1-type">Self Assessnment Test</div>
-      <div className="maths-sat-programme1-title">MATHS SAT</div>
-      <div className="maths-sat-programme1-desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, perferendis? Non fugit expedita error consectetur! </div>
-      <div className="maths-sat-programme1-duration">Long Course</div>
-    </div>
-    <div className="maths-sat-programme2"><div className="maths-sat-programme1-photo"></div>
-      <div className="maths-sat-programme1-type">Self Assessnment Test</div>
-      <div className="maths-sat-programme1-title">MATHS SAT</div>
-      <div className="maths-sat-programme1-desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, perferendis? Non fugit expedita error consectetur! </div>
-      <div className="maths-sat-programme1-duration">Long Course</div>
+      <div className="maths-sat-programme1-photo overflow-hidden">
+      <img src={PopularCourses} alt="Course Image" />
+
       </div>
-  </div>
-</div>;
-const EnglishSAT = () => <div className="animation-courses-maths">
-<div className="animation-courses-maths-sub1">
-  <div className="maths-sat-title">ENGLISH SAT</div>
-  <div className="maths-sat-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis porro iure quo voluptate omnis alias praesentium qui reiciendis nobis.<br/> Corporis soluta eaque a accusamus neque provident et ab aliquam adipisci!</div>
-  <div className="maths-sat-review"> &#x275D; The course was bueatifully conceptualized and well presented .The videos were lucid,clear,articulate and informative.&#x275E;<div className="maths-sat-review-user">Linda,USA</div></div>
-  <button className="maths-sat-button">Explore Course</button> 
-</div>
-<div className="animation-courses-maths-sub2">
-  <div className="maths-sat-programme1">
-    <div className="maths-sat-programme1-photo"></div>
-    <div className="maths-sat-programme1-type">Self Assessnment Test</div>
-    <div className="maths-sat-programme1-title">ENGLISH SAT</div>
-    <div className="maths-sat-programme1-desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, perferendis? Non fugit expedita error consectetur! </div>
-    <div className="maths-sat-programme1-duration">Long Course</div>
-  </div>
-  <div className="maths-sat-programme2"><div className="maths-sat-programme1-photo"></div>
-    <div className="maths-sat-programme1-type">Self Assessnment Test</div>
-    <div className="maths-sat-programme1-title">ENGLISH SAT</div>
-    <div className="maths-sat-programme1-desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, perferendis? Non fugit expedita error consectetur! </div>
-    <div className="maths-sat-programme1-duration">Long Course</div>
+      <div className="maths-sat-programme1-type">Self Assessnment Test</div>
+      <div className="maths-sat-programme1-title">ENGLISH SAT</div>
+      <div className="maths-sat-programme1-desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, perferendis? Non fugit expedita error consectetur! </div>
+      <div className="maths-sat-programme1-duration">Long Course</div>
     </div>
-</div>
+    <div className="maths-sat-programme2">
+      
+      <div className="maths-sat-programme1-photo overflow-hidden">
+      <img src={PopularCourses} alt="Course Image" />
+      </div>
+      <div className="maths-sat-programme1-type">Self Assessnment Test</div>
+      <div className="maths-sat-programme1-title">ENGLISH SAT</div>
+      <div className="maths-sat-programme1-desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, perferendis? Non fugit expedita error consectetur! </div>
+      <div className="maths-sat-programme1-duration">Long Course</div>
+    </div>
+  </div>
 </div>;
 const TestsOnly = () => <div>Tests Only Content</div>;
 const ExploreAfterDiagnoseTest = () => <div>Explore After Diagnose Test Content</div>;

@@ -23,11 +23,12 @@ const Animation_Methodolgy = () => {
           Create Effective Habits by Encouraging Efforts only.Results Follow.
         </div>
       </div>
+      
       <div className="animation-methodolgy-content-container">
         <div className="animation-methodology-content-card1">
-        <div className="animation-metodology-content-card-number">01</div>
+        <div className="animation-metodology-content-card-number ">01</div>
           <div className="animation-methodology-card-number">
-            <CircleIcon />
+          <CircleIcon style={{ fontSize: "10px" }} />
           </div>
           <div className="animation-methodology-card-title">
             Student Focused
@@ -41,9 +42,10 @@ const Animation_Methodolgy = () => {
         </div>
         <div className="animation-methodology-content-card2">
           <div className="animation-metodology-content-card-number">02</div>
-          <div className="animation-methodology-card-symbol">
-            <CircleIcon />
-            <CircleIcon />
+          <div className="animation-methodology-card-symbol ">
+          <CircleIcon style={{ fontSize: "10px" }} />
+          <CircleIcon style={{ fontSize: "10px" }} />
+
           </div>
           <div className="animation-methodology-card-title">
             Student Focused

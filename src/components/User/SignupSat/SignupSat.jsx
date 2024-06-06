@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import "./SignupSat.css";
 import personalDetailsImage from "../../../assets/SignupPersonalDetails/personaldetails.png";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { FaCalendarAlt } from "react-icons/fa";
 import UserNavbar from "../UserNavbar";
 
 const SignupSat = () => {
@@ -17,7 +14,7 @@ const SignupSat = () => {
 
   return (
     <>
-      <UserNavbar/>
+      <UserNavbar />
       <div className="satcontainer">
         <div className="satphoto">
           <img
@@ -44,19 +41,7 @@ const SignupSat = () => {
           <p>When do you plan to take your SAT Exam?</p>
         </div>
         <div className="sat-date">
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setDate(date)}
-            dateFormat="dd/MM/yyyy"
-            placeholderText="Select a date"
-            open={open}
-            onClickOutside={() => setOpen(false)}
-            popperPlacement="bottom-end"
-            showMonthDropdown
-            showYearDropdown
-            dropdownMode="select"
-          />
-          <FaCalendarAlt className="calendar-icon" onClick={handleIconClick} />
+          <input type="date" name="" id="" />
         </div>
         <div className="sat-exam-given">
           <p>Have you given any SAT before</p>

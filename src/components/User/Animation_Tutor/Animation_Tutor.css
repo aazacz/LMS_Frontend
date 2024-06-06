@@ -1,6 +1,9 @@
 .animation-tutor-main-container{
     width: 100%;
     height: max-content;
+    display: flex;
+    flex-wrap: wrap;
+    
 }
 .animation-tutor-sub-conatainer1{
     width: 100%;
@@ -59,7 +62,8 @@
   
   .animation-tutor-tutor1 img {
     width: 100%; 
-    height: 100%; 
+    height: 100%;
+    position: relative; 
   }
   
   .animation-tutor-content {
@@ -67,13 +71,13 @@
     bottom: 0; 
     left: 0; 
     right: 0; 
+    top: 0;
     background-color: rgb(3,104,255);
-    color: white; 
-     
+    color: white;   
     opacity: 0;
-    
     height: 30%;
     transition: opacity 0.5s ease-in-out;
+    position: absolute;
   }
   .animation-tutor-content h1{
     font-size: 15px;

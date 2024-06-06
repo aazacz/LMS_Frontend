@@ -72,6 +72,7 @@ textarea {
   display: none;
   position: absolute;
   width: 10px;
+  
 }
 :root::-webkit-scrollbar {
   display: none;

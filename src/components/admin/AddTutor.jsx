@@ -39,7 +39,7 @@ const AddTutor = () => {
         cv: {},
         educations: [],
         awards: [],
-        status: "active"
+        
     });
 
     const [tempEducation, setTempEducation] = useState({

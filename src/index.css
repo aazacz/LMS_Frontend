@@ -64,6 +64,7 @@ textarea {
 
 :root.scroll::-webkit-scrollbar {
   display: none;
+
 }
 
 /* Scroll Bar Design  */
@@ -73,7 +74,7 @@ textarea {
   width: 10px;
 }
 :root::-webkit-scrollbar {
-  /* display: none; */
+  display: none;
   position: absolute;
   width: 10px;
 }

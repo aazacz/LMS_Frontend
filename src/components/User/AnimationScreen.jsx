@@ -56,10 +56,10 @@ const AnimationScreen = () => {
                     </div>
 
                     <div>
-                        <Animation_ReviewPage1 />
+                        {/* <Animation_ReviewPage1 />
                         <Animation_Courses />
                         <Animation_Tutor />
-                        <Animation_Methodolgy />
+                        <Animation_Methodolgy /> */}
                     </div>
 
 

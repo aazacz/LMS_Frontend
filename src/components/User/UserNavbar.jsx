@@ -65,7 +65,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen }) => {
       </button>
 
       {(
-        <div className={` ${show ? "-translate-y-[700px] " : ""}  transition-all duration-700  absolute top-[7vh] right-0 w-full bg-white shadow-lg md:hidden `}>
+        <div className={` ${!show ? "-translate-y-[700px] " : ""}  transition-all duration-700  absolute top-[7vh] right-0 w-full bg-white shadow-lg md:hidden `}>
           <h1 className='md:hidden block hover:text-lg text-[#0066DE] font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
             Login
           </h1>

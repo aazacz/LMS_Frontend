@@ -6,6 +6,7 @@ import AdminRoutes from './routes/AdminRoutes';
 import { setUserDetails } from './store/reducers/loginSlice';
 import { setToken } from './store/reducers/tokenSlice'; 
 import ErrorPage from './pages/ErrorPage';
+import UserRoutes from './routes/UserRoutes';
 
 function App() {
   const token = useSelector((state)=>state.token)
@@ -17,6 +18,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/admin/*' element={<AdminRoutes/>} />
+          <Route path='/*' element={<UserRoutes/>} />
           <Route path="*" element={  <div className='w-screen h-screen'> 
                                       <ErrorPage /> 
                                      </div>} />

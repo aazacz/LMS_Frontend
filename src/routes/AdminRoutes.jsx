@@ -1,7 +1,7 @@
 import React from 'react'
-import { Route, Routes, Navigate, BrowserRouter as Router } from "react-router-dom";
 import Homepage from '../pages/admin/Homepage';
-import AdminLogin from '../pages/Login';
+import AdminLogin from '../pages/admin/Login';
+import { Route, Routes, Navigate, BrowserRouter as Router } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
 

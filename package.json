@@ -22,12 +22,8 @@
     "dotenv": "^16.4.5",
     "generate-password-browser": "^1.1.0",
     "react": "^18.2.0",
-<<<<<<< HEAD
-    "react-datepicker": "^6.9.0",
-=======
     "react-calendar": "^5.0.0",
     "react-chartjs-2": "^5.2.0",
->>>>>>> fd2eee2427fc4ad38156d23b0ce77539469cd421
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.5",
     "react-icons": "^5.2.1",
@@ -43,6 +39,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@swc/core": "^1.5.25",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react-swc": "^3.5.0",

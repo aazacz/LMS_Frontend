@@ -37,21 +37,11 @@ const Homepage = () => {
       <div className="flex flex-col w-full h-full flex-grow">
         {/* Main Content */}
 
-<<<<<<< HEAD
         <div className="flex-grow overflow-auto ">
           <Routes>
             <Route path="/*" element={<AnimationScreen />} />
             {/* <Route path="/courses/addcourse" element={<AddCourse />} />
                         <Route path="/courses" element={<CourseList />} />
-=======
-                {/* Main Content */}
-
-                <div className="flex-grow overflow-auto ">
-                    <Routes>
-                        <Route path="/*" element={<AnimationScreen/>} />
-                        {/* <Route path="/sdiagnosistest" element={<DiagnosisTest />} /> */}
-                        {/* <Route path="/courses/addcourse" element={<AddCourse />} />
->>>>>>> c47d8d5d0a8990cd8b71e1bb3b527dc11be15b34
                         <Route path="/courses/:courseId" element={<Coursedetails />} />
                         <Route path="/coursestructure" element={<CourseStructure />} />
                         <Route path="/students/:studentId" element={<StudentDetail />} />

@@ -4,12 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "preinstall": "rm -rf node_modules package-lock.json",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "install-and-build": "npm install && npm run build"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -52,11 +50,6 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
-    "vite": "^5.2.0",
-    "rollup": "^3.20.2" 
-  },
-  "optionalDependencies": {
-    "@esbuild/linux-x64": "^0.17.0",
-    "@rollup/rollup-linux-x64-gnu": "4.6.1" 
+    "vite": "^5.2.0"
   }
 }

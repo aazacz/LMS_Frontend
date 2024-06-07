@@ -22,6 +22,10 @@
     "dotenv": "^16.4.5",
     "generate-password-browser": "^1.1.0",
     "react": "^18.2.0",
+<<<<<<< HEAD
+=======
+    "react-datepicker": "^6.9.0",
+>>>>>>> 92dd149404d1db359c1cc2825a382ca61612e5f1
     "react-calendar": "^5.0.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",

@@ -35,8 +35,9 @@ const StudentHomepage = () => {
                         <Route path="/*" element={<DiagnosisTest />} />
                         <Route path="/diagnosistestresult" element={<DiagnosisTestResult />} />
                         <Route path="/courses" element={<CourseList />} />
+                        <Route path="/courses/:coursedetails" element={<Coursedetails />} />
                         <Route path="/assignments" element={<Assignments />} />
-                        <Route path="/coursedetails" element={<Coursedetails />} />
+                        {/* <Route path="/coursedetails" element={<Coursedetails />} /> */}
                         <Route path="/tutors" element={<TutorListing />} />
 
                         {/* <Route path="/sdiagnosistest" element={<DiagnosisTest />} /> */}

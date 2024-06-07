@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Route,
-  Routes,
-  Navigate,
-  BrowserRouter as Router,
-} from "react-router-dom";
+import { Route, Routes, Navigate, BrowserRouter as Router, } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Login from "../pages/student/Login";
 import Homepage from "../pages/student/HomePage";
@@ -13,6 +8,7 @@ import Animation_ReviewPage from "../components/User/Animation_ReviewPage/Animat
 import Animation_Courses from "../components/User/Animation_Courses/Animation_Courses";
 import Animation_Tutor from "../components/User/Animation_Tutor/Animation_Tutor";
 import Animation_Methodolgy from "../components/User/Animation_Methodology/Animation_Methodolgy";
+<<<<<<< HEAD
 
   import SignupPersonalDetails from "../components/User/SignupPersonalDetails/SignupPersonalDetails";
   import SignupOtp from "../components/User/SignupOtp/SignupOtp";
@@ -23,8 +19,16 @@ import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Di
 import Student_Diagnostic_Test from "../components/User/Student_Diagnostic_Test/Student_Diagnostic_Test";
 import Aside_Section_Test_Page from "../components/User/Aside_Section_Test_Page/Aside_Section_Test_Page";
 import HomePageContact from "../components/User/HomePageContact/HomePageContact";
+=======
+import SignupPersonalDetails from '../components/User/SignupPersonalDetails/SignupPersonalDetails';
+import SignupOtp from '../components/User/SignupOtp/SignupOtp';
+import SignupSat from '../components/User/SignupSat/SignupSat';
+import SignupEducation from '../components/User/SignupEducation/SignupEducation';
+import StudentHomepage from '../pages/student/StudentHomepage';
+>>>>>>> 92dd149404d1db359c1cc2825a382ca61612e5f1
 
 
+<<<<<<< HEAD
   const UserRoutes = () => {
     const user = useSelector((state) => state.token.user);
     console.log(user);
@@ -98,3 +102,33 @@ import HomePageContact from "../components/User/HomePageContact/HomePageContact"
   }
 
 export default UserRoutes;
+=======
+  const user = useSelector((state) => state.token.user)
+  console.log(user)
+
+
+  return (
+    
+    <Routes>
+      <Route path="/"            element={<Homepage />} />
+      <Route path="/login"       element={user ? <Navigate to="/home" /> : <Login />} />
+      <Route path="/Signup"      element={user ? <Navigate to="/home" /> : <Signup />} />
+      
+      <Route path="/student/*"   element={<StudentHomepage />}  />
+      <Route path='/SignupPersonalDetails' element={<SignupPersonalDetails />}/>
+      <Route path='/SignupOtp'   element={<SignupOtp />}/>
+      <Route path='/SignupSat'   element={<SignupSat />}/>
+      <Route path='/SignupEducation' element={<SignupEducation />}/>
+    </Routes>
+
+  )
+}
+
+
+
+
+
+export default UserRoutes
+
+
+>>>>>>> 92dd149404d1db359c1cc2825a382ca61612e5f1

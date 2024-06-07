@@ -6,6 +6,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px 20px;
+  
 } 
 .animation-review-title-conatainer{
   display: flex;
@@ -14,12 +16,14 @@
   justify-content: center;
   margin-bottom: 10px;
   height: 120px;
+
 }
 .animation-courses-title-underline1{
   width: 80px;
   height: 10px;
   background-color: rgb(255, 255, 255);
   border-radius: 50px;
+  
 }
 .animation-review-title {
   width: 100%;
@@ -31,28 +35,32 @@
   justify-content: center;
   align-items: center;
   margin:0 auto;
+  
 }
 
 .animation-review-contents{
 display: flex;
-justify-content: space-around;
+/* justify-content: space-around; */
+justify-content: center;
 align-items: center;
 width: 100%;
 }
 .animation-review-left-button{
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   background-color: white;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 5%;
-  margin-left: 7%;
+  margin-left: 5%;
+  /* border: 1px solid black; */
+  padding: 20px;
 }
 .animation-review-right-button{
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   background-color: white;
   border-radius: 10px;
   justify-content: center;
@@ -60,49 +68,55 @@ width: 100%;
   display: flex;
   margin-left: 5%;
   margin-right: 5%;
+  padding: 20px;
 }
 .animation-review-content {
-  width: 90%;
+  width: 100%;
   height:max-content;
   display: flex;
   margin: 0 auto;
+  align-items: center;
   transition: 0.3s ease-in;
 }
 
 .animation-review-testimonial {
+  
   width: 100%;
   height:90%; 
   background-color: white;
   border-radius: 1.5rem; 
   display: flex;
   padding: 1rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-2xl */
-  margin-bottom: 20px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
+  
  
 }
 
 .animation-review-profile {
   margin-top: 2.5rem; 
-  width: 250px; 
+  width: 100%; 
   height: auto;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
-
 }
 
 .animation-review-profile-image {
-  width: 250px;
+  width: 100%;
   height: 200px;
   border-radius: 1.5rem; 
-
+  
+  
+}
+.animation-review-testimonial_main{
+  width: 100%;
 }
 
 .animation-review-profile-name {
   width: 100%; 
-  margin-top: 1.5rem; 
+  /* margin-top: 1.5rem;  */
   color: #2563eb; 
   text-align: center;
   font-size: 18px; 
@@ -127,6 +141,7 @@ width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 }
 
 .quote {
@@ -135,7 +150,7 @@ width: 100%;
 }
 
 .animation-review-testimonial-content {
-  margin-top: 1rem; 
+
   width: 100%; 
   height: auto; 
   padding: 1rem; 
@@ -162,7 +177,17 @@ width: 100%;
   margin-left: 90%;
 }
 
+
 @media (max-width:690px){
+  .animation-review-left-button{
+    display: none;
+ 
+  }
+
+  .animation-review-right-button{
+    display: none;
+ 
+  }
   .animation-review-content {
     flex-direction: column;
   }
@@ -171,6 +196,8 @@ width: 100%;
     flex-direction: column;
   }
 }
+
+
 @media(max-width:600px){
   .animation-review-title {
     font-size: 25px;
@@ -185,9 +212,49 @@ width: 100%;
     font-size: 16px; 
   }
 }
+
+
 @media(max-width:800px){
+  
+  .larger-quotation{
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+     margin-left: 2%;
+  
+  }
+  .animation-review-main-container {
+    width: 100%;
+    height: fit-content;
+    background-color: #2563eb; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  } 
+
+
+  .larger-quotation1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    width: 20px;
+    height: 50px;
+    margin-left: 90%;
+  }
+
+  .animation-review-profile-image {
+    width: 200px;
+    height: 170px;
+    border-radius: 1 rem; 
+  }
+  
   .animation-review-title {
-    font-size: 30px;
+    font-size: 25px;
   }
   .animation-review-profile-details {
     font-size: 14px; 
@@ -196,7 +263,9 @@ width: 100%;
     font-size: 16px; 
   }
   .animation-review-testimonial-content {
-    font-size: 18px; 
+    font-size: 14px; 
+    padding: 5px;
+    
   }
 }
 

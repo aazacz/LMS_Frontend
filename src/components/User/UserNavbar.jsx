@@ -13,15 +13,19 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const user = useSelector((state) => state.userDetails);
 
   const list = ["Subjects", "Courses", "Pricing", "Contact"];
-  const navlist = [{title:"Courses",
-                    link:"/student/courses" },
-                    
-                    {title:"Tutor",
-                    link:"/student/tutors" },
-                    
+  const navlist = [{
+    title: "Courses",
+    link: "/student/courses"
+  },
 
-                    
-                    "Subjects", "Courses", "Pricing", "Contact"];
+  {
+    title: "Tutor",
+    link: "/student/tutors"
+  },
+
+
+
+    "Subjects", "Courses", "Pricing", "Contact"];
 
   const handleToggle = () => {
     setShow(!show);
@@ -35,11 +39,11 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen }) => {
 
       <div className='hidden  w-[50%] md:grid grid-flow-row grid-cols-6 px-5'>
         {navlist.map((val, index) => (
-         <Link key={index} to={val.link}>
-         <h1  className='text-[#0066DE] font-plusjakartasans text-center cursor-pointer  md:text-base font-semibold'>
-            {val.title}
-          </h1>
-         </Link>
+          <Link key={index} to={val.link}>
+            <h1 className='text-[#0066DE] font-plusjakartasans text-center cursor-pointer  md:text-base font-semibold'>
+              {val.title}
+            </h1>
+          </Link>
         ))}
       </div>
 
@@ -57,11 +61,11 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen }) => {
       </div>
 
       <button className='md:hidden ml-auto mr-4' onClick={handleToggle}>
-        <FaBars className={`text-lg  ${show ? "rotate-90 ":""}    transition-all duration-700`} />
+        <FaBars className={`text-lg  ${show ? "rotate-90 " : ""}    transition-all duration-700`} />
       </button>
 
       {(
-        <div className={` ${show ? "-translate-y-[700px] ":""}  transition-all duration-700  absolute top-[7vh] right-0 w-full bg-white shadow-lg md:hidden `}>
+        <div className={` ${!show ? "-translate-y-[700px] " : ""}  transition-all duration-700  absolute top-[7vh] right-0 w-full bg-white shadow-lg md:hidden `}>
           <h1 className='md:hidden block hover:text-lg text-[#0066DE] font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
             Login
           </h1>

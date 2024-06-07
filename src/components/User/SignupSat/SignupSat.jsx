@@ -14,7 +14,7 @@ const SignupSat = () => {
 
   return (
     <>
-      <UserNavbar/>
+      <UserNavbar />
       <div className="satcontainer">
         <div className="satphoto">
           <img
@@ -42,7 +42,7 @@ const SignupSat = () => {
         </div>
         <div className="sat-date">
           <input type="date" name="" id="" />
-           </div>
+        </div>
         <div className="sat-exam-given">
           <p>Have you given any SAT before</p>
           <div className="sat-radio">

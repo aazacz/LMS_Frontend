@@ -5,6 +5,7 @@ import Animation_ReviewPage1 from "./Animation_ReviewPage/Animation_ReviewPage";
 import Animation_Courses from "./Animation_Courses/Animation_Courses";
 import Animation_Tutor from "./Animation_Tutor/Animation_Tutor";
 import Animation_Methodolgy from "./Animation_Methodology/Animation_Methodolgy";
+import HomePageContact from "./HomePageContact/HomePageContact";
 
 
 
@@ -62,6 +63,7 @@ const AnimationScreen = () => {
                         <Animation_Courses />
                         <Animation_Tutor />
                         <Animation_Methodolgy />
+                        <HomePageContact/>
                     </div>
 
 

@@ -38,8 +38,9 @@
     "sweetalert2": "^11.11.0",
     "sweetalert2-react-content": "^5.0.7",
     "yup": "^1.4.0"
-  },
+      },
   "devDependencies": {
+    "@swc/core": "^1.5.25",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react-swc": "^3.5.0",

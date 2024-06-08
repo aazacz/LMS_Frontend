@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React,{ useState } from 'react'
 import './App.css'
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import { useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ function App() {
 
   return (
     <>
-      <Router>
+       <Router> 
         <Routes>
           <Route path='/admin/*' element={<AdminRoutes />} />
           <Route path='/*' element={<UserRoutes />} />

@@ -9,6 +9,7 @@ import CourseList from '../../components/User/CourseList';
 import Coursedetails from '../../components/User/Coursedetails';
 import TutorListing from '../../components/User/TutorListing';
 import Assignments from './Assignments';
+import Library from '../../components/User/Library';
 
 const StudentHomepage = () => {
 
@@ -30,28 +31,18 @@ const StudentHomepage = () => {
 
                 {/* Main Content */}
 
-                <div className="flex-grow overflow-auto ">
+                <div className="flex-grow overflow-auto  shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
                     <Routes>
                         <Route path="/*" element={<DiagnosisTest />} />
                         <Route path="/diagnosistestresult" element={<DiagnosisTestResult />} />
                         <Route path="/courses" element={<CourseList />} />
                         <Route path="/courses/:coursedetails" element={<Coursedetails />} />
                         <Route path="/assignments" element={<Assignments />} />
-                        {/* <Route path="/coursedetails" element={<Coursedetails />} /> */}
                         <Route path="/tutors" element={<TutorListing />} />
+                        <Route path="/library" element={<Library />} />
 
-                        {/* <Route path="/sdiagnosistest" element={<DiagnosisTest />} /> */}
-                        {/* <Route path="/courses/addcourse" element={<AddCourse />} />
-                        <Route path="/courses/:courseId" element={<Coursedetails />} />
-                        <Route path="/coursestructure" element={<CourseStructure />} />
-                        <Route path="/students/:studentId" element={<StudentDetail />} />
-                        <Route path="/students" element={<StudentList />} />
-                        <Route path="/tutors/addtutor" element={<AddTutor />} />
-                        <Route path="/diagnosistest/addiagnosistest" element={<Addiagnosistest />} />
-                        <Route path="/diagnosistest" element={<DiagnosisTest />} />
-                        <Route path="/tutors/:tutorId" element={<TutorDetails />} />
-                        <Route path="/tutors" element={<TutorListing />} />
-                        <Route path="/library" element={<Library />} /> */}
+                        {/* <Route path="/diagnosistest" element={<DiagnosisTest />} /> */}
+                       
 
                         <Route path="*" element={<ErrorPage />} />
                     </Routes>

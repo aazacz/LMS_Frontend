@@ -12,20 +12,24 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userDetails);
 
-  const list = ["Subjects", "Courses", "Pricing", "Contact"];
-  const navlist = [{
+  const list = ["Subjects", "Courses", "Library", "Contact"];
+  const navlist = [
+    {
     title: "Courses",
     link: "/student/courses"
   },
-
   {
     title: "Tutor",
     link: "/student/tutors"
   },
+  {
+    title: "Library",
+    link: "/student/Library"
+  },
 
 
 
-    "Subjects", "Courses", "Pricing", "Contact"];
+    "Subjects", "Courses", "Library", "Contact"];
 
   const handleToggle = () => {
     setShow(!show);
@@ -65,7 +69,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen }) => {
       </button>
 
       {(
-        <div className={` ${show ? "-translate-y-[700px] " : ""}  transition-all duration-700  absolute top-[7vh] right-0 w-full bg-white shadow-lg md:hidden `}>
+        <div className={` ${!show ? "-translate-y-[700px] " : ""}  transition-all duration-700  absolute top-[7vh] right-0 w-full bg-white shadow-lg md:hidden `}>
           <h1 className='md:hidden block hover:text-lg text-[#0066DE] font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
             Login
           </h1>

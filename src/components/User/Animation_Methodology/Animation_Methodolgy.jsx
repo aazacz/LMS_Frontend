@@ -13,22 +13,26 @@ const details = () => [
 
 const Animation_Methodolgy = () => {
   return (
-    <div className="animation-methodology-main-conatainer">
+    <div className="animation-methodology-main-conatainer bg-slate-300 ">
       <div className="animation-methodology-title-conatainer">
         <div className="animation-methodology-title-comment">
           Its way too simple😊
         </div>
-        <div className="animation-methodology-main-title">Our Methodology</div>
+        <div className="header text-left">
+
+        <h1 className="animation-methodology-main-title w-full text-left ">Our Methodology</h1>
+        </div>
         <div className="animation-methodology-sub-title">
           Create Effective Habits by Encouraging Efforts only.Results Follow.
         </div>
       </div>
-      
+
       <div className="animation-methodolgy-content-container">
+       
         <div className="animation-methodology-content-card1">
-        <div className="animation-metodology-content-card-number ">01</div>
+          <div className="animation-metodology-content-card-number ">01</div>
           <div className="animation-methodology-card-number">
-          <CircleIcon style={{ fontSize: "10px" }} />
+            <CircleIcon style={{ fontSize: "10px" }} />
           </div>
           <div className="animation-methodology-card-title">
             Student Focused
@@ -40,12 +44,13 @@ const Animation_Methodolgy = () => {
             sequi. Debitis, corrupti animi.
           </div>
         </div>
-        <div className="animation-methodology-content-card2">
+
+
+        <div className="animation-methodology-content-card1">
           <div className="animation-metodology-content-card-number">02</div>
           <div className="animation-methodology-card-symbol ">
-          <CircleIcon style={{ fontSize: "10px" }} />
-          <CircleIcon style={{ fontSize: "10px" }} />
-
+            <CircleIcon style={{ fontSize: "10px" }} />
+            <CircleIcon style={{ fontSize: "10px" }} />
           </div>
           <div className="animation-methodology-card-title">
             Student Focused
@@ -57,8 +62,10 @@ const Animation_Methodolgy = () => {
             sequi. Debitis, corrupti animi.
           </div>
         </div>
-        <div className="animation-methodology-content-card3">
-        <div className="animation-metodology-content-card-number">03</div>
+
+
+        <div className="animation-methodology-content-card1">
+          <div className="animation-metodology-content-card-number">03</div>
           <div className="animation-methodology-card-number">
             <WorkspacesRoundedIcon />
           </div>
@@ -72,6 +79,8 @@ const Animation_Methodolgy = () => {
             sequi. Debitis, corrupti animi.
           </div>
         </div>
+
+
       </div>
     </div>
   );

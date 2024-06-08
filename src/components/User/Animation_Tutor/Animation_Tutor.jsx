@@ -9,21 +9,23 @@ import Tutor6 from "../../../assets/Animation_Tutor/Tutor6.jpeg";
 
 const Animation_Tutor = () => {
   return (
-    <div className="animation-tutor-main-container">
+    <div className="animation-tutor-main-container ">
+     
+     
       <div className="animation-tutor-sub-conatainer1">
-    
-        <div className="animation-tutor-sub-container-content ">
-          <div className="animation-tutor-sub-conatainer-title">
-            Our Tutors Help You Achieve Your True Potential
-          </div>
-          <div className="animation-tutor-sub-conatiner-desc ">
-            We love what we do and we do it with passion.We value the
-            experimenatation of the message and smart incentives
-          </div>
-          <div className="animation-tutor-sub-container-button">
-            View All Tutors
-          </div>
-        </div>
+           
+            <div className="animation-tutor-sub-container-content ">
+              <div className="animation-tutor-sub-conatainer-title">
+                Our Tutors Help You Achieve Your True Potential
+              </div>
+              <div className="animation-tutor-sub-conatiner-desc ">
+                We love what we do and we do it with passion.We value the
+                experimenatation of the message and smart incentives
+              </div>
+              <div className="animation-tutor-sub-container-button">
+                View All Tutors
+              </div>
+             </div>
 
 
           <div className="animation-tutor-tutor1">
@@ -47,11 +49,10 @@ const Animation_Tutor = () => {
           </div>
         
 
-
       </div>
 
 
-      <div className="animation-tutor-sub-conatainer2">
+      <div className=" animation-tutor-sub-conatainer2">
         <div className="animation-tutor-tutor1">
           <img src={Tutor3} alt="Tutor Details" />
           <div className="animation-tutor-content">

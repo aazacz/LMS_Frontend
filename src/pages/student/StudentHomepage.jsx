@@ -10,6 +10,7 @@ import Coursedetails from '../../components/User/Coursedetails';
 import TutorListing from '../../components/User/TutorListing';
 import Assignments from './Assignments';
 import Library from '../../components/User/Library';
+import Dashboard from '../../components/User/Dashboard';
 
 const StudentHomepage = () => {
 
@@ -33,7 +34,8 @@ const StudentHomepage = () => {
 
                 <div className="flex-grow overflow-auto  shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
                     <Routes>
-                        <Route path="/*" element={<DiagnosisTest />} />
+                        <Route path="/*" element={<Dashboard />} />
+                        {/* <Route path="/*" element={<DiagnosisTest />} /> */}
                         <Route path="/diagnosistestresult" element={<DiagnosisTestResult />} />
                         <Route path="/courses" element={<CourseList />} />
                         <Route path="/courses/:coursedetails" element={<Coursedetails />} />

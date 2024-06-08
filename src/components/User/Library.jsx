@@ -6,7 +6,7 @@ const Library = () => {
     const pdf = [1, 2, 3, 5, 4, 1, 2, 5, 5, 6, 6]
 
     return (
-        <div className='px-6 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] w-full h-[90vh]  '>
+        <div className='px-6  w-full h-[90vh]  '>
 
             <h1 className='font-poppins text-3xl py-4 font-semibold text-black'>Library</h1>
 

@@ -14,7 +14,7 @@ const HomePageContact = () => {
             <button className="HomePageContact-faq-button  ">See FAQs</button>
           </div>
         </div>
-        <div className="w-full   flex py-8 justify-center items-center">
+        <div className="w-full flex py-8 justify-center items-center">
 
         <div className="HomePageContact-sub-container2 ">
        

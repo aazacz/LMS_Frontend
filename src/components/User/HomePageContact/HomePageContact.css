@@ -167,6 +167,11 @@
     width: 750px;
   }
 }
+@media(max-width:1380px){
+  .HomePageContact-main-container{
+    width: 70%;
+  }
+}
 @media (max-width: 920px) {
   .HomePageContact-faq-button {
     height: 60%;
@@ -195,6 +200,7 @@
   }
   .HomePageContact-sub-container2 {
     height: 300px;
+    width: 90%;
   }
 }
 @media (max-width: 760px) {

@@ -42,7 +42,9 @@ const SignupSat = () => {
         </div>
         <div className="sat-date">
           <input type="date" name="" id="" />
+
         </div>
+
         <div className="sat-exam-given">
           <p>Have you given any SAT before</p>
           <div className="sat-radio">

@@ -12,20 +12,24 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userDetails);
 
-  const list = ["Subjects", "Courses", "Pricing", "Contact"];
-  const navlist = [{
+  const list = ["Subjects", "Courses", "Library", "Contact"];
+  const navlist = [
+    {
     title: "Courses",
     link: "/student/courses"
   },
-
   {
     title: "Tutor",
     link: "/student/tutors"
   },
+  {
+    title: "Library",
+    link: "/student/Library"
+  },
 
 
 
-    "Subjects", "Courses", "Pricing", "Contact"];
+    "Subjects", "Courses", "Library", "Contact"];
 
   const handleToggle = () => {
     setShow(!show);

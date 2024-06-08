@@ -14,7 +14,7 @@ const HomePageContact = () => {
             <button className="HomePageContact-faq-button  ">See FAQs</button>
           </div>
         </div>
-        <div className="w-full flex py-8 justify-center items-center">
+        <div className="w-full   flex py-8 justify-center items-center">
 
         <div className="HomePageContact-sub-container2 ">
        
@@ -50,9 +50,9 @@ const HomePageContact = () => {
             </div>
             <div className="HomePageContact-details-sub-container2">
               <h2 className="HomePageContact-details-sub-name">MESSAGE</h2>
-              <input
+              <textarea
                 className="HomePageContact-details-sub-name-input-message "
-                type="text"
+                       
                 placeholder="Your Message...."
               />
               <button className="HomePageContact-details-SendButton ">

@@ -19,6 +19,7 @@ import SignupSat from "../components/User/SignupSat/SignupSat";
 import SignupEducation from "../components/User/SignupEducation/SignupEducation";
 import StudentHomepage from "../pages/student/StudentHomepage";
 import HomePageContact from "../components/User/HomePageContact/HomePageContact";
+import UserEditProfile from "../components/User/UserEditProfile";
 
 const UserRoutes = () => {
   const user = useSelector((state) => state.token.user);
@@ -45,6 +46,7 @@ const UserRoutes = () => {
       <Route path="/SignupSat" element={<SignupSat />} />
       <Route path="/SignupEducation" element={<SignupEducation />} />
       <Route path="/HomePageContact" element={<HomePageContact />} />
+      <Route path="/UserEditProfile" element={<UserEditProfile/>} />
     </Routes>
   );
 };

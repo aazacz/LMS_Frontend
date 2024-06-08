@@ -6,6 +6,34 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'sm': '500px', 
+        'md': '800px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+      },
+      padding: {
+        '2pct':'2%',
+        '5pct':'5%',
+        '15pct':'15%',
+        '20pct': '20%',
+        '30pct': '30%',
+        '40pct': '40%',
+        // Add more percentage values as needed
+      },
+      margin: {
+        '2mct':'2%',
+        '5mct':'5%',
+        '20mct': '20%',
+        '30mct': '30%',
+        '40mct': '40%',
+        // Add more percentage values as needed
+      },
+      width: {
+        '45percent': '45%',
+        '30percent': '30%',
+      },
       keyframes: {
 
         SlidefromLeft: {

@@ -75,14 +75,14 @@ const AdminLogin = () => {
                         <img src={studentLoginimage} className='w-18 ' alt="" />
                     </div>
                     <div className='w-full px-10 grid grid-flow-row grid-cols-2'>
-<button className='bg-[#0066de] text-white font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md'>Login</button>
-<button className='bg-white text-[#0066de] font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md' >Signup</button>
+                        <button className='bg-[#0066de] text-white font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md'>Login</button>
+                        <button className='bg-white text-[#0066de] font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md' >Signup</button>
 
                     </div>
                     <form onSubmit={handleSubmit(onSubmit)} className="p-10 space-y-6 h-[90%]">
                         <div className="relative">
                             <input
-                            placeholder='Email'
+                                placeholder='Email'
                                 type="email"
                                 {...register('email', {
                                     required: 'Email is required',
@@ -99,7 +99,7 @@ const AdminLogin = () => {
                             <div className='relative'>
 
                                 <input
-                                placeholder='Password'
+                                    placeholder='Password'
                                     type={PasswordInputType}
                                     {...register('password', {
                                         required: 'Password is required',

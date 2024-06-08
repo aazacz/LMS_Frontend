@@ -14,6 +14,7 @@ import SignupOtp from '../components/User/SignupOtp/SignupOtp';
 import SignupSat from '../components/User/SignupSat/SignupSat';
 import SignupEducation from '../components/User/SignupEducation/SignupEducation';
 import StudentHomepage from '../pages/student/StudentHomepage';
+import HomePageContact from "../components/User/HomePageContact/HomePageContact";
 
 
   const UserRoutes = () => {

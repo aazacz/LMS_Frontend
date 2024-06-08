@@ -32,6 +32,7 @@ const UserRoutes = () => {
       <Route path='/SignupSat'   element={<SignupSat />}/>
       <Route path='/SignupEducation' element={<SignupEducation />}/>
       <Route path='/HomePageContact' element={<HomePageContact />}/>
+      <Route path='/UserEditProfile' element={<UserEditProfile />}/>
     </Routes>
 
   )

@@ -9,19 +9,14 @@ import Animation_Courses from "../components/User/Animation_Courses/Animation_Co
 import Animation_Tutor from "../components/User/Animation_Tutor/Animation_Tutor";
 import Animation_Methodolgy from "../components/User/Animation_Methodology/Animation_Methodolgy";
 
-  import SignupPersonalDetails from "../components/User/SignupPersonalDetails/SignupPersonalDetails";
-  import SignupOtp from "../components/User/SignupOtp/SignupOtp";
-  import SignupSat from "../components/User/SignupSat/SignupSat";
-  import SignupEducation from "../components/User/SignupEducation/SignupEducation";
-  import StudentHomepage from "../pages/student/StudentHomepage";
-import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Diagnostic";
-import Student_Diagnostic_Test from "../components/User/Student_Diagnostic_Test/Student_Diagnostic_Test";
-import Aside_Section_Test_Page from "../components/User/Aside_Section_Test_Page/Aside_Section_Test_Page";
-import HomePageContact from "../components/User/HomePageContact/HomePageContact";
+import SignupPersonalDetails from '../components/User/SignupPersonalDetails/SignupPersonalDetails';
+import SignupOtp from '../components/User/SignupOtp/SignupOtp';
+import SignupSat from '../components/User/SignupSat/SignupSat';
+import SignupEducation from '../components/User/SignupEducation/SignupEducation';
+import StudentHomepage from '../pages/student/StudentHomepage';
 
 
-const UserRoutes = () => {
- 
+  const UserRoutes = () => {
   const user = useSelector((state) => state.token.user)
   console.log(user)
 
@@ -43,10 +38,6 @@ const UserRoutes = () => {
 
   )
 }
-
-
-
-
 
 export default UserRoutes
 

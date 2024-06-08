@@ -1,5 +1,10 @@
 import React from "react";
-import { Route, Routes, Navigate, BrowserRouter as Router, } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  Navigate,
+  BrowserRouter as Router,
+} from "react-router-dom";
 import { useSelector } from "react-redux";
 import Login from "../pages/student/Login";
 import Homepage from "../pages/student/HomePage";
@@ -13,14 +18,13 @@ import SignupEducation from '../components/User/SignupEducation/SignupEducation'
 import StudentHomepage from '../pages/student/StudentHomepage';
 import HomePageContact from "../components/User/HomePageContact/HomePageContact";
 import UserEditProfile from "../components/User/UserEditProfile";
+import ClassesToday from "../components/User/ClassesToday/ClassesToday";
 
 const UserRoutes = () => {
   const user = useSelector((state) => state.token.user);
   console.log(user);
 
-
   return (
-    
     <Routes>
       <Route path="/"            element={<Homepage />} />
       <Route path="/login"       element={user ? <Navigate to="/home" /> : <Login />} />
@@ -32,11 +36,12 @@ const UserRoutes = () => {
       <Route path='/SignupSat'   element={<SignupSat />}/>
       <Route path='/SignupEducation' element={<SignupEducation />}/>
       <Route path='/HomePageContact' element={<HomePageContact />}/>
+      <Route path='/ClassesToday' element={<ClassesToday />}/>
     </Routes>
+  );
+};
 
-  )
-}
-
+  
 export default UserRoutes
 
 

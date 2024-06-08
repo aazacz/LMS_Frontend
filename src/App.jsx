@@ -1,27 +1,25 @@
-import { useState } from 'react'
+import React,{ useState } from 'react'
 import './App.css'
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import AdminRoutes from './routes/AdminRoutes';
 import { setUserDetails } from './store/reducers/loginSlice';
-import { setToken } from './store/reducers/tokenSlice'; 
+import { setToken } from './store/reducers/tokenSlice';
 import ErrorPage from './pages/ErrorPage';
 import UserRoutes from './routes/UserRoutes';
 
 function App() {
-  const token = useSelector((state)=>state.token)
+  const token = useSelector((state) => state.token)
   console.log(token);
 
 
   return (
     <>
-      <Router>
+       <Router> 
         <Routes>
-          <Route path='/admin/*' element={<AdminRoutes/>} />
-          <Route path='/*' element={<UserRoutes/>} />
-          <Route path="*" element={  <div className='w-screen h-screen'> 
-                                      <ErrorPage /> 
-                                     </div>} />
+          <Route path='/admin/*' element={<AdminRoutes />} />
+          <Route path='/*' element={<UserRoutes />} />
+          <Route path="*" element={<div className='w-screen h-screen'>   <ErrorPage />   </div>} />
         </Routes>
 
       </Router>

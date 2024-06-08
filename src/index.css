@@ -1,23 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow&family=Open+Sans&family=Oswald&family=PT+Sans:wght@400;700&family=Poppins:wght@100;300;400;600&family=Roboto:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Barlow&family=Open+Sans&family=Oswald&family=PT+Sans:wght@400;700&family=Poppins:wght@100;300;400;600&family=Roboto:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 input[type="number"] {
-    -moz-appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 textarea {
-    resize: none;
-  }
+  resize: none;
+}
 
   .table-container {
     margin-top: 10px;
@@ -55,54 +56,84 @@ textarea {
   .responsive-table tbody tr:hover {
     background-color: #e0e0e0;
   }
+.table-container {
+  margin-top: 10px;
+  overflow-x: auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  height: 60vh;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
 
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0px;
+}
 
+.responsive-table th,
+.responsive-table td {
+  padding: 5px 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 12px;
+}
 
+.responsive-table th {
+  background-color: #03729b;
+  color: #ffffff;
+}
+
+.responsive-table tbody tr:nth-child(even) {
+  background-color: #03729b1e;
+}
+
+.responsive-table tbody tr:hover {
+  background-color: #e0e0e0;
+}
 
 /* Scroll Bar Design  */
-.scroll {
-    scrollbar-width: none; 
-    -ms-overflow-style: none; 
+:root.scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.scroll::-webkit-scrollbar {
-    display: none; 
+:root.scroll::-webkit-scrollbar {
+  display: none;
+
 }
 
-
-
+/* Scroll Bar Design  */
+.animationapart::-webkit-scrollbar {
+  display: none;
+  position: absolute;
+  width: 10px;
   
-  /* Scroll Bar Design  */
-  body::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  /* Track */
-  body::-webkit-scrollbar-track {
-    background: #f1f1f1;
-       
+}
+:root::-webkit-scrollbar {
+  display: none;
+  position: absolute;
+  width: 10px;
+}
 
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #00729C;
-    height: 30px;
-    border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+/* Track */
+:root::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
 
+/* Handle */
+:root::-webkit-scrollbar-thumb {
+  background: #00729c;
+  height: 30px;
+  border-radius: 10px;
+}
 
+/* Handle on hover */
+:root::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
-
-
-
-
-  /* In your CSS file */
+/* In your CSS file */
 
 .relative {
   position: relative;
@@ -135,17 +166,57 @@ textarea {
   width: 25%;
 }
 
+/* Add this CSS to your global styles or a CSS module */
+
 .slide-content {
   position: absolute;
   width: 100%;
   height: 100%;
-  transition: transform 0.5s ease;
+  transition: transform 0.3s ease-in-out;
 }
 
-.slide-content.left {
-  transform: translateX(-100%);
+.slide-left-enter {
+  animation: slide-left-enter 0.3s forwards;
 }
 
-.slide-content.right {
-  transform: translateX(100%);
+.slide-right-enter {
+  animation: slide-right-enter 0.3s forwards;
+}
+
+@keyframes slide-left-enter {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slide-right-enter {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+
+
+/* Diagnosis Test - Student Side*/
+
+.Test::-webkit-scrollbar {
+  display: none; 
+}
+
+.Test {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+
+.maincontainer{
+  box-sizing: border-box;
+  overflow-x: hidden;
 }

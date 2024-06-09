@@ -20,6 +20,7 @@
     "chart.js": "^4.4.3",
     "country-state-city": "^3.2.1",
     "dotenv": "^16.4.5",
+    "framer-motion": "^11.2.10",
     "generate-password-browser": "^1.1.0",
     "react": "^18.2.0",
     "react-calendar": "^5.0.0",
@@ -37,7 +38,7 @@
     "sweetalert2": "^11.11.0",
     "sweetalert2-react-content": "^5.0.7",
     "yup": "^1.4.0"
-      },
+  },
   "devDependencies": {
     "@swc/core": "^1.5.25",
     "@types/react": "^18.2.66",

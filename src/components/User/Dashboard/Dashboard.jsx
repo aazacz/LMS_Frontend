@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaStar, FaAngleRight } from 'react-icons/fa';
-import Loader from '../reusable/Loader';
+import Loader from '../../reusable/Loader';
 import profile from '/profile.jpeg'
 import AssignmentImage from '/AssignmentImage.png'
 import { FaArrowRight } from "react-icons/fa";
-
+import "./Dashboard.css"
 const Dashboard = () => {
 
     const [progress, setProgress] = useState(25);
@@ -32,17 +32,9 @@ const Dashboard = () => {
 
     }, [])
 
-
-
-
-
     return (
         <div className={`w-screen h-screen  px-7 flex   relative`}>
-
-            {/* ternary Operation to get Tutor data */}
-
-
-
+ 
             <>
                 <div className='w-[80%] p-5 '>
 
@@ -61,10 +53,22 @@ const Dashboard = () => {
                     </div>
 
                     {/* Pending Assignments */}
-                    <div className='w-full h-full py-4 '>
-                        <h1 className='font-poppins font-semibold text-2xl' > Pending Assignment</h1>
+                    <div className='w-full  py-4  flex flex-col gap-y-4'>
+                        <h1 className='font-poppins font-semibold text-2xl py-2' > Pending Assignment</h1>
+                       {/* Progress Bar */}
+                        {/* <label for="file">progress</label>
+                        <progress id="file" className='progressbar' value="32" max="100" /> */}
+                        
+                        <PendingAssignments progress={progress}/>
+                        <PendingAssignments progress={progress}/>
+                    </div>
 
-                        <PendingAssignments/>
+
+                    {/* Materials  */}
+                    <div className='w-full h-full py-4 '>
+                        <h1 className='font-poppins font-semibold text-2xl py-2' > Pending Assignment</h1>
+
+                        <PendingAssignments progress={progress}/>
 
                     </div>
 
@@ -127,7 +131,7 @@ const TutorCard = ({ tutor }) => (
 );
 
 
-const PendingAssignments =()=>{
+const PendingAssignments =({progress})=>{
 
     return(
 

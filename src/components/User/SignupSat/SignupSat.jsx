@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./SignupSat.css";
 import personalDetailsImage from "../../../assets/SignupPersonalDetails/personaldetails.png";
 import UserNavbar from "../UserNavbar";
+import { Link } from "react-router-dom";
 
 const SignupSat = () => {
   const [selectedDate, setDate] = useState(null);
@@ -14,7 +15,7 @@ const SignupSat = () => {
 
   return (
     <>
-      <UserNavbar />
+   
       <div className="satcontainer">
         <div className="satphoto">
           <img
@@ -70,11 +71,13 @@ const SignupSat = () => {
             </label>
           </div>
         </div>
+        <Link to={"/signup/signupEducation"}>
         <section className="sat-button-container">
           <button type="submit" className="sat-request">
             Next
           </button>
         </section>
+        </Link>
       </div>
     </>
   );

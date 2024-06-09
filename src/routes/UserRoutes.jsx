@@ -15,6 +15,8 @@ import SignupSat from '../components/User/SignupSat/SignupSat';
 import SignupEducation from '../components/User/SignupEducation/SignupEducation';
 import StudentHomepage from '../pages/student/StudentHomepage';
 import HomePageContact from "../components/User/HomePageContact/HomePageContact";
+import ErrorPage from "../pages/ErrorPage";
+import SignupRoute from "./SignupRoute";
 
 
   const UserRoutes = () => {
@@ -27,14 +29,11 @@ import HomePageContact from "../components/User/HomePageContact/HomePageContact"
     <Routes>
       <Route path="/"            element={<Homepage />} />
       <Route path="/login"       element={user ? <Navigate to="/home" /> : <Login />} />
-      <Route path="/Signup"      element={user ? <Navigate to="/home" /> : <Signup />} />
       
       <Route path="/student/*"   element={<StudentHomepage />}  />
-      <Route path='/SignupPersonalDetails' element={<SignupPersonalDetails />}/>
-      <Route path='/SignupOtp'   element={<SignupOtp />}/>
-      <Route path='/SignupSat'   element={<SignupSat />}/>
-      <Route path='/SignupEducation' element={<SignupEducation />}/>
-      <Route path='/HomePageContact' element={<HomePageContact />}/>
+      <Route path="/signup/*"      element={user ? <Navigate to="/home" /> : <SignupRoute />} />
+        <Route path='/HomePageContact' element={<HomePageContact />}/>
+      <Route path='*' element={<div className='w-screen h-screen'> <ErrorPage /> </div>}/>
     </Routes>
 
   )

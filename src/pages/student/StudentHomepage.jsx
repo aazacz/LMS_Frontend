@@ -10,7 +10,7 @@ import Coursedetails from '../../components/User/Coursedetails';
 import TutorListing from '../../components/User/TutorListing';
 import Assignments from './Assignments';
 import Library from '../../components/User/Library';
-import Dashboard from '../../components/User/Dashboard';
+import Dashboard from '../../components/User/Dashboard/Dashboard';
 
 const StudentHomepage = () => {
 

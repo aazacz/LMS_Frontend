@@ -37,6 +37,9 @@ const Dashboard = () => {
  
             <>
                 <div className='w-[80%] p-5 '>
+                    <Link to={"/student/classestoday"}>
+                    <button className='font-poppins font-semibold p-2 bg-[#F99406] mb-4 rounded-lg shadow-lg'> Classes Today</button>
+                    </Link>
 
                     <h1 className='font-poppins font-semibold text-2xl' > Dashboard</h1>
 

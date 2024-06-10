@@ -2,6 +2,11 @@
   /* border: 1px solid black; */
   padding-left: 10%;
 }
+.testt{
+  box-sizing: content-box;
+  font-size: larger;
+  color: #f12b2b;
+}
 
 /* .left-container {
   padding-top: 10px;

@@ -50,9 +50,9 @@ const HomePageContact = () => {
             </div>
             <div className="HomePageContact-details-sub-container2">
               <h2 className="HomePageContact-details-sub-name">MESSAGE</h2>
-              <input
+              <textarea
                 className="HomePageContact-details-sub-name-input-message "
-                type="text"
+                       
                 placeholder="Your Message...."
               />
               <button className="HomePageContact-details-SendButton ">

@@ -71,6 +71,14 @@
   height: max-content;
   display: flex;
   flex-wrap: wrap;
+  width: 100vw;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+
 }
 
 .animation-tutor-tutor1 {

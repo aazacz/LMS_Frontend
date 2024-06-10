@@ -17,20 +17,19 @@
 }
 .HomePageContact-sub-container1 {
   width: 100%;
-
   height: max-content;
-  /* border: 2px solid black; */
   display: flex;
   flex-wrap: wrap;
   padding-left: 10%;
   padding-top: 5%;
+  padding-bottom: 2%;
   justify-content: left;
   align-items: left;
 
 }
 .HomePageContact-main-title {
   font-size: 35px;
-  width: 60%;
+  width: 50%;
   font-weight: 700;
   height: max-content;
 }
@@ -55,8 +54,8 @@
   /* padding-left: 5%; */
 }
 .HomePageContact-details-conatiner1 {
-  width: 700px;
-  height: 300px;
+  width: 80%;
+  height: 400px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -157,6 +156,11 @@
 }
 .HomePageConatct-details-support-call:hover {
   color: rgb(90, 109, 237);
+}
+@media(max-width:1380px){
+  .HomePageContact-main-container{
+    width: 80%;
+  }
 }
 @media (max-width: 850px) {
   .HomePageContact-details-conatiner2 {
@@ -335,7 +339,7 @@
 
   .HomePageContact-sub-container2 {
     width: 100%;
-    background-color: blue;
+    
     
   }
   .HomePageContact-details-conatiner1 {

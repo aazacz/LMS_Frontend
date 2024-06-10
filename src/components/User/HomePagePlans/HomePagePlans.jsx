@@ -55,7 +55,9 @@ const plansData = [
 
 const HomePagePlans = () => {
   return (
-    <div className="plans-container">
+    <div className="w-screen  flex justify-center h-full ">  
+
+    <div className="plans-container max-w-[1200px]">
       <div className="plans-heading">
         <h3>Plans & Pricing</h3>
         <p>
@@ -80,6 +82,7 @@ const HomePagePlans = () => {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 };

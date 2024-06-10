@@ -10,6 +10,8 @@ import { useState } from 'react';
 import { setUserDetails } from '../../store/reducers/loginSlice';
 import { setToken } from '../../store/reducers/tokenSlice';
 import studentLoginimage from "/studentLoginimage.png";
+import UserNavbar from '../../components/User/UserNavbar';
+import Loader from '../../components/reusable/Loader';
 
 const AdminLogin = () => {
 
@@ -20,13 +22,14 @@ const AdminLogin = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
     // SUBMITTING THE LOGIN FUNCTION 
     const onSubmit = async (data, e) => {
         e.preventDefault()
         try {
-
+            setLoading(true);
 
             setIsSubmitting(true);
 
@@ -49,6 +52,8 @@ const AdminLogin = () => {
 
         } catch (error) {
             setIsSubmitting(false);
+            setLoading(false);
+
             toast.error(error.response.data.error)
             console.log(error.response.data.error);
             console.log(error.message);
@@ -65,21 +70,27 @@ const AdminLogin = () => {
 
     return (
         <>
-            <div className="min-h-screen flex items-center justify-center ">
+        <UserNavbar/>
+            <div className="min-h-[88vh] flex items-center justify-center ">
+          
+            {loading && (
+          <div className="modal-overlay w-screen h-[88vh] absolute">
+            <Loader />
+          </div>
+        )}
 
 
-
-                <div className=" bg-white  rounded-3xl border-[1px] border-[#0066de] shadow-lg w-full max-w-md">
+                <div className= {`${loading?"blur-sm":" "} bg-white  rounded-3xl border-[1px]  border-[#0066de] shadow-lg w-full max-w-md`}>
 
                     <div className='  w-full flex  justify-center items-center'>
                         <img src={studentLoginimage} className='w-18 ' alt="" />
                     </div>
-                    <div className='w-full px-10 grid grid-flow-row grid-cols-2'>
+                    <div className=' w-full px-10 grid grid-flow-row grid-cols-2 '>
                         <button className='bg-[#0066de] text-white font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md'>Login</button>
                         <button className='bg-white text-[#0066de] font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md' >Signup</button>
 
                     </div>
-                    <form onSubmit={handleSubmit(onSubmit)} className="p-10 space-y-6 h-[90%]">
+                    <form onSubmit={handleSubmit(onSubmit)} className=" p-10 space-y-6 h-[90%]">
                         <div className="relative">
                             <input
                                 placeholder='Email'

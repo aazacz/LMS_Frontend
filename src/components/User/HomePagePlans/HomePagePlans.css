@@ -2,6 +2,7 @@
   border: 2px solid #0262ff;
   padding: 20px 20px;
   border-radius: 30px;
+  
 }
 
 .plans-heading {
@@ -39,6 +40,7 @@
 
 .pricing-cards {
   display: flex;
+  gap: 20px;
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;

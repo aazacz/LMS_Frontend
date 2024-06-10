@@ -17,6 +17,8 @@ import StudentHomepage from '../pages/student/StudentHomepage';
 import HomePageContact from "../components/User/HomePageContact/HomePageContact";
 import ErrorPage from "../pages/ErrorPage";
 import SignupRoute from "./SignupRoute";
+import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Diagnostic";
+import Background from "../components/reusable/Background";
 
 
   const UserRoutes = () => {
@@ -33,6 +35,8 @@ import SignupRoute from "./SignupRoute";
       <Route path="/student/*"   element={<StudentHomepage />}  />
       <Route path="/signup/*"      element={user ? <Navigate to="/home" /> : <SignupRoute />} />
         <Route path='/HomePageContact' element={<HomePageContact />}/>
+        <Route path='/diagnosistest' element={<Student_Diagnostic />}/>
+       
       <Route path='*' element={<div className='w-screen h-screen'> <ErrorPage /> </div>}/>
     </Routes>
 

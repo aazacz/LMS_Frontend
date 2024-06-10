@@ -2,13 +2,8 @@
 import React, { useState } from 'react';
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from '../ErrorPage';
-
 import UserNavbar from '../../components/User/UserNavbar';
 import AnimationScreen from '../../components/User/AnimationScreen';
-
-
-             
-
 
 
 const Homepage = () => {
@@ -35,7 +30,6 @@ const Homepage = () => {
               <Route path="*" element={<ErrorPage />} />
             </Routes>
           </div>
-
         </div>
       </div>
     </div>

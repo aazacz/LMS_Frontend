@@ -1,7 +1,10 @@
 import React from "react";
 import erroricon from "/errorBoundary.webp";
 import mindsatlogo from "../assets/mindsatlogo.webp"
+
+
 class ErrorBoundary extends React.Component {
+    
     state = {
         hasError: false,
         error: null,

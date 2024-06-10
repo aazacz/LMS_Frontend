@@ -41,6 +41,7 @@ const UserRoutes = () => {
         <Route path='/diagnosistest' element={<Student_Diagnostic />}/>
         <Route path='/diagnosistest/intructions' element={<Student_Diagnostic_Test/>}/>
         <Route path='/diagnosistest/test1' element={<DiagnosisTest/>}/>
+        <Route path='/a' element={<ClassesToday/>}/>
        
       <Route path='*' element={<div className='w-screen h-screen'> <ErrorPage /> </div>}/>
     </Routes>

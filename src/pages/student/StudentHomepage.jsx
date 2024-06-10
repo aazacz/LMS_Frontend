@@ -11,6 +11,8 @@ import TutorListing from '../../components/User/TutorListing';
 import Assignments from './Assignments';
 import Library from '../../components/User/Library';
 import Dashboard from '../../components/User/Dashboard/Dashboard';
+import ClassesToday from '../../components/User/ClassesToday/ClassesToday';
+import UserEditProfile from '../../components/User/UserEditProfile';
 
 const StudentHomepage = () => {
 
@@ -42,8 +44,9 @@ const StudentHomepage = () => {
                         <Route path="/assignments" element={<Assignments />} />
                         <Route path="/tutors" element={<TutorListing />} />
                         <Route path="/library" element={<Library />} />
-
+                        <Route path='/classestoday' element={<ClassesToday/>}/>
                         {/* <Route path="/diagnosistest" element={<DiagnosisTest />} /> */}
+                        <Route path='/settings' element={<UserEditProfile/>}/>
                        
 
                         <Route path="*" element={<ErrorPage />} />

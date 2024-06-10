@@ -4,20 +4,8 @@ import Settings1 from "../../assets/Settings1.jpg";
 
 const UserEditProfile = () => {
   return (
-    <div className="w-full h-screen  ">
-      <div className="w-full py-4  flex justify-center items-left md:items-center lg:items-center flex-wrap">
-        <p className="w-max h-max ">
-          Welcome Back!<br></br>
-          <p className="font-semibold">Christian Bale</p>
-        </p>
-        <div className=" w-max h-max  flex justify-center items-center  pl-5pct md:pl-30pct">
-          <div className="w-12 h-12 rounded-full overflow-hidden"><img src={Settings1} /></div>
-          <div className="text-sm">
-            <p className="font-semibold">Christian Bale</p>
-            christianbale@gmail.com
-          </div>
-        </div>
-      </div>
+    <div className="w-screen h-screen  ">
+      
       <div className="w-full h-5/6  flex justify-start items-center flex-wrap flex-col ">
         <div className="w-1/2 md:w-1/3 lg:w-30percent h-5/6 flex flex-col justify-start items-start gap-4  pl-15pct">
           <p className="  text-sm md:text-md lg:text-xl font-bold">

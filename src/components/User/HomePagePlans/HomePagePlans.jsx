@@ -57,8 +57,8 @@ const HomePagePlans = () => {
   return (
     <div className="w-screen  flex justify-center h-full ">  
 
-    <div className="plans-container max-w-[1200px]">
-      <div className="plans-heading">
+    <div className="plans-container max-w-[1200px] bg-white pb-12">
+      <div className="plans-heading ">
         <h3>Plans & Pricing</h3>
         <p>
           Invest in your future with Unlimited access to 1400+ high-quality

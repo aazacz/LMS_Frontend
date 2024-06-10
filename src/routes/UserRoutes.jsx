@@ -37,7 +37,6 @@ const UserRoutes = () => {
     <Routes>
         <Route path="/"            element={<Homepage />} />
         <Route path="/login"       element={user ? <Navigate to="/home" /> : <Login />} />
-        
         <Route path="/student/*"   element={<StudentHomepage />}  />
         <Route path="/signup/*"      element={user ? <Navigate to="/home" /> : <SignupRoute />} />
         <Route path='/HomePageContact' element={<HomePageContact />}/>

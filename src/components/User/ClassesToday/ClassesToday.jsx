@@ -31,24 +31,8 @@ const ClassesToday = () => {
     <div className="classes-container">
     <div className="testt">
 
-
-                      <AcUnitIcon sx={{ fontSize: 40 }} className="text-6xl"/>
     </div>
       
-
-      {/* <div className="left-container">
-        <p className="left-container-heading">
-          Welcome Back!
-          <p>Christian Bale</p>
-        </p>
-        <div className="nav-search">
-          <div className="search">
-            <SearchIcon />
-            <input type="text" placeholder="Search" />
-          </div>
-        </div>
-      </div>
-      <div className="classes-line"></div> */}
       <div className="classes-heading">Classes Today 🗓️</div>
       <div className="content-container">
         <div className="parent-content-container">
@@ -136,9 +120,7 @@ const ClassesToday = () => {
               <h2>SAT practice test</h2>
               <p>English & Writing Skills Test</p>
 
-              <label for="file">:</label>
-              <progress id="file" value="32" max="100"> 32% </progress>
-
+     
 
               <div className="progress-bar">
                 <div className="progress" style={{ width: "60%" }}></div>

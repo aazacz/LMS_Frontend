@@ -54,7 +54,7 @@ const HomePageTeam = () => {
   ];
 
   return (
-    <div className="homepage-team-container">
+    <div className="homepage-team-container bg-white py-8">
       <div className="heading-team-container">
         <p className="sub-heading-team">Meet Our Team</p>
         <p className="sub-sub-heading-team">

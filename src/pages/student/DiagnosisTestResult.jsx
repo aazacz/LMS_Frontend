@@ -1,5 +1,6 @@
 import React from 'react'
 import DoughnutChart from './DoughnutChart'
+import Background from '../../components/reusable/Background'
 
 
 const DiagnosisTestResult = () => {
@@ -7,8 +8,11 @@ const DiagnosisTestResult = () => {
 
     return (
 
-        <div className='Test w-screen h-screen overflow-y-scroll p-24 '>
+        <div className='Test w-screen h-screen overflow-y-scroll p-24 relative'>
+            <div className='fixed top-0 left-0 -z-10'>
 
+<Background/>
+            </div>
 
             <div className='w-full h-[400px] rounded-[35px] bg-white border-[#0066DE]  border-2 flex flex-col justify-center items-center'>
 

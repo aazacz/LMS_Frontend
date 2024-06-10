@@ -25,7 +25,7 @@ import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Di
 import Background from "../components/reusable/Background";
 import Student_Diagnostic_Test from "../components/User/Student_Diagnostic_Test/Student_Diagnostic_Test";
 import DiagnosisTest from "../pages/student/DiagnosisTest";
-import ClassesToday from "../components/User/ClassesToday/ClassesToday";
+
 
 const UserRoutes = () => {
   const user = useSelector((state) => state.token.user);

@@ -19,6 +19,12 @@ import StudentHomepage from '../pages/student/StudentHomepage';
 import HomePageContact from "../components/User/HomePageContact/HomePageContact";
 import SettingsPage from "../components/User/SettingsPage/SettingsPage";
  
+import ErrorPage from "../pages/ErrorPage";
+import SignupRoute from "./SignupRoute";
+import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Diagnostic";
+import Background from "../components/reusable/Background";
+import Student_Diagnostic_Test from "../components/User/Student_Diagnostic_Test/Student_Diagnostic_Test";
+import DiagnosisTest from "../pages/student/DiagnosisTest";
 import ClassesToday from "../components/User/ClassesToday/ClassesToday";
 
 const UserRoutes = () => {
@@ -29,16 +35,15 @@ const UserRoutes = () => {
     <Routes>
       <Route path="/"            element={<Homepage />} />
       <Route path="/login"       element={user ? <Navigate to="/home" /> : <Login />} />
-      <Route path="/Signup"      element={user ? <Navigate to="/home" /> : <Signup />} />
       
       <Route path="/student/*"   element={<StudentHomepage />}  />
-      <Route path='/SignupPersonalDetails' element={<SignupPersonalDetails />}/>
-      <Route path='/SignupOtp'   element={<SignupOtp />}/>
-      <Route path='/SignupSat'   element={<SignupSat />}/>
-      <Route path='/SignupEducation' element={<SignupEducation />}/>
-      <Route path='/HomePageContact' element={<HomePageContact />}/>
-      <Route path='/Settings' element={<SettingsPage />}/>
-      <Route path='/ClassesToday' element={<ClassesToday />}/>
+      <Route path="/signup/*"      element={user ? <Navigate to="/home" /> : <SignupRoute />} />
+        <Route path='/HomePageContact' element={<HomePageContact />}/>
+        <Route path='/diagnosistest' element={<Student_Diagnostic />}/>
+        <Route path='/diagnosistest/intructions' element={<Student_Diagnostic_Test/>}/>
+        <Route path='/diagnosistest/test1' element={<DiagnosisTest/>}/>
+       
+      <Route path='*' element={<div className='w-screen h-screen'> <ErrorPage /> </div>}/>
     </Routes>
   );
 };

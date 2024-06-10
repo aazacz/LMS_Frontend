@@ -59,8 +59,14 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen }) => {
           </button>
         </div>
         <div className='h-1/2 flex justify-center'>
+          
+        <Link to={"/login"}>
           <button className='px-3 text-blue-700 h-[35px]'>Sign in</button>
+        </Link>
+        
+        <Link to={"/signup"}>
           <button className='px-3 bg-blue-700 h-[35px] text-white'>Register</button>
+        </Link>
         </div>
       </div>
 

@@ -17,13 +17,14 @@ import SignupSat from '../components/User/SignupSat/SignupSat';
 import SignupEducation from '../components/User/SignupEducation/SignupEducation';
 import StudentHomepage from '../pages/student/StudentHomepage';
 import HomePageContact from "../components/User/HomePageContact/HomePageContact";
+import SettingsPage from "../components/User/SettingsPage/SettingsPage";
+ 
 import ErrorPage from "../pages/ErrorPage";
 import SignupRoute from "./SignupRoute";
 import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Diagnostic";
 import Background from "../components/reusable/Background";
 import Student_Diagnostic_Test from "../components/User/Student_Diagnostic_Test/Student_Diagnostic_Test";
 import DiagnosisTest from "../pages/student/DiagnosisTest";
-import UserEditProfile from "../components/User/UserEditProfile";
 import ClassesToday from "../components/User/ClassesToday/ClassesToday";
 
 const UserRoutes = () => {

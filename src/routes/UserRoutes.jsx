@@ -17,6 +17,8 @@ import SignupSat from '../components/User/SignupSat/SignupSat';
 import SignupEducation from '../components/User/SignupEducation/SignupEducation';
 import StudentHomepage from '../pages/student/StudentHomepage';
 import HomePageContact from "../components/User/HomePageContact/HomePageContact";
+import SettingsPage from "../components/User/SettingsPage/SettingsPage";
+ 
 import ErrorPage from "../pages/ErrorPage";
 import SignupRoute from "./SignupRoute";
 import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Diagnostic";

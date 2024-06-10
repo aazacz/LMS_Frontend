@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { FiPlusCircle } from "react-icons/fi";
 import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 
 
 const Addiagnosistest = () => {
@@ -30,25 +29,9 @@ const Addiagnosistest = () => {
       const [test, setTest] = useState(initialTestState);
 
 
-    // const [test, setTest] = useState({
-    //     title: "",
-    //     positiveMark: "",
-    //     negativeMark: "",
-    //     questions: [
-    //         {
-    //             question: "",
-    //             choices: [
-    //                 { choiceText: "", isCorrect: true },
-    //                 { choiceText: "", isCorrect: true },
-    //                 { choiceText: "", isCorrect: true },
-    //                 { choiceText: "", isCorrect: true },
-    //             ],
-    //             whyIsIncorrect: ""
-    //         }
-    //     ]
-    // });
 
-    const cancelForm =()=>[
+
+    const cancelForm =()=>{
 
         Swal.fire({
             title: 'Do you want to cancel the changes you made,you will lose all the datas?',
@@ -67,7 +50,7 @@ const Addiagnosistest = () => {
             }
             })
                    
-    ]
+    }
 
 
     //   useEffect to print the test created 

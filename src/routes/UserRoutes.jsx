@@ -19,6 +19,8 @@ import ErrorPage from "../pages/ErrorPage";
 import SignupRoute from "./SignupRoute";
 import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Diagnostic";
 import Background from "../components/reusable/Background";
+import Student_Diagnostic_Test from "../components/User/Student_Diagnostic_Test/Student_Diagnostic_Test";
+import DiagnosisTest from "../pages/student/DiagnosisTest";
 
 
   const UserRoutes = () => {
@@ -36,6 +38,8 @@ import Background from "../components/reusable/Background";
       <Route path="/signup/*"      element={user ? <Navigate to="/home" /> : <SignupRoute />} />
         <Route path='/HomePageContact' element={<HomePageContact />}/>
         <Route path='/diagnosistest' element={<Student_Diagnostic />}/>
+        <Route path='/diagnosistest/intructions' element={<Student_Diagnostic_Test/>}/>
+        <Route path='/diagnosistest/test1' element={<DiagnosisTest/>}/>
        
       <Route path='*' element={<div className='w-screen h-screen'> <ErrorPage /> </div>}/>
     </Routes>

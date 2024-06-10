@@ -13,7 +13,7 @@ const details = () => [
 
 const Animation_Methodolgy = () => {
   return (
-    <div className="animation-methodology-main-conatainer bg-slate-300 ">
+    <div className="animation-methodology-main-conatainer  ">
       <div className="animation-methodology-title-conatainer">
         <div className="animation-methodology-title-comment">
           Its way too simple😊

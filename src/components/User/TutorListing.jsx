@@ -45,52 +45,58 @@ const TutorCard = ({ tutor }) => (
 
 
 const TutorListing = () => {
-  
+
   const [TutorList, setTutorList] = useState([]);
   const [Loader, setLoader] = useState(true);
   const baseURL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    axios.get(`${baseURL}api/tutor/tutors?page=1&pageSize=5&search=`, 
-                                { "user-agent": navigator.userAgent})
-    .then((res) => {
-      setTutorList(res.data.data);
-      setLoader(false);
-    })
-    .catch((error) => {
-      console.error("Error fetching tutors:", error);
-      setLoader(true);
-    })
+    axios.get(`${baseURL}api/tutor/tutors?page=1&pageSize=5&search=`,
+      { "user-agent": navigator.userAgent })
+      .then((res) => {
+        setTutorList(res.data.data);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching tutors:", error);
+        setLoader(true);
+      })
 
   }, []);
 
   return (
     <div className="relative p-4 w-screen h-screen ">
       {/* Loader */}
-      {Loader && (
+   
+   {/* If there is no data from the backend then the Loader shows  */}
+      {Loader ? (
         <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2  flex justify-center items-center  bg-opacity-75 z-10">
           <img src={mindsatLoader} className='w-[300px]' alt="Loading..." />
         </div>
+      ) : (
+        <>
+          {/* Add Button */}
+          <div className='flex justify-end mb-4'>
+            <Link replace to={`/admin/home/tutors/addtutor`} className='bg-[#F5F1F1]'>
+              <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2 font-plusjakartasans text-sm'>
+                <FaCirclePlus className='text-slate-600' />
+                Add Tutor
+              </button>
+            </Link>
+          </div>
+
+          <div className="w-full   max-w-[1200px] flex justify-center ">
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-2'>
+
+              {TutorList.map((tutor, index) => (
+                <TutorCard key={index} tutor={tutor} />
+              ))}
+            </div>
+          </div>
+        </>
       )}
 
-      {/* Add Button */}
-      <div className='flex justify-end mb-4'>
-        <Link replace to={`/admin/home/tutors/addtutor`} className='bg-[#F5F1F1]'>
-          <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2 font-plusjakartasans text-sm'>
-            <FaCirclePlus className='text-slate-600' />
-            Add Tutor
-          </button>
-        </Link>
-      </div>
 
-      <div className="w-full   max-w-[1200px] flex justify-center ">
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-2'>
-
-        {TutorList.map((tutor, index) => (
-            <TutorCard key={index} tutor={tutor} />
-        ))}
-      </div>
-        </div>
     </div>
   );
 };

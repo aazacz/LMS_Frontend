@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./SignupPersonalDetails.css";
 import personalDetailsImage from "../../../assets/SignupPersonalDetails/personaldetails.png";
 import UserNavbar from "../UserNavbar";
+import { Link } from "react-router-dom";
 
 const SignupPersonalDetails = () => {
   const [studentName, setStudentName] = useState("");
@@ -13,12 +14,12 @@ const SignupPersonalDetails = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission here
+
   };
 
   return (
     <div>
-      <UserNavbar/>
+      
     <div className="personaldetailscontainer">
       <div className="personaldetailsphoto">
         <img
@@ -94,7 +95,9 @@ const SignupPersonalDetails = () => {
               Mountain View is your current location. <a href="#">Change</a>
             </p>
           </section>
+          <Link to={"/signup/signupotpverify"}>
           <button type="submit">Request OTP</button>
+          </Link>
         </section>
       </form>
     </div>

@@ -6,14 +6,21 @@ import Animation_Courses from "./Animation_Courses/Animation_Courses";
 import Animation_Tutor from "./Animation_Tutor/Animation_Tutor";
 import Animation_Methodolgy from "./Animation_Methodology/Animation_Methodolgy";
 import HomePageContact from "./HomePageContact/HomePageContact";
+import HomePageTeam from "./HomePageTeam/HomePageTeam";
+import HomePageDiagnosis from "./HomePageDiagnosis/HomePageDiagnosis";
+import HomePagePlans from "./HomePagePlans/HomePagePlans";
+import Background from "../reusable/Background";
 
 
 
 const AnimationScreen = () => {
     return (
         <>
-            <div className='w-[100%] h-screen   flex flex-col justify-center items-center bg-slate-400 Test'>
+            <div className='w-[100%] h-screen relative  flex flex-col justify-center items-center  Test'>
+<div className="fixed -z-20">
 
+<Background/>
+</div>
                 <div className="w-[100%] h-screen ">
                     <div className='md:w-[70%] md:h-[50vh] h-[50%]   md:pt-0  flex flex-col gap-4 justify-center i '>
                         <div className='w-full flex flex-col md:flex-row gap-x-4 px-8 md:px-12'>
@@ -63,6 +70,9 @@ const AnimationScreen = () => {
                         <Animation_Courses />
                         <Animation_Tutor />
                         <Animation_Methodolgy />
+                        <HomePageTeam/>
+                        <HomePageDiagnosis/>
+                        <HomePagePlans/>
                         <HomePageContact/>
                     </div>
 

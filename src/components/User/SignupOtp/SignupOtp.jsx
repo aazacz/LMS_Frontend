@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./SignupOtp.css";
 import personalDetailsImage from "../../../assets/SignupPersonalDetails/personaldetails.png";
 import UserNavbar from "../UserNavbar";
+import { Link } from "react-router-dom";
 
 const SignupOtp = () => {
   const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -21,7 +22,6 @@ const SignupOtp = () => {
 
   return (
     <div>
-      <UserNavbar/>
     <div className="otpcontainer">
       <div className="otpphoto">
         <img
@@ -64,9 +64,11 @@ const SignupOtp = () => {
           Didn't receive the OTP yet? <a href="#">Send Again</a>
         </p>
       </div>
+        <Link  to={'/signup/signupSat'}>
       <section className="otp-button-container">
-        <button type="submit" className="otp-request">Request OTP</button>
+        <button type="submit" className="otp-request">Confirm OTP</button>
       </section>
+        </Link>
     </div>
     </div>
   );

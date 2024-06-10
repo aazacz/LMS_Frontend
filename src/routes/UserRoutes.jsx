@@ -17,8 +17,12 @@ import SignupSat from '../components/User/SignupSat/SignupSat';
 import SignupEducation from '../components/User/SignupEducation/SignupEducation';
 import StudentHomepage from '../pages/student/StudentHomepage';
 import HomePageContact from "../components/User/HomePageContact/HomePageContact";
-import UserEditProfile from "../components/User/UserEditProfile";
 import ClassesToday from "../components/User/ClassesToday/ClassesToday";
+import HomePagePlans from "../components/User/HomePagePlans/HomePagePlans";
+import HomePageDiagnosis from "../components/User/HomePageDiagnosis/HomePageDiagnosis";
+import HomePageTeam from "../components/User/HomePageTeam/HomePageTeam";
+import SettingsPage from "../components/User/SettingsPage/SettingsPage";
+import NotificationPage from "../components/User/SettingsPage/NotificationPage";
 
 const UserRoutes = () => {
   const user = useSelector((state) => state.token.user);

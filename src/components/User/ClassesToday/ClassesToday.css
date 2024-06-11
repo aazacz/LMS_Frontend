@@ -1,5 +1,4 @@
 .classes-container {
-  /* border: 1px solid black; */
   padding-left: 10%;
 }
 .testt{
@@ -7,56 +6,6 @@
   font-size: larger;
   color: #f12b2b;
 }
-
-/* .left-container {
-  padding-top: 10px;
-  width: 65%;
-  display: flex;
-  flex-direction: row;
-  gap: 30%;
-}
-
-.left-container-heading {
-  font-family: "Poppins";
-  font-weight: 400;
-}
-
-.left-container-heading p {
-  font-weight: 600;
-  font-family: "Poppins";
-}
-
-.nav-search {
-  width: 50%;
-  display: flex;
-  align-items: center;
-}
-
-.search {
-  padding: 7px;
-  width: 80%;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #f4efef;
-}
-
-.search > input {
-  width: 80%;
-  border: none;
-  outline: none;
-  background-color: transparent;
-}
-
-.classes-line {
-  border: 1.3px solid grey;
-  margin-top: 2%;
-  margin-bottom: 1%;
-  margin-left: 5%;
-  width: 45%;
-} */
 
 .classes-heading {
   font-family: "Poppins";
@@ -77,7 +26,7 @@
 }
 
 .left-content {
-  /* border: 1px solid black; */
+
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -140,7 +89,7 @@
 .left-sub-content2 {
   display: flex;
   flex-direction: column;
-  /* border: 1px solid black; */
+
   justify-content: space-around;
   background: #f4f5fb;
   border-radius: 10px;
@@ -156,7 +105,7 @@
 }
 
 .left-sub-content-box2 {
-  /* border: 1px solid black; */
+
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -229,10 +178,7 @@ button[type="button"] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* padding: 20px; */
-  /* border: 1px solid black; */
-  /* padding-top: 20px 20px; */
-  margin-top: 5%;
+   margin-top: 5%;
 }
 
 .continue-tests h1 {
@@ -247,8 +193,6 @@ button[type="button"] {
   display: flex;
   align-items: center;
   border: 1px solid #ddd;
-  /* padding: 10px; */
-  /* margin-bottom: 10px; */
   border-radius: 8px;
   width: 100%;
   background: #f4f5fb;
@@ -269,7 +213,6 @@ button[type="button"] {
 }
 
 .test-details {
-  /* padding-top: 20px; */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -290,7 +233,6 @@ button[type="button"] {
   display: flex;
   align-items: center;
   margin-top: 10px;
-  /* background-color: #eee; */
   border-radius: 8px;
   padding: 5px;
 }
@@ -321,40 +263,11 @@ button[type="button"] {
 }
 
 .right-content {
-  /* border: 1px solid black; */
+
   width: 39%;
   margin-top: -6%;
   background-color: #f3f3f3;
 }
-
-/* .right-heading {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid black;
-  gap: 30%;
-}
-
-.notification-icon {
-  border: 1px solid black;
-  size: 48px;
-  margin: 20px;
-  cursor: pointer;
-}
-
-.right-heading-pic {
-  width: 40px;
-  height: 40px;
-  background-color: black;
-  border-radius: 9999px;
-  margin-top: 7px;
-}
-
-.right-heading p {
-  font-weight: 500;
-  font-family: "Poppins";
-  padding-left: 10px;
-  padding-top: 10px;
-} */
 
 .right-stats {
   background-color: white;
@@ -383,8 +296,6 @@ button[type="button"] {
 .stats-member {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  /* align-items: center; */
   background: white;
   padding: 20px;
   border-radius: 5px;
@@ -423,7 +334,6 @@ button[type="button"] {
 }
 
 .important-grid {
-  /* padding: 20px 30px; */
   font-family: "Poppins";
   font-size: 25px;
   font-weight: 700;
@@ -471,8 +381,7 @@ button[type="test"] {
 }
 
 .sats-grid {
-  /* padding: 20px 30px; */
-  margin-top: 10%;
+   margin-top: 10%;
   font-family: "Poppins";
   font-size: 15px;
   font-weight: 500;
@@ -490,7 +399,6 @@ button[type="test"] {
 }
 
 .sats-grid span {
-  /* border: 1px solid black; */
   height: fit-content;
   margin-top: 4%;
   padding: 5px;
@@ -498,4 +406,39 @@ button[type="test"] {
   color: white;
   font-weight: 500;
   background: #6c51d9;
+}
+
+
+/* custom-swal.css */
+.my-actions {
+  display: flex;
+  width: 250px !important;
+
+  justify-content: space-between;
+}
+
+.my-confirm-button {
+  background-color: green !important;
+  width: fit-content !important;
+  color: white !important;
+  order: 1 !important;
+}
+
+.my-deny-button {
+  background-color: red !important;
+  color: white !important;
+  order: 2 !important;
+}
+
+.swal2-title {
+  font-size: 24px;
+  color: #333;
+}
+
+.swal2-popup {
+  border-radius: 10px;
+}
+.my-toast-confirm-button {
+  width: 120px !important;
+  color: white !important;
 }

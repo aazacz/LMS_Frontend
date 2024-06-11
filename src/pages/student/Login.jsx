@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
 import usePasswordToggle from '../../hooks/usePasswordToggle';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
 import { setUserDetails } from '../../store/reducers/loginSlice';
@@ -30,24 +30,31 @@ const AdminLogin = () => {
         e.preventDefault()
         try {
             setLoading(true);
+            setTimeout(() => {
+                navigate("/student")
+                setLoading(false);
 
-            setIsSubmitting(true);
+            }, 3000);
 
-            const res = await axios.post(`${baseURL}api/admin/login`, data,
 
-                {
-                    "user-agent": navigator.userAgent,
-                },
-            )
-            console.log(res.data);
-            toast.success("Login Successful")
-            dispatch(setToken(res.data))   //Saving the token in redux  
-            dispatch(
-                setUserDetails({ ...data || [] }) //Saving the USER DETAILS in redux  
-            )
-            if (role === "admin") {
-                navigate("/admin/home")
-            }
+
+            // setIsSubmitting(true);
+
+            // const res = await axios.post(`${baseURL}api/admin/login`, data,
+
+            //     {
+            //         "user-agent": navigator.userAgent,
+            //     },
+            // )
+            // console.log(res.data);
+            // toast.success("Login Successful")
+            // dispatch(setToken(res.data))   //Saving the token in redux  
+            // dispatch(
+            //     setUserDetails({ ...data || [] }) //Saving the USER DETAILS in redux  
+            // )
+            // if (role === "admin") {
+            //     navigate("/admin/home")
+            // }
 
 
         } catch (error) {
@@ -87,7 +94,11 @@ const AdminLogin = () => {
                     </div>
                     <div className=' w-full px-10 grid grid-flow-row grid-cols-2 '>
                         <button className='bg-[#0066de] text-white font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md'>Login</button>
-                        <button className='bg-white text-[#0066de] font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md' >Signup</button>
+                        <button className='bg-white text-[#0066de] font-semibold px-5 py-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md' >
+                            <Link to={"/signup"}>
+                            Signup
+                            </Link>
+                            </button>
 
                     </div>
                     <form onSubmit={handleSubmit(onSubmit)} className=" p-10 space-y-6 h-[90%]">

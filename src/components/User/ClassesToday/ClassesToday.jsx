@@ -6,8 +6,10 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import importantimage from "../../../assets/ClassesToday/important.png";
 import continuetests from "../../../assets/ClassesToday/continuetests.png";
 import AcUnitIcon from '@mui/icons-material/AcUnit';
+import Swal from "sweetalert2";
 
 const ClassesToday = () => {
+ 
   const Stats = [
     {
       heading: "Classes",
@@ -26,13 +28,43 @@ const ClassesToday = () => {
       module: "00/03",
     },
   ];
+const handleReschedule=()=>{
+  
+  Swal.fire({
+    title: "Are you sure want to reschedule?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Reschedule",
+    customClass: {
+      actions: 'my-actions',
+      confirmButton: 'my-confirm-button',
+      denyButton: 'my-deny-button',
+  },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Rescheduled!",
+        text: "Your Class has been rescheduled.",
+        icon: "success",
+        customClass: {
+          confirmButton: 'my-toast-confirm-button',
+      },
+      });
+    }
+  });
+}
+
+
 
   return (
     <div className="classes-container">
-    <div className="testt">
+      <div className="testt">
 
-    </div>
-      
+      </div>
+
       <div className="classes-heading">Classes Today 🗓️</div>
       <div className="content-container">
         <div className="parent-content-container">
@@ -77,7 +109,8 @@ const ClassesToday = () => {
                 <button type="button" className="join-now-button">
                   Join Now
                 </button>
-                <button type="button" className="reschedule-button">
+
+                <button type="button" onClick={handleReschedule} className="reschedule-button">
                   Reschedule
                 </button>
                 <button type="button" className="cancel-button">
@@ -120,7 +153,7 @@ const ClassesToday = () => {
               <h2>SAT practice test</h2>
               <p>English & Writing Skills Test</p>
 
-     
+
 
               <div className="progress-bar">
                 <div className="progress" style={{ width: "60%" }}></div>

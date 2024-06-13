@@ -16,6 +16,7 @@ import CourseList from '../../components/admin/CourseList';
 import Library from '../../components/admin/Library';
 import AddCourse from '../../components/admin/AddCourse';
 import StudentDetail from '../../components/admin/StudentDetail';
+import Dashboard from '../../components/admin/Dashboard';
 
 
 const Homepage = () => {
@@ -44,7 +45,7 @@ const Homepage = () => {
 
                     <Routes>
 
-                        <Route path="/*" element={<div className='w-full h-10 bg-red-400'>Welcome to the Admin Dashboard</div>} />
+                        <Route path="/*" element={<Dashboard/>} />
                         <Route path="/courses/addcourse" element={<AddCourse />} />
                         <Route path="/courses" element={<CourseList />} />
                         <Route path="/courses/:courseId" element={<Coursedetails height={Ref} />} />

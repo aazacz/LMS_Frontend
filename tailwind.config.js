@@ -6,13 +6,7 @@ export default {
   ],
   theme: {
     extend: {
-      screens: {
-        'sm': '500px', 
-        'md': '800px',
-        'lg': '1024px',
-        'xl': '1280px',
-        '2xl': '1536px',
-      },
+      
       padding: {
         '2pct':'2%',
         '5pct':'5%',
@@ -32,7 +26,13 @@ export default {
       },
       width: {
         '45percent': '45%',
+        '55percent':'55%',
         '30percent': '30%',
+        '90percent':'90%',
+        '70percent':'70%',
+      },
+      height:{
+        '90percent':'90%',
       },
       keyframes: {
 

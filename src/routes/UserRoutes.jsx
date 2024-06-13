@@ -28,6 +28,7 @@ import DiagnosisTest from "../pages/student/DiagnosisTest";
 import UserEditProfile from "../components/User/UserEditProfile";
 import ClassesToday from "../components/User/ClassesToday/ClassesToday";
 import DiagnosisTestResult from "../pages/student/DiagnosisTestResult";
+import Tailwind from "../components/User/Tailwind";
 
 const UserRoutes = () => {
   const user = useSelector((state) => state.token.user);

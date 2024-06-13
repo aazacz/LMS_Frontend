@@ -4,6 +4,7 @@ import { FaBell } from "react-icons/fa6";
 import { FaBars } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { FiBookOpen, FiBook } from "react-icons/fi";
+import "./AdminNavbar.css"
 
 
 const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
@@ -16,11 +17,11 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
 
   return (
     <>
-
+    
 
       {/* ___________________NAVBAR STARTS HERE________________________  */}
 
-      <div className='md:px-4  px-2 flex-1 w-full h-[10vh]  border-b-[1px] flex items-center md:py-8 py-5  z-50 bg-white     '>
+      <div className='navbar-container md:px-4  px-2 flex-1 w-full h-[10vh]  border-b-[1px] flex items-center md:py-8 py-5  z-50 bg-white     '>
 
         {/*_________________ left side____________________ */}
         <div className='w-[60%]  font-poppins relative'>

@@ -5,6 +5,7 @@ import classroomimage from "../../../assets/ClassesToday/classestoday.png";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import importantimage from "../../../assets/ClassesToday/important.png";
 import continuetests from "../../../assets/ClassesToday/continuetests.png";
+import AcUnitIcon from '@mui/icons-material/AcUnit';
 
 const ClassesToday = () => {
   const Stats = [
@@ -28,19 +29,10 @@ const ClassesToday = () => {
 
   return (
     <div className="classes-container">
-      {/* <div className="left-container">
-        <p className="left-container-heading">
-          Welcome Back!
-          <p>Christian Bale</p>
-        </p>
-        <div className="nav-search">
-          <div className="search">
-            <SearchIcon />
-            <input type="text" placeholder="Search" />
-          </div>
-        </div>
-      </div>
-      <div className="classes-line"></div> */}
+    <div className="testt">
+
+    </div>
+      
       <div className="classes-heading">Classes Today 🗓️</div>
       <div className="content-container">
         <div className="parent-content-container">
@@ -127,6 +119,9 @@ const ClassesToday = () => {
             <div className="test-details">
               <h2>SAT practice test</h2>
               <p>English & Writing Skills Test</p>
+
+     
+
               <div className="progress-bar">
                 <div className="progress" style={{ width: "60%" }}></div>
                 <span className="progress-value">60%</span>

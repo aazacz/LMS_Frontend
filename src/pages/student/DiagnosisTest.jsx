@@ -5,6 +5,9 @@ import { Hourglass } from 'react-loader-spinner';
 import Swal from 'sweetalert2'
 import Loader from '../../components/reusable/Loader';
 import { useNavigate } from 'react-router-dom';
+import "./DiagnosisTest.css"
+
+
 
 const DiagnosisTest = () => {
     const [fontSize, setFontSize] = useState(15);
@@ -22,17 +25,26 @@ const handleSubmit= ()=>[
         confirmButtonText: 'Yes',
         denyButtonText: 'No',
         customClass: {
-          actions: 'my-actions',
-          confirmButton: 'order-2',
-          denyButton: 'order-3',
+            actions: 'my-actions',
+            confirmButton: 'my-confirm-button',
+            denyButton: 'my-deny-button',
         },
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
             setLoading(true)
             setTimeout(() => {
             setLoading(false)
-            Swal.fire('Sumitted', '', 'success');
-
+            Swal.fire({
+                icon: 'success',
+                title: 'Submitted!',
+                text: 'Your answers have been submitted successfully.',
+                customClass: {
+                    confirmButton: 'my-toast-confirm-button',
+                },
+            });
+                setTimeout(() => {
+                    navigate("/diagnosistest/result")
+                }, 1500);
             }, 3000);
         }
         })

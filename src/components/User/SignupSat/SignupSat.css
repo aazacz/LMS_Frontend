@@ -1,6 +1,6 @@
 .satcontainer {
   border: 2px solid #0066de;
-  width: 60%;
+  width: 75%;
   border-radius: 50px;
   background: #ffffff4d;
   padding: 20px;
@@ -141,6 +141,8 @@
   font-family: "Poppins";
   font-size: 12px;
   font-weight: 500;
+  display: flex;
+  gap: 0 8px ;
 }
 
 .sat-button-container {

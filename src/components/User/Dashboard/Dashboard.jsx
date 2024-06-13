@@ -37,8 +37,20 @@ const Dashboard = () => {
  
             <>
                 <div className='w-[80%] p-5 '>
+                   
+                   
+                   <div className='   flex items-center'>
 
-                    <h1 className='font-poppins font-semibold text-2xl' > Dashboard</h1>
+                    <Link to={"/student/classestoday"}>
+                    <button className='font-poppins font-semibold p-2 bg-[#F99406]  rounded-lg shadow-lg'> Classes Today</button>
+                    </Link>
+                   <div className='rounded-full w-2 h-2 animate-ping bg-green-600 relative -top-5 right-2 '></div>
+                   
+                   </div>
+                   
+                   
+
+                    <h1 className='mt-4 font-poppins font-semibold text-2xl' > Dashboard</h1>
 
                     {/* Card Showing div */}
                     <div className="w-full  h-[200px]  max-w-[1200px] flex justify-center relative border">
@@ -75,7 +87,19 @@ const Dashboard = () => {
 
 
                 </div>
-                <div className=''></div>
+                <div className='w-[20%]  px-2'>
+
+                    <h1 className='font-poppins font-semibold text-lg py-2'>Classes Sheduled</h1>
+                    <h1 className='font-poppins font-semibold'>February</h1>
+                    <h1 className='py-2'>Schedule</h1>
+                            <div className='flex flex-col gap-y-4'>
+
+                    <SheduleCard/>
+                    <SheduleCard/>
+                    <SheduleCard/>
+                    <SheduleCard/>
+                            </div>
+                </div>
             </>
 
         </div>
@@ -129,6 +153,29 @@ const TutorCard = ({ tutor }) => (
         </div>
     </Link>
 );
+
+
+const SheduleCard =({})=>{
+return(
+    <div className=''>
+    <div className='bg-[#F5F1F1] flex py-2'>
+        <div className='w-[20%] border-r-2 flex font-bold justify-center items-center' >1</div>
+        <div className='w-[80%] px-4 flex justify-between items-center'>
+            <div>
+                <h1 className='font-bold'>SAT</h1>
+                <h1 className='font-light text-gray-400 text-xs'>6 of 20 chapters</h1>
+            </div>
+        
+               
+                <h1 className='font-light text-gray-400 text-xs'>17.00 - 18.00</h1>
+           
+        </div>
+    </div>
+
+
+</div>
+)
+}
 
 
 const PendingAssignments =({progress})=>{

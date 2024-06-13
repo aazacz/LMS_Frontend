@@ -15,7 +15,7 @@ import Coursedetails from '../../components/admin/Coursedetails';
 import CourseList from '../../components/admin/CourseList';
 import Library from '../../components/admin/Library';
 import AddCourse from '../../components/admin/AddCourse';
-import StudentDetail from '../../components/admin/StudentDetail';
+import StudentDetail from '../../components/admin/StudentDetail/StudentDetail';
 
 
 const Homepage = () => {

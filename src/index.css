@@ -5,15 +5,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-body{
+
+body {
   padding: 0;
-  /* margin: 0; */
 }
 
 input[type="number"] {
@@ -24,42 +23,41 @@ textarea {
   resize: none;
 }
 
-  .table-container {
-    margin-top: 10px;
-    overflow-x: auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: 60vh;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-  }
-  
-  .responsive-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 0px;
-  }
-  
-  .responsive-table th,
-  .responsive-table td {
-    padding: 5px 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    font-size: 12px;
-  }
-  
-  .responsive-table th {
-    background-color: #03729b;
-    color:#ffffff;
-    
-  }
-  
-  .responsive-table tbody tr:nth-child(even) {
-    background-color: #03729b1e
-  }
-  
-  .responsive-table tbody tr:hover {
-    background-color: #e0e0e0;
-  }
+.table-container {
+  margin-top: 10px;
+  overflow-x: auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  height: 60vh;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0px;
+}
+
+.responsive-table th,
+.responsive-table td {
+  padding: 5px 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 12px;
+}
+
+.responsive-table th {
+  background-color: #03729b;
+  color: #ffffff;
+}
+
+.responsive-table tbody tr:nth-child(even) {
+  background-color: #03729b1e;
+}
+
+.responsive-table tbody tr:hover {
+  background-color: #e0e0e0;
+}
 .table-container {
   margin-top: 10px;
   overflow-x: auto;
@@ -104,7 +102,6 @@ textarea {
 
 :root.scroll::-webkit-scrollbar {
   display: none;
-
 }
 
 /* Scroll Bar Design  */
@@ -112,7 +109,6 @@ textarea {
   display: none;
   position: absolute;
   width: 10px;
-  
 }
 :root::-webkit-scrollbar {
   display: none;
@@ -205,12 +201,10 @@ textarea {
   }
 }
 
-
-
 /* Diagnosis Test - Student Side*/
 
 .Test::-webkit-scrollbar {
-  display: none; 
+  display: none;
 }
 
 .Test {
@@ -218,9 +212,7 @@ textarea {
   scrollbar-width: none;
 }
 
-
-
-.maincontainer{
+.maincontainer {
   box-sizing: border-box;
   overflow-x: hidden;
 }

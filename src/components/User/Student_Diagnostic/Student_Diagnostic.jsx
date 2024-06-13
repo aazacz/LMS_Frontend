@@ -12,7 +12,7 @@ const Student_Diagnostic = () => {
       </div> 
     <div className='student-diagnostic-main-container'>
       <div className='student-diagnostic-sub-container1'>
-        <div className='student-diagnostic-sub-title'>&#x275D;Get Your Diagnostic Test Report With Detailed Analysis.You Will Get A Customized Sudy Plan Based On Your Assesment&#x275E;</div>
+        <div className='student-diagnostic-sub-title '>&#x275D;Get Your Diagnostic Test Report With Detailed Analysis.You Will Get A Customized Study Plan Based On Your Assessment&#x275E;</div>
         <Link to={'/diagnosistest/intructions'} >
         <div className='student-diagnostic-sub-button'>Get Diagnosis Test Results</div>
         </Link>

@@ -4,7 +4,7 @@ import "./HomePageContact.css";
 const HomePageContact = () => {
   return (
     <div className="HomePageContact-main-main-container">
-      <div className="HomePageContact-main-container  " >
+      <div className="HomePageContact-main-container bg-white  " >
        
         <div className="HomePageContact-sub-container1 ">
           <div className="HomePageContact-main-title text-md md:text-3xl lg:text-4xl">

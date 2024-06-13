@@ -70,7 +70,7 @@ const Assignments = () => {
 
                         <div>
                             <h1 className='font-poppins font-semibold text-xl py-2'>Assignment Calendar</h1>
-                            <Calendar className="rounded-md border-white" />
+                            < div className="rounded-md border-white" />
                         </div>
 
                         <div>

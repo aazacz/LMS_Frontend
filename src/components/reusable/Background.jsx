@@ -21,7 +21,7 @@ const Background = () => {
                 <div className='mover3 rounded-full  w-[450px] h-[450px] opacity-40 bg-gradient-to-r from-yellow-200 to-green-500 blur-lg '>
                 </div>
          
-                <div className='mover4 rounded-full  w-[350px] h-[350px] opacity-30 bg-gradient-to-r from-fuchsia-600 to-pink-600 blur-lg '>
+                <div className='mover4 rounded-full  w-[350px] h-[350px] opacity-30 bg-gradient-to-r from-blue-400 to-emerald-400 blur-lg '>
                 </div>
          
            </div>

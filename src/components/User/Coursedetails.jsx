@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import coursephoto from '/coursephoto.jpeg';
 import { BiSpreadsheet } from 'react-icons/bi';
 import { LuTimer } from 'react-icons/lu';
+import { Link } from 'react-router-dom';
 
 const Coursedetails = ({ height }) => {
     const [activeTab, setActiveTab] = useState('about');
@@ -64,10 +65,61 @@ const Coursedetails = ({ height }) => {
 
 export default Coursedetails;
 
-const AboutContent = () => <div className='w-full h-full bg-red-300'>About Content</div>;
-const ModuleContent = () => <div className='w-full h-full bg-green-300'>Module Content</div>;
-const TestsContent = () => <div className='w-full h-full bg-blue-300'>Tests Content</div>;
-const ReviewContent = () => <div className='w-full h-full bg-yellow-300'>Review Content</div>;
+const AboutContent = () => (
+    <div className='w-full h-full border-t-2 p-4'>
+        <h2 className='text-lg font-bold mb-2'>About the Course</h2>
+        <p>This course offers a comprehensive introduction to the basics of SAT & DSAT. The curriculum is designed to help students grasp fundamental concepts and build a strong foundation in the subject. Key topics covered include:</p>
+        <ul className='list-disc ml-5'>
+            <li>Overview of SAT & DSAT</li>
+            <li>Core principles and methodologies</li>
+            <li>Application of theories in real-world scenarios</li>
+        </ul>
+    </div>
+);
+
+const ModuleContent = () => (
+    <div className='w-full h-full border-t-2 p-4'>
+        <h2 className='text-lg font-bold mb-2'>Course Modules</h2>
+        <ol className='list-decimal ml-5'>
+            <li>Introduction to SAT & DSAT</li>
+            <li>Key Concepts and Techniques</li>
+            <li>Advanced Topics and Applications</li>
+            <li>Case Studies and Practical Examples</li>
+            <li>Final Review and Assessment</li>
+        </ol>
+    </div>
+);
+const TestsContent = () => (
+    <div className='w-full h-full border-t-2 p-4'>
+        <h2 className='text-lg font-bold mb-2'>Tests and Assessments</h2>
+        <p>This course includes several tests and assessments to evaluate your understanding of the material. These assessments will help you identify areas where you need to focus more. The tests include:</p>
+        <ul className='list-disc ml-5'>
+            <li>Weekly quizzes</li>
+            <li>Mid-term examination</li>
+            <li>Final examination</li>
+            <li>Practical assignments and projects</li>
+        </ul>
+    </div>
+);
+const ReviewContent = () => (
+    <div className='w-full h-full  px-4'>
+        <h2 className='text-lg font-bold mb-2'>Student Reviews</h2>
+        <div className='space-y-4'>
+            <div className='p-3 bg-orange-200 rounded-md shadow-md'>
+                <h3 className='font-bold'>John Doe</h3>
+                <p className='text-sm'>This course was extremely helpful. The content was well-structured and easy to follow. Highly recommend it!</p>
+            </div>
+            <div className='p-3 bg-orange-200  rounded-md shadow-md'>
+                <h3 className='font-bold'>Jane Smith</h3>
+                <p className='text-sm'>I learned a lot from this course. The practical examples and case studies were particularly useful.</p>
+            </div>
+            <div className='p-3 bg-orange-200 rounded-md shadow-md'>
+                <h3 className='font-bold'>Sam Wilson</h3>
+                <p className='text-sm'>A great introduction to SAT & DSAT. The assessments helped me to understand my progress throughout the course.</p>
+            </div>
+        </div>
+    </div>
+);
 
 const AsideBAr = ({ Height }) => {
     const modules = ['Introduction', 'What is UX Design', 'Usability testing', 'Create Usability Test', 'How to implement'];
@@ -89,9 +141,17 @@ const AsideBAr = ({ Height }) => {
                             <h1 className='w-[35%] text-right text-xs text-gray-400'>2 Sessions</h1>
                         </div>
                     ))}
-                    <div className='w-[90%] flex justify-center items-center bg-[#FFBB54] text-black rounded-md py-2'>Edit</div>
+
+                    
+                    <div className='w-[90%] flex justify-center items-center bg-[#FFBB54] text-black rounded-md py-2'><Link replace to={'/student/cart'}>Enroll Now </Link></div>
+                   
+
                 </div>
             </div>
         </div>
     );
 };
+
+
+
+

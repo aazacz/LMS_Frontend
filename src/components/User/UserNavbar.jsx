@@ -6,8 +6,8 @@ import { FiBookOpen, FiBook } from "react-icons/fi";
 import { IoSearch } from "react-icons/io5";
 import logo from "../../assets/mindsatlogo.webp";
 import { Link } from 'react-router-dom';
-
-const UserNavbar = ({ toggleSidebar, isSidebarOpen }) => {
+import profile from "/profile.jpeg"
+const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userDetails);
@@ -51,24 +51,74 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen }) => {
         ))}
       </div>
 
-      <div className='hidden md:flex md:w-[40%] justify-end items-center h-full'>
-        <div className='h-1/2 flex justify-center'>
-          <input className='h-[35px] border-2' type="text" />
-          <button className='w-[35px] bg-blue-700 h-[35px] flex justify-center items-center'>
-            <IoSearch className='text-white' />
-          </button>
-        </div>
-        <div className='h-1/2 flex justify-center'>
-          
-        <Link to={"/login"}>
-          <button className='px-3 text-blue-700 h-[35px]'>Sign in</button>
-        </Link>
-        
-        <Link to={"/signup"}>
-          <button className='px-3 bg-blue-700 h-[35px] text-white'>Register</button>
-        </Link>
-        </div>
+
+
+
+
+      {User?( <div className='w-[40%] flex justify-end    '>
+
+<div className='flex items-center'>
+
+  {/* notification bell */}
+  <div className=' w-16 flex h-9  justify-start px-2'>
+    <div className='rounded-lg h-8 w-8   flex justify-center items-center text-black border-[1px] border-black mr-1 '>
+      <FaBell className='' />
+    </div>
+    {/* notification red icon */}
+    <div className=' rounded-[4px] h-4 w-4 flex justify-center items-center bg-red-700 relative '>
+      <div className='absolute rotate-45 -translate-x-1/2 -translate-y-1/2   bg-red-700 w-[6px] h-[6px] top-1/2  left-[1px]'></div>
+      <p className='text-xs text-white'>8</p>
+    </div>
+
+  </div>
+
+
+  {/* hamburger button */}
+  {isSidebarOpen ? <FiBookOpen onClick={() => toggleSidebar()} className='block md:hidden z-30  text-2xl ' />
+          : <FiBook onClick={() => toggleSidebar()} className='block md:hidden z-30  text-2xl ' />
+        }          
+
+
+  {/* Admin NAME EMAIL AND PROFILE PHOTO */}
+  <div className='flex-1  h-auto md:flex md:flex-row  items-center flex-col  hidden'>
+    <img className=' rounded-full object-cover overflow-hidden md:w-[42px] md:h-[42px] w-[20px] ' src={profile} alt="" />
+    <div className='flex items-center'>
+  
+      <div className='md:px-3'>
+        <p className=' font-poppins'>Abin</p>
+        <p className='text-gray-500 font-poppins'>abin@gmail.com</p>
       </div>
+      <IoIosArrowForward className='text-2xl' />
+    </div>
+  </div>
+
+
+</div>
+</div>):
+
+(
+  <div className='hidden md:flex md:w-[40%] justify-end items-center h-full '>
+    <div className='h-1/2 flex justify-center'>
+      <input className='h-[35px] border-2' type="text" />
+      <button className='w-[35px] bg-blue-700 h-[35px] flex justify-center items-center'>
+        <IoSearch className='text-white' />
+      </button>
+    </div>
+    <div className='h-1/2 flex justify-center '>
+      
+    <Link to={"/login"}>
+      <button className='px-3 text-blue-700 h-[35px]'>Sign in</button>
+    </Link>
+    
+    <Link to={"/signup"}>
+      <button className='px-3 bg-blue-700 h-[35px] text-white'>Register</button>
+    </Link>
+    </div>
+  </div>
+)
+
+
+}
 
       <button className='md:hidden ml-auto mr-4' onClick={handleToggle}>
         <FaBars className={`text-lg  ${show ? "rotate-90 " : ""}    transition-all duration-700`} />

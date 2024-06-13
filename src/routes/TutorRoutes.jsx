@@ -17,10 +17,10 @@ const TutorRoutes = () => {
 
         <Routes>
           
-            <Route path="/" element={user ? <Navigate to="/tutor/home" /> : <AdminLogin />} />
+            <Route path="/" element={true ? <Navigate to="/tutor/home" /> : <AdminLogin />} />
 
             {/* <Route path='/' element={<Homepage/>}/> */}
-            <Route path="/home/*" element={user ? <Homepage/> : <Navigate to="/tutor" />}/>
+            <Route path="/home/*" element={true ? <Homepage/> : <Navigate to="/tutor" />}/>
 
 
 

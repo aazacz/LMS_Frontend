@@ -80,7 +80,7 @@
   object-fit: cover;
 }
 
-@media (max-width:700px){
+@media (max-width: 700px) {
   .team-member-info p {
     font-size: 10px;
   }

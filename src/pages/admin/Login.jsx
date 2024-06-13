@@ -47,8 +47,6 @@ const AdminLogin = () => {
             if (role === "admin") {
                 navigate("/admin/home")
             }
-
-
         } catch (error) {
             setIsSubmitting(false);
             toast.error(error.response.data.error)

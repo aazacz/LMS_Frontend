@@ -74,6 +74,8 @@ const CourseStructure = () => {
         }));
     }
 
+    
+
     // function to add a new Session
     const addSession = (moduleIndex) => {
         const updatedModules = [...course.modules];

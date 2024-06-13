@@ -33,13 +33,13 @@ const Dashboard = () => {
     }, [])
 
     return (
-        <div className={`w-screen h-screen  px-7 flex   relative`}>
+        <div className={`w-screen h-full  px-7 flex   relative`}>
  
             <>
                 <div className='w-[80%] p-5 '>
                    
                    
-                   <div className='   flex items-center'>
+                   <div className='   flex items-center '>
 
                     <Link to={"/student/classestoday"}>
                     <button className='font-poppins font-semibold p-2 bg-[#F99406]  rounded-lg shadow-lg'> Classes Today</button>
@@ -66,7 +66,7 @@ const Dashboard = () => {
 
                     {/* Pending Assignments */}
                     <div className='w-full  py-4  flex flex-col gap-y-4'>
-                        <h1 className='font-poppins font-semibold text-2xl py-2' > Pending Assignment</h1>
+                        <h1 className='font-poppins font-semibold text-xl py-2' > Pending Assignment</h1>
                        {/* Progress Bar */}
                         {/* <label for="file">progress</label>
                         <progress id="file" className='progressbar' value="32" max="100" /> */}
@@ -78,16 +78,16 @@ const Dashboard = () => {
 
                     {/* Materials  */}
                     <div className='w-full h-full py-4 '>
-                        <h1 className='font-poppins font-semibold text-2xl py-2' > Pending Assignment</h1>
+                        <h1 className='font-poppins font-semibold text-xl py-2' > Completed Assignment</h1>
 
-                        <PendingAssignments progress={progress}/>
+                        <PendingAssignments progress={100}/>
 
                     </div>
 
 
 
                 </div>
-                <div className='w-[20%]  px-2'>
+                <div className='w-[20%] h-full border-l-2 px-2'>
 
                     <h1 className='font-poppins font-semibold text-lg py-2'>Classes Sheduled</h1>
                     <h1 className='font-poppins font-semibold'>February</h1>

@@ -28,6 +28,7 @@ import DiagnosisTest from "../pages/student/DiagnosisTest";
 import UserEditProfile from "../components/User/UserEditProfile";
 import ClassesToday from "../components/User/ClassesToday/ClassesToday";
 import DiagnosisTestResult from "../pages/student/DiagnosisTestResult";
+import Tailwind from "../components/User/Tailwind";
 
 const UserRoutes = () => {
   const user = useSelector((state) => state.token.user);
@@ -36,14 +37,16 @@ const UserRoutes = () => {
   return (
     <Routes>
         <Route path="/"            element={<Homepage />} />
-        <Route path="/login"       element={user ? <Navigate to="/home" /> : <Login />} />
-        <Route path="/student/*"   element={<StudentHomepage />}  />
-        <Route path="/signup/*"      element={user ? <Navigate to="/home" /> : <SignupRoute />} />
+        <Route path="/login"       element={ <Login />} />
+        <Route path="/student/*"   element={<StudentHomepage User={true} />}  />
+        <Route path="/signup/*"      element={user ? <Navigate to="/student" /> : <SignupRoute />} />
         <Route path='/HomePageContact' element={<HomePageContact />}/>
         <Route path='/diagnosistest' element={<Student_Diagnostic />}/>
         <Route path='/diagnosistest/intructions' element={<Student_Diagnostic_Test/>}/>
         <Route path='/diagnosistest/test1' element={<DiagnosisTest/>}/>
         <Route path='/diagnosistest/result' element={<DiagnosisTestResult/>}/>
+        <Route path='/settings' element={<SettingsPage/>}/>
+        
        
        
       <Route path='*' element={<div className='w-screen h-screen'> <ErrorPage /> </div>}/>

@@ -36,14 +36,15 @@ const UserRoutes = () => {
   return (
     <Routes>
         <Route path="/"            element={<Homepage />} />
-        <Route path="/login"       element={user ? <Navigate to="/home" /> : <Login />} />
+        <Route path="/login"       element={ <Login />} />
         <Route path="/student/*"   element={<StudentHomepage User={true} />}  />
-        <Route path="/signup/*"      element={user ? <Navigate to="/home" /> : <SignupRoute />} />
+        <Route path="/signup/*"      element={user ? <Navigate to="/student" /> : <SignupRoute />} />
         <Route path='/HomePageContact' element={<HomePageContact />}/>
         <Route path='/diagnosistest' element={<Student_Diagnostic />}/>
         <Route path='/diagnosistest/intructions' element={<Student_Diagnostic_Test/>}/>
         <Route path='/diagnosistest/test1' element={<DiagnosisTest/>}/>
         <Route path='/diagnosistest/result' element={<DiagnosisTestResult/>}/>
+        <Route path='/settings' element={<SettingsPage/>}/>
         
        
        

@@ -3,8 +3,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TfiWrite } from 'react-icons/tfi';
+import { CiCircleRemove } from "react-icons/ci";
+import { IoIosCloseCircle } from 'react-icons/io';
+
 
 const AddCourse = () => {
+
   const navigate = useNavigate();
   const token = useSelector((state) => state.token.token);
   const baseURL = process.env.REACT_APP_API_URL;
@@ -35,9 +39,76 @@ const AddCourse = () => {
     ],
   });
 
+useEffect(() => {
+console.log("course is changed in useEffect ")
+console.log(course)
+
+}, [course])
 
 
-  
+
+
+// function to add a new module
+const addModule = () => {
+    setCourse(prevState => ({
+        ...prevState,
+        modules: [
+            ...prevState.modules,
+            {
+                moduleName: "",
+                moduleDescription: "",
+                sessions: [
+                    {
+                        sessionName: "",
+                        sessionDescription: "",
+                        sessionDateTime: "",
+                        sessionLink: ""
+                    }
+                ]
+            }
+        ]
+    }));
+}
+
+
+// function to add a new module
+const RemoveModule = () => {
+  console.log(e.target.moduleIndex)
+  setCourse(prevState => ({
+      ...prevState,
+      modules: [
+          ...prevState.modules,
+          {
+              moduleName: "",
+              moduleDescription: "",
+              sessions: [
+                  {
+                      sessionName: "",
+                      sessionDescription: "",
+                      sessionDateTime: "",
+                      sessionLink: ""
+                  }
+              ]
+          }
+      ]
+  }));
+}
+
+
+
+// function to add a new Session
+const addSession = (moduleIndex) => {
+      const updatedModules = [...course.modules];
+      updatedModules[moduleIndex].sessions.push({
+          sessionName: "",
+          sessionDescription: "",
+          sessionDateTime: "",
+          sessionLink: ""
+      });
+      setCourse({ ...course, modules: updatedModules });
+  }
+
+
 
   // Auto Populate function
   const handleAutofill = (e) => {
@@ -229,28 +300,26 @@ const AddCourse = () => {
         </div>
 
         {/*________ ADD MODULE BUTTON_____________ */}
-        <div className="border-b-[1px] border-gray-400 ">
+        <div className="border-b-[1px] border- ">
           <h1 className="text-xl font-semibold font-poppins">Modules</h1>
         </div>
 
+          <button
+            type='button'
+            onClick={(e) => addModule(e)}
+            className="w-full  md:w-[100%] md:max-w-[150px] h-10 bg-blue-900 rounded-lg text-white font-poppins font-semibold flex  justify-center items-center"
+          >
+            Add Module
+          </button>
+     
         {course?.modules?.map((module, moduleIndex) => {
           return (
             <div className="w-full h-auto border-2 border- bg-white rounded-lg p-4 flex flex-col shadow-lg space-y-4">
               <div className="w-full flex gap-x-6 justify-between items-center ">
                 <h1 className="text-md font-semibold">Module {moduleIndex + 1}</h1>
-                <div className="flex w-auto gap-x-4">
-                  <button
-                    onClick={(e) => addSession(moduleIndex, e)}
-                    className="px-3 h-8 bg-blue-900 rounded-md text-white flex items-center "
-                  >
-                    Add Session
-                  </button>
-                  <button
-                    onClick={(e) => removeModule(moduleIndex, e)}
-                    className="px-3 h-8 bg-red-900 rounded-md text-white flex items-center "
-                  >
-                    Remove Module
-                  </button>
+                <div className="  ">
+                 <IoIosCloseCircle  className='font-black text-2xl  text-red-900 ' onClick={(e) => RemoveModule(moduleIndex, e)}/>
+                 
                 </div>
               </div>
 
@@ -282,12 +351,24 @@ const AddCourse = () => {
                   <div className="w-full bg-gray-200 rounded-lg p-4 flex flex-col shadow-lg space-y-4">
                     <div className="w-full flex gap-x-6 justify-between items-center ">
                       <h1 className="text-md font-semibold">Session {sessionIndex + 1}</h1>
+                    
+                    <div className='flex gap-x-2'>
+
+                    
+                      <button
+                    onClick={(e) => addSession(moduleIndex, e)}
+                    className="px-3 h-8 bg-blue-900 rounded-md text-sm text-white flex items-center "
+                    >
+                    Add Session
+                  </button>
+                     
                       <button
                         onClick={(e) => removeSession(moduleIndex, sessionIndex, e)}
-                        className="px-3 h-8 bg-red-900 rounded-md text-white flex items-center "
+                        className="px-3 h-8 bg-red-900 rounded-md text-sm text-white flex items-center "
                       >
                         Remove Session
                       </button>
+                    </div>
                     </div>
 
                     <div className="w-full flex flex-col md:flex-row md:gap-x-4">
@@ -342,20 +423,12 @@ const AddCourse = () => {
           );
         })}
 
-        <div className="w-full h-auto bg-white rounded-lg p-4 flex justify-center items-center">
-          <button
-            onClick={(e) => addModule(e)}
-            className="w-full md:w-[80%] h-10 bg-blue-900 rounded-lg text-white font-poppins font-semibold flex justify-center items-center"
-          >
-            Add Module
-          </button>
-        </div>
-
         <div className="flex items-center justify-center">
           <button onClick={(e) => submitHandler(e)} type="submit" className="px-6 py-2 bg-green-900 rounded-md text-white">
             Submit
           </button>
         </div>
+
       </form>
     </div>
   );

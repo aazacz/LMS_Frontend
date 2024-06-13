@@ -1,12 +1,10 @@
 .notification-container {
-  /* border: 2px solid black; */
   display: flex;
   flex-direction: row;
 }
 
 .notification-settings {
   width: 70%;
-  /* border: 1px solid #ddd; */
   border-radius: 5px;
   margin-left:2%;
 }
@@ -32,7 +30,6 @@
 
 .email-notifications,
 .email-news-updates {
-  /* border: 1px solid black; */
   margin-bottom: 20px;
   font-weight: 400;
   font-size: 14px;
@@ -41,7 +38,6 @@
 
 .email-notifications p,
 .email-news-updates p {
-  /* border: 1px solid black; */
   color: #9c9ca4;
   line-height: 28px;
   font-size: 14px;
@@ -74,7 +70,6 @@
 .checkbox-group label {
   display: flex;
   align-items: center;
-  /* border: 1px solid black; */
   font-size: 14px;
   color: #9c9ca4;
   font-weight: 400;
@@ -86,7 +81,6 @@
 }
 
 .notification-footer {
-  /* border: 1px solid black; */
   color: #9c9ca4;
   line-height: 28px;
   font-size: 14px;

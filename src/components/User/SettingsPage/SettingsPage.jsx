@@ -72,7 +72,7 @@ const SettingsPage = () => {
     setModal(!modal);
   };
 
-  if(modal) {
+  if (modal) {
     document.body.classList.add('active-modal')
   } else {
     document.body.classList.remove('active-modal')
@@ -488,7 +488,7 @@ const SettingsPage = () => {
             </div>
           </div>
         );
-    
+
       default:
         return null;
     }
@@ -496,6 +496,7 @@ const SettingsPage = () => {
 
   return (
     <div className="w-full h-screen  ">
+      
       <div className="w-full h-5/6  flex justify-start items-center flex-wrap flex-col ">
         <div className="w-1/2 md:w-1/3 lg:w-30percent h-5/6 flex flex-col justify-start items-start gap-6  pl-15pct">
           <p className="  text-sm md:text-md lg:text-xl font-bold">
@@ -503,46 +504,44 @@ const SettingsPage = () => {
             <br /> Your Account
           </p>
           <button
-            className={`bg-slate-100 rounded-md text-xs md:text-sm lg:text-sm ${
-              activeButton === "editProfile" ? "bg-slate-200" : ""
-            }`}
+            className={`bg-slate-100 rounded-md text-xs md:text-sm lg:text-sm ${activeButton === "editProfile" ? "bg-slate-200" : ""
+              }`}
             onClick={() => handleButtonClick("editProfile")}
           >
             ✏️Edit Profile
           </button>
           <button
-            className={`bg-white rounded-md text-xs md:text-sm lg:text-sm ${
-              activeButton === "accountSettings" ? "bg-slate-200" : ""
-            }`}
+            className={`bg-white rounded-md text-xs md:text-sm lg:text-sm ${activeButton === "accountSettings" ? "bg-slate-200" : ""
+              }`}
             onClick={() => handleButtonClick("accountSettings")}
           >
             🛞Account Settings
           </button>
           <button
-            className={`bg-white rounded-md text-xs md:text-sm lg:text-sm ${
-              activeButton === "notificationSettings" ? "bg-slate-200" : ""
-            }`}
+            className={`bg-white rounded-md text-xs md:text-sm lg:text-sm ${activeButton === "notificationSettings" ? "bg-slate-200" : ""
+              }`}
             onClick={() => handleButtonClick("notificationSettings")}
           >
             🔔Notification Settings
           </button>
           <button
-            className={`bg-white rounded-md text-xs md:text-sm lg:text-sm ${
-              activeButton === "helpDesk" ? "bg-slate-200" : ""
-            }`}
+            className={`bg-white rounded-md text-xs md:text-sm lg:text-sm ${activeButton === "helpDesk" ? "bg-slate-200" : ""
+              }`}
             onClick={() => handleButtonClick("helpDesk")}
           >
             📞Help Desk
           </button>
           <button
-            className={`bg-white rounded-md text-xs md:text-sm lg:text-sm ${
-              activeButton === "logout" ? "bg-slate-200" : ""
-            }`}
+            className={`bg-white rounded-md text-xs md:text-sm lg:text-sm ${activeButton === "logout" ? "bg-slate-200" : ""
+              }`}
             onClick={() => handleButtonClick("logout")}
           >
             Logout
           </button>
         </div>
+
+
+
         {renderContent()}
       </div>
     </div>

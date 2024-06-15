@@ -46,6 +46,8 @@ const StudentList = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const [file, setFile] = useState(null);
+
 
 
 
@@ -70,6 +72,43 @@ const StudentList = () => {
     setPageSize(newPageSize);
     setCurrentPage(1); // Reset to page 1 when changing page size
     updateUrl({ page: 1, pageSize: newPageSize });
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile && selectedFile.type !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+      toast.error("Please select an .xlsx file");
+      return;
+    }
+    setFile(selectedFile);
+  };
+
+  const handleFileUpload = () => {
+    if (!file) {
+      toast.error("Please select a file to upload");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("file", file);
+    
+    axios.post(`${process.env.REACT_APP_API_URL}/api/students/bulk-upload`, formData)
+      .then(response => {
+        toast.success("File uploaded successfully");
+        // handle response
+      })
+      .catch(error => {
+        toast.error("File upload failed");
+        // handle error
+      });
+  };
+  
+  const handleDownloadTemplate = () => {
+    const link = document.createElement('a');
+    link.href = `${process.env.REACT_APP_API_URL}/api/students/download-template`;
+    link.setAttribute('download', 'StudentDetails.xlsx');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const formatDate = (date) => {
@@ -291,7 +330,8 @@ const StudentList = () => {
 
 
 
-
+      <div className="bulk-upload-container flex justify-between items-end gap-x-2">
+        <div>
         <div className="select-container">
           <div>
             <select value={pageSize} onChange={handlePageSizeSelectChange}>
@@ -322,6 +362,37 @@ const StudentList = () => {
             zIndex: "0",
           }}
         />
+        </div>
+        <div>
+        <h3 className="mr-4">Bulk upload Student Details</h3>
+        <div className="flex gap-x-2 ">
+        <input 
+            type="file" 
+            id="fileInput"
+            className="hidden" 
+            onChange={handleFileChange}
+          />
+
+          <label 
+            htmlFor="fileInput" 
+            className="file-label bg-gray-300 text-blue-700 px-4 py-2 rounded cursor-pointer">
+            {file ? file.name : 'Select'}
+          </label>
+
+          <button 
+            onClick={handleFileUpload} 
+            className="upload-button bg-green-500 text-white px-4 py-2 rounded">
+            Upload
+          </button>
+
+          <button 
+            onClick={handleDownloadTemplate} 
+            className="download-button bg-blue-500 text-white px-4 py-2 rounded">
+            Download Excel
+          </button>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   );

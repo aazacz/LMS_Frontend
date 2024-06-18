@@ -111,7 +111,6 @@ const CourseStructure = () => {
         try {
             await coursestructureform.validate(course, { abortEarly: false });
 
-
             axios.post(`${baseURL}api/structure/create`, course,
                 {
                     "user-agent": navigator.userAgent,
@@ -145,19 +144,12 @@ const CourseStructure = () => {
             [name]: value
         }))
 
-        console.log(e.target.name);
-        console.log(e.target.value);
-
-
     };
 
 
     useEffect(() => {
         console.log(course);
         console.log(errors);
-
-
-
     }, [course, errors])
 
     return (

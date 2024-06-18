@@ -1,22 +1,46 @@
-import React,{useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import coursephoto from "/coursephoto.jpeg"
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
-
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import Loader from '../reusable/Loader';
 
 const Coursedetails = ({ height }) => {
 
-    const [activeTab, setActiveTab] = useState('about');
+    const baseUrl = process.env.REACT_APP_API_URL;
+    const token = useSelector((state) => state.token.token);
+ 
 
+    const [Loading,SetLoading] = useState(true) 
+    const [activeTab, setActiveTab] = useState('about');
     const [slideDirection, setSlideDirection] = useState('left');
+
+    const { courseId } = useParams();
+
 
     const handleTabClick = (tab) => {
         setSlideDirection(activeTab === 'about' && tab === 'module' ? 'left' : 'right');
         setActiveTab(tab);
     };
 
+    useEffect(() => {
+
+        axios.get(`${baseUrl}api/course/get-course/${courseId}`, {
+            headers: { authorization: `Bearer ${token}` }
+        })
+            .then((response) => {
+                console.log(response.data)
+            })
+    }, [])
+
+
     return (
-        <div className='px-2   flex'>
+        <>
+        {Loader? (<Loader/>):(
+            <>
+        <div className='px-2   flex ' >
 
             <div className='w-[70%] scroll overflow-y-scroll  p-4 flex flex-col '>
 
@@ -39,7 +63,7 @@ const Coursedetails = ({ height }) => {
                     </div>
 
                     <div className='w-full bg-blue-400 mt-4 relative'>
-                        
+
                         <div className='flex w-full gap-x-4'>
                             {['about', 'module', 'tests', 'review'].map((tab, index) => (
                                 <button
@@ -63,7 +87,7 @@ const Coursedetails = ({ height }) => {
                             {activeTab === 'review' && <ReviewContent />}
                         </div>
                     </div>
-             
+
 
 
                 </div>
@@ -72,6 +96,9 @@ const Coursedetails = ({ height }) => {
             </div>
             <AsideBAr Height={height} />
         </div>
+        </>
+        )}
+        </> 
     )
 }
 
@@ -80,13 +107,13 @@ export default Coursedetails
 
 
 const AboutContent = () => <div className='bg-red-300'>About Content</div>;
-const ModuleContent = () => <div  className='bg-green-300'>Module Content</div>;
-const TestsContent = () => <div  className='bg-blue-300'>Tests Content</div>;
-const ReviewContent = () => <div  className='bg-yellow-300'>Review Content</div>;
+const ModuleContent = () => <div className='bg-green-300'>Module Content</div>;
+const TestsContent = () => <div className='bg-blue-300'>Tests Content</div>;
+const ReviewContent = () => <div className='bg-yellow-300'>Review Content</div>;
 
 
 
- 
+
 
 
 const AsideBAr = ({ Height }) => {
@@ -96,6 +123,7 @@ const AsideBAr = ({ Height }) => {
 
     return (
         <>
+        
             <div className='sticky top-[10vh] bg-slate-200 w-[30%] h-[90vh] flex flex-col '>
 
                 <div className='p-6 '>
@@ -107,10 +135,10 @@ const AsideBAr = ({ Height }) => {
                         {modules.map((value, index) => {
                             return (
                                 <div key={index} className='flex w-full justify-between  items-center py-5'>
-                                    
+
                                     <div className='flex  gap-x-3 items-center w-[65%]  '>
                                         <div>
-                                        <div className='w-6 h-6 bg-[#C75625] text-white rounded-[5px] text-sm flex justify-center items-center'>{index + 1}</div>
+                                            <div className='w-6 h-6 bg-[#C75625] text-white rounded-[5px] text-sm flex justify-center items-center'>{index + 1}</div>
                                         </div>
 
                                         <h1 className=' text-orange-600 text-[12px] line-clamp-1'>{value}</h1>

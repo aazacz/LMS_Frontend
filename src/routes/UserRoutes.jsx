@@ -46,8 +46,7 @@ const UserRoutes = () => {
         <Route path='/diagnosistest/test1' element={<DiagnosisTest/>}/>
         <Route path='/diagnosistest/result' element={<DiagnosisTestResult/>}/>
         <Route path='/settings' element={<SettingsPage/>}/>
-        
-       
+            
        
       <Route path='*' element={<div className='w-screen h-screen'> <ErrorPage /> </div>}/>
     </Routes>

@@ -18,7 +18,7 @@ const Coursedetails = ({ height }) => {
   };
 
   return (
-    <div className="px-2   flex">
+    <div className="px-2 flex">
       <div className="w-[70%] scroll overflow-y-scroll  p-4 flex flex-col ">
         <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-3xl">
           {" "}

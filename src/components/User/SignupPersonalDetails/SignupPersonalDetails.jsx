@@ -96,7 +96,7 @@ const SignupPersonalDetails = () => {
             </p>
           </section>
           <Link to={"/signup/signupotpverify"}>
-          <button type="submit">Request OTP</button>
+          <button type="submit" className="personal-detail-submit">Request OTP</button>
           </Link>
         </section>
       </form>

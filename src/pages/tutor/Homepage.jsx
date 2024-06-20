@@ -40,7 +40,7 @@ const Homepage = () => {
               isSidebarOpen={isSidebarOpen}
             />
           </div>
-          <div className=""><Routes>
+          <Routes>
             <Route path="/*" element={<Dashboard />} />
             <Route path="/content" element={<Content />} />
             <Route
@@ -71,7 +71,7 @@ const Homepage = () => {
             <Route path="/settings/*" element={<Settings />} />
 
             <Route path="*" element={<ErrorPage />} />
-          </Routes></div>
+          </Routes>
           
         </div>
       </div>

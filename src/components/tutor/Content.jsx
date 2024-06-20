@@ -77,6 +77,8 @@ const Content = () => {
   ];
 
   return (
+    <div className="w-full flex">
+      <div className="w-[70%] ">
     <div className="w-full  flex">
       <div className="w-[70%] ">
         <div className="p-4">
@@ -163,6 +165,7 @@ const Content = () => {
         </div>
       </div>
 
+      <div className="w-[30%]  border-l-2">
       <div className="w-[30%]  border-l-2">
         {/* <div className="flex justify-left py-4">
           <Link

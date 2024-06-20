@@ -44,9 +44,21 @@ const PdfCard = ()=>{
 
         <div className='flex justify-between mt-4 gap-x-5 items-center'>
             <h1 className='font-plusjakartasans font-semibold text-xs line-clamp-1'> SAT Prep Book</h1>
-            <a href={'https://css4.pub/2015/icelandic/dictionary.pdf'} target="_blank" download className='flex items-center'>
-                    <MdFileDownload className='text-xl' />
+
+
+
+            <a href={'https://css4.pub/2015/icelandic/dictionary.pdf'}
+                 target="_blank"
+                 download
+                 className='flex items-center'>
+             <MdFileDownload className='text-xl' /> {/* Download icon*/} 
+               
                 </a>
+
+
+
+
+
 
         </div>
     </div>

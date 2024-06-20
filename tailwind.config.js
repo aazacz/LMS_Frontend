@@ -38,8 +38,13 @@ export default {
           '30%': { transform: 'translate3d(70%, 70%, 0)', opacity: '0' },
           '100%': { transform: 'translate3d(0, 0, 0)', opacity: '1' },
         },
+        spinOpacitychange: {
+          '0%':  { opacity: '0', transform: 'rotate(0deg)' },
+        '100%':  { opacity: '1', transform: 'rotate(360deg)' },
+        },
       },
       animation: {
+        "spinOpacitychange":"spinOpacitychange 1s ease-in-out infinite ",
         "SlidefromLeft": 'SlidefromLeft 1s ease-in-out',
         "SlidefromRight": 'SlidefromRight 1s ease-in-out',
         "HeaderfromRight": 'SlidefromRight 5s ease-in-out',

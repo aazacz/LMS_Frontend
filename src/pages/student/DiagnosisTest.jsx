@@ -13,7 +13,7 @@ const DiagnosisTest = () => {
     const [fontSize, setFontSize] = useState(15);
     const [timeLeft, setTimeLeft] = useState(600); 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate()
 

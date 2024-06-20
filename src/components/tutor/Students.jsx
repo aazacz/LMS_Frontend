@@ -3,9 +3,11 @@ import React from 'react'
 const Students = () => {
   return (
     <div>
-      jjjj
+      Students
+      
     </div>
   )
 }
 
 export default Students
+Students

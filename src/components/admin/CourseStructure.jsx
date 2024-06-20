@@ -5,8 +5,8 @@ import { toast } from 'react-toastify'
 import { coursestructureform } from "../../utils/adminSide/Formvalidation"
 import axios from "axios"
 
-
 const CourseStructure = () => {
+
 
     const navigate = useNavigate();
 
@@ -106,7 +106,7 @@ const CourseStructure = () => {
 
 
     const submitHandler = async (event) => {
-        event.preventDefault();
+        event.preventDefault()
         console.log(course);
         try {
             await coursestructureform.validate(course, { abortEarly: false });

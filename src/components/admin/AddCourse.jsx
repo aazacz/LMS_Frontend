@@ -131,6 +131,7 @@ const addSession = (moduleIndex) => {
 
   // Function to change the input element value
   const handleInputChange = (e) => {
+    
     const { name, value } = e.target;
     setCourse((prevState) => ({
       ...prevState,
@@ -188,9 +189,11 @@ const addSession = (moduleIndex) => {
 
           <div className="w-full ">
             <label className="text-sm font-semibold">Course Structure</label>
+         
+         
             <select
               name="courseStructure"
-              onChange={(e) => {
+              onChange={(e) => {  
                 handleInputChange(e);
                 handleAutofill(e);
               }}
@@ -198,6 +201,10 @@ const addSession = (moduleIndex) => {
               id=""
               className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             >
+
+
+
+
               <option disabled value="">
                 Select the Course Structure
               </option>

@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Settings = () => {
+const AllTestPage = () => {
   return (
     <div>
-    sss
+      
     </div>
   )
 }
 
-export default Settings
+export default AllTestPage

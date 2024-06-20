@@ -149,7 +149,7 @@
   padding-left: 10px;
 }
 
-button[type="button"] {
+.common-button {
   color: white;
   font-family: "Poppins";
   font-size: 11px;

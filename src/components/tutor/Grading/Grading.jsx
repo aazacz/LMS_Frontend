@@ -118,11 +118,11 @@ const Grading = () => {
   ];
 
   return (
-    <div className="px-9">
+    <div className="px-9 ">
       <div className="main-container">
         <div>
           <div className="heading-column-toggle-container py-2">
-            <h1 className="font-plusjakartasans text-xl font-semibold">
+            <h1 className="font-poppins text-xl font-semibold">
               Grading
             </h1>
           </div>
@@ -157,8 +157,8 @@ const Grading = () => {
         </p>
       </div>
       <div className="assignment-detail-line"></div>
-      <div className="flex gap-16 ">
-        <div className="assignment-detail-cards grid grid-flow-row grid-cols-1 sm:grid-cols-1 tb:grid-cols-1 tab:grid-cols-1 lg:grid-cols-3">
+      <div className="flex w-full gap-16  ">
+        <div className="w-[60%] assignment-detail-cards grid grid-flow-row grid-cols-1 sm:grid-cols-1 tb:grid-cols-1 tab:grid-cols-1 lg:grid-cols-3">
           {assignments
             .slice(0, showAllAssignments ? assignments.length : 3)
             .map((assignment, index) => (
@@ -171,7 +171,8 @@ const Grading = () => {
               />
             ))}
         </div>
-        <div className=" bg-[#FFF7F7] h-96 overflow-y-scroll">
+      
+        <div className=" w-[35%] bg-[#FFF7F7] h-96 overflow-y-scroll">
           {data.map((item, index) => (
             <div
               key={index}
@@ -190,7 +191,8 @@ const Grading = () => {
             </div>
           ))}
         </div>
-      </div>
+        </div>
+  
     </div>
   );
 };

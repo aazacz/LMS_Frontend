@@ -2,11 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import TutorNavbar from "../../components/tutor/TutorNavbar";
 import Sidebar from "../../components/tutor/Sidebar";
-import Dashboard from "../../components/tutor/Dashboard";
+import Dashboard from "../../components/tutor/Dashboard/Dashboard";
 import Content from "../../components/tutor/Content";
-import QuestionBank from "../../components/tutor/QuestionBank";
+import QuestionBank from "../../components/tutor/QuestionBank/QuestionBank";
 import Insights from "../../components/tutor/Insights";
-import Settings from "../../components/tutor/Settings";
+import Settings from "../../components/tutor/Settings/Settings";
 import ErrorPage from "../ErrorPage";
 import Coursedetails from "../../components/tutor/Coursedetails";
 import Assignments from "../../components/tutor/Assignment/Assignments";
@@ -40,7 +40,7 @@ const Homepage = () => {
               isSidebarOpen={isSidebarOpen}
             />
           </div>
-          <Routes>
+          <div className="flex-1 flex"><Routes>
             <Route path="/*" element={<Dashboard />} />
             <Route path="/content" element={<Content />} />
             <Route
@@ -68,10 +68,11 @@ const Homepage = () => {
               element={<MarksGrading />}
             />
             <Route path="/insights" element={<Insights />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/settings/*" element={<Settings />} />
 
             <Route path="*" element={<ErrorPage />} />
-          </Routes>
+          </Routes></div>
+          
         </div>
       </div>
     </>

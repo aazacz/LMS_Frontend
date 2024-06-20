@@ -1,11 +1,23 @@
 import React, { useState ,useEffect} from "react";
 import coursephoto from "/coursephoto.jpeg";
+import axios from "axios";
 import { BiSpreadsheet } from "react-icons/bi";
 import { LuTimer } from "react-icons/lu";
 import { Link,useParams } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
 
 const Coursedetails = ({ height }) => {
+  const baseURL = process.env.REACT_APP_API_URL;
+  const sections = [
+    
+    {
+      title: 'Introduction to Basic SAT & DSAT',
+      modules: 5,
+      hours: '60Hrs',
+    },
+  
+    // Add more sections as needed
+  ];
   const { courseId } = useParams(); 
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,18 +25,19 @@ const Coursedetails = ({ height }) => {
     const fetchCourse = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${baseURL}api/course/${courseId}`); 
+        const response = await axios.get(`${baseURL}api/course/get-course/${courseId}`); 
+        console.log(response.data)
         setCourse(response.data); 
         setLoading(false);
       } catch (error) {
         console.error('Error fetching course:', error);
-        setError(error.message);
+        console.log(error.message);
         setLoading(false);
       }
     };
 
     fetchCourse();
-  }, [courseId]); // Trigger fetchCourse whenever courseId changes
+  }, [courseId]); 
 
 
   
@@ -40,9 +53,10 @@ const Coursedetails = ({ height }) => {
   };
 
   return (
-    <div className="px-2   flex">
+    <div className="px-2 font-poppins   flex">
+      { loading ? (<></>) :(<></>) }
       <div className="w-[70%] scroll overflow-y-scroll  p-4 flex flex-col ">
-        <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-3xl">
+        <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold  text-3xl">
           {" "}
           Introduction to SAT & DSAT
         </div>
@@ -50,18 +64,20 @@ const Coursedetails = ({ height }) => {
         <div className="w-full  ">
           {/* heading and Module line */}
           <div className="mt-4">
-            <h1 className="font-bold text-xl font-plusjakartasans ">
-              Introduction to Basic SAT & DSAT
-            </h1>
-            <div className="flex items-center gap-x-6 mt-2">
-              <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
-                <BiSpreadsheet className="text-gray-400" /> 5 Modules
-              </span>
-              <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
-                <LuTimer className="text-gray-400" /> 60Hrs
-              </span>
-            </div>
+      {sections.map((section, index) => (
+        <div key={index} className="mb-4">
+          <h1 className="font-bold text-xl">{section.title}</h1>
+          <div className="flex items-center gap-x-6 mt-2">
+            <span className="flex items-center gap-x-1 text-sm">
+              <BiSpreadsheet className="text-gray-400" /> {section.modules} Modules
+            </span>
+            <span className="flex items-center gap-x-1 text-sm">
+              <LuTimer className="text-gray-400" /> {section.hours}
+            </span>
           </div>
+        </div>
+      ))}
+    </div>
 
           <div className="w-full bg-blue-400 mt-4 relative">
             <div className="flex w-full gap-x-4">

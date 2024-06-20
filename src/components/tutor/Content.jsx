@@ -204,8 +204,7 @@ const Content = () => {
 export default Content;
 
 const CourseCard = ({ course, index }) => {
-  console.log("course in card");
-  console.log(course);
+
   return (
     <div className="bg-[#F4F5FB] p-4 rounded-2xl min-h-[16rem] h-auto">
       <div className="w-full rounded-lg">

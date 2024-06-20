@@ -37,7 +37,7 @@ const Homepage = () => {
 
                 <Sidebar isOpen={isSidebarOpen} />
 
-                <div className='w-full px-2 '>
+                <div className='w-full px-2 overflow-y-scroll '>
                     <div className='h-auto sticky top-0 '>
 
                         <AdminNavbar  toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />

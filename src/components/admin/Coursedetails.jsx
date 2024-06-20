@@ -11,9 +11,10 @@ const Coursedetails = ({ height }) => {
 
     const baseUrl = process.env.REACT_APP_API_URL;
     const token = useSelector((state) => state.token.token);
- 
 
-    const [Loading,SetLoading] = useState(true) 
+
+    const [Course, SetCourse] = useState()
+    const [Loading, SetLoading] = useState(false)
     const [activeTab, setActiveTab] = useState('about');
     const [slideDirection, setSlideDirection] = useState('left');
 
@@ -31,74 +32,80 @@ const Coursedetails = ({ height }) => {
             headers: { authorization: `Bearer ${token}` }
         })
             .then((response) => {
+                console.log("response.data")
                 console.log(response.data)
+                SetCourse(response.data)
             })
     }, [])
 
 
     return (
         <>
-        {Loader? (<Loader/>):(
-            <>
-        <div className='px-2   flex ' >
-
-            <div className='w-[70%] scroll overflow-y-scroll  p-4 flex flex-col '>
-
-
-                <div className='w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-3xl'> Introduction to SAT & DSAT</div>
-
-                <div className='w-full  '>
-
-                    {/* heading and Module line */}
-                    <div className='mt-4'>
-                        <h1 className='font-bold text-xl font-plusjakartasans '>Introduction to Basic SAT & DSAT</h1>
-                        <div className='flex items-center gap-x-6 mt-2'>
-                            <span className='flex items-center gap-x-1 text-sm font-plusjakartasans'>
-                                <BiSpreadsheet className='text-gray-400' /> 5 Modules
-                            </span>
-                            <span className='flex items-center gap-x-1 text-sm font-plusjakartasans'>
-                                <LuTimer className='text-gray-400' /> 60Hrs
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className='w-full bg-blue-400 mt-4 relative'>
-
-                        <div className='flex w-full gap-x-4'>
-                            {['about', 'module', 'tests', 'review'].map((tab, index) => (
-                                <button
-                                    key={index}
-                                    className={`relative py-2 ${activeTab === tab ? 'border-b-4 border-amber-500' : ''}`}
-                                    onClick={() => handleTabClick(tab)}
-                                >
-                                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                                </button>
-                            ))}
-                        </div>
-
-                        {/* <div className={`underline absolute bottom-0 h-1 bg-amber-500 transition-all duration-300 ${activeTab}`} /> */}
-                    </div>
-
-                    <div className='relative mt-4 overflow-hidden h-64'>
-                        <div className={`slide-content ${slideDirection}`}>
-                            {activeTab === 'about' && <AboutContent />}
-                            {activeTab === 'module' && <ModuleContent />}
-                            {activeTab === 'tests' && <TestsContent />}
-                            {activeTab === 'review' && <ReviewContent />}
-                        </div>
-                    </div>
-
-
-
+            {Loading ? (
+                <div className='w-full bg-gray-300 h-max flex justify-center items-center'>
+                    <Loader />
                 </div>
+            ) : (
+                <>
+                    <div className='h-full flex ' >
+
+                        <div className='w-[70%]  scroll overflow-y-scroll  p-4 flex flex-col '>
 
 
-            </div>
-            <AsideBAr Height={height} />
-        </div>
+                            <div className='w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-3xl'> Introduction to SAT & DSAT</div>
+
+                            <div className='w-full  '>
+
+                                {/* heading and Module line */}
+                                <div className='mt-4'>
+                                    <h1 className='font-bold text-xl font-plusjakartasans '>Introduction to Basic SAT & DSAT</h1>
+                                    <div className='flex items-center gap-x-6 mt-2'>
+                                        <span className='flex items-center gap-x-1 text-sm font-plusjakartasans'>
+                                            <BiSpreadsheet className='text-gray-400' /> {Course ? Course.modules.length : 0} Modules
+                                        </span>
+                                        <span className='flex items-center gap-x-1 text-sm font-plusjakartasans'>
+                                            <LuTimer className='text-gray-400' /> {Course && Course.trainingDuration}Hrs
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className='w-full bg-blue-400 mt-4 relative'>
+
+                                    <div className='flex w-full gap-x-4'>
+                                        {['about', 'module', 'tests', 'review'].map((tab, index) => (
+                                            <button
+                                                key={index}
+                                                className={`relative py-2 ${activeTab === tab ? 'border-b-4 border-amber-500' : ''}`}
+                                                onClick={() => handleTabClick(tab)}
+                                            >
+                                                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    {/* <div className={`underline absolute bottom-0 h-1 bg-amber-500 transition-all duration-300 ${activeTab}`} /> */}
+                                </div>
+
+                                <div className='relative mt-4 overflow-hidden h-64'>
+                                    <div className={`slide-content ${slideDirection}`}>
+                                        {activeTab === 'about' && <AboutContent />}
+                                        {activeTab === 'module' && <ModuleContent course={Course} />}
+                                        {activeTab === 'tests' && <TestsContent />}
+                                        {activeTab === 'review' && <ReviewContent />}
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+                        <AsideBAr course={Course} />
+                    </div>
+                </>
+            )}
         </>
-        )}
-        </> 
     )
 }
 
@@ -107,7 +114,28 @@ export default Coursedetails
 
 
 const AboutContent = () => <div className='bg-red-300'>About Content</div>;
-const ModuleContent = () => <div className='bg-green-300'>Module Content</div>;
+const ModuleContent = ({ Course }) => {
+    const [modules, setModules] = useState([]);
+    console.log("course")
+
+    useEffect(() => {
+        if (Course && Course.modules) {
+            setModules(Course.modules);
+        }
+    }, [Course])
+    
+    return (
+
+        <div className='bg-green-300 w-full h-full  border-2 '>
+
+            <h1></h1>
+
+
+
+        </div>
+    )
+}
+
 const TestsContent = () => <div className='bg-blue-300'>Tests Content</div>;
 const ReviewContent = () => <div className='bg-yellow-300'>Review Content</div>;
 
@@ -116,15 +144,20 @@ const ReviewContent = () => <div className='bg-yellow-300'>Review Content</div>;
 
 
 
-const AsideBAr = ({ Height }) => {
-    const modules = ['Introduction', 'What is UX Design', 'Usability testing', 'Create Usability Test', 'How to implement']
+const AsideBAr = ({ course }) => {
+    const [modules, setModules] = useState([]);
+    console.log("course")
 
-
+    useEffect(() => {
+        if (course && course.modules) {
+            setModules(course.modules);
+        }
+    }, [course]);
 
     return (
         <>
-        
-            <div className='sticky top-[10vh] bg-slate-200 w-[30%] h-[90vh] flex flex-col '>
+
+            <div className='sticky top-[10vh] bg-slate-200 w-[30%] flex flex-col '>
 
                 <div className='p-6 '>
                     <h1 className='font-plusjakartasans font-bold '>Modules List</h1>
@@ -141,17 +174,17 @@ const AsideBAr = ({ Height }) => {
                                             <div className='w-6 h-6 bg-[#C75625] text-white rounded-[5px] text-sm flex justify-center items-center'>{index + 1}</div>
                                         </div>
 
-                                        <h1 className=' text-orange-600 text-[12px] line-clamp-1'>{value}</h1>
+                                        <h1 className=' text-orange-600 text-[12px] line-clamp-1'>{value.moduleName}</h1>
                                     </div>
 
-                                    <h1 className='w-[35%] text-right text-xs text-gray-400'> 2 Sessions</h1>
+                                    <h1 className='w-[35%] text-right text-xs text-gray-400'> {value.sessions ? value.sessions.length : "0"} Sessions</h1>
 
 
                                 </div>
                             )
                         })}
 
-                        <div className='w-[90%] flex justify-center items-center bg-[#FFBB54] text-black rounded-md py-2'>Edit</div>
+                        {/* <div className='w-[90%] flex justify-center items-center bg-[#FFBB54] text-black rounded-md py-2'>Edit</div> */}
                     </div>
                 </div>
 
@@ -162,3 +195,4 @@ const AsideBAr = ({ Height }) => {
 
     )
 }
+

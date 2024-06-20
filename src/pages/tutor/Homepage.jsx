@@ -40,7 +40,7 @@ const Homepage = () => {
               isSidebarOpen={isSidebarOpen}
             />
           </div>
-          <div className="flex-1 flex"><Routes>
+          <div className=""><Routes>
             <Route path="/*" element={<Dashboard />} />
             <Route path="/content" element={<Content />} />
             <Route

@@ -1,11 +1,33 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import coursephoto from "/coursephoto.jpeg";
 import { BiSpreadsheet } from "react-icons/bi";
 import { LuTimer } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
 
 const Coursedetails = ({ height }) => {
+  const { courseId } = useParams(); 
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${baseURL}api/course/${courseId}`); 
+        setCourse(response.data); 
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching course:', error);
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchCourse();
+  }, [courseId]); // Trigger fetchCourse whenever courseId changes
+
+
+  
   const [activeTab, setActiveTab] = useState("about");
 
   const [slideDirection, setSlideDirection] = useState("left");

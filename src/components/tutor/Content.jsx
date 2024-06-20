@@ -1,16 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import coursephoto from "/coursephoto.jpeg";
 import { BiSpreadsheet } from "react-icons/bi";
 import { LuTimer } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { FaCirclePlus } from "react-icons/fa6";
-
+import { RotatingLines } from "react-loader-spinner";
 const Content = () => {
+  const baseURL = process.env.REACT_APP_API_URL;
+  const [courses, setCourses] = useState([]);
+  const [Loading, setLoading] = useState(true);
 
-  const courses = [
-    { title: "Introduction Basic SAT & DSAT" },
-    { title: "Introduction Basic SAT & DSAT" },
-  ];
+  //fetch all the courses
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${baseURL}api/course/get-all-course?page=1&pageSize=2&search=`
+        );
+        if (!response.status == 200) {
+          throw new Error("Failed to fetch courses");
+        }
+        setLoading(false);
+        const data = response.data;
+        setCourses(data.data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+    fetchCourses();
+  }, []);
 
   const data = [
     { name: "John Doe", email: "john.doe@example.com" },
@@ -59,32 +79,34 @@ const Content = () => {
   return (
     <div className="w-full flex">
       <div className="w-[70%] ">
+    <div className="w-full  flex">
+      <div className="w-[70%] ">
         <div className="p-4">
-          {/* Add Button */}
+          <div className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+            {Loading ? (
+              <RotatingLines
+                visible={true}
+                height="96"
+                width="96"
+                strokeColor="#01729c"
+                strokeWidth="2"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            ) : (
+              courses &&
+              courses.map((val, index) => {
+                return (
+                  <Link key={index} to={`/tutor/home/courses/${val._id}`}>
+                    <CourseCard course={val} index={index} />
+                  </Link>
+                );
+              })
+            )}
 
-          {/* <div className="flex justify-left py-4">
-            <Link
-              replace
-              to={`/tutor/home/content/newcourse`}
-              className="bg-[#F5F1F1]"
-            >
-              <button
-                className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
-                                    p-1 rounded-lg border-slate-600 px-2 font-plusjakartasans text-sm sm:font-semibold"
-              >
-                <FaCirclePlus className="text-slate-600 " />
-                My Courses
-              </button>
-            </Link>
-          </div> */}
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-            {courses.map((course, index) => (
-              <Link key={index} to={`/tutor/home/courses/1`}>
-                
-                <CourseCard title={course.title} />
-              </Link>
-            ))}
+            
           </div>
 
           {/* <div className="flex justify-left py-4">
@@ -144,6 +166,7 @@ const Content = () => {
       </div>
 
       <div className="w-[30%]  border-l-2">
+      <div className="w-[30%]  border-l-2">
         {/* <div className="flex justify-left py-4">
           <Link
             replace
@@ -183,7 +206,9 @@ const Content = () => {
 
 export default Content;
 
-const CourseCard = ({ title }) => {
+const CourseCard = ({ course, index }) => {
+  console.log("course in card");
+  console.log(course);
   return (
     <div className="bg-[#F4F5FB] p-4 rounded-2xl min-h-[16rem] h-auto">
       <div className="w-full rounded-lg">
@@ -196,15 +221,17 @@ const CourseCard = ({ title }) => {
       <div className="w-full mt-4">
         <div className="min-h-[3rem]">
           <h1 className="font-plusjakartasans font-semibold text-base line-clamp-2">
-            {title}
+            {course.courseName}
           </h1>
         </div>
         <div className="flex items-center gap-x-6 mt-2">
           <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
-            <BiSpreadsheet className="text-gray-400" /> 5 Modules
+            <BiSpreadsheet className="text-gray-400" /> {course.modules.length}{" "}
+            Modules
           </span>
           <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
-            <LuTimer className="text-gray-400" /> 60Hrs
+            <LuTimer className="text-gray-400" />
+            {course.trainingDuration}
           </span>
         </div>
       </div>

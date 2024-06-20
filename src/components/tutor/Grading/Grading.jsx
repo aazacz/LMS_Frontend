@@ -122,7 +122,7 @@ const Grading = () => {
       <div className="main-container">
         <div>
           <div className="heading-column-toggle-container py-2">
-            <h1 className="font-plusjakartasans text-xl font-semibold">
+            <h1 className="font-poppins text-xl font-semibold">
               Grading
             </h1>
           </div>
@@ -190,7 +190,8 @@ const Grading = () => {
             </div>
           ))}
         </div>
-      </div>
+        </div>
+  
     </div>
   );
 };

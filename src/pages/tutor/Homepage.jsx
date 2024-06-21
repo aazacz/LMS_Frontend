@@ -52,8 +52,8 @@ const Homepage = () => {
               path="/content/:courseId/newassignment"
               element={<Assignments />}
             />
-            <Route path="/content/addtest" element={<AddTest />} />
-            <Route path="/content/material" element={<Material />} />
+            <Route path="/content/:courseId/addtest" element={<AddTest />} />
+            <Route path="/content/:courseId/material" element={<Material />} />
             <Route path="/questionbank" element={<QuestionBank />} />
             <Route path="/library" element={<Library />} />
             <Route path="/students" element={<Students />} />
@@ -72,7 +72,6 @@ const Homepage = () => {
 
             <Route path="*" element={<ErrorPage />} />
           </Routes>
-          
         </div>
       </div>
     </>

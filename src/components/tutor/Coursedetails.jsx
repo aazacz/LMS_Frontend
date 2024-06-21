@@ -1,23 +1,23 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import coursephoto from "/coursephoto.jpeg";
 import { BiSpreadsheet } from "react-icons/bi";
 import { LuTimer } from "react-icons/lu";
-import { Link,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
 
 const Coursedetails = ({ height }) => {
-  const { courseId } = useParams(); 
+  const { courseId } = useParams();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${baseURL}api/course/${courseId}`); 
-        setCourse(response.data); 
+        const response = await axios.get(`${baseURL}api/course/${courseId}`);
+        setCourse(response.data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching course:', error);
+        console.error("Error fetching course:", error);
         setError(error.message);
         setLoading(false);
       }
@@ -26,8 +26,6 @@ const Coursedetails = ({ height }) => {
     fetchCourse();
   }, [courseId]); // Trigger fetchCourse whenever courseId changes
 
-
-  
   const [activeTab, setActiveTab] = useState("about");
 
   const [slideDirection, setSlideDirection] = useState("left");
@@ -91,7 +89,7 @@ const Coursedetails = ({ height }) => {
           </div>
         </div>
       </div>
-      <AsideBAr Height={height} />
+      <AsideBAr CourseId={courseId} />
     </div>
   );
 };
@@ -103,7 +101,7 @@ const ModuleContent = () => <div className="bg-green-300">Module Content</div>;
 const TestsContent = () => <div className="bg-blue-300">Tests Content</div>;
 const ReviewContent = () => <div className="bg-yellow-300">Review Content</div>;
 
-const AsideBAr = ({ Height }) => {
+const AsideBAr = ({ CourseId }) => {
   const modules = [
     "Introduction",
     "What is UX Design",
@@ -119,7 +117,7 @@ const AsideBAr = ({ Height }) => {
           <div className="flex justify-left py-4">
             <Link
               replace
-              to={`/tutor/home/content/${1}/newassignment`}
+              to={`/tutor/home/content/${CourseId}/newassignment`}
               className="bg-[#F5F1F1]"
             >
               <button
@@ -135,7 +133,7 @@ const AsideBAr = ({ Height }) => {
           <div className="flex justify-left py-4">
             <Link
               replace
-              to={`/tutor/home/content/material`}
+              to={`/tutor/home/content/${CourseId}/material`}
               className="bg-[#F5F1F1]"
             >
               <button
@@ -151,7 +149,7 @@ const AsideBAr = ({ Height }) => {
           <div className="flex justify-left py-4">
             <Link
               replace
-              to={`/tutor/home/content/addtest`}
+              to={`/tutor/home/content/${CourseId}/addtest`}
               className="bg-[#F5F1F1]"
             >
               <button

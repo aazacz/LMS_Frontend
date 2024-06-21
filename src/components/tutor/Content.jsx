@@ -123,43 +123,30 @@ const Content = () => {
             </Link>
           </div> */}
 
-          <table className=" bg-white border border-gray-200 mt-10">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 border-b">SL No</th>
-                <th className="px-4 py-2 border-b">Assignment Name</th>
-                <th className="px-4 py-2 border-b">Status</th>
-                <th className="px-4 py-2 border-b">Course</th>
-                <th className="px-4 py-2 border-b">Students</th>
-                <th className="px-4 py-2 border-b">Submission</th>
-                <th className="px-4 py-2 border-b">Reports</th>
-                <th className="px-4 py-2 border-b">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {assignments.map((assignment, index) => (
-                <tr key={assignment.id}>
-                  <td className="px-4 py-2 border-b">{index + 1}</td>
-                  <td className="px-4 py-2 border-b">{assignment.name}</td>
-                  <td className="px-4 py-2 border-b">{assignment.status}</td>
-                  <td className="px-4 py-2 border-b">{assignment.course}</td>
-                  <td className="px-4 py-2 border-b">{assignment.students}</td>
-                  <td className="px-4 py-2 border-b">
-                    {assignment.submission}
-                  </td>
-                  <td className="px-4 py-2 border-b">
-                    <Link
-                      to={`/reports/${assignment.id}`}
-                      className="text-blue-500"
-                    >
-                      {assignment.reports}
-                    </Link>
-                  </td>
-                  <td className="px-4 py-2 border-b">{assignment.action}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <table class="bg-blue-400 w-full overflow-x-auto no-scrollbar border border-gray-200 mt-10">
+  <thead>
+    <tr>
+      <th class="px-4 py-2 border-b text-left">SL No</th>
+      <th class="px-4 py-2 border-b text-left">Assignment Name</th>
+      <th class="px-4 py-2 border-b text-left">Status</th>
+      <th class="px-4 py-2 border-b text-left">Course</th>
+      <th class="px-4 py-2 border-b hidden lg:table-cell text-left">Students</th>  <th class="px-4 py-2 border-b hidden lg:table-cell text-left">Submission</th>  <th class="px-4 py-2 border-b text-left">Reports</th>
+      <th class="px-4 py-2 border-b text-left">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {assignments.map((assignment, index) => (
+      <tr key={assignment.id}>
+        <td class="px-4 py-2 border-b">{index + 1}</td>
+        <td class="px-4 py-2 border-b">{assignment.name}</td>
+        <td class="px-4 py-2 border-b">{assignment.status}</td>
+        <td class="px-4 py-2 border-b">{assignment.course}</td>
+        <td class="px-4 py-2 border-b hidden lg:table-cell">{assignment.students}</td>  <td class="px-4 py-2 border-b hidden lg:table-cell">{assignment.submission}</td>  <td class="px-4 py-2 border-b">{assignment.reports}</td>
+        <td class="px-4 py-2 border-b">{assignment.action}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
         </div>
       </div>
 

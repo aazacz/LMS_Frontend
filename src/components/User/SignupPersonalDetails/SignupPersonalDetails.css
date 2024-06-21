@@ -114,7 +114,7 @@
   transition: color 0.3s ease;
 }
 
-button[type="submit"] {
+.personal-detail-submit {
   margin-left: 35%;
   width: 30%;
   padding: 10px;
@@ -128,7 +128,7 @@ button[type="submit"] {
   transition: background-color 0.3s ease;
 }
 
-button[type="submit"]:hover {
+.personal-detail-submit:hover {
   background-color: #0062cc;
 }
 

@@ -118,7 +118,7 @@ const Grading = () => {
   ];
 
   return (
-    <div className="px-9 ">
+    <div className="px-9 w-full">
       <div className="main-container">
         <div>
           <div className="heading-column-toggle-container py-2">
@@ -157,8 +157,8 @@ const Grading = () => {
         </p>
       </div>
       <div className="assignment-detail-line"></div>
-      <div className="flex w-full gap-16  ">
-        <div className="w-[60%] assignment-detail-cards grid grid-flow-row grid-cols-1 sm:grid-cols-1 tb:grid-cols-1 tab:grid-cols-1 lg:grid-cols-3">
+      <div className="flex gap-16 ">
+        <div className="assignment-detail-cards w-[60%] grid grid-flow-row grid-cols-1 sm:grid-cols-1 tb:grid-cols-1 tab:grid-cols-1 lg:grid-cols-3">
           {assignments
             .slice(0, showAllAssignments ? assignments.length : 3)
             .map((assignment, index) => (
@@ -171,8 +171,7 @@ const Grading = () => {
               />
             ))}
         </div>
-      
-        <div className=" w-[35%] bg-[#FFF7F7] h-96 overflow-y-scroll">
+        <div className=" bg-[#FFF7F7] w-[35%] h-96 overflow-y-scroll">
           {data.map((item, index) => (
             <div
               key={index}

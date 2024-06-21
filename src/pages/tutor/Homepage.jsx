@@ -40,7 +40,7 @@ const Homepage = () => {
               isSidebarOpen={isSidebarOpen}
             />
           </div>
-          <div className=""><Routes>
+          <Routes>
             <Route path="/*" element={<Dashboard />} />
             <Route path="/content" element={<Content />} />
             <Route
@@ -52,7 +52,7 @@ const Homepage = () => {
               path="/content/:courseId/newassignment"
               element={<Assignments />}
             />
-            <Route path="/content/addtest" element={<AddTest />} />
+            <Route path="/content/:courseId/addtest" element={<AddTest />} />
             <Route path="/content/material" element={<Material />} />
             <Route path="/questionbank" element={<QuestionBank />} />
             <Route path="/library" element={<Library />} />
@@ -71,7 +71,7 @@ const Homepage = () => {
             <Route path="/settings/*" element={<Settings />} />
 
             <Route path="*" element={<ErrorPage />} />
-          </Routes></div>
+          </Routes>
           
         </div>
       </div>

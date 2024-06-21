@@ -110,7 +110,7 @@ const Content = () => {
           {/* <div className="flex justify-left py-4">
             <Link
               replace
-              to={`/tutor/home/content/newassignment`}
+              to={/tutor/home/content/newassignment}
               className="bg-[#F5F1F1]"
             >
               <button
@@ -154,7 +154,7 @@ const Content = () => {
         {/* <div className="flex justify-left py-4">
           <Link
             replace
-            to={`/tutor/home/content/material`}
+            to={/tutor/home/content/material}
             className="bg-[#F5F1F1]"
           >
             <button

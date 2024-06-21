@@ -186,7 +186,7 @@ const AsideBAr = ({ CourseId }) => {
           <div className="flex justify-left py-4">
             <Link
               replace
-              to={`/tutor/home/content/material`}
+              to={`/tutor/home/content/${CourseId}/material`}
               className="bg-[#F5F1F1]"
             >
               <button

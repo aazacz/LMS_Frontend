@@ -1,5 +1,4 @@
 .new-material-container {
-  /* border: 1px solid black; */
   padding: 10px 20px;
 }
 
@@ -22,7 +21,6 @@
 .new-material-duration {
   display: flex;
   flex-direction: column;
-  /* border: 1px solid pink; */
   width: 100%;
 }
 
@@ -37,7 +35,6 @@
 
 .new-material-name {
   border: 1.5px solid #d0d0d0;
-  /* border: 2px solid red; */
   border-radius: 5px;
   width: 100%;
   padding: 10px 10px;
@@ -52,15 +49,8 @@
   border-radius: 5px;
   font-family: "Poppins";
   padding-left: 10px;
-  /* text-align: center; */
   padding-top: 10px;
   font-size: 12px;
-}
-
-.input::placeholder {
-  display: flex;
-  justify-items: center;
-  align-items: center;
 }
 
 .file-input-material-button {
@@ -106,9 +96,55 @@
   cursor: pointer;
   padding: 15px 15px;
   font-size: 12px;
+  transition: background-color 0.3s;
+}
+
+.upload-area.dragging {
+  background-color: #e0e0e0;
 }
 
 .upload-icon {
   font-size: 30px;
   margin-bottom: 8px;
+}
+
+.file-list {
+  margin-top: 20px;
+}
+
+.file-list-title {
+  font-family: "Poppins";
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.file-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.file-list li {
+  font-family: "Poppins";
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 970px) {
+  .material-files {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 380px) {
+  .time-container {
+    flex-direction: column;
+  }
+  .file-input-material-button {
+    margin-top: -4.5%;
+  }
+  .upload-area {
+    width: 250px;
+    height: 100px;
+  }
 }

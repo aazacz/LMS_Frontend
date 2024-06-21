@@ -1,10 +1,11 @@
-import { useState, React } from "react";
+import React, { useState, useRef } from "react";
 import "./Assignments.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Assignments = () => {
+  const input = useRef();
   // const students = ["John", "Rita", "Raj"];
   const baseUrl = process.env.REACT_APP_API_URL;
   const { courseId } = useParams();
@@ -12,14 +13,19 @@ const Assignments = () => {
   const [assignmentDescription, setassignmentDescription] = useState("");
   const [file, setFile] = useState();
   const [fileName, setfileName] = useState("");
-  console.log(courseId);
+
+  const [nameError, setNameError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+  const [fileError, setFileError] = useState("");
 
   const handleNameChange = (e) => {
     setAssignmentName(e.target.value);
+    setNameError("");
   };
 
   const handleDescriptionChange = (e) => {
     setassignmentDescription(e.target.value);
+    setDescriptionError("");
   };
 
   const handleFileChange = (e) => {
@@ -27,15 +33,28 @@ const Assignments = () => {
     console.log(e.target.type);
     console.log(e.target.files[0]);
     setfileName(e.target.files[0].name);
+    setFileError("");
   };
 
   const handleSubmit = async (e) => {
+    console.log(e.target.value);
     e.preventDefault();
-    if (!file) {
-      toast.warning("Please select a file");
-      return;
+    let valid = true;
+    if (!assignmentName) {
+      setNameError("Assignment name is required");
+      valid = false;
     }
-    const fileName = `${Date.now()}-${file.name}`
+    if (!assignmentDescription) {
+      setDescriptionError("Assignment description is required");
+      valid = false;
+    }
+    if (!file) {
+      setFileError("Please select a file");
+      valid = false;
+    }
+
+    if (!valid) return;
+    const fileName = `${Date.now()}-${file.name}`;
     const formData = new FormData();
     formData.append("assignmentName", assignmentName);
     formData.append("assignmentDescription", assignmentDescription);
@@ -54,12 +73,11 @@ const Assignments = () => {
       console.log(formData.get("file")); // Check formData content
 
       const response = await axios.post(
-        `${baseUrl}api/assignments/create-assignment/66518ded2ff27c7f712064fc`,
+        `${baseUrl}api/assignments/create-assignment/${courseId}`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            "user-agent": navigator.userAgent,
             Authorization:
               "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTAyYWE4YTE0ZTdiNTM1N2UwNjhlYyIsInJvbGUiOiJ0dXRvciIsImlhdCI6MTcxNzEzMDgxOH0.yQ2kisu7irJUvntqfjK-e95yys_VCbMzriFZEcv2Dks",
           },
@@ -70,6 +88,12 @@ const Assignments = () => {
           icon: "success",
           title: "Assignment created successfully",
         });
+
+        setAssignmentName("");
+        setassignmentDescription("");
+        setFile(null);
+        setfileName("");
+        input.current.value = "";
       }
 
       console.log(response.data);
@@ -88,19 +112,24 @@ const Assignments = () => {
         <input
           type="text"
           className="new-assignment-name"
-          placeholder=""
+          placeholder="Enter Assignment Name"
           value={assignmentName}
           onChange={handleNameChange}
         />
+        {nameError && <p className="text-red-500 text-sm">{nameError}</p>}
         <p className="new-assignment-instruction">Description</p>
         <textarea
           name="postContent"
           className="new-assignment-name"
+          placeholder="Enter Assignment Description"
           rows={4}
           cols={40}
           value={assignmentDescription}
           onChange={handleDescriptionChange}
         />
+        {descriptionError && (
+          <p className="text-red-500 text-sm">{descriptionError}</p>
+        )}
         {/* 
         <p className="new-assignment-instruction">Assign To</p>
         <select
@@ -122,6 +151,7 @@ const Assignments = () => {
         <p className="new-assignment-instruction">Select Files</p>
         <div className="file-input">
           <input
+            ref={input}
             type="file"
             className="btn"
             id="file-upload"
@@ -134,6 +164,7 @@ const Assignments = () => {
             Browse
           </label>
         </div>
+        {fileError && <p className="text-red-500 text-sm">{fileError}</p>}
         <button type="submit" className="create-assignment">
           Create Assignment
         </button>

@@ -6,8 +6,8 @@ import { useParams } from "react-router-dom";
 
 const AddTest = () => {
   const baseURL = process.env.REACT_APP_API_URL;
-  const { courseId } = useParams(); 
-  const tutorId = "66502aa8a14e7b5357e068ec"; 
+  const { courseId } = useParams();
+  const tutorId = "66502aa8a14e7b5357e068ec";
 
   // Schema for the test state
   const initialTestState = {
@@ -31,9 +31,10 @@ const AddTest = () => {
     timeSlot: "",
   };
 
+  // 
   const [test, setTest] = useState(initialTestState);
 
-  
+
 
   //cancel
   const cancelForm = () => {
@@ -57,11 +58,8 @@ const AddTest = () => {
     });
   };
 
-  // useEffect(() => {
-  //   console.log(test, "from UseEffect");
-  // }, [test]);
 
-  
+
   //concatenate questions
   const handleQuestionInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -110,7 +108,7 @@ const AddTest = () => {
       ],
     }));
   };
-  
+
   //validate if all the fields are filled
   const validateTest = (test) => {
     if (!test.title || !test.title.trim()) { // Check for empty or whitespace-only title
@@ -125,7 +123,7 @@ const AddTest = () => {
     if (!test.timeSlot) { // Check for existence of timeslot
       return false;
     }
-  
+
     for (let question of test.questions) {
       if (!question.question || !question.question.trim()) { // Check for empty or whitespace-only question
         return false;
@@ -139,7 +137,7 @@ const AddTest = () => {
         }
       }
     }
-  
+
     return true;
   };
   //submisson of the test
@@ -157,7 +155,7 @@ const AddTest = () => {
     try {
       const response = await axios.post(
         `${baseURL}api/diagnosis/create-course-test`,
-       test
+        test
       );
       // console.log("Test created successfully:", response.data);
       setTest(initialTestState);
@@ -180,7 +178,7 @@ const AddTest = () => {
     }
   };
 
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setTest((prevState) => ({
@@ -197,7 +195,7 @@ const AddTest = () => {
     "1.5 hour": 90,
     "2 hour": 120,
   };
-  
+
   const handleDurationChange = (e) => {
     setTest((prevState) => ({
       ...prevState,
@@ -296,23 +294,20 @@ const AddTest = () => {
             </div>
 
             {question.choices.map((choice, cIndex) => (
-              <div
-                key={cIndex}
-                className={`flex items-center gap-x-2 px-2 rounded-md  `}
-              >
+              <div key={cIndex} className={`flex items-center gap-x-2 px-2 rounded-md  `}>
+
                 <input
                   name="choiceText"
                   value={choice.choiceText}
                   onChange={(e) => handleChoiceInputChange(e, qIndex, cIndex)}
                   type="text"
                   placeholder={`Choice ${cIndex + 1}`}
-                  className="w-full h-10 bg-white border-[2px] text-sm rounded shadow-lg px-3 mt-2  focus:outline-blue-900"
+                  className="w-full  h-10 bg-white border-[2px] border-gray-500 text-sm rounded shadow-lg px-3 mt-2  focus:outline-blue-900"
                 />
-                <div
-                  className={`flex w-20  justify-between shadow-[0_3px_10px_rgb(0,0,0,0.2)] ${getBackgroundColor(
-                    choice.isCorrect
-                  )} px-2 rounded-sm `}
-                >
+
+                <div className={`flex w-20 mt-2 py-2 justify-between  shadow-[0_3px_10px_rgb(0,0,0,0.2)] ${getBackgroundColor(
+                  choice.isCorrect)} px-2 rounded-md  `} >
+
                   <input
                     className="w-[20%] "
                     type="checkbox"
@@ -322,9 +317,9 @@ const AddTest = () => {
                     {choice.isCorrect ? "True" : "False"}
                   </label>
                 </div>
-                
+
               </div>
-              
+
             ))}
             <div className="w-full">
               <label className="text-sm font-semibold">Why is Incorrect</label>

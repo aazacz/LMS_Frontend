@@ -7,14 +7,14 @@ import { useSelector } from 'react-redux';
 
 
 const HomeRoutes = () => {
-    const user = useSelector((state) => state.token.user)
+    const user = useSelector((state) => state.AdminDetails.token)
 
     return (
 
 
         <Routes>
 
-            {/* <Route path="/" element={user ? <Navigate to="/admin/home" /> : <AdminLogin />} /> */}
+            <Route path="/" element={user ? <Navigate to="/admin/home" /> : <AdminLogin />} />
             {/* <Route path="/" element={ <Navigate to="/admin/home" />     } /> */}
             <Route path="/home/*" element={<Homepage />} />
 

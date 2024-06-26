@@ -10,7 +10,7 @@ import "./AdminNavbar.css"
 const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
   const [show, setShow] = useState(false)
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userDetails);
+  const user = useSelector((state) => state.AdminDetails);
 
   console.log(user);
 
@@ -21,7 +21,7 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
 
       {/* ___________________NAVBAR STARTS HERE________________________  */}
 
-      <div className='navbar-container md:px-4  px-2 flex-1 w-full h-[10vh]  border-b-[1px] flex items-center md:py-8 py-5  z-50 bg-white     '>
+      <div className='navbar-container md:px-4  px-2 sticky top-0 w-full h-[10vh]  border-b-[1px] flex justify-between items-center md:py-8 py-5   bg-white     '>
 
         {/*_________________ left side____________________ */}
         <div className='w-[60%]  font-poppins relative'>
@@ -57,7 +57,7 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
           
             {/* Admin NAME EMAIL AND PROFILE PHOTO */}
             <div className='flex-1  h-auto md:flex md:flex-row  items-center flex-col  hidden'>
-              <img className=' rounded-full object-cover overflow-hidden md:w-[42px] md:h-[42px] w-[20px] ' src={`${user.userImg}`} alt="" />
+              <img className=' rounded-full object-cover overflow-hidden md:w-[42px] md:h-[42px] w-[20px] ' src={user.userImg} alt="" />
               <div className='flex items-center'>
             
                 <div className='md:px-3'>

@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
 import { FaBars, FaBedPulse } from "react-icons/fa6";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { PiCirclesFourFill } from "react-icons/pi";
-import { clearUserDetails } from '../../store/reducers/loginSlice';
+import { clearTutorDetails } from '../../store/reducers/TutorloginSlice';
 import { clearToken } from '../../store/reducers/tokenSlice';
 import { persistor } from "../../store/index"
 import { useDispatch } from 'react-redux';
 import mindsatlogo from "../../assets/mindsatlogo.webp"
-
+import Swal from 'sweetalert2';
 
 const Sidebar = ({ isOpen }) => {
 
     const location = useLocation();
     const dispatch = useDispatch();
+    const navigate = useNavigate(); // Hook for navigation
+
 
     const handleLogout = () => {
         dispatch(clearToken());

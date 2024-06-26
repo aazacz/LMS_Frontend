@@ -10,7 +10,7 @@ import "./Addcourse.css"
 const AddCourse = () => {
 
   const navigate = useNavigate();
-  const token = useSelector((state) => state.token.token);
+  const token = useSelector((state) => state.AdminDetails.token);
   const baseURL = process.env.REACT_APP_API_URL;
 
   const [errors, setErrors] = useState({});

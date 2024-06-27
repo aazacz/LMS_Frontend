@@ -3,8 +3,6 @@ import './App.css'
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import AdminRoutes from './routes/AdminRoutes';
-import { setUserDetails } from './store/reducers/loginSlice';
-import { setToken } from './store/reducers/tokenSlice';
 import ErrorPage from './pages/ErrorPage';
 import UserRoutes from './routes/UserRoutes';
 import TutorRoutes from './routes/TutorRoutes';

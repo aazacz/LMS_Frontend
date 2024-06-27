@@ -7,7 +7,7 @@ import usePasswordToggle from "../../hooks/usePasswordToggle";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { setUserDetails } from "../../store/reducers/loginSlice";
+import { setStudentDetails } from "../../store/reducers/StudentloginSlice";
 import { setToken } from "../../store/reducers/tokenSlice";
 import studentLoginimage from "/studentLoginimage.png";
 
@@ -40,10 +40,10 @@ const Signup = () => {
       );
       console.log(res.data);
       toast.success("Login Successful");
-      dispatch(setToken(res.data)); //Saving the token in redux
-      dispatch(
-        setUserDetails({ ...(data || []) }) //Saving the USER DETAILS in redux
-      );
+      // dispatch(setToken(res.data)); //Saving the token in redux
+      // dispatch(
+      //   setUserDetails({ ...(data || []) }) //Saving the USER DETAILS in redux
+      // );
       if (role === "admin") {
         navigate("/admin/home");
       }

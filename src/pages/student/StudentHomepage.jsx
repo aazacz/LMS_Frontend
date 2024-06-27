@@ -18,7 +18,7 @@ import Checkout from '../../components/User/Checkout';
 
 const StudentHomepage = ({User}) => {
 
-    const user = useSelector((state) => state.token.user)
+    const user = useSelector((state) => state.StudentDetails.token)
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {

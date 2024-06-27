@@ -6,7 +6,7 @@ import axios from "axios";
 import usePasswordToggle from '../../hooks/usePasswordToggle';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUserDetails } from '../../store/reducers/loginSlice';
+import { setStudentDetails } from '../../store/reducers/StudentloginSlice';
 import { setToken } from '../../store/reducers/tokenSlice';
 import studentLoginimage from "/studentLoginimage.png";
 import UserNavbar from '../../components/User/UserNavbar';

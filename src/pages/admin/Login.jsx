@@ -7,7 +7,7 @@ import usePasswordToggle from '../../hooks/usePasswordToggle';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
-import { setUserDetails } from '../../store/reducers/loginSlice';
+import { setAdminDetails } from '../../store/reducers/AdminloginSlice';
 import { setToken } from '../../store/reducers/tokenSlice';
 import adminBg from "/adminBg.jpg"
 import Logo from "/Logoo.png"
@@ -28,50 +28,42 @@ const AdminLogin = () => {
     const onSubmit = async (data, e) => {
         e.preventDefault()
         try {
-
-
             setIsSubmitting(true);
 
             const res = await axios.post(`${baseURL}api/admin/login`, data,
-
                 {
                     "user-agent": navigator.userAgent,
                 },
             )
             console.log(res.data);
             toast.success("Login Successful")
-            dispatch(setToken(res.data))   //Saving the token in redux  
-            dispatch(
-                setUserDetails({ ...data || [] }) //Saving the USER DETAILS in redux  
-            )
-            if (role === "admin") {
+            dispatch(setAdminDetails(res.data || []))
+            if (res.data.role === "admin") {
                 navigate("/admin/home")
             }
         } catch (error) {
             setIsSubmitting(false);
-            toast.error(error.response.data.error)
-            console.log(error.response.data.error);
+            toast.error(error.message)
             console.log(error.message);
-            console.log(error.response);
-        }
 
+        }
     };
 
     useEffect(() => {
 
     }, [isSubmitting])
 
-    
+
     // bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400
     return (
         <>
             <div className="min-h-screen flex items-center justify-center flex-col ">
-    <img src={adminBg} className='fixed -z-10 top-0 left-0 w-screen h-screen blur-sm ' alt="" />
-             
+              
+                <img src={adminBg} className='fixed -z-10 top-0 left-0 w-screen h-screen blur-sm ' alt="" />
                 <img className='absolute w-60 top-10 right-12 backdrop-blur-lg  bg-white px-8 py-4 bg-opacity-50 ' src={Logo} alt="" />
                 <img className='absolute w-60 top-10 right-12    bg-opacity-100 px-8 py-4 ' src={Logo} alt="" />
-             
-             
+
+
                 <div className=" bg-white  rounded-lg shadow-lg w-full max-w-md">
                     <div className=' h-[20%] py-3 bg-rose-900 rounded-t-lg flex items-center justify-center' >
                         <h2 className="text-2xl font-plusjakartasans font-bold  text-white text-center">Admin Login</h2>
@@ -120,7 +112,7 @@ const AdminLogin = () => {
                                  shadow-sm text-sm font-medium text-white  hover:bg-blue-700 
                                  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
                             >
-                                {isSubmitting ? "Verifying...":"Login"}
+                                {isSubmitting ? "Verifying..." : "Login"}
                             </button>
                         </div>
                     </form>

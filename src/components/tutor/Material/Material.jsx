@@ -29,7 +29,7 @@ const Material = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          `${baseUrl}api/course/get-all-course?page=1&pageSize=2&search=`
+          `${baseUrl}api/course/get-all-course-name?page=1&pageSize=&search=`
         );
         if (response.status !== 200) {
           throw new Error("Failed to fetch courses");

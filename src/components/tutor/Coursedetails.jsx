@@ -31,7 +31,7 @@ const Coursedetails = ({ height }) => {
         setLoading(false);
       }
     };
-z
+
     fetchCourse();
   }, [courseId]);
 
@@ -94,10 +94,10 @@ z
           </div>
 
           <div className="relative mt-4 overflow-hidden h-64">
-            {activeTab === "about" && <AboutContent about={course?.description} />}
-            {activeTab === "modules" && <ModuleContent modules={course?.modules} />}
-            {activeTab === "tests" && <TestsContent tests={course?.tests} />}
-            {activeTab === "review" && <ReviewContent review={course?.review} />}
+            {activeTab === "about"    && <AboutContent    about   = {course?.description} />}
+            {activeTab === "modules"  && <ModuleContent   modules = {course?.modules} />}
+            {activeTab === "tests"    && <TestsContent    tests   = {course?.tests} />}
+            {activeTab === "review"   && <ReviewContent   review  = {course?.review} />}
           </div>
         </div>
       )}

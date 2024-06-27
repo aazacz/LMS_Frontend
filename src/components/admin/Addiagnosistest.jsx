@@ -4,6 +4,9 @@ import { FiPlusCircle } from "react-icons/fi";
 import Swal from "sweetalert2";
 
 const Addiagnosistest = () => {
+
+const baseUrl = process.env.REACT_APP_API_URL;
+
   // Schema for the test state
   const initialTestState = {
     title: "",
@@ -13,10 +16,10 @@ const Addiagnosistest = () => {
       {
         question: "",
         choices: [
-          { choiceText: "", isCorrect: true },
-          { choiceText: "", isCorrect: true },
-          { choiceText: "", isCorrect: true },
-          { choiceText: "", isCorrect: true },
+          { choiceText: "", isCorrect: false },
+          { choiceText: "", isCorrect: false },
+          { choiceText: "", isCorrect: false },
+          { choiceText: "", isCorrect: false },
         ],
         whyIsIncorrect: "",
       },
@@ -75,6 +78,7 @@ const Addiagnosistest = () => {
     setTest({ ...test, questions: updatedQuestions });
   };
 
+  //handle correct and incorrect answers
   const handleIsCorrectChange = (e, questionIndex, choiceIndex) => {
     const { checked } = e.target;
     console.log(checked);
@@ -108,7 +112,7 @@ const Addiagnosistest = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     console.log(test);
-    axios.post();
+    axios.post(`${baseUrl}api/diagnosis/create-diagnosis`);
   };
 
   //helper function to change the background colour of the checkbox button

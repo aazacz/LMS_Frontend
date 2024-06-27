@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 const AddTutor = () => {
     const navigate = useNavigate();
     const baseURL = process.env.REACT_APP_API_URL;
-    const token = useSelector((state)=>state.token.token)
+    const token = useSelector((state)=>state.AdminDetails.token)
 
     // STATES USED 
     const [isClicked, setIsClicked] = useState(false);

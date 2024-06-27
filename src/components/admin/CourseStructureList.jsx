@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import { FaCirclePlus } from 'react-icons/fa6';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import Loader from '../reusable/Loader'; // Ensure Loader is correctly imported
+import Loader from '../reusable/Loader';
 import { RotatingLines } from 'react-loader-spinner';
 
-const CourseList = () => {
+const CourseStructureList = () => {
     const baseUrl = process.env.REACT_APP_API_URL;
     const token = useSelector((state) => state.AdminDetails.token);
     const [courses, setCourses] = useState([]);
@@ -19,7 +19,7 @@ const CourseList = () => {
         const getdata = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get(`${baseUrl}api/course/get-all-course?page=1&pageSize=2&search=`, {
+                const response = await axios.get(`${baseUrl}api/structure/get-all-structure?page=1&pageSize=10&search=`, {
                     headers: { authorization: `Bearer ${token}` }
                 });
                 console.log(response.data.data);
@@ -28,12 +28,11 @@ const CourseList = () => {
             } catch (err) {
                 console.log(err);
                 setLoading(true);
-            } 
+            }
         };
 
         getdata();
     }, [baseUrl, token]);
-
     return (
 
         <>
@@ -51,24 +50,28 @@ const CourseList = () => {
                     wrapperClass=""
                 />
 
-            </div>) : (<div className='p-4'>
-                {/* Add Button */}
-                <div className='flex justify-end py-4'>
+            </div>) : 
+            (<div className=' p-4'>
+
+
+
+                {/* heading and button div */}
+                <div className=' flex justify-between py-2 border-b-2'>
+                    <h1 className='font-poppins font-semibold text-2xl '>Course Structure</h1>
+
                     <Link replace to={`/admin/home/courses/addcourse`} className='bg-[#F5F1F1]'>
-                        <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
-                                    p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
-                            <FaCirclePlus className='text-slate-600 ' />
-                            Add Course
-                        </button>
+                        <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
+                            <FaCirclePlus className='text-slate-600 ' />     Add Course          </button>
                     </Link>
+
                 </div>
 
-                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+                <div className='grid grid-cols-1 mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                     {loading ? (
                         <Loader />
                     ) : (
                         courses.map((course, index) => (
-                            <Link key={index} to={`/admin/home/courses/${course._id}`}>
+                            <Link key={index} to={`/admin/home/coursestructure/${course._id}`}>
                                 <CourseCard course={course} />
                             </Link>
                         ))
@@ -78,10 +81,15 @@ const CourseList = () => {
 
 
         </>
-    );
-};
+    )
+}
 
-export default CourseList;
+export default CourseStructureList
+
+
+
+
+
 
 const CourseCard = ({ course }) => {
     return (

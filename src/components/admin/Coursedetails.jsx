@@ -10,7 +10,7 @@ import Loader from '../reusable/Loader';
 const Coursedetails = ({ height }) => {
 
     const baseUrl = process.env.REACT_APP_API_URL;
-    const token = useSelector((state) => state.token.token);
+    const token = useSelector((state) => state.AdminDetails.token);
 
 
     const [Course, SetCourse] = useState()

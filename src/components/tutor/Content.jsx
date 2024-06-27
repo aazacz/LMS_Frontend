@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { FaCirclePlus } from "react-icons/fa6";
 import { RotatingLines } from "react-loader-spinner";
+
 const Content = () => {
   const baseURL = process.env.REACT_APP_API_URL;
   const [courses, setCourses] = useState([]);
@@ -17,7 +18,7 @@ const Content = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${baseURL}api/course/get-all-course?page=1&pageSize=2&search=`
+          `${baseURL}api/course/get-all-course?page=1&pageSize=&search=`
         );
         if (!response.status == 200) {
           throw new Error("Failed to fetch courses");
@@ -32,16 +33,16 @@ const Content = () => {
     fetchCourses();
   }, []);
 
-  const data = [
-    { name: "John Doe", email: "john.doe@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    // ... more items
-  ];
+  // const data = [
+  //   { name: "John Doe", email: "john.doe@example.com" },
+  //   { name: "Jane Smith", email: "jane.smith@example.com" },
+  //   { name: "Jane Smith", email: "jane.smith@example.com" },
+  //   { name: "Jane Smith", email: "jane.smith@example.com" },
+  //   { name: "Jane Smith", email: "jane.smith@example.com" },
+  //   { name: "Jane Smith", email: "jane.smith@example.com" },
+  //   { name: "Jane Smith", email: "jane.smith@example.com" },
+  //   // ... more items
+  // ];
 
   const assignments = [
     {
@@ -77,103 +78,62 @@ const Content = () => {
   ];
 
   return (
-    <div className="w-full  flex">
-      <div className="w-[70%] ">
+    <div className="w-full flex">
+      {Loading && <FullscreenLoader />}
+      <div className="w-[100%]">
         <div className="p-4">
-          <div className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-            {Loading ? (
-              <RotatingLines
-                visible={true}
-                height="96"
-                width="96"
-                strokeColor="#01729c"
-                strokeWidth="2"
-                animationDuration="0.75"
-                ariaLabel="rotating-lines-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-              />
-            ) : (
-              courses &&
-              courses.map((val, index) => {
-                return (
-                  <Link key={index} to={`/tutor/home/courses/${val._id}`}>
-                    <CourseCard course={val} index={index} />
-                  </Link>
-                );
-              })
-            )}
-
-            
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {courses &&
+              courses.map((val, index) => (
+                <Link key={index} to={`/tutor/home/courses/${val._id}`}>
+                  <CourseCard course={val} index={index} />
+                </Link>
+              ))}
           </div>
 
-          {/* <div className="flex justify-left py-4">
-            <Link
-              replace
-              to={/tutor/home/content/newassignment}
-              className="bg-[#F5F1F1]"
-            >
-              <button
-                className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
-                                    p-1 rounded-lg border-slate-600 px-2 font-plusjakartasans text-sm sm:font-semibold"
-              >
-                <FaCirclePlus className="text-slate-600 " />
-                Assignments
-              </button>
-            </Link>
-          </div> */}
-
-          <table class="bg-blue-400 w-full overflow-x-auto no-scrollbar border border-gray-200 mt-10">
-  <thead>
-    <tr>
-      <th class="px-4 py-2 border-b text-left">SL No</th>
-      <th class="px-4 py-2 border-b text-left">Assignment Name</th>
-      <th class="px-4 py-2 border-b text-left">Status</th>
-      <th class="px-4 py-2 border-b text-left">Course</th>
-      <th class="px-4 py-2 border-b hidden lg:table-cell text-left">Students</th>  <th class="px-4 py-2 border-b hidden lg:table-cell text-left">Submission</th>  <th class="px-4 py-2 border-b text-left">Reports</th>
-      <th class="px-4 py-2 border-b text-left">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {assignments.map((assignment, index) => (
-      <tr key={assignment.id}>
-        <td class="px-4 py-2 border-b">{index + 1}</td>
-        <td class="px-4 py-2 border-b">{assignment.name}</td>
-        <td class="px-4 py-2 border-b">{assignment.status}</td>
-        <td class="px-4 py-2 border-b">{assignment.course}</td>
-        <td class="px-4 py-2 border-b hidden lg:table-cell">{assignment.students}</td>  <td class="px-4 py-2 border-b hidden lg:table-cell">{assignment.submission}</td>  <td class="px-4 py-2 border-b">{assignment.reports}</td>
-        <td class="px-4 py-2 border-b">{assignment.action}</td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+          <table className=" w-full overflow-x-auto no-scrollbar border border-gray-200 mt-10">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 border-b text-left">SL No</th>
+                <th className="px-4 py-2 border-b text-left">Assignment Name</th>
+                <th className="px-4 py-2 border-b text-left">Status</th>
+                <th className="px-4 py-2 border-b text-left">Course</th>
+                <th className="px-4 py-2 border-b hidden lg:table-cell text-left">Students</th>
+                <th className="px-4 py-2 border-b hidden lg:table-cell text-left">Submission</th>
+                <th className="px-4 py-2 border-b text-left">Reports</th>
+                <th className="px-4 py-2 border-b text-left">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {assignments.map((assignment, index) => (
+                <tr key={assignment.id}>
+                  <td className="px-4 py-2 border-b">{index + 1}</td>
+                  <td className="px-4 py-2 border-b">{assignment.name}</td>
+                  <td className="px-4 py-2 border-b">{assignment.status}</td>
+                  <td className="px-4 py-2 border-b">{assignment.course}</td>
+                  <td className="px-4 py-2 border-b hidden lg:table-cell">
+                    {assignment.students}
+                  </td>
+                  <td className="px-4 py-2 border-b hidden lg:table-cell">
+                    {assignment.submission}
+                  </td>
+                  <td className="px-4 py-2 border-b">{assignment.reports}</td>
+                  <td className="px-4 py-2 border-b">{assignment.action}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      <div className="w-[30%]  border-l-2">
-        {/* <div className="flex justify-left py-4">
-          <Link
-            replace
-            to={/tutor/home/content/material}
-            className="bg-[#F5F1F1]"
-          >
-            <button
-               className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
-                                    p-1 rounded-lg border-slate-600 px-2 font-plusjakartasans text-sm sm:font-semibold"
-            >
-              <FaCirclePlus className="text-slate-600 " />
-              Assignment Materials
-            </button>
-          </Link>
-        </div> */}
-
+      {/* <div className="w-[30%] border-l-2">
         <div className="pl-5">
           {data.map((item, index) => (
             <div
               key={index}
               className="w-[90%] h-max flex justify-start items-start p-2"
             >
-              <div className="w-80 flex flex-row items-center border-[1px] border-black p-2 rounded ">
+              <div className="w-80 flex flex-row items-center border-[1px] border-black p-2 rounded">
                 <div className="w-10 h-10 rounded-full border-[1px] border-black"></div>
                 <div className="flex flex-col ml-2 justify-start items-start text-xs">
                   <p>{item.name}</p>
@@ -183,15 +143,28 @@ const Content = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
 
 export default Content;
 
-const CourseCard = ({ course, index }) => {
+const FullscreenLoader = () => (
+  <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-100 z-50">
+    <RotatingLines
+      visible={true}
+      height="96"
+      width="96"
+      strokeColor="#01729c"
+      strokeWidth="2"
+      animationDuration="0.75"
+      ariaLabel="rotating-lines-loading"
+    />
+  </div>
+);
 
+const CourseCard = ({ course, index }) => {
   return (
     <div className="bg-[#F4F5FB] p-4 rounded-2xl min-h-[16rem] h-auto">
       <div className="w-full rounded-lg">

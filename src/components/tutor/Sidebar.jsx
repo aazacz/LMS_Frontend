@@ -45,6 +45,11 @@ const Sidebar = ({ isOpen }) => {
             icon: <PiCirclesFourFill />
         },
         {
+            title: "Materials",
+            path: "/tutor/home/allmaterials",
+            icon: <PiCirclesFourFill />
+        },
+        {
             title: "Insights",
             path: "/tutor/home/insights",
             icon: <PiCirclesFourFill />
@@ -54,6 +59,7 @@ const Sidebar = ({ isOpen }) => {
             path: "/tutor/home/settings",
             icon: <PiCirclesFourFill />
         },
+      
     ];
 
     return (

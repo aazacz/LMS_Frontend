@@ -82,7 +82,7 @@ const Coursedetails = ({ height }) => {
               </div>
             </div>
 
-            <div className="w-full bg-blue-400 mt-4 relative ">
+            <div className="w-full mt-4 relative ">
               <div className="flex w-full gap-x-6 px-2">
                 {["about", "modules", "tests", "review"].map((tab, index) => (
                   <button
@@ -152,7 +152,13 @@ const AsideBAr = ({ CourseId }) => {
       try {
         // Replace with your actual API endpoint
         const response = await axios.get(
-          `${baseURL}api/course/get-course/${CourseId}`
+          `${baseURL}api/course/get-course/${CourseId}`,
+          {
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTAyYWE4YTE0ZTdiNTM1N2UwNjhlYyIsInJvbGUiOiJ0dXRvciIsImlhdCI6MTcxNzEzMDgxOH0.yQ2kisu7irJUvntqfjK-e95yys_VCbMzriFZEcv2Dks",
+            },
+          }
         );
         setModules(response.data.modules);
       } catch (error) {
@@ -229,19 +235,19 @@ const AsideBAr = ({ CourseId }) => {
                     <div className="w-6 h-6 bg-[#C75625] text-white rounded-[5px] text-sm flex justify-center items-center">
                       {moduleIndex + 1}
                     </div>
-                    <h1 className="text-orange-600 text-[14px] line-clamp-1">
+                    <h1 className="text-orange-600 text-[12px]">
                       {module.moduleName}
                     </h1>
                   </div>
-                  <h1 className="w-[35%] text-right text-xs text-gray-400">
+                  <h1 className="w-[full] text-right text-[10px] text-gray-600">
                     {module.sessions.length} {module.sessions.length === 1 ? 'Session' : 'Sessions'}
                   </h1>
                 </div>
-                <div className="flex flex-col ml-10">
+                <div className="flex flex-col ml-2">
                   {module.sessions.map((session, sessionIndex) => (
                     <div key={session._id} className="flex justify-between items-center py-2">
                       <div className="flex gap-x-3 items-center w-[65%]">
-                        <div className="w-6 h-6 bg-[#FFBB54] text-white rounded-[5px] text-sm flex justify-center items-center">
+                        <div className="w-4 h-4 bg-[#FFBB54] text-white rounded-[5px] text-[10px] flex justify-center items-center">
                           {sessionIndex + 1}
                         </div>
                         <h1 className="text-gray-600 text-[12px] line-clamp-1">

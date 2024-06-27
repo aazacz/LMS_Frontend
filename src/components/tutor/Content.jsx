@@ -17,7 +17,13 @@ const Content = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${baseURL}api/course/get-all-course?page=1&pageSize=2&search=`
+          `${baseURL}api/course/get-all-course?page=1&pageSize=&search=`,
+          {
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTAyYWE4YTE0ZTdiNTM1N2UwNjhlYyIsInJvbGUiOiJ0dXRvciIsImlhdCI6MTcxNzEzMDgxOH0.yQ2kisu7irJUvntqfjK-e95yys_VCbMzriFZEcv2Dks",
+            },
+          }
         );
         if (!response.status == 200) {
           throw new Error("Failed to fetch courses");
@@ -32,16 +38,6 @@ const Content = () => {
     fetchCourses();
   }, []);
 
-  const data = [
-    { name: "John Doe", email: "john.doe@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    // ... more items
-  ];
 
   const assignments = [
     {
@@ -78,9 +74,9 @@ const Content = () => {
 
   return (
     <div className="w-full  flex">
-      <div className="w-[70%] ">
+      <div className="w-full ">
         <div className="p-4">
-          <div className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {Loading ? (
               <RotatingLines
                 visible={true}
@@ -150,7 +146,7 @@ const Content = () => {
         </div>
       </div>
 
-      <div className="w-[30%]  border-l-2">
+
         {/* <div className="flex justify-left py-4">
           <Link
             replace
@@ -166,24 +162,7 @@ const Content = () => {
             </button>
           </Link>
         </div> */}
-
-        <div className="pl-5">
-          {data.map((item, index) => (
-            <div
-              key={index}
-              className="w-[90%] h-max flex justify-start items-start p-2"
-            >
-              <div className="w-80 flex flex-row items-center border-[1px] border-black p-2 rounded ">
-                <div className="w-10 h-10 rounded-full border-[1px] border-black"></div>
-                <div className="flex flex-col ml-2 justify-start items-start text-xs">
-                  <p>{item.name}</p>
-                  <p className="text-gray-500">{item.email}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+   
     </div>
   );
 };

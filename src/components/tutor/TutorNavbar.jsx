@@ -11,6 +11,7 @@ const TutorNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.TutorDetails);
 
+  console.log("user from tutor Navbar");
   console.log(user);
 
   return (

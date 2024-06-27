@@ -9,6 +9,8 @@ import Loader from '../reusable/Loader';
 import { FaCirclePlus } from 'react-icons/fa6';
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
+import Swal from 'sweetalert2';
+import { PiWarningFill } from 'react-icons/pi';
 
 const CourseStructureDetails = ({ height }) => {
 
@@ -175,9 +177,43 @@ const ReviewContent = () => {
 
 const AsideBAr = ({ course }) => {
 
+
+
+
+const handleDeleteCourse=()=>{
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        iconHtml: <PiWarningFill  className='text-red-700'/> ,
+        timer: 2000,
+        timerProgressBar: true,
+        showCancelButton: true,
+        confirmButtonColor: "#eb5048",
+        cancelButtonColor: "#878ca7",
+        confirmButtonText: "Delete Course Structure!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+
+
+
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          });
+        }
+      });
+
+}
+
+
+
+
+
     return (
         <>
-            <div className="  -z-10 top-[10vh] bg-slate-200  h-full flex flex-col ">
+            <div className="  -z-10 top-[10vh] pb-8 bg-slate-200  h-full flex flex-col justify-between ">
                 <div className="p-4 ">
 
                     <div className=" rounded-lg flex flex-col   items-center">
@@ -254,6 +290,27 @@ const AsideBAr = ({ course }) => {
 
                     </div>
                 </div>
+
+
+{/* Delete Button */}
+
+<div className='w-full h-7 px-4 '>
+
+    <div className='cursor-pointer
+                    w-full h-8 rounded-xl
+                    flex justify-center 
+                    items-center text-base 
+                    font-semibold font-poppins 
+                    border-[1px] text-red-700 
+                    border-red-600  bg-opacity-30 
+                    bg-red-500 '
+        onClick={handleDeleteCourse}            
+                    >
+        <h1>Delete Course Structure</h1>
+    </div>
+
+</div>
+
             </div>
         </>
     );

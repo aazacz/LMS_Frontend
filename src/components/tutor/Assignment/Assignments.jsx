@@ -84,6 +84,7 @@ const Assignments = () => {
           },
         }
       );
+      console.log("Here are the assignment details:",formData)
       if (response.data.message === "Assignment created successfully") {
         Swal.fire({
           icon: "success",

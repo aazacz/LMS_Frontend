@@ -19,6 +19,7 @@ import Grading from "../../components/tutor/Grading/Grading";
 import Library from "../../components/tutor/Library";
 import GradingAssignment from "../../components/tutor/GradingAssignment";
 import MarksGrading from "../../components/tutor/MarksGrading";
+import AllMaterials from "../../components/tutor/AllMaterials";
 
 const Homepage = () => {
   const divRef = useRef(null);
@@ -69,6 +70,7 @@ const Homepage = () => {
             />
             <Route path="/insights" element={<Insights />} />
             <Route path="/settings/*" element={<Settings />} />
+            <Route path="/allmaterials" element={<AllMaterials />} />
 
             <Route path="*" element={<ErrorPage />} />
           </Routes>

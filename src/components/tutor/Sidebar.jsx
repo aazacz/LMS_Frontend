@@ -1,22 +1,41 @@
-import React, { useState } from 'react'
-import { FaBars, FaBedPulse } from "react-icons/fa6";
+import React from 'react'
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { PiCirclesFourFill } from "react-icons/pi";
-import { clearTutorDetails } from '../../store/reducers/TutorloginSlice';
 import { clearToken } from '../../store/reducers/tokenSlice';
 import { persistor } from "../../store/index"
 import { useDispatch } from 'react-redux';
 import mindsatlogo from "../../assets/mindsatlogo.webp"
 import Swal from 'sweetalert2';
+import { clearTutorDetails } from '../../store/reducers/TutorloginSlice';
+
 
 const Sidebar = ({ isOpen }) => {
 
     const location = useLocation();
     const dispatch = useDispatch();
-    const navigate = useNavigate(); // Hook for navigation
+    const navigate = useNavigate(); 
 
 
     const handleLogout = () => {
+        Swal.fire({
+            title: 'Do you want to Logout?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: 'No',
+            customClass: {
+                actions: 'my-actions',
+                confirmButton: 'my-confirm-button',
+                denyButton: 'my-deny-button',
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(clearTutorDetails()); // Clear admin details
+                navigate("/tutor"); // Navigate to login page
+            }
+        });
+
+
+
         dispatch(clearToken());
     };
 

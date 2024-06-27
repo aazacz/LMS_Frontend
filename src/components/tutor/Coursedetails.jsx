@@ -101,13 +101,26 @@ const Coursedetails = ({ height }) => {
           </div>
         </div>
       )}
-
       <AsideBAr courseId={courseId} course={course?.modules} />
     </div>
   );
 };
 
 export default Coursedetails;
+
+const FullscreenLoader = () => (
+  <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-100 z-50">
+    <RotatingLines
+      visible={true}
+      height="96"
+      width="96"
+      strokeColor="#01729c"
+      strokeWidth="2"
+      animationDuration="0.75"
+      ariaLabel="rotating-lines-loading"
+    />
+  </div>
+);
 
 const AboutContent = ({ about }) => {
   return <div className="font-poppins">{about}</div>;

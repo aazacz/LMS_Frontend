@@ -9,6 +9,7 @@ const Assignments = () => {
   // const students = ["John", "Rita", "Raj"];
   const baseUrl = process.env.REACT_APP_API_URL;
   const { courseId } = useParams();
+  console.log(courseId)
   const [assignmentName, setAssignmentName] = useState("");
   const [assignmentDescription, setassignmentDescription] = useState("");
   const [file, setFile] = useState();
@@ -37,7 +38,7 @@ const Assignments = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     e.preventDefault();
     let valid = true;
     if (!assignmentName) {
@@ -61,10 +62,10 @@ const Assignments = () => {
     formData.append("fileName", fileName);
     formData.append("file", file);
 
-    console.log(formData.get("assignmentName")); // Check formData content
-    console.log(formData.get("assignmentDescription")); // Check formData content
-    console.log(formData.get("fileName")); // Check formData content
-    console.log(formData.get("file")); // Check formData content
+    // console.log(formData.get("assignmentName")); // Check formData content
+    // console.log(formData.get("assignmentDescription")); // Check formData content
+    // console.log(formData.get("fileName")); // Check formData content
+    // console.log(formData.get("file")); // Check formData content
 
     try {
       console.log(formData.get("assignmentName")); // Check formData content

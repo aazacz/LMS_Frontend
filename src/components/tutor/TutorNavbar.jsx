@@ -18,7 +18,7 @@ const TutorNavbar = ({ toggleSidebar, isSidebarOpen }) => {
     <>
       {/* ___________________NAVBAR STARTS HERE________________________  */}
 
-      <div className="navbar-container md:px-4  px-2 flex-1 w-full h-[10vh] z-30  border-b-[1px] flex items-center md:py-8 py-5  z-50 bg-white     ">
+      <div className="navbar-container md:px-4  px-2 flex-1 w-full h-[10vh] z-30  border-b-[1px] flex items-center  md:py-8 py-5   bg-white     ">
         {/*_________________ left side____________________ */}
         <div className="w-[60%]  font-poppins relative">
           <p className=" md:pl-0 text-sm z-10"> Welcome Back!</p>
@@ -29,8 +29,8 @@ const TutorNavbar = ({ toggleSidebar, isSidebarOpen }) => {
         </div>
 
         {/* _________________right side__________________ */}
-        <div className="w-[40%] flex justify-end    ">
-          <div className="flex items-center">
+        <div className="w-[40%]  flex justify-end     ">
+          <div className="flex w-full  justify-end items-center">
             {/* notification bell */}
             <div className=" w-16 flex h-9  justify-start px-2">
               <div className="rounded-lg h-8 w-8   flex justify-center items-center text-black border-[1px] border-black mr-1 ">
@@ -55,15 +55,16 @@ const TutorNavbar = ({ toggleSidebar, isSidebarOpen }) => {
                 className="block md:hidden z-30  text-2xl "
               />
             )}
+          </div>
 
             {/* Admin NAME EMAIL AND PROFILE PHOTO */}
-            <div className="flex-1  h-auto md:flex md:flex-row  items-center flex-col  hidden">
+            <div className="w-[75%] bg-yellow-400 h-auto md:flex md:flex-row  items-center flex-col  hidden">
               <img
                 className=" rounded-full object-cover overflow-hidden md:w-[42px] md:h-[42px] w-[20px] "
                 src={`${user.userImg}`}
                 alt=""
               />
-              <div className="flex items-center">
+              <div className="w-[100%] flex bg-green-400 justify-between items-center">
                 <div className="md:px-3">
                   <p className=" font-poppins">{user.userName}</p>
                   <p className="text-gray-500 font-poppins">{user.email}</p>
@@ -71,7 +72,6 @@ const TutorNavbar = ({ toggleSidebar, isSidebarOpen }) => {
                 <IoIosArrowForward className="text-2xl" />
               </div>
             </div>
-          </div>
         </div>
       </div>
     </>

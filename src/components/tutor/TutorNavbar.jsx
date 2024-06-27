@@ -9,7 +9,7 @@ import "./TutorNavbar.css";
 const TutorNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userDetails);
+  const user = useSelector((state) => state.TutorDetails);
 
   console.log(user);
 

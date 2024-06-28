@@ -131,8 +131,9 @@ const handleSubmit= ()=>[
 
     return (
         <>
-            {loading && <Loader />}
-        <div className={`${loading ? "blur-md":""} Test w-screen h-screen flex overflow-y-scroll relative`}>
+            {/* {loading && <Loader />} */}
+            {/* ${loading ? "blur-md":""} */}
+        <div className={` Test w-screen h-screen flex overflow-y-scroll relative`}>
 
 
             {/*BODY CONTENT  */}

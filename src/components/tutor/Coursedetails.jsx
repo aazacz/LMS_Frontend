@@ -31,7 +31,7 @@ const Coursedetails = ({ height }) => {
         setLoading(false);
       }
     };
-z
+
     fetchCourse();
   }, [courseId]);
 

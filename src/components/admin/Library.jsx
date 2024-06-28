@@ -117,24 +117,29 @@ const token = useSelector((state)=>state.AdminDetails.token)
   //Download Material
   const handleDownloadMaterial = async (materialId) => {
     try {
-      const response = await axios.get(
-        `${baseURL}api/library/download-file/${materialId}`,
+    await axios.get(
+        `${baseURL}api/library/download-file//${materialId}`,
         {
           responseType: "blob",
           headers: {
-            Accept:"application/json",
+            Accept:"application/pdf",
             authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
           },
         }
-      );
-      // Create a blob URL for the file and trigger download
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${materialId}.pdf`); // Adjust file name as needed
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      ).then((res)=>{
+        console.log("res.data in then block")
+        console.log(res.data)
+      })
+
+      // // Create a blob URL for the file and trigger download
+      // const url = window.URL.createObjectURL(new Blob([response.data]));
+      // const link = document.createElement("a");
+      // link.href = url;
+      // link.setAttribute("download", `${materialId}.pdf`); // Adjust file name as needed
+      // document.body.appendChild(link);
+      // link.click();
+      // link.remove();
+
     } catch (error) {
       console.error("Error downloading file:", error);
       Swal.fire("Error!", "Failed to download file.", "error");

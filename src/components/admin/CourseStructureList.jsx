@@ -106,7 +106,7 @@ const CourseCard = ({ course }) => {
                         <BiSpreadsheet className='text-gray-400' /> {course.modules.length}  Modules
                     </span>
                     <span className='flex items-center gap-x-1 text-sm font-plusjakartasans'>
-                        <LuTimer className='text-gray-400' /> {course.trainingDuration}
+                        <LuTimer className='text-gray-400' /> {course.trainingDuration} Hrs
                     </span>
                 </div>
             </div>

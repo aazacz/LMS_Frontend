@@ -1,21 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SignupSat.css";
 import personalDetailsImage from "../../../assets/SignupPersonalDetails/personaldetails.png";
-import UserNavbar from "../UserNavbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const SignupSat = () => {
-  const [selectedDate, setDate] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [hasGivenSat, setHasGivenSat] = useState(null);
+  const [comingSatExamDate, setSelectedDate] = useState("");
+  const [isSatExamtaken, setHasGivenSat] = useState(null);
+  const navigate = useNavigate();
 
-  const handleIconClick = () => {
-    setOpen(!open);
+  useEffect(() => {
+    const storedDetails = sessionStorage.getItem("SignupPersonalDetails");
+    if (!storedDetails) {
+      navigate("/signup/signupPersonalDetails");
+    }
+  }, [navigate]);
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!comingSatExamDate || isSatExamtaken === null) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'All fields are required',
+        text: 'Please fill out all fields before proceeding.',
+      });
+    } else {
+      try {
+        const storedDetails = JSON.parse(
+          sessionStorage.getItem("SignupPersonalDetails")
+        );
+        sessionStorage.setItem(
+          "SignupPersonalDetails",
+          JSON.stringify({ ...storedDetails, comingSatExamDate, isSatExamtaken })
+        );
+        navigate("/signup/signupEducation");
+      } catch (error) {
+        console.error("Error in storing SAT details", error);
+      }
+    }
   };
 
   return (
     <>
-   
       <div className="satcontainer">
         <div className="satphoto">
           <img
@@ -24,7 +54,7 @@ const SignupSat = () => {
             alt="Personal Details"
           />
           <div className="sat-content-container">
-            <p className="sat-content">Signup to get started </p>
+            <p className="sat-content">Signup to get started</p>
             <p className="sat-sub-content">
               2,97,565 students and parents signed up to study <br />
               abroad. Make an informed decision about your abroad education.
@@ -42,19 +72,18 @@ const SignupSat = () => {
           <p>When do you plan to take your SAT Exam?</p>
         </div>
         <div className="sat-date">
-          <input type="date" name="" id="" />
-
+          <input type="date" value={comingSatExamDate} onChange={handleDateChange} />
         </div>
 
         <div className="sat-exam-given">
-          <p>Have you given any SAT before</p>
+          <p>Have you given any SAT before?</p>
           <div className="sat-radio">
             <label>
               <input
                 type="radio"
                 name="givenSat"
                 value="yes"
-                checked={hasGivenSat === "yes"}
+                checked={isSatExamtaken === "yes"}
                 onChange={() => setHasGivenSat("yes")}
               />
               Yes
@@ -64,20 +93,18 @@ const SignupSat = () => {
                 type="radio"
                 name="givenSat"
                 value="no"
-                checked={hasGivenSat === "no"}
+                checked={isSatExamtaken === "no"}
                 onChange={() => setHasGivenSat("no")}
               />
               No
             </label>
           </div>
         </div>
-        <Link to={"/signup/signupEducation"}>
         <section className="sat-button-container">
-          <button type="submit" className="sat-request">
+          <button type="button" className="sat-request" onClick={handleSubmit}>
             Next
           </button>
         </section>
-        </Link>
       </div>
     </>
   );

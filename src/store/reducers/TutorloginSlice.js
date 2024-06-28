@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userName: "Abhilash Tutor",
-  email:    "tutor@gmail.com",
-  userImg: 'https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=',
+  userName: "",
+  email:    "",
+  userImg: '',
   token: '',
 
 };
@@ -13,8 +13,8 @@ const TutorDetailsSlice = createSlice({
     initialState,
     reducers: {
       setTutorDetails: (state, action) => {
-        const { userName, token, email, userImg } =  action.payload;
-        state.userName = "Tutor"
+        const { name, token, email, userImg } =  action.payload;
+        state.userName = name
         state.email = email
         state.token = token
         state.userImg = 'https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=';

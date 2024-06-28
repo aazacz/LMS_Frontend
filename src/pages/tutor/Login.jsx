@@ -1,18 +1,53 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
 import usePasswordToggle from '../../hooks/usePasswordToggle';
-import tutorBg from "/adminBg.jpg";  // Replace with appropriate background image for tutor
-import Logo from "/Logoo.png";  // Ensure the logo is the same or appropriate for tutor login
+import tutorBg from "/adminBg.jpg"; 
+import Logo from "/Logoo.png";  
+import { setTutorDetails } from '../../store/reducers/TutorloginSlice';
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios"
+import { toast } from 'react-toastify';
+
+
 
 const TutorLogin = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [PasswordInputType, ToggleIcon] = usePasswordToggle();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const baseURL = process.env.REACT_APP_API_URL;
+
+
 
     // SUBMITTING THE LOGIN FUNCTION 
-    const onSubmit = (data) => {
-        navigate("/tutor/home");  // Navigate to tutor home page immediately
+    const onSubmit = async (data,e) => {
+        e.preventDefault()
+
+        try {
+            setIsSubmitting(true);
+
+            const res = await axios.post(`${baseURL}api/tutor/login-tutor`, data,
+                {
+                    "user-agent": navigator.userAgent,
+                },
+            )
+            console.log(res.data);
+            toast.success("Login Successful")
+            dispatch(setTutorDetails(res.data || []))
+            if (res.data.role === "tutor") {
+                navigate("/tutor/home");  
+            }
+           
+
+            
+        } catch (error) {
+            setIsSubmitting(false);
+            toast.error(error.message)
+            console.log(error.message);
+        }
     };
 
     return (

@@ -8,7 +8,7 @@ import {
 import ErrorPage from '../pages/ErrorPage';
 import Homepage from '../pages/tutor/Homepage';
 import { useSelector } from 'react-redux';
-import AdminLogin from '../pages/admin/Login';
+import TutorLogin from '../pages/tutor/Login';
 
 
 const TutorRoutes = () => {
@@ -17,10 +17,10 @@ const TutorRoutes = () => {
 
         <Routes>
           
-            <Route path="/" element={user ? <Navigate to="/tutor/home" /> : <AdminLogin />} />
+            <Route path="/" element={user ? <Navigate to="/tutor/home" /> : <TutorLogin />} />
 
             {/* <Route path='/' element={<Homepage/>}/> */}
-            <Route path="/home/*" element={true ? <Homepage/> : <Navigate to="/tutor" />}/>
+            <Route path="/home/*" element={user ? <Homepage/> : <Navigate to="/tutor" />}/>
 
 
 

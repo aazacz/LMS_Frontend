@@ -1,66 +1,130 @@
-import React from 'react'
-import Pdflogo from "./Pdflogo.jsx"
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Pdflogo from "./Pdflogo"; 
 import { MdFileDownload } from "react-icons/md";
 
+const baseURL = process.env.REACT_APP_API_URL; 
 const Library = () => {
-const pdf=[1,2,3,5,4,1,2,5,5,6,6]
+  const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState("");
+  const [materials, setMaterials] = useState([]);
 
-    return (
-        <div className='p-6'>
-            <div className='grid grid-flow-row grid-cols-6 gap-4 '>
+  // Fetch all courses on component mount
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get(`${baseURL}api/course/get-all-course?page=1&pageSize=&search`);
+        setCourses(response.data.data); 
+      } catch (error) {
+        console.log("Error fetching courses:", error);
+      }
+    };
 
-{pdf.map(()=>{
-    return(
+    fetchCourses();
+  }, []);
 
+  // Fetch all materials initially
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        const response = await axios.get(`${baseURL}api/library/get-all-assignment`, {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
+          },
+        });
+        console.log(response.data.data)
+        setMaterials(response.data.data); 
+      } catch (error) {
+        console.log("Error fetching materials:", error);
+      }
+    };
 
-        <PdfCard/>
-    )
-})}
+    fetchMaterials();
+  }, []);
 
-            </div>
+  // Fetch materials when selectedCourse changes
+  useEffect(() => {
+    const fetchMaterialsByCourse = async () => {
+      try {
+        if (selectedCourse) {
+          const response = await axios.get(`${baseURL}api/library/get-course/${selectedCourse}`, {
+            headers: {
+              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
+            },
+          });
+          setMaterials(response.data.data); 
+        } else {
+          const response = await axios.get(`${baseURL}api/library/get-all-assignment`, {
+            headers: {
+              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
+            },
+          });
+       
+          setMaterials(response.data.data);
+        }
+      } catch (error) {
+        console.log("Error fetching materials by course:", error);
+      }
+    };
 
+    fetchMaterialsByCourse();
+  }, [selectedCourse]);
 
+  const handleCourseChange = (event) => {
+    setSelectedCourse(event.target.value);
+  };
 
-
-
-
-
-
+  return (
+    <div className="w-full flex flex-col font-poppins">
+      <div className="w-full flex justify-between items-start p-2">
+        <div className="flex">
+          <div className="text-sm md:text-base">Choose Course</div>
+          <select
+            className="ml-2 text-sm p-1 h-max rounded"
+            onChange={handleCourseChange}
+            value={selectedCourse}
+          >
+            <option value="">All courses</option>
+            {courses.map((course) => (
+              <option key={course._id} value={course._id}>
+                {course.courseName}
+              </option>
+            ))}
+          </select>
         </div>
-    )
-}
-
-export default Library
-
-
-
-const PdfCard = ()=>{
-    return(
-        
-        <div className='w-full bg-gray-300 h-full flex flex-col justify-center items-center px-1 py-4 rounded-md'>
-        <div>
-            <Pdflogo />
-        </div>
-
-        <div className='flex justify-between mt-4 gap-x-5 items-center'>
-            <h1 className='font-plusjakartasans font-semibold text-xs line-clamp-1'> SAT Prep Book</h1>
-
-
-
-            <a href={'https://css4.pub/2015/icelandic/dictionary.pdf'}
-                 target="_blank"
-                 download
-                 className='flex items-center'>
-             <MdFileDownload className='text-xl' /> {/* Download icon*/} 
-               
+        <button className="text-sm px-6 py-2 bg-[#BFDBFE] text-black rounded-md">
+          Upload material
+        </button>
+      </div>
+      <div className="p-2 m-4">
+        <div className="grid grid-flow-row sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-x-6">
+          {materials.map((material) => (
+            <div
+              key={material._id}
+              className="w-full bg-gray-300 flex flex-col justify-center items-center px-1 py-4 m-4 rounded-md"
+            >
+              <div>
+                <Pdflogo />
+              </div>
+              <div className="flex justify-between mt-4 gap-5 items-center">
+                <h1 className="font-poppins font-semibold text-xs line-clamp-1">
+                  {material.fileName}
+                </h1>
+                <a
+                  href={material.filePath}
+                  target="_blank"
+                  download
+                  className="flex items-center"
+                >
+                  <MdFileDownload className="text-xl" />
                 </a>
-
-
-
-
-
-
+              </div>
+            </div>
+          ))}
         </div>
+      </div>
     </div>
-    )
-}
+  );
+};
+
+export default Library;

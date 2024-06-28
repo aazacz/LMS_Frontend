@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react'
 import coursephoto from "/coursephoto.jpeg"
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Loader from '../reusable/Loader';
 import { FaCirclePlus } from 'react-icons/fa6';
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
+import Swal from 'sweetalert2';
 
 const CourseStructureDetails = ({ height }) => {
 
+    const navigate = useNavigate()
     const baseUrl = process.env.REACT_APP_API_URL;
     const token = useSelector((state) => state.AdminDetails.token);
 
@@ -36,7 +38,9 @@ const CourseStructureDetails = ({ height }) => {
             .then((response) => {
                 console.log("response.data")
                 console.log(response.data)
+                console.log(response.data._id)
                 SetCourse(response.data)
+                
             })
     }, [])
 
@@ -107,7 +111,7 @@ const CourseStructureDetails = ({ height }) => {
 
                             </div>
                             <div className='w-[30%] '>
-                                <AsideBAr course={Course?.modules} />
+                                <AsideBAr course={Course?.modules} id={Course?._id} />
 
                             </div>
                         </div>
@@ -170,14 +174,72 @@ const ReviewContent = () => {
 
 
 
+const AsideBAr = ({ course,id }) => {
 
+const baseUrl = process.env.REACT_APP_API_URL;
+const Token = useSelector((state) => state.AdminDetails.token);
+const navigate = useNavigate()
 
+const deleteHandler = ()=>{
+    axios.delete(`${baseUrl}api/structure/delete/${id}`,{
+        headers: { authorization: `Bearer ${Token}` },
+      })
+        .then((res)=>{
+            if(res.data.message==="Structure deleted successfully"){
+                Swal.fire({
+                    timer: 2000,
+                    timerProgressBar: true,
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                  });
 
-const AsideBAr = ({ course }) => {
+                  navigate("/admin/home/coursestructure")
+            }
+        }).catch((error)=>{
+            console.warn(error)
+            console.warn(error.message)
+            throw new Error(error.messsage)
+        })
+}
+
+const handleDeleteCourse=(id)=>{
+    Swal.fire({
+        title: `Are you sure, you want to delete ?`,
+        text: "You won't be able to revert this!",
+        icon: "warning",
+              
+        showCancelButton: true,
+        confirmButtonColor: "#eb5048",
+        cancelButtonColor: "#878ca7",
+        confirmButtonText: "Delete Course Structure!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Are you absolutely sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            timer: 2000,
+            timerProgressBar: true,
+            showCancelButton: true,
+            confirmButtonColor: "#eb5048",
+            cancelButtonColor: "#878ca7",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              
+                deleteHandler()
+
+            }
+          });
+        }
+      });
+     }
+
 
     return (
         <>
-            <div className="  -z-10 top-[10vh] bg-slate-200  h-full flex flex-col ">
+            <div className="  -z-10 top-[10vh] pb-8 bg-slate-200  h-full flex flex-col justify-between ">
                 <div className="p-4 ">
 
                     <div className=" rounded-lg flex flex-col   items-center">
@@ -254,6 +316,27 @@ const AsideBAr = ({ course }) => {
 
                     </div>
                 </div>
+
+
+{/* Delete Button */}
+
+<div className='w-full h-7 px-4 '>
+
+    <div className='cursor-pointer
+                    w-full h-8 rounded-xl
+                    flex justify-center 
+                    items-center text-base 
+                    font-semibold font-poppins 
+                    border-[1px] text-red-700 
+                    border-red-600  bg-opacity-30 
+                    bg-red-500 '
+        onClick={handleDeleteCourse}            
+                    >
+        <h1>Delete Course Structure</h1>
+    </div>
+
+</div>
+
             </div>
         </>
     );

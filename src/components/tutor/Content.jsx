@@ -18,7 +18,13 @@ const Content = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${baseURL}api/course/get-all-course?page=1&pageSize=&search=`
+          `${baseURL}api/course/get-all-course?page=1&pageSize=&search=`,
+          {
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTAyYWE4YTE0ZTdiNTM1N2UwNjhlYyIsInJvbGUiOiJ0dXRvciIsImlhdCI6MTcxNzEzMDgxOH0.yQ2kisu7irJUvntqfjK-e95yys_VCbMzriFZEcv2Dks",
+            },
+          }
         );
         if (!response.status == 200) {
           throw new Error("Failed to fetch courses");
@@ -33,16 +39,6 @@ const Content = () => {
     fetchCourses();
   }, []);
 
-  // const data = [
-  //   { name: "John Doe", email: "john.doe@example.com" },
-  //   { name: "Jane Smith", email: "jane.smith@example.com" },
-  //   { name: "Jane Smith", email: "jane.smith@example.com" },
-  //   { name: "Jane Smith", email: "jane.smith@example.com" },
-  //   { name: "Jane Smith", email: "jane.smith@example.com" },
-  //   { name: "Jane Smith", email: "jane.smith@example.com" },
-  //   { name: "Jane Smith", email: "jane.smith@example.com" },
-  //   // ... more items
-  // ];
 
   const assignments = [
     {

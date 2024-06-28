@@ -8,6 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Check from "@mui/icons-material/Check";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux"; 
 // import "./StudentList.css"
 
 const CustomTooltip = ({ title, children }) => {
@@ -32,6 +33,8 @@ const CustomTooltip = ({ title, children }) => {
 };
 
 const Students = () => {
+const token = useSelector((state)=> state.AdminDetails.token)
+
   const apiURL = process.env.REACT_APP_API_URL;
 
   const params = new URLSearchParams(window.location.search);
@@ -143,7 +146,9 @@ const Students = () => {
   ];
   const getCategoryData = async () => {
     await axios
-      .get(`${apiURL}api/students/getAll-students`) // replace with your actual API endpoint
+      .get(`${apiURL}api/students/getAll-students`,{
+        headers:{authorization:`Bearer ${token}` }
+      }) 
       .then((response) => {
         console.log(response.data.data);
         setData(response.data.data);
@@ -221,7 +226,7 @@ const Students = () => {
                         <Link to={`/tutor/home/students/${row._id}`}>
                           {console.log(row._id)}
                           <span className="action-container text-blue-600 capitalize text-sm font-semibold ">
-                            iuefhlweiufhewfuiwfblfiwubf{row[column.field]}
+                            {row[column.field]}
                           </span>
                         </Link>
                       ) : (

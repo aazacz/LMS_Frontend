@@ -8,11 +8,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import Check from "@mui/icons-material/Check";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { MdBlock } from "react-icons/md";
 // import "./StudentList.css" 
+import { useQuery } from "@tanstack/react-query";
+
 
 const CustomTooltip = ({ title, children }) => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
-
+ 
   return (
     <Tooltip
       title={title}
@@ -220,6 +223,19 @@ const StudentList = () => {
     getCategoryData();
   }, [currentPage, pageSize, searchQuery]);
 
+  // function to block the student
+  const HandleBlock =async(blockId)=>{
+    console.log("block funciton executed")
+    
+    await axios.patch(`${baseURL}api/students/block-students/${blockId}`)
+      .then((res)=>{
+
+        console.log(res)
+      })  
+  
+  
+  }
+
   return (
     <div className="px-9 ">
 
@@ -259,15 +275,21 @@ const StudentList = () => {
             <tbody>
               {data.map((row, indexrow) => (
                 <tr key={row._id}>
+                  {console.log(row.status)}
                   {columns.map((column, index) => (
 
                     <td key={column.field}>
 
-
                       {column.field === "actions" ? (
-                        <div className="action-container">
-                          <Check />
-                          <CloseIcon onClick={() => console.log("Action clicked")} />
+                        <div className="action-container flex items-center justify-center gap-x-2">
+                        
+                         {
+                          row.status === "active" ?
+                           ( <MdBlock   className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={HandleBlock(row._id)} />)
+                           :
+                           ( <Check     className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={()=>console.log(row._id+ "UnBlock Action clicked")} />)
+                         }
+                             <CloseIcon className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id+"Delete Action clicked")} />
                         </div>
                       ) : <></>}
 
@@ -275,7 +297,7 @@ const StudentList = () => {
                       {column.field === "name" ? (
                         <Link to={`/admin/home/students/${row._id}`}>
                           {console.log(row._id)}
-                          <span className="action-container text-blue-600 capitalize text-sm font-semibold ">iuefhlweiufhewfuiwfblfiwubf{row[column.field]}</span>
+                          <span className="action-container text-blue-600 capitalize text-sm font-semibold ">{row[column.field]}</span>
                         </Link>
                       ) : (<></>)}
 
@@ -314,7 +336,7 @@ const StudentList = () => {
                         </div>
                       ) : (
                         <>
-                          {/* {row[column.field]}  */}
+                         
                         </>
                       )}
 

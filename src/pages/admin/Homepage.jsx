@@ -20,6 +20,9 @@ import StudentDetail from '../../components/admin/StudentDetail/StudentDetail';
 import CourseStructureList from '../../components/admin/CourseStructureList';
 import CourseStructureDetails from '../../components/admin/CourseStructureDetails';
 import Admin_Material from '../../components/admin/UploadMaterial/Admin_Material'
+import AddCourseStructure from '../../components/admin/AddCourseStructure';
+
+
 
 const Homepage = () => {
     const divRef = useRef(null);
@@ -56,6 +59,7 @@ const Homepage = () => {
                             <Route path="/courses" element={<CourseList />} />
                             <Route path="/courses/:courseId" element={<Coursedetails height={Ref} />} />
                             <Route path="/coursestructure" element={<CourseStructureList />} />
+                            <Route path="/courseStructure/addcoursestructure" element={<AddCourseStructure />} />
                             <Route path="/coursestructure/:structureId" element={<CourseStructureDetails />} />
                             {/* <Route path="/coursestructure" element={<CourseStructure />} /> */}
                             <Route path="/students/:studentId" element={<StudentDetail />} />

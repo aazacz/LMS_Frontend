@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Pdflogo from "./Pdflogo"; 
-import { MdFileDownload } from "react-icons/md";
+import Pdflogo from "./Pdflogo";
+import { MdFileDownload, MdDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2"; // Import SweetAlert
+import ReusablePagination from "../reusable/ReusablePagination";
+import { Link } from "react-router-dom";
 
-const baseURL = process.env.REACT_APP_API_URL; 
+const baseURL = process.env.REACT_APP_API_URL;
+
 const Library = () => {
+const token = useSelector((state)=>state.AdminDetails.token)
+
+
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [materials, setMaterials] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10); // Default page size
+  const [totalRows, setTotalRows] = useState(0); // Total rows for pagination
 
   // Fetch all courses on component mount
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get(`${baseURL}api/course/get-all-course?page=1&pageSize=&search`);
-        setCourses(response.data.data); 
+        const response = await axios.get(
+          `${baseURL}api/course/get-all-course?page=1&pageSize=&search`
+        );
+        setCourses(response.data.data);
       } catch (error) {
         console.log("Error fetching courses:", error);
       }
@@ -23,55 +36,120 @@ const Library = () => {
     fetchCourses();
   }, []);
 
-  // Fetch all materials initially
+  // Fetch materials initially and when selectedCourse or pagination changes
   useEffect(() => {
     const fetchMaterials = async () => {
       try {
-        const response = await axios.get(`${baseURL}api/library/get-all-assignment`, {
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
-          },
-        });
-        console.log(response.data.data)
-        setMaterials(response.data.data); 
+        let response;
+        if (selectedCourse !== "") {
+          response = await axios.get(
+            `${baseURL}api/library/get-course/${selectedCourse}?page=${currentPage}&pageSize=${pageSize}`,
+            {
+              headers: {
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
+              },
+            }
+          );
+        } else {
+          response = await axios.get(
+            `${baseURL}api/library/get-all-assignment?page=${currentPage}&pageSize=${pageSize}`,
+            {
+              headers: {
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
+              },
+            }
+          );
+        }
+        setMaterials(response.data.data);
+        setTotalRows(response.data.total);
       } catch (error) {
         console.log("Error fetching materials:", error);
       }
     };
 
     fetchMaterials();
-  }, []);
+  }, [selectedCourse, currentPage, pageSize]);
 
-  // Fetch materials when selectedCourse changes
-  useEffect(() => {
-    const fetchMaterialsByCourse = async () => {
-      try {
-        if (selectedCourse) {
-          const response = await axios.get(`${baseURL}api/library/get-course/${selectedCourse}`, {
-            headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
-            },
-          });
-          setMaterials(response.data.data); 
-        } else {
-          const response = await axios.get(`${baseURL}api/library/get-all-assignment`, {
-            headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
-            },
-          });
-       
-          setMaterials(response.data.data);
-        }
-      } catch (error) {
-        console.log("Error fetching materials by course:", error);
-      }
-    };
-
-    fetchMaterialsByCourse();
-  }, [selectedCourse]);
-
+  // Function to handle course selection
   const handleCourseChange = (event) => {
     setSelectedCourse(event.target.value);
+    setCurrentPage(1);
+  };
+
+  // Deleting a Material
+  const handleDeleteMaterial = async (materialId) => {
+    try {
+      const confirmDelete = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (confirmDelete.isConfirmed) {
+        const response = await axios.delete(
+          `${baseURL}api/library/delete-material/${materialId}`,
+          {
+            headers: {
+              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
+            },
+          }
+        );
+        console.log("File deleted successfully:", response.data);
+
+        // Update materials after deleting
+        const updatedMaterials = materials.filter(
+          (material) => material._id !== materialId
+        );
+        setMaterials(updatedMaterials);
+
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    } catch (error) {
+      console.error("Error deleting file:", error);
+      Swal.fire("Error!", "Failed to delete file.", "error");
+    }
+  };
+
+  //Download Material
+  const handleDownloadMaterial = async (materialId) => {
+    try {
+      const response = await axios.get(
+        `${baseURL}api/library/download-file/${materialId}`,
+        {
+          responseType: "blob",
+          headers: {
+            Accept:"application/json",
+            authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
+          },
+        }
+      );
+      // Create a blob URL for the file and trigger download
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${materialId}.pdf`); // Adjust file name as needed
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Error downloading file:", error);
+      Swal.fire("Error!", "Failed to download file.", "error");
+    }
+  };
+
+  // Function to handle page change
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
+
+  // Function to handle page size change
+  const handlePageSizeChange = (event) => {
+    setPageSize(parseInt(event.target.value, 10));
+    setCurrentPage(1); 
   };
 
   return (
@@ -92,17 +170,25 @@ const Library = () => {
             ))}
           </select>
         </div>
-        <button className="text-sm px-6 py-2 bg-[#BFDBFE] text-black rounded-md">
-          Upload material
-        </button>
+        <Link to="uploadMaterial">
+          <button className="text-sm px-6 py-2 bg-[#BFDBFE] text-black rounded-md">
+            Upload Material
+          </button>
+        </Link>
       </div>
       <div className="p-2 m-4">
-        <div className="grid grid-flow-row sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-x-6">
+        <div className="grid grid-flow-row  grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-x-6">
           {materials.map((material) => (
             <div
               key={material._id}
               className="w-full bg-gray-300 flex flex-col justify-center items-center px-1 py-4 m-4 rounded-md"
             >
+              <div className="flex justify-end w-full mr-4">
+                <MdDelete
+                  className="text-xl cursor-pointer"
+                  onClick={() => handleDeleteMaterial(material._id)}
+                />
+              </div>
               <div>
                 <Pdflogo />
               </div>
@@ -110,18 +196,22 @@ const Library = () => {
                 <h1 className="font-poppins font-semibold text-xs line-clamp-1">
                   {material.fileName}
                 </h1>
-                <a
-                  href={material.filePath}
-                  target="_blank"
-                  download
-                  className="flex items-center"
-                >
-                  <MdFileDownload className="text-xl" />
-                </a>
+
+                <MdFileDownload
+                  className="text-xl cursor-pointer"
+                  onClick={() => handleDownloadMaterial(material._id)}
+                />
               </div>
             </div>
           ))}
         </div>
+        <ReusablePagination
+          currentPage={currentPage}
+          pageSize={pageSize}
+          totalRows={totalRows}
+          handlePageChange={handlePageChange}
+          handlePageSizeChange={handlePageSizeChange}
+        />
       </div>
     </div>
   );

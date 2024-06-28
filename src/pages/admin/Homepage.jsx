@@ -19,6 +19,7 @@ import Dashboard from '../../components/admin/Dashboard/Dashboard';
 import StudentDetail from '../../components/admin/StudentDetail/StudentDetail';
 import CourseStructureList from '../../components/admin/CourseStructureList';
 import CourseStructureDetails from '../../components/admin/CourseStructureDetails';
+import Admin_Material from '../../components/admin/UploadMaterial/Admin_Material'
 import AddCourseStructure from '../../components/admin/AddCourseStructure';
 
 
@@ -70,6 +71,7 @@ const Homepage = () => {
                             {/* <Route path="/tutors/tutorform/" element={<TutorForm />} /> */}
                             <Route path="/tutors" element={<TutorListing />} />
                             <Route path="/library" element={<Library />} />
+                            <Route path="/library/uploadmaterial" element={<Admin_Material />} />
                             <Route path="*" element={<ErrorPage />} />
 
                         </Routes>

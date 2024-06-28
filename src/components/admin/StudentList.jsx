@@ -13,26 +13,26 @@ import { MdBlock } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 
 
-const CustomTooltip = ({ title, children }) => {
-  const [tooltipOpen, setTooltipOpen] = useState(false);
- 
-  return (
-    <Tooltip
-      title={title}
-      placement="right"
-      open={tooltipOpen}
-      onClose={() => setTooltipOpen(false)}
-      onOpen={() => setTooltipOpen(true)}
-    >
-      <div
-        onMouseEnter={() => setTooltipOpen(true)}
-        onMouseLeave={() => setTooltipOpen(false)}
-      >
-        {children}
-      </div>
-    </Tooltip>
-  );
-};
+// const CustomTooltip = ({ title, children }) => {
+//   const [tooltipOpen, setTooltipOpen] = useState(false);
+
+//   return (
+//     <Tooltip
+//       title={title}
+//       placement="right"
+//       open={tooltipOpen}
+//       onClose={() => setTooltipOpen(false)}
+//       onOpen={() => setTooltipOpen(true)}
+//     >
+//       <div
+//         onMouseEnter={() => setTooltipOpen(true)}
+//         onMouseLeave={() => setTooltipOpen(false)}
+//       >
+//         {children}
+//       </div>
+//     </Tooltip>
+//   );
+// };
 
 const StudentList = () => {
   const apiURL = process.env.REACT_APP_API_URL;
@@ -51,6 +51,12 @@ const StudentList = () => {
 
   const [file, setFile] = useState(null);
 
+  const { data, isPending, isError, error, refetch } = useQuery({
+    queryKey: ["directories"],
+    queryFn: getData,
+    staleTime: 1000,
+    refetchInterval: 600000,
+  });
 
 
 
@@ -93,7 +99,7 @@ const StudentList = () => {
     }
     const formData = new FormData();
     formData.append("file", file);
-    
+
     axios.post(`${process.env.REACT_APP_API_URL}/api/students/bulk-upload`, formData)
       .then(response => {
         toast.success("File uploaded successfully");
@@ -104,7 +110,7 @@ const StudentList = () => {
         // handle error
       });
   };
-  
+
   const handleDownloadTemplate = () => {
     const link = document.createElement('a');
     link.href = `${process.env.REACT_APP_API_URL}/api/students/download-template`;
@@ -153,29 +159,6 @@ const StudentList = () => {
       headerName: "Parent Number",
 
     },
-    // {
-    //   field: "productDetails.name",
-    //   headerName: "Product",
-    // },
-    // {
-    //   field: "totalPrice",
-    //   headerName: "Price",
-
-    // },
-    // {
-    //   field: "pickUpDetails.date",
-    //   headerName: "Pick Up Date",
-    // },
-    // {
-    //   field: "pickUpDetails.time",
-    //   headerName: "Pick Up Time",
-
-    // },
-    // {
-    //   field: "partner.partnerName",
-    //   headerName: "Partner Name",
-
-    // },
     {
       field: "createdAt",
       headerName: "Created Date",
@@ -195,10 +178,7 @@ const StudentList = () => {
     },
   ];
   const getCategoryData = async () => {
-    await axios
-      .get(
-        `${apiURL}api/students/getAll-students`
-      ) // replace with your actual API endpoint
+    await axios.get(`${apiURL}api/students/getAll-students`) // replace with your actual API endpoint
       .then((response) => {
         console.log(response.data.data);
         setData(response.data.data);
@@ -223,17 +203,19 @@ const StudentList = () => {
     getCategoryData();
   }, [currentPage, pageSize, searchQuery]);
 
+
+
   // function to block the student
-  const HandleBlock =async(blockId)=>{
+  const HandleBlock = async (blockId) => {
     console.log("block funciton executed")
-    
+
     await axios.patch(`${baseURL}api/students/block-students/${blockId}`)
-      .then((res)=>{
+      .then((res) => {
 
         console.log(res)
-      })  
-  
-  
+      })
+
+
   }
 
   return (
@@ -262,7 +244,7 @@ const StudentList = () => {
           </div>
         </div>
 
-      
+
         <div className="table-container ">
           <table className="responsive-table">
             <thead>
@@ -282,14 +264,14 @@ const StudentList = () => {
 
                       {column.field === "actions" ? (
                         <div className="action-container flex items-center justify-center gap-x-2">
-                        
-                         {
-                          row.status === "active" ?
-                           ( <MdBlock   className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={HandleBlock(row._id)} />)
-                           :
-                           ( <Check     className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={()=>console.log(row._id+ "UnBlock Action clicked")} />)
-                         }
-                             <CloseIcon className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id+"Delete Action clicked")} />
+
+                          {
+                            row.status === "active" ?
+                              (<MdBlock className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={HandleBlock(row._id)} />)
+                              :
+                              (<Check className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "UnBlock Action clicked")} />)
+                          }
+                          <CloseIcon className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "Delete Action clicked")} />
                         </div>
                       ) : <></>}
 
@@ -336,7 +318,7 @@ const StudentList = () => {
                         </div>
                       ) : (
                         <>
-                         
+
                         </>
                       )}
 
@@ -352,69 +334,69 @@ const StudentList = () => {
 
 
 
-      <div className="bulk-upload-container flex justify-between items-end gap-x-2">
-        <div>
-        <div className="select-container">
+        <div className="bulk-upload-container flex justify-between items-end gap-x-2">
           <div>
-            <select value={pageSize} onChange={handlePageSizeSelectChange}>
-              <option value="2">2</option>
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="100">100</option>
-            </select>
+            <div className="select-container">
+              <div>
+                <select value={pageSize} onChange={handlePageSizeSelectChange}>
+                  <option value="2">2</option>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+              <div>Total Items : {totalRows}</div>
+            </div>
+
+            <Pagination
+              count={Math.ceil(totalRows / pageSize)}
+              page={currentPage}
+              onChange={handlePageChange}
+              variant="outlined"
+              color="primary"
+              shape="rounded"
+              showFirstButton
+              showLastButton
+              sx={{
+                display: "block",
+                width: "100%",
+                height: "max-content",
+                marginTop: "10px",
+                backgroundColor: "transparent",
+                zIndex: "0",
+              }}
+            />
           </div>
-          <div>Total Items : {totalRows}</div>
-        </div>
+          <div>
+            <h3 className="mr-4">Bulk upload Student Details</h3>
+            <div className="flex gap-x-2 ">
+              <input
+                type="file"
+                id="fileInput"
+                className="hidden"
+                onChange={handleFileChange}
+              />
 
-        <Pagination
-          count={Math.ceil(totalRows / pageSize)}
-          page={currentPage}
-          onChange={handlePageChange}
-          variant="outlined"
-          color="primary"
-          shape="rounded"
-          showFirstButton
-          showLastButton
-          sx={{
-            display: "block",
-            width: "100%",
-            height: "max-content",
-            marginTop: "10px",
-            backgroundColor: "transparent",
-            zIndex: "0",
-          }}
-        />
-        </div>
-        <div>
-        <h3 className="mr-4">Bulk upload Student Details</h3>
-        <div className="flex gap-x-2 ">
-        <input 
-            type="file" 
-            id="fileInput"
-            className="hidden" 
-            onChange={handleFileChange}
-          />
+              <label
+                htmlFor="fileInput"
+                className="file-label bg-gray-300 text-blue-700 px-4 py-2 rounded cursor-pointer">
+                {file ? file.name : 'Select'}
+              </label>
 
-          <label 
-            htmlFor="fileInput" 
-            className="file-label bg-gray-300 text-blue-700 px-4 py-2 rounded cursor-pointer">
-            {file ? file.name : 'Select'}
-          </label>
+              <button
+                onClick={handleFileUpload}
+                className="upload-button bg-green-500 text-white px-4 py-2 rounded">
+                Upload
+              </button>
 
-          <button 
-            onClick={handleFileUpload} 
-            className="upload-button bg-green-500 text-white px-4 py-2 rounded">
-            Upload
-          </button>
-
-          <button 
-            onClick={handleDownloadTemplate} 
-            className="download-button bg-blue-500 text-white px-4 py-2 rounded">
-            Download Excel
-          </button>
+              <button
+                onClick={handleDownloadTemplate}
+                className="download-button bg-blue-500 text-white px-4 py-2 rounded">
+                Download Excel
+              </button>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import coursephoto from "/coursephoto.jpeg"
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import Loader from '../reusable/Loader';
@@ -10,10 +10,10 @@ import { FaCirclePlus } from 'react-icons/fa6';
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
 import Swal from 'sweetalert2';
-import { PiWarningFill } from 'react-icons/pi';
 
 const CourseStructureDetails = ({ height }) => {
 
+    const navigate = useNavigate()
     const baseUrl = process.env.REACT_APP_API_URL;
     const token = useSelector((state) => state.AdminDetails.token);
 
@@ -38,7 +38,9 @@ const CourseStructureDetails = ({ height }) => {
             .then((response) => {
                 console.log("response.data")
                 console.log(response.data)
+                console.log(response.data._id)
                 SetCourse(response.data)
+                
             })
     }, [])
 
@@ -109,7 +111,7 @@ const CourseStructureDetails = ({ height }) => {
 
                             </div>
                             <div className='w-[30%] '>
-                                <AsideBAr course={Course?.modules} />
+                                <AsideBAr course={Course?.modules} id={Course?._id} />
 
                             </div>
                         </div>
@@ -172,43 +174,67 @@ const ReviewContent = () => {
 
 
 
+const AsideBAr = ({ course,id }) => {
 
+const baseUrl = process.env.REACT_APP_API_URL;
+const Token = useSelector((state) => state.AdminDetails.token);
+const navigate = useNavigate()
 
+const deleteHandler = ()=>{
+    axios.delete(`${baseUrl}api/structure/delete/${id}`,{
+        headers: { authorization: `Bearer ${Token}` },
+      })
+        .then((res)=>{
+            if(res.data.message==="Structure deleted successfully"){
+                Swal.fire({
+                    timer: 2000,
+                    timerProgressBar: true,
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                  });
 
-const AsideBAr = ({ course }) => {
+                  navigate("/admin/home/coursestructure")
+            }
+        }).catch((error)=>{
+            console.warn(error)
+            console.warn(error.message)
+            throw new Error(error.messsage)
+        })
+}
 
-
-
-
-const handleDeleteCourse=()=>{
+const handleDeleteCourse=(id)=>{
     Swal.fire({
-        title: "Are you sure?",
+        title: `Are you sure, you want to delete ?`,
         text: "You won't be able to revert this!",
-        iconHtml: <PiWarningFill  className='text-red-700'/> ,
-        timer: 2000,
-        timerProgressBar: true,
+        icon: "warning",
+              
         showCancelButton: true,
         confirmButtonColor: "#eb5048",
         cancelButtonColor: "#878ca7",
         confirmButtonText: "Delete Course Structure!"
       }).then((result) => {
         if (result.isConfirmed) {
-
-
-
-
           Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
+            title: "Are you absolutely sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            timer: 2000,
+            timerProgressBar: true,
+            showCancelButton: true,
+            confirmButtonColor: "#eb5048",
+            cancelButtonColor: "#878ca7",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              
+                deleteHandler()
+
+            }
           });
         }
       });
-
-}
-
-
-
+     }
 
 
     return (

@@ -6,14 +6,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SignupEducation = () => {
- 
   const baseUrl = process.env.REACT_APP_API_URL;
-
-  const [englishSatMarkFile, setEnglishFile] = useState(null); //file
+  const [englishSatMarkFile, setEnglishFile] = useState(null);
   const [englishSatMark, setEnglishMarks] = useState("");
-  const [mathSatMarkFile, setMathFile] = useState(null); //file
+  const [mathSatMarkFile, setMathFile] = useState(null);
   const [mathSatMark, setMathMarks] = useState("");
-  const [totalSatMarkFile, setTotalFile] = useState(null); //file
+  const [totalSatMarkFile, setTotalFile] = useState(null);
   const [totalSatMark, setTotalMarks] = useState("");
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,16 +29,32 @@ const SignupEducation = () => {
     setConsent(!consent);
   };
 
-  const handleFileChange = (event, setFile) => {
-    setFile(event.target.files[0]);
+  const handleEnglishFileChange = (e) => {
+    setEnglishFile(e.target.value);
   };
 
-  const handleMarksChange = (event, setMarks) => {
-    setMarks(event.target.value);
+  const handleEnglishMarksChange = (e) => {
+    setEnglishMarks(e.target.value);
   };
 
-  const registerUser = async (event) => {
-    event.preventDefault();
+  const handleMathFileChange = (e) => {
+    setMathFile(e.target.value);
+  };
+
+  const handleMathMarksChange = (e) => {
+    setMathMarks(e.target.value);
+  };
+
+  const handleTotalFileChange = (e) => {
+    setTotalFile(e.target.value);
+  };
+
+  const handleTotalMarksChange = (e) => {
+    setTotalMarks(e.target.value);
+  };
+
+  const registerUser = async (e) => {
+    e.preventDefault();
     if (!consent) {
       alert("Please provide consent to proceed.");
       return;
@@ -49,14 +63,12 @@ const SignupEducation = () => {
     setLoading(true);
 
     const formDataToSend = new FormData();
-    formDataToSend.append("englishSatMarkFile", englishSatMarkFile,"englishSatMarkFile");
+    formDataToSend.append("englishSatMarkFile", englishSatMarkFile);
     formDataToSend.append("englishSatMark", englishSatMark);
-    formDataToSend.append("mathSatMarkFile", mathSatMarkFile,"mathSatMarkFile");
+    formDataToSend.append("mathSatMarkFile", mathSatMarkFile);
     formDataToSend.append("mathSatMark", mathSatMark);
-    formDataToSend.append("totalSatMarkFile", totalSatMarkFile,"totalSatMarkFile");
+    formDataToSend.append("totalSatMarkFile", totalSatMarkFile);
     formDataToSend.append("totalSatMark", totalSatMark);
-
-  
 
     try {
       const storedDetails = JSON.parse(
@@ -65,8 +77,6 @@ const SignupEducation = () => {
 
       for (const key in storedDetails) {
         formDataToSend.append(key, storedDetails[key]);
-   
-          console.log(key)
       }
 
       // console.log(formDataToSend.get("englishSatMarkFile"));
@@ -82,22 +92,24 @@ const SignupEducation = () => {
         console.log(key, value);
       });
 
-      const response = await axios.post( `${baseUrl}api/students/register`,formDataToSend,
+      const response = await axios.post(
+        `${baseUrl}api/students/register`,
+        formDataToSend,
         {
           headers: {
-                        "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data",
           },
         }
       );
 
       if (response.status === 200) {
         setLoading(false);
+        alert("User registered successfully!");
         sessionStorage.clear();
         navigate("/diagnosistest");
-      } 
+      }
     } catch (error) {
       setLoading(false);
-      console.error("Error:?", error?.message);
       console.error("Error:", error);
       alert("Failed to register. Please try again.");
     }
@@ -143,82 +155,71 @@ const SignupEducation = () => {
 
           <form className="education-form" onSubmit={registerUser}>
             <div className="education-row">
-              <div className="education-row-heading">
-                <p>English (Reading & Writing)</p>
-              </div>
               <div className="education-boxes">
                 <div className="upload-box">
                   <input
                     type="file"
                     className="file-input"
-                    onChange={(e) => handleFileChange(e, setEnglishFile)}
+                    value={englishSatMarkFile}
+                    onChange={handleEnglishFileChange}
                   />
                 </div>
                 <div className="marks-box">
                   <input
                     type="text"
                     className="marks-input"
-                    placeholder="Enter marks"
+                    placeholder="Enter English marks"
                     value={englishSatMark}
-                    onChange={(e) => handleMarksChange(e, setEnglishMarks)}
+                    onChange={handleEnglishMarksChange}
                   />
                 </div>
-              </div>
-            </div>
-
-            <div className="education-row">
-              <div className="education-row-heading">
-                <p>Math</p>
               </div>
               <div className="education-boxes">
                 <div className="upload-box">
                   <input
                     type="file"
                     className="file-input"
-                    onChange={(e) => handleFileChange(e, setMathFile)}
+                    value={mathSatMarkFile}
+                    onChange={handleMathFileChange}
                   />
                 </div>
                 <div className="marks-box">
                   <input
                     type="text"
                     className="marks-input"
-                    placeholder="Enter marks"
+                    placeholder="Enter Math marks"
                     value={mathSatMark}
-                    onChange={(e) => handleMarksChange(e, setMathMarks)}
+                    onChange={handleMathMarksChange}
                   />
                 </div>
               </div>
             </div>
-
             <div className="education-row">
-              <div className="education-row-heading">
-                <p>Total Score</p>
-              </div>
               <div className="education-boxes">
                 <div className="upload-box">
                   <input
                     type="file"
                     className="file-input"
-                    onChange={(e) => handleFileChange(e, setTotalFile)}
+                    value={totalSatMarkFile}
+                    onChange={handleTotalFileChange}
                   />
                 </div>
                 <div className="marks-box">
                   <input
                     type="text"
                     className="marks-input"
-                    placeholder="Enter marks"
+                    placeholder="Enter Total marks"
                     value={totalSatMark}
-                    onChange={(e) => handleMarksChange(e, setTotalMarks)}
+                    onChange={handleTotalMarksChange}
                   />
                 </div>
               </div>
             </div>
-
             <div className="consent-container">
               <label className="consent-label">
                 <input
                   type="checkbox"
-                  checked={consent}
+                  value={consent}
                   onChange={handleConsentChange}
                   className="consent-checkbox"
                 />
@@ -228,11 +229,9 @@ const SignupEducation = () => {
               </label>
             </div>
             <section className="education-button-container">
-             
               <button type="submit" className="education-request">
                 Signup
               </button>
-
             </section>
           </form>
         </div>

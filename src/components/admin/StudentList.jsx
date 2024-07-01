@@ -149,7 +149,10 @@ const StudentList = () => {
   };
 
   const handleBlock = async (blockId) => {
+    console.log("block function hitted")
+    console.log(blockId)
     try {
+
       await axios.patch(`${apiURL}/api/students/block-students/${blockId}`);
       refetch();
     } catch (error) {

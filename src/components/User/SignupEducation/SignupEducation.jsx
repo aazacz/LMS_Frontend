@@ -79,14 +79,18 @@ const SignupEducation = () => {
         formDataToSend.append(key, storedDetails[key]);
       }
 
-      console.log(formDataToSend.get("englishSatMarkFile"));
-      console.log(formDataToSend.get("mathSatMarkFile"));
-      console.log(formDataToSend.get("totalSatMarkFile"));
-      console.log(formDataToSend.get("englishSatMark"));
-      console.log(formDataToSend.get("mathSatMark"));
-      console.log(formDataToSend.get("totalSatMark"));
-      console.log(formDataToSend.get("name"));
-      console.log(formDataToSend.get("grade"));
+      // console.log(formDataToSend.get("englishSatMarkFile"));
+      // console.log(formDataToSend.get("mathSatMarkFile"));
+      // console.log(formDataToSend.get("totalSatMarkFile"));
+      // console.log(formDataToSend.get("englishSatMark"));
+      // console.log(formDataToSend.get("mathSatMark"));
+      // console.log(formDataToSend.get("totalSatMark"));
+      // console.log(formDataToSend.get("name"));
+      // console.log(formDataToSend.get("grade"));
+      console.log('FormData contents:');
+      formDataToSend.forEach((value, key) => {
+        console.log(key, value);
+      });
 
       const response = await axios.post(
         `${baseUrl}api/students/register`,

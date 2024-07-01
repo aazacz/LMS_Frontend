@@ -9,8 +9,8 @@ import Check from "@mui/icons-material/Check";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { MdBlock } from "react-icons/md";
-// import "./StudentList.css" 
 import { useQuery } from "@tanstack/react-query";
+import Loader from "../reusable/Loader";
 
 
 // const CustomTooltip = ({ title, children }) => {
@@ -36,29 +36,47 @@ import { useQuery } from "@tanstack/react-query";
 
 const StudentList = () => {
   const apiURL = process.env.REACT_APP_API_URL;
-
-
-  const params = new URLSearchParams(window.location.search);
-  const initialPage = parseInt(params.get("page"), 10) || 1;
-  const initialSize = parseInt(params.get("pageSize"), 10) || 10;
-
-
-  const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(initialPage);
-  const [pageSize, setPageSize] = useState(initialSize);
+  // const [Data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-
   const [file, setFile] = useState(null);
 
+  const fetchStudents = async () => {
+    try {
+      const response = await axios.get(`${apiURL}api/students/getAll-students`)
+      console.log(response.data)
+       return response.data;
+    } catch (error) {
+      toast.error(error.response.data.error);
+    }
+  };
+
+
   const { data, isPending, isError, error, refetch } = useQuery({
-    queryKey: ["directories"],
-    queryFn: getData,
+    queryKey: ["studentList"],
+    queryFn: fetchStudents,
     staleTime: 1000,
     refetchInterval: 600000,
+    // onSuccess: (data) => {
+     
+    //     setData(data);
+    //     setTotalRows(data.totalRows);
+        
+    // },
+    
   });
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setCurrentPage(parseInt(params.get("page"), 10) || 1);
+    setPageSize(parseInt(params.get("pageSize"), 10) || 10);
+  }, []);
 
+  useEffect(() => {
+    refetch();
+  }, [currentPage, pageSize, searchQuery]);
 
   const updateUrl = ({ page, pageSize }) => {
     const newUrl = `?page=${page}&pageSize=${pageSize}`;
@@ -79,7 +97,7 @@ const StudentList = () => {
   const handlePageSizeSelectChange = (event) => {
     const newPageSize = parseInt(event.target.value, 10);
     setPageSize(newPageSize);
-    setCurrentPage(1); // Reset to page 1 when changing page size
+    setCurrentPage(1); 
     updateUrl({ page: 1, pageSize: newPageSize });
   };
 
@@ -92,7 +110,7 @@ const StudentList = () => {
     setFile(selectedFile);
   };
 
-  const handleFileUpload = () => {
+  const handleFileUpload = async () => {
     if (!file) {
       toast.error("Please select a file to upload");
       return;
@@ -100,20 +118,18 @@ const StudentList = () => {
     const formData = new FormData();
     formData.append("file", file);
 
-    axios.post(`${process.env.REACT_APP_API_URL}/api/students/bulk-upload`, formData)
-      .then(response => {
-        toast.success("File uploaded successfully");
-        // handle response
-      })
-      .catch(error => {
-        toast.error("File upload failed");
-        // handle error
-      });
+    try {
+      await axios.post(`${apiURL}/api/students/bulk-upload`, formData);
+      toast.success("File uploaded successfully");
+      refetch();
+    } catch {
+      toast.error("File upload failed");
+    }
   };
 
   const handleDownloadTemplate = () => {
     const link = document.createElement('a');
-    link.href = `${process.env.REACT_APP_API_URL}/api/students/download-template`;
+    link.href = `${apiURL}/api/students/download-template`;
     link.setAttribute('download', 'StudentDetails.xlsx');
     document.body.appendChild(link);
     link.click();
@@ -121,102 +137,39 @@ const StudentList = () => {
   };
 
   const formatDate = (date) => {
-    const options = {
+    return new Date(date).toLocaleString('en-IN', {
       timeZone: 'Asia/Kolkata',
       hour12: true,
       hour: 'numeric',
       minute: '2-digit',
       day: '2-digit',
       month: '2-digit',
-      year: 'numeric'
-    };
-
-    const formattedDate = new Date(date).toLocaleString('en-IN', options);
-    return formattedDate;
-  }
-
-
-  const [Active, SetActive] = useState(false)
-
-
-
-  const columns = [
-    {
-      field: "name",
-      headerName: "Name",
-
-    },
-    {
-      field: "grade",
-      headerName: "Grade",
-    },
-    {
-      field: "number",
-      headerName: "Phone",
-    },
-    {
-      field: "parentNumber",
-      headerName: "Parent Number",
-
-    },
-    {
-      field: "createdAt",
-      headerName: "Created Date",
-    },
-    {
-      field: "comingSatExamDate",
-      headerName: "Next Exam Date",
-    },
-    {
-      field: "status",
-      headerName: "Status",
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-
-    },
-  ];
-  const getCategoryData = async () => {
-    await axios.get(`${apiURL}api/students/getAll-students`) // replace with your actual API endpoint
-      .then((response) => {
-        console.log(response.data.data);
-        setData(response.data.data);
-        setTotalRows(response.data.totalRows);
-      })
-      .catch((error) => {
-        toast.error(error.response.data.error);
-      });
+      year: 'numeric',
+    });
   };
 
-  useEffect(() => {
-    // Read pagination data from URL on component mount
-    const params = new URLSearchParams(window.location.search);
-    const page = parseInt(params.get("page"), 10) || 1;
-    const size = parseInt(params.get("pageSize"), 10) || 10;
+  const handleBlock = async (blockId) => {
+    try {
+      await axios.patch(`${apiURL}/api/students/block-students/${blockId}`);
+      refetch();
+    } catch (error) {
+      toast.error(error.response.data.error);
+    }
+  };
 
-    setCurrentPage(page);
-    setPageSize(size);
-  }, []);
-
-  useEffect(() => {
-    getCategoryData();
-  }, [currentPage, pageSize, searchQuery]);
-
-
-
-  // function to block the student
-  const HandleBlock = async (blockId) => {
-    console.log("block funciton executed")
-
-    await axios.patch(`${baseURL}api/students/block-students/${blockId}`)
-      .then((res) => {
-
-        console.log(res)
-      })
+  const columns = [
+    { field: "name", headerName: "Name" },
+    { field: "grade", headerName: "Grade" },
+    { field: "number", headerName: "Phone" },
+    { field: "parentNumber", headerName: "Parent Number" },
+    { field: "createdAt", headerName: "Created Date" },
+    { field: "comingSatExamDate", headerName: "Next Exam Date" },
+    { field: "status", headerName: "Status" },
+    { field: "actions", headerName: "Actions" },
+  ];
 
 
-  }
+
 
   return (
     <div className="px-9 ">
@@ -254,8 +207,10 @@ const StudentList = () => {
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {data.map((row, indexrow) => (
+            <tbody className="relative">
+
+                {isPending||isError ? <div className="absolute w-full h-[150px]  top-[50%] translate-y-[50%] flex justify-center  "><Loader/></div> :    
+                 (data?.data.map((row, indexrow) => (
                 <tr key={row._id}>
                   {console.log(row.status)}
                   {columns.map((column, index) => (
@@ -267,7 +222,7 @@ const StudentList = () => {
 
                           {
                             row.status === "active" ?
-                              (<MdBlock className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={HandleBlock(row._id)} />)
+                              (<MdBlock className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={handleBlock(row._id)} />)
                               :
                               (<Check className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "UnBlock Action clicked")} />)
                           }
@@ -311,8 +266,8 @@ const StudentList = () => {
                       )}
                       {column.field === "status" ? (
                         <div className="action-container">
-                          {Active ? <div className="font-poppins text-sm  border-[1px] border-blue-700 bg-blue-700 text-white cursor-pointer hover:bg-slate-200   flex justify-center items-center"> Active</div>
-                            : <div className="font-poppins text-sm  border-[1px] border-blue-700  cursor-pointer text-blue-700 hover:bg-slate-200   flex justify-center items-center"> Inactive</div>
+                          {row.status === "active" ? <div className="font-poppins text-sm  border-[1px] border-blue-700 bg-blue-700 text-white cursor-pointer flex justify-center items-center"> Active</div>
+                            : <div className="font-poppins text-sm  border-[1px] border-blue-700  cursor-pointer text-blue-700  flex justify-center items-center"> Inactive</div>
                           }
 
                         </div>
@@ -325,12 +280,18 @@ const StudentList = () => {
                     </td>
                   ))}
                 </tr>
-              ))}
+              )
+            
+            
+            ))
+            
+            }
+
+
+         
             </tbody>
           </table>
         </div>
-
-
 
 
 
@@ -345,7 +306,7 @@ const StudentList = () => {
                   <option value="100">100</option>
                 </select>
               </div>
-              <div>Total Items : {totalRows}</div>
+              <div>Total Items : {data?.totalRows}</div>
             </div>
 
             <Pagination

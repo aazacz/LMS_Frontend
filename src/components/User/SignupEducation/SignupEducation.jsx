@@ -8,6 +8,7 @@ import axios from "axios";
 const SignupEducation = () => {
  
   const baseUrl = process.env.REACT_APP_API_URL;
+
   const [englishSatMarkFile, setEnglishFile] = useState(null); //file
   const [englishSatMark, setEnglishMarks] = useState("");
   const [mathSatMarkFile, setMathFile] = useState(null); //file
@@ -64,29 +65,27 @@ const SignupEducation = () => {
 
       for (const key in storedDetails) {
         formDataToSend.append(key, storedDetails[key]);
-       
-          // console.log(storedDetails[key]);
-          // console.log(formDataToSend.get(key));
+   
           console.log(key)
       }
 
-      console.log(formDataToSend.get("englishSatMarkFile"));
-      console.log(formDataToSend.get("mathSatMarkFile"));
-      console.log(formDataToSend.get("totalSatMarkFile"));
-      console.log(formDataToSend.get("englishSatMark"));
-      console.log(formDataToSend.get("mathSatMark"));
-      console.log(formDataToSend.get("totalSatMark"));
-      console.log(formDataToSend.get("name"));
-      console.log(formDataToSend.get("grade"));
+      // console.log(formDataToSend.get("englishSatMarkFile"));
+      // console.log(formDataToSend.get("mathSatMarkFile"));
+      // console.log(formDataToSend.get("totalSatMarkFile"));
+      // console.log(formDataToSend.get("englishSatMark"));
+      // console.log(formDataToSend.get("mathSatMark"));
+      // console.log(formDataToSend.get("totalSatMark"));
+      // console.log(formDataToSend.get("name"));
+      // console.log(formDataToSend.get("grade"));
+      console.log('FormData contents:');
+      formDataToSend.forEach((value, key) => {
+        console.log(key, value);
+      });
 
-
-      const response = await axios.post(
-        `${baseUrl}api/students/register`,formDataToSend,
+      const response = await axios.post( `${baseUrl}api/students/register`,formDataToSend,
         {
           headers: {
-            "User-Agent": navigator.userAgent,
-            "Content-Type": "multipart/form-data",
-            authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTAyYWE4YTE0ZTdiNTM1N2UwNjhlYyIsInJvbGUiOiJ0dXRvciIsImlhdCI6MTcxNzEzMDgxOH0.yQ2kisu7irJUvntqfjK-e95yys_VCbMzriFZEcv2Dks",
+                        "Content-Type": "multipart/form-data",
           },
         }
       );

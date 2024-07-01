@@ -1,0 +1,151 @@
+.new-material-container {
+    padding: 10px 20px;
+  }
+  
+  .new-material-title {
+    color: #666666;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 5px 0;
+    font-family: "Poppins";
+  }
+  
+  .new-material-instruction {
+    font-family: "Poppins";
+    font-size: 12px;
+    font-weight: 400;
+    padding: 15px 0;
+    color: #454545;
+  }
+  
+  .new-material-duration {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .new-material-select {
+    border: 1.5px solid #d0d0d0;
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px 10px;
+    font-size: 12px;
+    font-family: "Poppins";
+  }
+  
+  .new-material-name {
+    border: 1.5px solid #d0d0d0;
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px 10px;
+    font-size: 12px;
+    font-family: "Poppins";
+  }
+  
+  .material-file-input {
+    display: flex;
+    max-width: fit-content;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: "Poppins";
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 12px;
+  }
+  
+  .file-input-material-button {
+    background-color: #407bff;
+    color: white;
+    padding: 10px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: "Poppins";
+    margin-top: -3.5%;
+  }
+  
+  .material-btn-webkit-file-upload-button {
+    display: none;
+  }
+  
+  .material-btn::file-selector-button {
+    display: none !important;
+  }
+  
+  .create-material {
+    background-color: #407bff;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 5px;
+    margin-top: 4%;
+    margin-bottom: 5%;
+  }
+  
+  .upload-area {
+    margin-top: 5%;
+    width: 340px;
+    height: 120px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background-color: #f5f1f1;
+    color: #333;
+    cursor: pointer;
+    padding: 15px 15px;
+    font-size: 12px;
+    transition: background-color 0.3s;
+  }
+  
+  .upload-area.dragging {
+    background-color: #e0e0e0;
+  }
+  
+  .upload-icon {
+    font-size: 30px;
+    margin-bottom: 8px;
+  }
+  
+  .file-list {
+    margin-top: 20px;
+  }
+  
+  .file-list-title {
+    font-family: "Poppins";
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  
+  .file-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .file-list li {
+    font-family: "Poppins";
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  
+  @media (max-width: 970px) {
+    .material-files {
+      flex-direction: column;
+    }
+  }
+  
+  @media (max-width: 380px) {
+    .time-container {
+      flex-direction: column;
+    }
+    .file-input-material-button {
+      margin-top: -4.5%;
+    }
+    .upload-area {
+      width: 250px;
+      height: 100px;
+    }
+  }
+  

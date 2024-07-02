@@ -102,7 +102,7 @@ const EditProfile = () => {
         className="w-11/12 h-10 border-2 border-gray-100 px-2 rounded-lg text-sm  outline-none"
         type="text"
       />
-      <div class="flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
       <p className="font-medium text-sm ">Location</p>
     <select
       className="w-full py-2 border-2 border-gray-100 px-2 rounded-lg text-sm outline-none"

@@ -36,70 +36,68 @@ const SignupRoute = () => {
   return (
     <>
       <UserNavbar />
-      <div className="w-screen h-[100%] p-5  flex-1  flex justify-center items-center ">
-
-      <AnimatePresence mode="wait" >
-        <Routes location={location} key={location.pathname}>
-          <Route
-            path="/*"
-            element={
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <SignupPersonalDetails />
-              </motion.div>
-            }
-          />
-          <Route
-            path="/signupotpverify"
-            element={
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <SignupOtp />
-              </motion.div>
-            }
-          />
-          <Route
-            path="/signupSat"
-            element={
+      <div className="w-screen h-[100%] p-6 flex-1  flex justify-center items-center ">
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route
+              path="/*"
+              element={
                 <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <SignupSat />
-              </motion.div>
-            }
-          />
-          <Route
-          
-            path="/signupEducation"
-            element={
-              <motion.div
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={pageVariants}
-                transition={pageTransition}
-              >
-                <SignupEducation />
-              </motion.div>
-            }
+                  initial="initial"
+                  animate="in"
+                  exit="out"
+                  variants={pageVariants}
+                  transition={pageTransition}
+                >
+                  <SignupPersonalDetails />
+                </motion.div>
+              }
             />
-        </Routes>
-      </AnimatePresence>
-            </div>
+            <Route
+              path="/signupotpverify"
+              element={
+                <motion.div
+                  initial="initial"
+                  animate="in"
+                  exit="out"
+                  variants={pageVariants}
+                  transition={pageTransition}
+                >
+                  <SignupOtp />
+                </motion.div>
+              }
+            />
+            <Route
+              path="/signupSat"
+              element={
+                <motion.div
+                  initial="initial"
+                  animate="in"
+                  exit="out"
+                  variants={pageVariants}
+                  transition={pageTransition}
+                >
+                  <SignupSat />
+                </motion.div>
+              }
+            />
+            <Route
+              path="/signupEducation"
+              element={
+                <motion.div
+                  initial="initial"
+                  animate="in"
+                  exit="out"
+                  variants={pageVariants}
+                  transition={pageTransition}
+                >
+                  <SignupEducation />
+                </motion.div>
+              }
+            />
+          </Routes>
+        </AnimatePresence>
+      </div>
     </>
   );
 };

@@ -106,31 +106,32 @@ const SignupPersonalDetails = () => {
   };
 
   return (
-    <div className="signuppersonaldetails">
+    <div>
       <div className="personaldetailscontainer">
         <form onSubmit={handleSubmit}>
-          <div className="personaldetailsphoto">
-            <img
-              className="detailphoto"
-              src={personalDetailsImage}
-              alt="Personal Details"
-            />
-            <div className="details-content-container">
-              <p className="details-content">Signup to get started</p>
-              <p className="details-sub-content">
-                2,97,565 students and parents signed up to study <br />
-                abroad.Make an informed decision about your abroad education.
-              </p>
+          <div className="flex">
+            <div className="personaldetailsphoto">
+              <img
+                className="detailphoto"
+                src={personalDetailsImage}
+                alt="Personal Details"
+              />
+              <div className="details-content-container">
+                <p className="details-content">Signup to get started</p>
+                <p className="details-sub-content">
+                  2,97,565 students and parents signed up to study <br />
+                  abroad.Make an informed decision about your abroad education.
+                </p>
+              </div>
             </div>
           </div>
-          <div className=" flex justify-center">
+          <div className="personal-details-heading">
             <div className="details-heading ">
               <p className="deatils-sub-heading">1. Personal details</p>
               <p className="details-sub-sub-heading">
                 This will create your account and enable you to receive
                 recommendations (you can opt-out anytime)
               </p>
-
               <section className="detail-section">
                 <div className="input-row">
                   <input

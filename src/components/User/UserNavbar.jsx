@@ -38,7 +38,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
   return (
     <div className='Test md:px-4 px-4 bg-white  backdrop-blur-lg w-screen h-[7vh] md:h-[12vh] border-b-[1px] flex items-center md:py-0 relative transition-all duration-500'>
       <div className='md:w-[10%]  w-[30%] h-full font-poppins flex justify-center items-center'>
-        <img src={logo} className='md:w-[100px] w-[100%] md:' alt="logo" />
+        <img src={logo} className='w-full' alt="logo" />
       </div>
 
       <div className='hidden  w-[50%] md:grid grid-flow-row grid-cols-6 px-5'>

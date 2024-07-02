@@ -22,7 +22,7 @@ const CourseList = () => {
        ]
 
     return (
-        <div className='p-4 w-full max-w-[1200px]  '>
+        <div className='p-4 h-screen overflow-y-scroll no-scrollbar w-full  '>
 
             {/*Add Button */}
             <div className='flex justify-end'>

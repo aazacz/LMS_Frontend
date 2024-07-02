@@ -81,19 +81,28 @@
   width: 70%;
   margin: auto;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   gap: 10px;
 }
 
 .input {
-  width: 40px;
-  height: 40px;
+  width: 100%;
   padding: 10px;
-  font-size: 12px;
-  text-align: center;
+  font-size: 14px;
+  text-align: left;
   border: 1.5px solid #ccc;
   border-radius: 4px;
   outline: none;
+}
+
+.error-message {
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+  color: red;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .otp-number-sub-heading {
@@ -116,7 +125,6 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  /* margin-left: -50%; */
 }
 
 .otp-request {

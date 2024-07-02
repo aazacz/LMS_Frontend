@@ -9,50 +9,74 @@ import Check from "@mui/icons-material/Check";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { MdBlock } from "react-icons/md";
-// import "./StudentList.css" 
 import { useQuery } from "@tanstack/react-query";
+import Loader from "../reusable/Loader";
 
 
-const CustomTooltip = ({ title, children }) => {
-  const [tooltipOpen, setTooltipOpen] = useState(false);
- 
-  return (
-    <Tooltip
-      title={title}
-      placement="right"
-      open={tooltipOpen}
-      onClose={() => setTooltipOpen(false)}
-      onOpen={() => setTooltipOpen(true)}
-    >
-      <div
-        onMouseEnter={() => setTooltipOpen(true)}
-        onMouseLeave={() => setTooltipOpen(false)}
-      >
-        {children}
-      </div>
-    </Tooltip>
-  );
-};
+// const CustomTooltip = ({ title, children }) => {
+//   const [tooltipOpen, setTooltipOpen] = useState(false);
+
+//   return (
+//     <Tooltip
+//       title={title}
+//       placement="right"
+//       open={tooltipOpen}
+//       onClose={() => setTooltipOpen(false)}
+//       onOpen={() => setTooltipOpen(true)}
+//     >
+//       <div
+//         onMouseEnter={() => setTooltipOpen(true)}
+//         onMouseLeave={() => setTooltipOpen(false)}
+//       >
+//         {children}
+//       </div>
+//     </Tooltip>
+//   );
+// };
 
 const StudentList = () => {
   const apiURL = process.env.REACT_APP_API_URL;
-
-
-  const params = new URLSearchParams(window.location.search);
-  const initialPage = parseInt(params.get("page"), 10) || 1;
-  const initialSize = parseInt(params.get("pageSize"), 10) || 10;
-
-
-  const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(initialPage);
-  const [pageSize, setPageSize] = useState(initialSize);
+  // const [Data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-
   const [file, setFile] = useState(null);
 
+  const fetchStudents = async () => {
+    try {
+      const response = await axios.get(`${apiURL}api/students/getAll-students`)
+      console.log(response.data)
+       return response.data;
+    } catch (error) {
+      toast.error(error.response.data.error);
+    }
+  };
 
 
+  const { data, isPending, isError, error, refetch } = useQuery({
+    queryKey: ["studentList"],
+    queryFn: fetchStudents,
+    staleTime: 1000,
+    refetchInterval: 600000,
+    // onSuccess: (data) => {
+     
+    //     setData(data);
+    //     setTotalRows(data.totalRows);
+        
+    // },
+    
+  });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setCurrentPage(parseInt(params.get("page"), 10) || 1);
+    setPageSize(parseInt(params.get("pageSize"), 10) || 10);
+  }, []);
+
+  useEffect(() => {
+    refetch();
+  }, [currentPage, pageSize, searchQuery]);
 
   const updateUrl = ({ page, pageSize }) => {
     const newUrl = `?page=${page}&pageSize=${pageSize}`;
@@ -73,7 +97,7 @@ const StudentList = () => {
   const handlePageSizeSelectChange = (event) => {
     const newPageSize = parseInt(event.target.value, 10);
     setPageSize(newPageSize);
-    setCurrentPage(1); // Reset to page 1 when changing page size
+    setCurrentPage(1); 
     updateUrl({ page: 1, pageSize: newPageSize });
   };
 
@@ -86,28 +110,26 @@ const StudentList = () => {
     setFile(selectedFile);
   };
 
-  const handleFileUpload = () => {
+  const handleFileUpload = async () => {
     if (!file) {
       toast.error("Please select a file to upload");
       return;
     }
     const formData = new FormData();
     formData.append("file", file);
-    
-    axios.post(`${process.env.REACT_APP_API_URL}/api/students/bulk-upload`, formData)
-      .then(response => {
-        toast.success("File uploaded successfully");
-        // handle response
-      })
-      .catch(error => {
-        toast.error("File upload failed");
-        // handle error
-      });
+
+    try {
+      await axios.post(`${apiURL}/api/students/bulk-upload`, formData);
+      toast.success("File uploaded successfully");
+      refetch();
+    } catch {
+      toast.error("File upload failed");
+    }
   };
-  
+
   const handleDownloadTemplate = () => {
     const link = document.createElement('a');
-    link.href = `${process.env.REACT_APP_API_URL}/api/students/download-template`;
+    link.href = `${apiURL}/api/students/download-template`;
     link.setAttribute('download', 'StudentDetails.xlsx');
     document.body.appendChild(link);
     link.click();
@@ -115,126 +137,42 @@ const StudentList = () => {
   };
 
   const formatDate = (date) => {
-    const options = {
+    return new Date(date).toLocaleString('en-IN', {
       timeZone: 'Asia/Kolkata',
       hour12: true,
       hour: 'numeric',
       minute: '2-digit',
       day: '2-digit',
       month: '2-digit',
-      year: 'numeric'
-    };
-
-    const formattedDate = new Date(date).toLocaleString('en-IN', options);
-    return formattedDate;
-  }
-
-
-  const [Active, SetActive] = useState(false)
-
-
-
-  const columns = [
-    {
-      field: "name",
-      headerName: "Name",
-
-    },
-    {
-      field: "grade",
-      headerName: "Grade",
-    },
-    {
-      field: "number",
-      headerName: "Phone",
-    },
-    {
-      field: "parentNumber",
-      headerName: "Parent Number",
-
-    },
-    // {
-    //   field: "productDetails.name",
-    //   headerName: "Product",
-    // },
-    // {
-    //   field: "totalPrice",
-    //   headerName: "Price",
-
-    // },
-    // {
-    //   field: "pickUpDetails.date",
-    //   headerName: "Pick Up Date",
-    // },
-    // {
-    //   field: "pickUpDetails.time",
-    //   headerName: "Pick Up Time",
-
-    // },
-    // {
-    //   field: "partner.partnerName",
-    //   headerName: "Partner Name",
-
-    // },
-    {
-      field: "createdAt",
-      headerName: "Created Date",
-    },
-    {
-      field: "comingSatExamDate",
-      headerName: "Next Exam Date",
-    },
-    {
-      field: "status",
-      headerName: "Status",
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-
-    },
-  ];
-  const getCategoryData = async () => {
-    await axios
-      .get(
-        `${apiURL}api/students/getAll-students`
-      ) // replace with your actual API endpoint
-      .then((response) => {
-        console.log(response.data.data);
-        setData(response.data.data);
-        setTotalRows(response.data.totalRows);
-      })
-      .catch((error) => {
-        toast.error(error.response.data.error);
-      });
+      year: 'numeric',
+    });
   };
 
-  useEffect(() => {
-    // Read pagination data from URL on component mount
-    const params = new URLSearchParams(window.location.search);
-    const page = parseInt(params.get("page"), 10) || 1;
-    const size = parseInt(params.get("pageSize"), 10) || 10;
+  const handleBlock = async (blockId) => {
+    console.log("block function hitted")
+    console.log(blockId)
+    try {
 
-    setCurrentPage(page);
-    setPageSize(size);
-  }, []);
+      await axios.patch(`${apiURL}/api/students/block-students/${blockId}`);
+      refetch();
+    } catch (error) {
+      toast.error(error.response.data.error);
+    }
+  };
 
-  useEffect(() => {
-    getCategoryData();
-  }, [currentPage, pageSize, searchQuery]);
+  const columns = [
+    { field: "name", headerName: "Name" },
+    { field: "grade", headerName: "Grade" },
+    { field: "number", headerName: "Phone" },
+    { field: "parentNumber", headerName: "Parent Number" },
+    { field: "createdAt", headerName: "Created Date" },
+    { field: "comingSatExamDate", headerName: "Next Exam Date" },
+    { field: "status", headerName: "Status" },
+    { field: "actions", headerName: "Actions" },
+  ];
 
-  // function to block the student
-  const HandleBlock =async(blockId)=>{
-    console.log("block funciton executed")
-    
-    await axios.patch(`${baseURL}api/students/block-students/${blockId}`)
-      .then((res)=>{
 
-        console.log(res)
-      })  
-  
-  
-  }
+
 
   return (
     <div className="px-9 ">
@@ -262,7 +200,7 @@ const StudentList = () => {
           </div>
         </div>
 
-      
+
         <div className="table-container ">
           <table className="responsive-table">
             <thead>
@@ -272,8 +210,10 @@ const StudentList = () => {
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {data.map((row, indexrow) => (
+            <tbody className="relative">
+
+                {isPending||isError ? <div className="absolute w-full h-[150px]  top-[50%] translate-y-[50%] flex justify-center  "><Loader/></div> :    
+                 (data?.data.map((row, indexrow) => (
                 <tr key={row._id}>
                   {console.log(row.status)}
                   {columns.map((column, index) => (
@@ -282,14 +222,14 @@ const StudentList = () => {
 
                       {column.field === "actions" ? (
                         <div className="action-container flex items-center justify-center gap-x-2">
-                        
-                         {
-                          row.status === "active" ?
-                           ( <MdBlock   className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={HandleBlock(row._id)} />)
-                           :
-                           ( <Check     className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={()=>console.log(row._id+ "UnBlock Action clicked")} />)
-                         }
-                             <CloseIcon className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id+"Delete Action clicked")} />
+
+                          {
+                            row.status === "active" ?
+                              (<MdBlock className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={handleBlock(row._id)} />)
+                              :
+                              (<Check className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "UnBlock Action clicked")} />)
+                          }
+                          <CloseIcon className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "Delete Action clicked")} />
                         </div>
                       ) : <></>}
 
@@ -329,92 +269,98 @@ const StudentList = () => {
                       )}
                       {column.field === "status" ? (
                         <div className="action-container">
-                          {Active ? <div className="font-poppins text-sm  border-[1px] border-blue-700 bg-blue-700 text-white cursor-pointer hover:bg-slate-200   flex justify-center items-center"> Active</div>
-                            : <div className="font-poppins text-sm  border-[1px] border-blue-700  cursor-pointer text-blue-700 hover:bg-slate-200   flex justify-center items-center"> Inactive</div>
+                          {row.status === "active" ? <div className="font-poppins text-sm  border-[1px] border-blue-700 bg-blue-700 text-white cursor-pointer flex justify-center items-center"> Active</div>
+                            : <div className="font-poppins text-sm  border-[1px] border-blue-700  cursor-pointer text-blue-700  flex justify-center items-center"> Inactive</div>
                           }
 
                         </div>
                       ) : (
                         <>
-                         
+
                         </>
                       )}
 
                     </td>
                   ))}
                 </tr>
-              ))}
+              )
+            
+            
+            ))
+            
+            }
+
+
+         
             </tbody>
           </table>
         </div>
 
 
 
-
-
-      <div className="bulk-upload-container flex justify-between items-end gap-x-2">
-        <div>
-        <div className="select-container">
+        <div className="bulk-upload-container flex justify-between items-end gap-x-2">
           <div>
-            <select value={pageSize} onChange={handlePageSizeSelectChange}>
-              <option value="2">2</option>
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="100">100</option>
-            </select>
+            <div className="select-container">
+              <div>
+                <select value={pageSize} onChange={handlePageSizeSelectChange}>
+                  <option value="2">2</option>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+              <div>Total Items : {data?.totalRows}</div>
+            </div>
+
+            <Pagination
+              count={Math.ceil(totalRows / pageSize)}
+              page={currentPage}
+              onChange={handlePageChange}
+              variant="outlined"
+              color="primary"
+              shape="rounded"
+              showFirstButton
+              showLastButton
+              sx={{
+                display: "block",
+                width: "100%",
+                height: "max-content",
+                marginTop: "10px",
+                backgroundColor: "transparent",
+                zIndex: "0",
+              }}
+            />
           </div>
-          <div>Total Items : {totalRows}</div>
-        </div>
+          <div>
+            <h3 className="mr-4">Bulk upload Student Details</h3>
+            <div className="flex gap-x-2 ">
+              <input
+                type="file"
+                id="fileInput"
+                className="hidden"
+                onChange={handleFileChange}
+              />
 
-        <Pagination
-          count={Math.ceil(totalRows / pageSize)}
-          page={currentPage}
-          onChange={handlePageChange}
-          variant="outlined"
-          color="primary"
-          shape="rounded"
-          showFirstButton
-          showLastButton
-          sx={{
-            display: "block",
-            width: "100%",
-            height: "max-content",
-            marginTop: "10px",
-            backgroundColor: "transparent",
-            zIndex: "0",
-          }}
-        />
-        </div>
-        <div>
-        <h3 className="mr-4">Bulk upload Student Details</h3>
-        <div className="flex gap-x-2 ">
-        <input 
-            type="file" 
-            id="fileInput"
-            className="hidden" 
-            onChange={handleFileChange}
-          />
+              <label
+                htmlFor="fileInput"
+                className="file-label bg-gray-300 text-blue-700 px-4 py-2 rounded cursor-pointer">
+                {file ? file.name : 'Select'}
+              </label>
 
-          <label 
-            htmlFor="fileInput" 
-            className="file-label bg-gray-300 text-blue-700 px-4 py-2 rounded cursor-pointer">
-            {file ? file.name : 'Select'}
-          </label>
+              <button
+                onClick={handleFileUpload}
+                className="upload-button bg-green-500 text-white px-4 py-2 rounded">
+                Upload
+              </button>
 
-          <button 
-            onClick={handleFileUpload} 
-            className="upload-button bg-green-500 text-white px-4 py-2 rounded">
-            Upload
-          </button>
-
-          <button 
-            onClick={handleDownloadTemplate} 
-            className="download-button bg-blue-500 text-white px-4 py-2 rounded">
-            Download Excel
-          </button>
+              <button
+                onClick={handleDownloadTemplate}
+                className="download-button bg-blue-500 text-white px-4 py-2 rounded">
+                Download Excel
+              </button>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );

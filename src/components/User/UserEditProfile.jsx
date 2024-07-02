@@ -4,7 +4,7 @@ import Settings1 from "../../assets/Settings1.jpg";
 
 const UserEditProfile = () => {
   return (
-    <div className="w-screen h-screen  ">
+    <div className="w-full h-screen  ">
       
       <div className="w-full h-5/6  flex justify-start items-center flex-wrap flex-col ">
         <div className="w-1/2 md:w-1/3 lg:w-30percent h-5/6 flex flex-col justify-start items-start gap-4  pl-15pct">

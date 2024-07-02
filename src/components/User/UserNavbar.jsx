@@ -7,49 +7,50 @@ import { IoSearch } from "react-icons/io5";
 import logo from "../../assets/mindsatlogo.webp";
 import { Link } from 'react-router-dom';
 import profile from "/profile.jpeg"
+
 const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userDetails);
 
   const list = ["Subjects", "Courses", "Library", "Contact"];
-  const navlist = [
-    {
-    title: "Courses",
-    link: "/student/courses"
-  },
-  {
-    title: "Tutor",
-    link: "/student/tutors"
-  },
-  {
-    title: "Library",
-    link: "/student/Library"
-  },
+  // const navlist = [
+  //   {
+  //   title: "Courses",
+  //   link: "/student/courses"
+  // },
+  // {
+  //   title: "Tutor",
+  //   link: "/student/tutors"
+  // },
+  // {
+  //   title: "Library",
+  //   link: "/student/Library"
+  // },
 
 
 
-    "Subjects", "Courses", "Library", "Contact"];
+  //   "Subjects", "Courses", "Library", "Contact"];
 
   const handleToggle = () => {
     setShow(!show);
   };
 
   return (
-    <div className='Test md:px-4 px-4 bg-white  backdrop-blur-lg w-screen h-[7vh] md:h-[12vh] border-b-[1px] flex items-center md:py-0 relative transition-all duration-500'>
+    <div className='Test md:px-4 px-4 justify-between  backdrop-blur-lg w-full bg-white  h-[7vh] md:h-[12vh] border-b-[1px] flex items-center md:py-0 relative transition-all duration-500'>
       <div className='md:w-[10%]  w-[30%] h-full font-poppins flex justify-center items-center'>
         <img src={logo} className='md:w-[100px] w-[100%] md:' alt="logo" />
       </div>
 
-      <div className='hidden  w-[50%] md:grid grid-flow-row grid-cols-6 px-5'>
+      {/* <div className='hidden  w-[50%] md:grid grid-flow-row grid-cols-6 px-5'>
         {navlist.map((val, index) => (
           <Link key={index} to={val.link}>
-            <h1 className='text-[#0066DE] font-plusjakartasans text-center cursor-pointer  md:text-base font-semibold'>
+            <h1 className='text-[#0066DE] bg-red-400 font-poppins text-center cursor-pointer  md:text-base font-semibold'>
               {val.title}
             </h1>
           </Link>
         ))}
-      </div>
+      </div> */}
 
 
 

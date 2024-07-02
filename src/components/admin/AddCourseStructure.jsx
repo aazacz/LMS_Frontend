@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TfiWrite } from 'react-icons/tfi';
-
+import "./AddCourseStructure.css"
 import { IoIosCloseCircle } from 'react-icons/io';
 import "../../index.css"
 import "./Addcourse.css"
@@ -268,21 +268,22 @@ const axiosHandler = ()=>{
           </div>
 
 
-          <div className="w-full md:w-full">
-            <label className="text-sm font-semibold">Package</label>
+          <div className=" w-full md:w-full">
+            <label className=" text-sm font-semibold">Package</label>
             <select
+            
               onChange={handleInputChange}
               name="package"
               value={course.package}
-              className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900 border-[1px] border-gray-500"
+              className="  w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900 border-[1px] border-gray-500"
             >
-              <option value="Select a package" defaultChecked className="font-poppins opac text-slate-500">
+              <option value="Select a package" defaultChecked className="w-[100px] font-poppins opac text-slate-500">
                 Select a package
               </option>
 
               {packages && packages.map((val, index) => {
                 return (
-                  <option key={index}>{val.packageName}</option>
+                  <option className='w-[100px]' key={index}>{val.packageName} </option>
                 )
               })}
 

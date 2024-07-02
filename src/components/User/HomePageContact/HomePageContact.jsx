@@ -67,7 +67,7 @@ const HomePageContact = () => {
                   stroke-width="3"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-chevron-right"
+                  className="feather feather-chevron-right"
                 ></svg>
               </button>
             </div>

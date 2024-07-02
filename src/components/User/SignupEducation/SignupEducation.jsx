@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./SignupEducation.css";
-import personalDetailsImage from "../../../assets/SignupPersonalDetails/personaldetails.png";
+import personalDetailsImage from "../../../assets/SignupPersonalDetails/personal.svg";
 import Loader from "../../reusable/Loader";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -79,15 +79,7 @@ const SignupEducation = () => {
         formDataToSend.append(key, storedDetails[key]);
       }
 
-      // console.log(formDataToSend.get("englishSatMarkFile"));
-      // console.log(formDataToSend.get("mathSatMarkFile"));
-      // console.log(formDataToSend.get("totalSatMarkFile"));
-      // console.log(formDataToSend.get("englishSatMark"));
-      // console.log(formDataToSend.get("mathSatMark"));
-      // console.log(formDataToSend.get("totalSatMark"));
-      // console.log(formDataToSend.get("name"));
-      // console.log(formDataToSend.get("grade"));
-      console.log('FormData contents:');
+      console.log("FormData contents:");
       formDataToSend.forEach((value, key) => {
         console.log(key, value);
       });
@@ -117,127 +109,122 @@ const SignupEducation = () => {
   };
 
   return (
-    <>
-      <div className="w-screen h-[88vh]relative flex items-center justify-center">
-        {loading && (
-          <div className="modal-overlay w-screen h-[88vh] absolute">
-            <Loader />
-          </div>
-        )}
-
-        <div
-          className={
-            loading ? "educationcontainer blurred" : "educationcontainer"
-          }
-        >
-          <div className="educationphoto">
-            <img
-              className="educationimage"
-              src={personalDetailsImage}
-              alt="Personal Details"
-            />
-            <div className="education-content-container">
-              <p className="education-content">Signup to get started </p>
-              <p className="education-sub-content">
-                2,97,565 students and parents signed up to study <br />
-                abroad. Make an informed decision about your abroad education.
-              </p>
+    <div className="educationdetailscontainer">
+      <form onSubmit={registerUser}>
+        <div>
+          {loading && (
+            <div className="modal-overlay w-screen h-[88vh] absolute">
+              <Loader />
             </div>
-          </div>
-          <div className="education-heading">
-            <p className="education-sub-heading">
-              3. Current education details
-            </p>
-            <p className="education-sub-sub-heading">
-              Accurate details will help us show universities & scholarships
-              that match your profile.
-            </p>
-          </div>
-
-          <form className="education-form" onSubmit={registerUser}>
-            <div className="education-row">
-              <div className="education-boxes">
-                <div className="upload-box">
-                  <input
-                    type="file"
-                    className="file-input"
-                    value={englishSatMarkFile}
-                    onChange={handleEnglishFileChange}
-                  />
-                </div>
-                <div className="marks-box">
-                  <input
-                    type="text"
-                    className="marks-input"
-                    placeholder="Enter English marks"
-                    value={englishSatMark}
-                    onChange={handleEnglishMarksChange}
-                  />
-                </div>
-              </div>
-              <div className="education-boxes">
-                <div className="upload-box">
-                  <input
-                    type="file"
-                    className="file-input"
-                    value={mathSatMarkFile}
-                    onChange={handleMathFileChange}
-                  />
-                </div>
-                <div className="marks-box">
-                  <input
-                    type="text"
-                    className="marks-input"
-                    placeholder="Enter Math marks"
-                    value={mathSatMark}
-                    onChange={handleMathMarksChange}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="education-row">
-              <div className="education-boxes">
-                <div className="upload-box">
-                  <input
-                    type="file"
-                    className="file-input"
-                    value={totalSatMarkFile}
-                    onChange={handleTotalFileChange}
-                  />
-                </div>
-                <div className="marks-box">
-                  <input
-                    type="text"
-                    className="marks-input"
-                    placeholder="Enter Total marks"
-                    value={totalSatMark}
-                    onChange={handleTotalMarksChange}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="consent-container">
-              <label className="consent-label">
-                <input
-                  type="checkbox"
-                  value={consent}
-                  onChange={handleConsentChange}
-                  className="consent-checkbox"
+          )}
+          <div
+            className={
+              loading ? "educationcontainer blurred" : "educationcontainer"
+            }
+          >
+            <div className="flex">
+              <div className="educationdetailsphoto">
+                <img
+                  className="educationphoto"
+                  src={personalDetailsImage}
+                  alt="Personal Details"
                 />
-                I have read and provide consent for my data to be processed for
-                purposes mentioned in the Terms and Conditions and agree to be
-                contacted for Education related services & promotions.
-              </label>
+                <div className="education-details-content-container">
+                  <p className="education-details-content">
+                    Signup to get started
+                  </p>
+                  <p className="education-details-sub-content">
+                    2,97,565 students and parents signed up to study <br />
+                    abroad. Make an informed decision about your abroad
+                    education.
+                  </p>
+                </div>
+              </div>
             </div>
-            <section className="education-button-container">
-              <button type="submit" className="education-request">
-                Signup
-              </button>
-            </section>
-          </form>
+            <div className="education-details-main-heading">
+              <div className="education-details-heading">
+                <p className="education-details-sub-heading">
+                  3. Current Details Education
+                </p>
+                <p className="education-details-sub-sub-heading">
+                  Accurate details will help us show universities & scholarships
+                  that match your profile.
+                </p>
+                <section className="education-detail-section">
+                  <div className="education-input-row">
+                    <input
+                      type="file"
+                      className="education-detail-input-file"
+                      value={englishSatMarkFile}
+                      onChange={handleEnglishFileChange}
+                    />
+                    <input
+                      type="text"
+                      className="education-detail-input"
+                      name="grade"
+                      placeholder="Enter English marks"
+                      value={englishSatMark}
+                      onChange={handleEnglishMarksChange}
+                    />
+                  </div>
+                  <div className="education-input-row">
+                    <input
+                      type="file"
+                      className="education-detail-input-file"
+                      value={mathSatMarkFile}
+                      onChange={handleMathFileChange}
+                    />
+                    <input
+                      type="text"
+                      className="education-detail-input"
+                      placeholder="Enter Math marks"
+                      value={mathSatMark}
+                      onChange={handleMathMarksChange}
+                    />
+                  </div>
+                  <div className="education-input-row">
+                    <input
+                      type="file"
+                      className="education-detail-input-file"
+                      value={totalSatMarkFile}
+                      onChange={handleTotalFileChange}
+                    />
+                    <input
+                      type="text"
+                      className="education-detail-input"
+                      placeholder="Enter Total marks"
+                      value={totalSatMark}
+                      onChange={handleTotalMarksChange}
+                    />
+                  </div>
+                  <div className="consent-container">
+                    <input
+                      type="checkbox"
+                      value={consent}
+                      onChange={handleConsentChange}
+                      className="consent-checkbox"
+                    />
+                    <p>
+                      I have read and provide consent for my data to be
+                      processed for purposes mentioned
+                      <br />
+                      in the Terms and Conditions and agree to be contacted for
+                      Education related services
+                      <br />& promotions.
+                    </p>
+                  </div>
+                  <div className="flex flex-col md:flex-row items-center w-full justify-center">
+                    <button type="submit" className="education-detail-submit">
+                      Register
+                    </button>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </>
+      </form>
+    </div>
   );
 };
 

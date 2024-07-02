@@ -1,100 +1,97 @@
 .otpcontainer {
-  border: 2px solid #0066de;
-  width: 75%;
+  border: 2px solid #0062cc;
   border-radius: 50px;
-  background: #ffffff4d;
-  padding: 20px;
-  margin: 0 auto;
-  margin-top: 3%;
-  margin-bottom: 1%;
 }
 
 .otpphoto {
+  /* border: 1px solid black; */
   display: flex;
-  flex-direction: row;
   margin-left: 5%;
   align-items: center;
-}
-
-.otpimage {
-  width: 25%;
-  height: 25%;
-}
-
-.otp-content-container {
-  margin-left: 10%;
-  display: flex;
-  flex-wrap: wrap;
   gap: 20px;
 }
 
+.otp-content-container {
+  /* border: 1px solid black; */
+  /* margin-left: 40px; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+}
+
 .otp-content {
+  /* border: 1px solid black; */
   font-family: "Poppins";
-  font-size: 18px;
+  font-size: 1.2rem;
   font-weight: 700;
-  line-height: 30px;
 }
 
 .otp-sub-content {
   font-family: "Poppins";
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 21px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 18px;
+  /* border: 1px solid black; */
 }
 
 .otp-heading {
+  /* border: 1px solid black; */
   display: flex;
-  align-items: center;
+  width: 100%;
+  justify-content: center;
   flex-direction: column;
-  margin-left: 5%;
-  margin-top: 2%;
-  gap: 10px;
-  padding-bottom: 15px;
-  text-align: center;
+  margin-top: 20px;
+  gap: 2px;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
 .otp-sub-heading {
   font-family: "Poppins";
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 28px;
-  text-align: left;
-}
-
-.otp-sub-sub-heading {
-  font-family: "Poppins";
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 18px;
-  text-align: left;
-  color: black;
-  padding: 20px 20px;
-}
-
-.otp-sub-sub-heading a {
-  color: #007bff;
-  text-decoration: underline;
-  transition: color 0.3s ease;
+  text-align: justify;
 }
 
 .otp-number {
-  width: 70%;
-  margin: auto;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-bottom: 25px;
 }
 
 .input {
   width: 100%;
-  padding: 10px;
-  font-size: 14px;
+  height: 40px;
+  padding-left: 5px;
+  font-size: 12px;
   text-align: left;
-  border: 1.5px solid #ccc;
+  box-sizing: border-box;
+  border: 1.5px solid #e2e2e2;
   border-radius: 4px;
   outline: none;
+  background-color: #fafafa;
 }
+
+.password-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.show-password-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #0066de;
+}
+
 
 .error-message {
   font-family: "Poppins";
@@ -102,37 +99,17 @@
   font-weight: 500;
   color: red;
   text-align: center;
-  margin-top: 10px;
-}
-
-.otp-number-sub-heading {
-  font-family: "Poppins";
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 18px;
-  color: black;
-  padding: 20px 20px;
-  text-align: center;
-}
-
-.otp-number-sub-heading a {
-  color: #007bff;
-  text-decoration: underline;
-  transition: color 0.3s ease;
-}
-
-.otp-button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  margin-top: 1px;
 }
 
 .otp-request {
-  width: 30%;
+  display: flex;
+  justify-content: center;
+  width: max-content;
   padding: 10px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  background-color: #007bff;
+  background-color: #0066de;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -142,59 +119,31 @@
 
 .otp-request:hover {
   background-color: #0062cc;
+  outline: none;
 }
 
-@media (max-width: 800px) {
-  .otpphoto {
-    flex-direction: column;
-  }
-  .otpimage {
-    width: 50%;
-    height: 50%;
+@media (max-width: 680px) {
+  .otp-heading {
+    padding: 0 30px;
   }
 }
 
 @media (max-width: 540px) {
-  .otp-sub-sub-heading {
-    text-align: center;
+  .otpphoto {
+    flex-direction: column;
+    justify-content: left;
+    display: flex;
   }
-  .otp-number {
-    flex-wrap: wrap;
-  }
-  .otpimage {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-@media (max-width: 450px) {
-  .otp-button-container {
-    margin-left: 10%;
-  }
-  .otpimage {
-    width: 90%;
-    height: 90%;
+  .otp-content-container {
+    /* border: 2px solid red; */
+    margin-left: 10px;
+    flex-direction: column;
+    padding-top: 5px;
   }
 }
 
-@media (max-width: 350px) {
-  .otp-button-container {
-    margin-top: 15px;
-    margin-left: 6%;
-  }
-  .otpimage {
-    width: 80%;
-    height: 80%;
-  }
-}
-
-@media (max-width: 330px) {
-  .otp-button-container {
-    margin-top: 15px;
-    margin-left: -2%;
-  }
-  .otpimage {
-    width: 70%;
-    height: 70%;
+@media (max-width: 480px) {
+  .otpcontainer {
+    border: none;
   }
 }

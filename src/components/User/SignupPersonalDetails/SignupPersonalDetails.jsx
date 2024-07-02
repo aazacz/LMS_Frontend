@@ -112,7 +112,7 @@ const SignupPersonalDetails = () => {
           <div className="flex">
             <div className="personaldetailsphoto">
               <img
-                className="detailphoto"
+                className="detailphoto -z-20"
                 src={personalDetailsImage}
                 alt="Personal Details"
               />

@@ -112,7 +112,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
     </Link>
     
     <Link to={"/signup"}>
-      <button className='px-3 bg-blue-700 h-[35px] text-white'>Register</button>
+      <button className='px-3  bg-blue-700 h-[35px] text-white'>Register</button>
     </Link>
     </div>
   </div>
@@ -126,15 +126,15 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
       </button>
 
       {(
-        <div className={` ${!show ? "-translate-y-[700px] " : ""}  transition-all duration-700  absolute top-[7vh] right-0 w-full bg-white shadow-lg md:hidden `}>
-          <h1 className='md:hidden block hover:text-lg text-[#0066DE] font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
+        <div className={` ${!show ? "-translate-y-[700px] " : ""}  transition-all z-50 duration-700  absolute top-[7vh] right-0 w-full bg-white shadow-lg md:hidden `}>
+          <h1 className='md:hidden block hover:text-lg bg-white text-[#0066DE] font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
             Login
           </h1>
-          <h1 className='md:hidden block hover:text-lg text-[#0066DE] font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
+          <h1 className='md:hidden block hover:text-lg bg-white text-[#0066DE] font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
             Register
           </h1>
           {list.map((val, index) => (
-            <h1 key={index} className='text-[#0066DE] hover:text-lg font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
+            <h1 key={index} className='text-[#0066DE] bg-red-700 hover:text-lg font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
               {val}
             </h1>
           ))}

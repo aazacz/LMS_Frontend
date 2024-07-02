@@ -1,6 +1,7 @@
 .personaldetailscontainer {
   border: 2px solid #0062cc;
   border-radius: 50px;
+  z-index: -10;
 }
 
 .personaldetailsphoto {
@@ -9,6 +10,8 @@
   margin-left: 5%;
   align-items: center;
   gap: 20px;
+  z-index: -10;
+
 }
 
 .details-content-container {

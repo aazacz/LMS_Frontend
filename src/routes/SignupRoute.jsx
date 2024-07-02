@@ -35,8 +35,8 @@ const SignupRoute = () => {
 
   return (
     <>
-      <UserNavbar />
-      <div className="w-screen h-[100%] p-6 flex-1  flex justify-center items-center ">
+      <div className="z-30"><UserNavbar /></div>
+      <div className="w-screen h-[100%] p-6 flex-1 -z-20 flex justify-center items-center ">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route

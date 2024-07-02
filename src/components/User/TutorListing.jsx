@@ -9,7 +9,7 @@ import mindsatLoader from '/mindsatLoader.gif'
 
 const TutorCard = ({ tutor }) => (
   <Link to={`/admin/home/tutors/${tutor._id}`}>
-    <div className="bg-[#F5F1F1] rounded-md border-[1px] shadow-lg border-gray-500 px-3 py-2 m-4 flex flex-row cursor-pointer">
+    <div className=" bg-red-400  rounded-md border-[1px] shadow-lg border-gray-500 px-3 py-2 m-4 flex flex-row cursor-pointer">
       <div className='w-[90%] '>
         <div className="flex items-center ">
           <div className="w-10 h-10 rounded-full overflow-hidden">
@@ -65,7 +65,7 @@ const TutorListing = () => {
   }, []);
 
   return (
-    <div className="relative p-4 w-screen h-screen ">
+    <div className="relative p-4 w-full h-screen ">
       {/* Loader */}
    
    {/* If there is no data from the backend then the Loader shows  */}

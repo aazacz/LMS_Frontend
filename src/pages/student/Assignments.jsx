@@ -18,9 +18,9 @@ const Assignments = () => {
 
     return (
         <>
-            <div className="max-w-[1200px] w-screen h-screen p-6 rounded-lg shadow-lg flex flex-col">
-                <div className='flex flex-grow'>
-                    <div className='w-[70%] max-w-[70%] h-full bg-[#F3F3F3] p-5 flex-grow'>
+            <div className="w-full flex-wrap h-screen bg-red-400 p-6 rounded-lg shadow-lg overflow-y-scroll no-scrollbar  flex flex-col">
+                <div className='flex flex-wrap flex-grow '> 
+                    <div className='w-full lg:w-[70%] bg-[#F3F3F3] p-5 h-max '>
                         <h1 className="text-2xl font-bold mb-4">Assignments</h1>
                         <div className="flex gap-x-4 mb-6">
                             <button
@@ -66,7 +66,7 @@ const Assignments = () => {
                         </div>
                     </div>
 
-                    <div className='w-[30%] max-w-[30%] p-5 bg-slate-200'>
+                    <div className='w-full lg:w-[30%] p-5 bg-slate-200'>
 
                         <div>
                             <h1 className='font-poppins font-semibold text-xl py-2'>Assignment Calendar</h1>

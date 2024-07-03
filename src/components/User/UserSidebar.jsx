@@ -11,7 +11,8 @@ import { IoIosSettings } from "react-icons/io";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { FaBookReader } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
-
+import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; // Import the clearStudentDetails action
+import { clearToken } from "../../store/reducers/tokenSlice"; // Import the clearToken action
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -41,12 +42,11 @@ const SideBar = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(clearTutorDetails()); // Clear admin details
-        navigate("/tutor"); // Navigate to login page
+        dispatch(clearStudentDetails());
+        dispatch(clearToken());
+        navigate("/");
       }
     });
-
-    dispatch(clearToken());
   };
 
   const navLinks = [
@@ -81,7 +81,7 @@ const SideBar = () => {
     <div>
       <div>
         <div className=" h-screen font-poppins text-sm font-medium">
-          <Sidebar  collapsed={collapsed} backgroundColor="#fff" width="250px">
+          <Sidebar collapsed={collapsed} backgroundColor="#fff" width="250px">
             <Menu className="h-screen">
               <MenuItem
                 onClick={toggleCollapse}

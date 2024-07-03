@@ -29,7 +29,7 @@ const Notifications = () => {
     });
   };
   return (
-    <div className="notification-settings">
+    <div className="h-screen overflow-y-scroll no-scrollbar notification-settings">
             <h2>Notification</h2>
             <div className="mobile-push-notification">
               <label htmlFor="mobile-push-notification">

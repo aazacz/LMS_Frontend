@@ -40,6 +40,7 @@ const StudentHomepage = ({ User }) => {
               isSidebarOpen={isSidebarOpen}
             />
           </div> */}
+          {/* <UserNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} /> */}
           <Routes>
              <Route path="/*" element={<Dashboard />} />
              <Route

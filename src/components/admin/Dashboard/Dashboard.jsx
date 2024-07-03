@@ -8,10 +8,10 @@ import Dashboard_TopStudents from './Dashboard_TopStudents'
 
 const Dashboard = () => {
   return (
-    <div className='w-full justify-center items-center h-max p-2 '>
+    <div className='w-full bg-yellow-400 justify-center items-center h-screen overflow-y-scroll no-scrollbar p-2 '>
       <div className='w-full justify-start items-start flex h-max flex-wrap gap-2'>
-        <div className='w-full lg:w-[55%] h-max'><Dashboard_Overview/></div>
-        <div className='w-full lg:w-[40%] h-max'><Dashboard_Calculations/></div>
+        <div className='w-full h-max'><Dashboard_Overview/></div>
+        <div className='w-full  h-max'><Dashboard_Calculations/></div>
       </div>
       <div className='w-full justify-start items-start flex flex-wrap h-max gap-4 mt-4'>
         <div className='w-full lg:w-[55%] h-max '><Dashboard_UpcomingClasses/></div>

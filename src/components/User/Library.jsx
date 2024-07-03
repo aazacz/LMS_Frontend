@@ -20,11 +20,11 @@ const Library = () => {
         }
 
     return (
-        <div onClick={()=>setModal(false)} className={`w-screen flex justify-center ${Modal ? " bg-gray-200":" "}`}>
+        <div onClick={()=>setModal(false)} className={`w-full flex  ${Modal ? " bg-gray-200":" "}`}>
 
-        <div  className={`px-6  shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-whiet max-w-[1200px] h-[90vh] flex flex-col relative `}  >
+        <div  className={` px-6 w-full shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] h-screen overflow-y-scroll no-scrollbar flex flex-col relative `}  >
             {Modal && (
-          <div className="w-full max-w-[80vw] h-[88vh]  absolute left-1/2 -translate-x-1/2">
+          <div className=" w-full max-w-[80vw] h-[88vh]  absolute left-1/2 -translate-x-1/2">
                  <object data={sample} type="application/pdf" width="100%" height="100%">
                  <img src="broken.png" alt="PDF not found"/>
                     </object>
@@ -33,7 +33,7 @@ const Library = () => {
 
             <h1 className='font-poppins text-3xl py-4 font-semibold text-black'>Library</h1>
 
-            <div className='grid grid-flow-row grid-cols-6 gap-4  '>
+            <div className='grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4  '>
 
                 {pdf.map((valuem,index) => {
                     return (

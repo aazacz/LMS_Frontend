@@ -37,9 +37,11 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
   };
 
   return (
-    <div className='Test md:px-4 px-4 justify-between  backdrop-blur-lg w-full bg-white  h-[7vh] md:h-[12vh] border-b-[1px] flex items-center md:py-0 relative transition-all duration-500'>
+    <div className='Test md:px-4 px-4 justify-between   w-full bg-white  h-[7vh] md:h-[12vh] border-b-[1px] flex items-center md:py-0 relative transition-all duration-500'>
       <div className='md:w-[10%]  w-[30%] h-full font-poppins flex justify-center items-center'>
-        <img src={logo} className='w-full' alt="logo" />
+      <Link to="/">
+      <img src={logo} className='w-full cursor-pointer' alt="logo" />
+    </Link>
       </div>
 
       {/* <div className='hidden  w-[50%] md:grid grid-flow-row grid-cols-6 px-5'>
@@ -50,9 +52,9 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
             </h1>
           </Link>
         ))}
-      </div> */}
+      </div>
 
-
+ */}
 
 
 
@@ -67,7 +69,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
     </div>
     {/* notification red icon */}
     <div className=' rounded-[4px] h-4 w-4 flex justify-center items-center bg-red-700 relative '>
-      <div className='absolute rotate-45 -translate-x-1/2 -translate-y-1/2   bg-red-700 w-[6px] h-[6px] top-1/2  left-[1px]'></div>
+      <div className='absolute rotate-45 -translate-x-1/2 -translate-y-1/2    w-[6px] h-[6px] top-1/2  left-[1px]'></div>
       <p className='text-xs text-white'>8</p>
     </div>
 
@@ -99,20 +101,20 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
 
 (
   <div className='hidden md:flex md:w-[40%] justify-end items-center h-full '>
-    <div className='h-1/2 flex justify-center'>
+    {/* <div className='h-1/2 flex justify-center'>
       <input className='h-[35px] border-2' type="text" />
       <button className='w-[35px] bg-blue-700 h-[35px] flex justify-center items-center'>
         <IoSearch className='text-white' />
       </button>
-    </div>
-    <div className='h-1/2 flex justify-center '>
+    </div> */}
+    <div className='h-1/2  flex gap-4 justify-between '>
       
     <Link to={"/login"}>
-      <button className='px-3 text-blue-700 h-[35px]'>Sign in</button>
+      <button className='px-3 text-[14px]  bg-blue-700 h-[35px] text-white font-poppins'>Sign in</button>
     </Link>
     
     <Link to={"/signup"}>
-      <button className='px-3  bg-blue-700 h-[35px] text-white'>Register</button>
+      <button className='px-3 text-[14px]  bg-blue-700 h-[35px] text-white font-poppins'>Register</button>
     </Link>
     </div>
   </div>
@@ -134,7 +136,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
             Register
           </h1>
           {list.map((val, index) => (
-            <h1 key={index} className='text-[#0066DE] bg-red-700 hover:text-lg font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
+            <h1 key={index} className='text-[#0066DE] backdrop-blur-lg hover:text-lg font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
               {val}
             </h1>
           ))}

@@ -104,8 +104,8 @@ const Dashboard_Overview = () => {
                 Download now
               </button>
             </div>
-            <div className="w-full h-max">
-              <Histogram  />
+            <div className="w-full h-max ">
+              {/* <Histogram  /> */}
             </div>
           </div>
         </div>

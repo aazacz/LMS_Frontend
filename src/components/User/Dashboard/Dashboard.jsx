@@ -49,11 +49,11 @@ const Dashboard = () => {
           </h1>
 
           {/* Card Showing div */}
-          <div className="w-full   h-[200px]  max-w-[1200px] flex justify-center relative border">
+          <div className="w-full   h-max  max-w-[1200px] flex justify-center relative">
             {loader ? (
               <Loader />
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-2 relative">
+              <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-2 relative">
                 {TutorList.map((tutor, index) => (
                   <TutorCard key={index} tutor={tutor} />
                 ))}

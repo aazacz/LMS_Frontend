@@ -37,7 +37,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
   };
 
   return (
-    <div className='Test md:px-4 px-4 justify-between   w-full bg-white  h-[7vh] md:h-[12vh] border-b-[1px] flex items-center md:py-0 relative transition-all duration-500'>
+    <div className='Test md:px-4 px-4 justify-between  w-full bg-white  h-[7vh] md:h-[12vh] border-b-[1px] flex items-center md:py-0 relative transition-all duration-500'>
       <div className='md:w-[10%]  w-[30%] h-full font-poppins flex justify-center items-center'>
         <img src={logo} className='w-full' alt="logo" />
       </div>
@@ -134,7 +134,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
             Register
           </h1>
           {list.map((val, index) => (
-            <h1 key={index} className='text-[#0066DE] hover:text-lg font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
+            <h1 key={index} className='text-[#0066DE] bg-white hover:text-lg font-plusjakartasans text-base font-semibold px-4 py-2 border-b'>
               {val}
             </h1>
           ))}

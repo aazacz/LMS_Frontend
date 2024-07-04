@@ -118,7 +118,7 @@ const SideBar = () => {
                 isActive("/") ? "bg-blue-500 text-white" : "side-menu-item"
               }`}
               icon={<img src={Logohalf} alt="" />}
-              onClick={() => navigate('/')}
+              // onClick={() => navigate('/')}
             >
               <img src={Logohalf2} className="w-[120px]" alt="" />
             </MenuItem>

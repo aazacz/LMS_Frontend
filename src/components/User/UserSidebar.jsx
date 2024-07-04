@@ -15,7 +15,8 @@ import Tooltip from "@mui/material/Tooltip";
 import { IoNotifications } from "react-icons/io5";
 import { FaPencilAlt } from "react-icons/fa";
 import { IoLibrarySharp } from "react-icons/io5";
-import { FaBookAtlas } from "react-icons/fa6";
+import { FaBookAtlas } from "react-icons/fa6";import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; // Import the clearStudentDetails action
+import { clearToken } from "../../store/reducers/tokenSlice"; // Import the clearToken action
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -45,12 +46,11 @@ const SideBar = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(clearTutorDetails()); // Clear admin details
-        navigate("/"); // Navigate to login page
+        dispatch(clearStudentDetails());
+        dispatch(clearToken());
+        navigate("/");
       }
     });
-
-    dispatch(clearToken());
   };
 
   const navLinks = [

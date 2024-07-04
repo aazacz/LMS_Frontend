@@ -43,7 +43,6 @@ const SignupSat = () => {
             isSatExamtaken,
           })
         );
-        console.log("error message")
         navigate("/signup/signupEducation");
       } catch (error) {
         console.error("Error in storing SAT details", error);

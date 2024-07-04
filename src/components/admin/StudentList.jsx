@@ -13,30 +13,10 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "../reusable/Loader";
 
 
-// const CustomTooltip = ({ title, children }) => {
-//   const [tooltipOpen, setTooltipOpen] = useState(false);
-
-//   return (
-//     <Tooltip
-//       title={title}
-//       placement="right"
-//       open={tooltipOpen}
-//       onClose={() => setTooltipOpen(false)}
-//       onOpen={() => setTooltipOpen(true)}
-//     >
-//       <div
-//         onMouseEnter={() => setTooltipOpen(true)}
-//         onMouseLeave={() => setTooltipOpen(false)}
-//       >
-//         {children}
-//       </div>
-//     </Tooltip>
-//   );
-// };
 
 const StudentList = () => {
   const apiURL = process.env.REACT_APP_API_URL;
-  // const [Data, setData] = useState([]);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
@@ -47,7 +27,7 @@ const StudentList = () => {
     try {
       const response = await axios.get(`${apiURL}api/students/getAll-students`)
       console.log(response.data)
-       return response.data;
+      return response.data;
     } catch (error) {
       toast.error(error.response.data.error);
     }
@@ -59,13 +39,7 @@ const StudentList = () => {
     queryFn: fetchStudents,
     staleTime: 1000,
     refetchInterval: 600000,
-    // onSuccess: (data) => {
-     
-    //     setData(data);
-    //     setTotalRows(data.totalRows);
-        
-    // },
-    
+
   });
 
   useEffect(() => {
@@ -97,7 +71,7 @@ const StudentList = () => {
   const handlePageSizeSelectChange = (event) => {
     const newPageSize = parseInt(event.target.value, 10);
     setPageSize(newPageSize);
-    setCurrentPage(1); 
+    setCurrentPage(1);
     updateUrl({ page: 1, pageSize: newPageSize });
   };
 
@@ -148,13 +122,20 @@ const StudentList = () => {
     });
   };
 
-  const handleBlock = async (blockId) => {
+  const handleBlock = async (e, blockId) => {
+    // e.preventDefault()
+    e.stopPropagation();
     console.log("block function hitted")
     console.log(blockId)
     try {
 
-      await axios.patch(`${apiURL}/api/students/block-students/${blockId}`);
-      refetch();
+      await axios.patch(`${apiURL}/api/students/block-students/${blockId}`)
+        .then((response) => {
+          if (response.data.data.status === "blocked") {
+            toast.success("Student Blocked Successfully");
+            refetch();
+          }
+        })
     } catch (error) {
       toast.error(error.response.data.error);
     }
@@ -212,86 +193,85 @@ const StudentList = () => {
             </thead>
             <tbody className="relative">
 
-                {isPending||isError ? <div className="absolute w-full h-[150px]  top-[50%] translate-y-[50%] flex justify-center  "><Loader/></div> :    
-                 (data?.data.map((row, indexrow) => (
-                <tr key={row._id}>
-                  {console.log(row.status)}
-                  {columns.map((column, index) => (
+              {isPending || isError ? <div className="absolute w-full h-[150px]  top-[50%] translate-y-[50%] flex justify-center  "><Loader /></div> :
+                (data?.data.map((row, indexrow) => (
+                  <tr key={row._id}>
+                    {columns.map((column, index) => (
 
-                    <td key={column.field}>
+                      <td key={column.field}>
 
-                      {column.field === "actions" ? (
-                        <div className="action-container flex items-center justify-center gap-x-2">
+                        {column.field === "actions" ? (
+                          <div className="action-container flex items-center justify-center gap-x-2">
 
-                          {
-                            row.status === "active" ?
-                              (<MdBlock className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={handleBlock(row._id)} />)
-                              :
-                              (<Check className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "UnBlock Action clicked")} />)
-                          }
-                          <CloseIcon className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "Delete Action clicked")} />
-                        </div>
-                      ) : <></>}
-
-
-                      {column.field === "name" ? (
-                        <Link to={`/admin/home/students/${row._id}`}>
-                          {console.log(row._id)}
-                          <span className="action-container text-blue-600 capitalize text-sm font-semibold ">{row[column.field]}</span>
-                        </Link>
-                      ) : (<></>)}
-
-                      {column.field === "grade" ? (
-                        <span className="action-container text-sm font-semibold">{row[column.field]} </span>
-                      ) : (<></>)}
-                      {column.field === "number" ? (
-                        <span className="action-container text-sm font-semibold">{row[column.field]} </span>
-                      ) : (<></>)}
-                      {column.field === "parentNumber" ? (
-                        <span className="action-container text-sm font-semibold">{row[column.field]} </span>
-                      ) : (<></>)}
-
-                      {column.field === "createdAt" ? (
-                        <span className="action-container text-sm font-semibold">{formatDate(row[column.field])} </span>
-                      ) : (<></>)}
-                      {column.field === "comingSatExamDate" ? (
-                        <span className="action-container text-sm font-semibold">{formatDate(row[column.field])} </span>
-                      ) : (<></>)}
+                            {
+                              row.status === "active" ?
+                                (<MdBlock className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={(e) => handleBlock(e, row._id)}
+                                />)
+                                :
+                                (<Check className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "UnBlock Action clicked")} />)
+                            }
+                            <CloseIcon className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "Delete Action clicked")} />
+                          </div>
+                        ) : <></>}
 
 
-                      {column.field === "button" ? (
-                        <div className="action-container">
-                          <div className="font-poppins text-sm  border-[1px] border-gray-500 cursor-pointer hover:bg-slate-200   flex justify-center items-center"> Review</div>
+                        {column.field === "name" ? (
+                          <Link to={`/admin/home/students/${row._id}`}>
+                            <span className="action-container text-blue-600 capitalize text-sm font-semibold ">{row[column.field]}</span>
+                          </Link>
+                        ) : (<></>)}
 
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                      {column.field === "status" ? (
-                        <div className="action-container">
-                          {row.status === "active" ? <div className="font-poppins text-sm  border-[1px] border-blue-700 bg-blue-700 text-white cursor-pointer flex justify-center items-center"> Active</div>
-                            : <div className="font-poppins text-sm  border-[1px] border-blue-700  cursor-pointer text-blue-700  flex justify-center items-center"> Inactive</div>
-                          }
+                        {column.field === "grade" ? (
+                          <span className="action-container text-sm font-semibold">{row[column.field]} </span>
+                        ) : (<></>)}
+                        {column.field === "number" ? (
+                          <span className="action-container text-sm font-semibold">{row[column.field]} </span>
+                        ) : (<></>)}
+                        {column.field === "parentNumber" ? (
+                          <span className="action-container text-sm font-semibold">{row[column.field]} </span>
+                        ) : (<></>)}
 
-                        </div>
-                      ) : (
-                        <>
-
-                        </>
-                      )}
-
-                    </td>
-                  ))}
-                </tr>
-              )
-            
-            
-            ))
-            
-            }
+                        {column.field === "createdAt" ? (
+                          <span className="action-container text-sm font-semibold">{formatDate(row[column.field])} </span>
+                        ) : (<></>)}
+                        {column.field === "comingSatExamDate" ? (
+                          <span className="action-container text-sm font-semibold">{formatDate(row[column.field])} </span>
+                        ) : (<></>)}
 
 
-         
+                        {column.field === "button" ? (
+                          <div className="action-container">
+                            <div className="font-poppins text-sm  border-[1px] border-gray-500 cursor-pointer hover:bg-slate-200   flex justify-center items-center"> Review</div>
+
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                        {column.field === "status" ? (
+                          <div className="action-container">
+                            {row.status === "active" ? <div className="font-poppins text-sm  border-[1px] border-blue-700 bg-blue-700 text-white cursor-pointer flex justify-center items-center"> Active</div>
+                              : <div className="font-poppins text-sm  border-[1px] border-blue-700  cursor-pointer text-blue-700  flex justify-center items-center"> Inactive</div>
+                            }
+
+                          </div>
+                        ) : (
+                          <>
+
+                          </>
+                        )}
+
+                      </td>
+                    ))}
+                  </tr>
+                )
+
+
+                ))
+
+              }
+
+
+
             </tbody>
           </table>
         </div>

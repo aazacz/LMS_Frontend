@@ -88,9 +88,10 @@ const SignupEducation = () => {
         `${baseUrl}api/students/register`,
         formDataToSend,
         {
-          headers: {
+           
+            "user-agent":navigator.userAgent,
             "Content-Type": "multipart/form-data",
-          },
+          
         }
       );
 

@@ -15,9 +15,9 @@ const HomeRoutes = () => {
 
         <Routes>
 
-            <Route path="/" element={user ? <Navigate to="/admin/home" /> : <AdminLogin />} />
+            <Route path="/" element={true ? <Navigate to="/admin/home" /> : <AdminLogin />} />
             {/* <Route path="/" element={ <Navigate to="/admin/home" />     } /> */}
-            <Route path="/home/*" element={user ?<Homepage />:<Navigate to="/admin" />} />
+            <Route path="/home/*" element={true ?<Homepage />:<Navigate to="/admin" />} />
             <Route path="/*" element={<ErrorPage/>} />
 
 

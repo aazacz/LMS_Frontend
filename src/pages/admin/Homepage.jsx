@@ -22,6 +22,7 @@ import CourseStructureDetails from '../../components/admin/CourseStructureDetail
 import Admin_Material from '../../components/admin/UploadMaterial/Admin_Material'
 import AddCourseStructure from '../../components/admin/AddCourseStructure';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AdminSidebar from '../../components/admin/AdminSidebar';
 
 
 
@@ -45,7 +46,8 @@ const Homepage = () => {
                 <div className='flex w-full relative '>
 
 
-                    <Sidebar isOpen={isSidebarOpen} />
+                    <AdminSidebar isOpen={isSidebarOpen} />
+                    {/* <Sidebar isOpen={isSidebarOpen} /> */}
 
                     <div className='flex-1  px-2  '>
 

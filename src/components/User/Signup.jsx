@@ -56,7 +56,7 @@ const Signup = () => {
     }
   };
 
-  useEffect(() => {}, [isSubmitting]);
+
 
   return (
     <>

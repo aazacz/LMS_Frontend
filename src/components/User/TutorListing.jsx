@@ -8,9 +8,9 @@ import mindsatLoader from '/mindsatLoader.gif'
 
 
 const TutorCard = ({ tutor }) => (
-  <Link to={`/admin/home/tutors/${tutor._id}`}>
-    <div className=" bg-red-400  rounded-md border-[1px] shadow-lg border-gray-500 px-3 py-2 m-4 flex flex-row cursor-pointer">
-      <div className='w-[90%] '>
+  
+    <div className="bg-[#F5F1F1] rounded-md border-[1px] shadow-lg border-gray-500 px-3 py-2 m-4 flex flex-row cursor-pointer">
+      <div className='w-full'>
         <div className="flex items-center ">
           <div className="w-10 h-10 rounded-full overflow-hidden">
             <img src={profile} className='object-cover' alt="tutor-image" />
@@ -39,7 +39,7 @@ const TutorCard = ({ tutor }) => (
         <FaAngleRight />
       </div>
     </div>
-  </Link>
+
 );
 
 
@@ -65,7 +65,7 @@ const TutorListing = () => {
   }, []);
 
   return (
-    <div className="relative p-4 w-full h-screen ">
+    <div className="relative p-2 w-full  h-screen overflow-y-scroll no-scrollbar ">
       {/* Loader */}
    
    {/* If there is no data from the backend then the Loader shows  */}
@@ -77,16 +77,16 @@ const TutorListing = () => {
         <>
           {/* Add Button */}
           <div className='flex justify-end mb-4'>
-            <Link replace to={`/admin/home/tutors/addtutor`} className='bg-[#F5F1F1]'>
+            {/* <Link replace to={`/admin/home/tutors/addtutor`} className='bg-[#F5F1F1]'> */}
               <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2 font-plusjakartasans text-sm'>
                 <FaCirclePlus className='text-slate-600' />
                 Add Tutor
               </button>
-            </Link>
+            {/* </Link> */}
           </div>
 
-          <div className="w-full   max-w-[1200px] flex justify-center ">
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-2'>
+          <div className="w-full flex justify-center  ">
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2'>
 
               {TutorList.map((tutor, index) => (
                 <TutorCard key={index} tutor={tutor} />

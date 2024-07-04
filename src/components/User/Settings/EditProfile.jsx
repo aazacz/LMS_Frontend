@@ -65,9 +65,9 @@ const EditProfile = () => {
     reader.readAsDataURL(file);
   };
   return (
-    <div className="w-3/4 h-max flex flex-col justify-center items-start gap-4 font-poppins">
+    <div className="w-full  h-max flex flex-col justify-center items-start gap-4 font-poppins">
       <p className="font-semibold text-sm md:text-lg ">Edit Profile</p>
-      <div className="w-11/12  h-max flex flex-wrap justify-start items-center">
+      <div className="w-full h-max flex flex-wrap justify-start items-center">
         <div className="relative rounded-full  bg-red-400 overflow-hidden w-28 h-28 md:w-32 md:h-32 lg:w-32 lg:h-32  ">
           {selectedImage ? (
             <img
@@ -99,13 +99,13 @@ const EditProfile = () => {
       {/*Details starts here*/}
       <p className="font-medium text-sm ">Full Name</p>
       <input
-        className="w-11/12 h-10 border-2 border-gray-100 px-2 rounded-lg text-sm  outline-none"
+        className="w-11/12 h-10 border-2 border-gray-300 px-2 rounded-lg text-sm  outline-none"
         type="text"
       />
       <div class="flex flex-col gap-4">
       <p className="font-medium text-sm ">Location</p>
     <select
-      className="w-full py-2 border-2 border-gray-100 px-2 rounded-lg text-sm outline-none"
+      className="w-full py-2 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none"
       value={selectedCountry}
       onChange={(event) => setSelectedCountry(event.target.value)}
     >
@@ -119,12 +119,12 @@ const EditProfile = () => {
       </div>
       <p className="font-medium text-sm ">Birthday</p>
       <input
-        className="w-11/12 h-10 border-2 border-gray-100 px-2 rounded-lg text-sm  outline-none"
+        className="w-11/12 h-10 border-2 border-gray-300 px-2 rounded-lg text-sm  outline-none"
         type="date"
       />
       <p className="font-medium text-sm ">Phone</p>
       <input
-      className="border-2 h-10 rounded-lg px-2 border-gray-100 w-11/12 outline-none py-2"
+      className="border-2 h-10 rounded-lg px-2 border-gray-300 w-11/12 outline-none py-2"
       type="number"
       value={inputValue}
       onChange={handleInputChange}

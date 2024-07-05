@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 import DiagnosisTest from "./DiagnosisTest";
-import StudentNavbar from "../../components/User/StudentNavbar"
+import StudentNavbar from "../../components/User/StudentNavbar";
 import ErrorPage from "../ErrorPage";
 import DiagnosisTestResult from "./DiagnosisTestResult";
 import CourseList from "../../components/User/CourseList";
@@ -30,26 +30,21 @@ const StudentHomepage = ({ User }) => {
     setIsSidebarOpen(!isSidebarOpen);
   };
   return (
-    <div className="flex h-screen w-full relative ">
-        <UserSidebar className="h-screen z-30"  isOpen={isSidebarOpen} />
     <>
-    <div className="w-screen flex">
-      <div className="w-max">
-
-    <UserSidebar isOpen={isSidebarOpen} />
-      </div>
-    <div className="flex-1  w-full ">
-        
+      <div className="flex h-screen w-full relative ">
+        <UserSidebar className="h-screen z-30" isOpen={isSidebarOpen} />
         <div className="w-full px-2 ">
           <div className="h-auto z-30 sticky top-0 ">
-           <StudentNavbar className="w-screen sticky"toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+            <StudentNavbar
+              className="w-screen sticky"
+              toggleSidebar={toggleSidebar}
+              isSidebarOpen={isSidebarOpen}
+            />
           </div>
-          
-         
-          
+
           <Routes>
-             <Route path="/*" element={<Dashboard />} />
-             <Route
+            <Route path="/*" element={<Dashboard />} />
+            <Route
               path="/diagnosistestresult"
               element={<DiagnosisTestResult />}
             />
@@ -67,8 +62,7 @@ const StudentHomepage = ({ User }) => {
           </Routes>
         </div>
       </div>
-      </div>
-      </>
+    </>
   );
 };
 

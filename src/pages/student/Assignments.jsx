@@ -18,7 +18,7 @@ const Assignments = () => {
 
     return (
         <>
-            <div className="w-full flex-wrap h-screen bg-red-400 p-6 rounded-lg shadow-lg overflow-y-scroll no-scrollbar  flex flex-col">
+            <div className="w-full flex-wrap h-screen  p-6 rounded-lg shadow-lg overflow-y-scroll no-scrollbar  flex flex-col">
                 <div className='flex flex-wrap flex-grow '> 
                     <div className='w-full lg:w-[70%] bg-[#F3F3F3] p-5 h-max '>
                         <h1 className="text-2xl font-bold mb-4">Assignments</h1>

@@ -8,7 +8,7 @@ import {
 import { useSelector } from "react-redux";
 import Login from "../pages/student/Login";
 import Homepage from "../pages/student/HomePage";
-import StudentHomepage from '../pages/student/StudentHomepage';
+import StudentHomepage from "../pages/student/StudentHomepage";
 import HomePageContact from "../components/User/HomePageContact/HomePageContact";
 import SettingsPage from "../components/User/SettingsPage/SettingsPage";
 import ErrorPage from "../pages/ErrorPage";
@@ -20,28 +20,30 @@ import DiagnosisTestResult from "../pages/student/DiagnosisTestResult";
 
 const UserRoutes = () => {
   const user = useSelector((state) => state.StudentDetails.token);
-  console.log(user);
+  // console.log(user);
 
   return (
     <Routes>
-        <Route path="/"            element={<Homepage />} />
-        <Route path="/login"       element={ <Login />} />
-        <Route path="/student/*"   element={<StudentHomepage User={true} />}  />
-        <Route path="/signup/*"      element={user ? <Navigate to="/student" /> : <SignupRoute />} />
-        <Route path='/HomePageContact' element={<HomePageContact />}/>
-        <Route path='/diagnosistest' element={<Student_Diagnostic />}/>
-        <Route path='/diagnosistest/intructions' element={<Student_Diagnostic_Test/>}/>
-        <Route path='/diagnosistest/test1' element={<DiagnosisTest/>}/>
-        <Route path='/diagnosistest/result' element={<DiagnosisTestResult/>}/>
-        <Route path='/settings' element={<SettingsPage/>}/>
-            
-       
-      <Route path='*' element={<div className='w-screen h-screen'> <ErrorPage /> </div>}/>
+      <Route path="/" element={<Homepage />} />
+      <Route path="/login"   element={user ? <Navigate to="/student" /> : <Login />}   />
+      <Route path="/student/*" element={user?<StudentHomepage User={true} /> : <Navigate to="/login" />} />
+      <Route path="/signup/*" element={<SignupRoute />} />
+      <Route path="/diagnosistest" element={<Student_Diagnostic />} />
+      <Route path="/diagnosistest/intructions"   element={<Student_Diagnostic_Test />}     />
+      <Route path="/diagnosistest/test1" element={<DiagnosisTest />} />
+      <Route path="/diagnosistest/result" element={<DiagnosisTestResult />} />
+
+      <Route
+        path="*"
+        element={
+          <div className="w-screen h-screen">
+            {" "}
+            <ErrorPage />{" "}
+          </div>
+        }
+      />
     </Routes>
   );
 };
 
-  
-export default UserRoutes
-
-
+export default UserRoutes;

@@ -66,7 +66,7 @@ const AddCourseStructure = () => {
       .catch((err) => {
         console.error(err.message);
       });
-  }, [[baseURL, token]]);
+  }, [baseURL, token]);
 
 
   //getting the package information from database
@@ -81,7 +81,7 @@ const AddCourseStructure = () => {
         console.error(err.message);
       });
 
-  }, [[baseURL, token]])
+  }, [baseURL, token])
 
 
 

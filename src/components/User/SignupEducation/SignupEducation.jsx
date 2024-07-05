@@ -4,6 +4,7 @@ import personalDetailsImage from "../../../assets/SignupPersonalDetails/personal
 import Loader from "../../reusable/Loader";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const SignupEducation = () => {
   const baseUrl = process.env.REACT_APP_API_URL;
@@ -56,7 +57,10 @@ const SignupEducation = () => {
   const registerUser = async (e) => {
     e.preventDefault();
     if (!consent) {
-      alert("Please provide consent to proceed.");
+      Swal.fire({
+        icon: "warning",
+        text: "Please provide consent to proceed.",
+      });
       return;
     }
 
@@ -78,7 +82,14 @@ const SignupEducation = () => {
       for (const key in storedDetails) {
         formDataToSend.append(key, storedDetails[key]);
       }
-
+      console.log(formDataToSend.get("englishSatMarkFile"));
+      console.log(formDataToSend.get("mathSatMarkFile"));
+      console.log(formDataToSend.get("totalSatMarkFile"));
+      console.log(formDataToSend.get("englishSatMark"));
+      console.log(formDataToSend.get("mathSatMark"));
+      console.log(formDataToSend.get("totalSatMark"));
+      console.log(formDataToSend.get("name"));
+      console.log(formDataToSend.get("grade"));
       console.log("FormData contents:");
       formDataToSend.forEach((value, key) => {
         console.log(key, value);
@@ -97,14 +108,20 @@ const SignupEducation = () => {
 
       if (response.status === 200) {
         setLoading(false);
-        alert("User registered successfully!");
+        Swal.fire({
+          icon: "success",
+          text: "User Registerd Successfully.",
+        });
         sessionStorage.clear();
         navigate("/diagnosistest");
       }
     } catch (error) {
       setLoading(false);
       console.error("Error:", error);
-      alert("Failed to register. Please try again.");
+      Swal.fire({
+        icon: "warning",
+        text: "Failed To Register.",
+      });
     }
   };
 

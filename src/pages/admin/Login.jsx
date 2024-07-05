@@ -14,6 +14,10 @@ import Logo from "/Logoo.png"
 const AdminLogin = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [data,setData]= useState(
+        {email:"",
+         passwrord:""}
+    )
     const [PasswordInputType, ToggleIcon] = usePasswordToggle();
     const baseURL = process.env.REACT_APP_API_URL;
 
@@ -33,9 +37,11 @@ const AdminLogin = () => {
                     "user-agent": navigator.userAgent,
                 },
             )
-            console.log(res.data);
-            toast.success("Login Successful")
+        
+            
             dispatch(setAdminDetails(res.data || []))
+
+
             if (res.data.role === "admin") {
                 navigate("/admin/home")
             }
@@ -47,12 +53,8 @@ const AdminLogin = () => {
         }
     };
 
-    useEffect(() => {
-
-    }, [isSubmitting])
 
 
-    // bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400
     return (
         <>
             <div className="min-h-screen flex items-center justify-center flex-col ">

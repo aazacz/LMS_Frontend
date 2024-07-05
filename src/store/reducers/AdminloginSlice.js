@@ -7,6 +7,8 @@ const initialState = {
   token: ''
 };
 
+
+
 const AdminDetailsSlice = createSlice({
     name: "AdminDetails",
     initialState,

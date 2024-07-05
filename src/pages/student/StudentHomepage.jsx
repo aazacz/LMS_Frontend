@@ -32,10 +32,20 @@ const StudentHomepage = ({ User }) => {
   return (
     <div className="flex h-screen w-full relative ">
         <UserSidebar className="h-screen z-30"  isOpen={isSidebarOpen} />
+    <>
+    <div className="w-screen flex">
+      <div className="w-max">
+
+    <UserSidebar isOpen={isSidebarOpen} />
+      </div>
+    <div className="flex-1  w-full ">
+        
         <div className="w-full px-2 ">
           <div className="h-auto z-30 sticky top-0 ">
            <StudentNavbar className="w-screen sticky"toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
           </div>
+          
+         
           
           <Routes>
              <Route path="/*" element={<Dashboard />} />
@@ -57,6 +67,8 @@ const StudentHomepage = ({ User }) => {
           </Routes>
         </div>
       </div>
+      </div>
+      </>
   );
 };
 

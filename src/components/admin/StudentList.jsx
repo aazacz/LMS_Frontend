@@ -16,7 +16,7 @@ import Loader from "../reusable/Loader";
 
 const StudentList = () => {
   const apiURL = process.env.REACT_APP_API_URL;
-  
+
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
@@ -39,7 +39,6 @@ const StudentList = () => {
     queryFn: fetchStudents,
     staleTime: 1000,
     refetchInterval: 600000,
-
   });
 
   useEffect(() => {
@@ -48,9 +47,11 @@ const StudentList = () => {
     setPageSize(parseInt(params.get("pageSize"), 10) || 10);
   }, []);
 
+
   useEffect(() => {
     refetch();
   }, [currentPage, pageSize, searchQuery]);
+
 
   const updateUrl = ({ page, pageSize }) => {
     const newUrl = `?page=${page}&pageSize=${pageSize}`;
@@ -93,7 +94,7 @@ const StudentList = () => {
     formData.append("file", file);
 
     try {
-      await axios.post(`${apiURL}/api/students/bulk-upload`, formData);
+      await axios.post(`${apiURL}api/students/bulk-upload`, formData);
       toast.success("File uploaded successfully");
       refetch();
     } catch {
@@ -103,7 +104,7 @@ const StudentList = () => {
 
   const handleDownloadTemplate = () => {
     const link = document.createElement('a');
-    link.href = `${apiURL}/api/students/download-template`;
+    link.href = `${apiURL}api/students/download-template`;
     link.setAttribute('download', 'StudentDetails.xlsx');
     document.body.appendChild(link);
     link.click();
@@ -122,22 +123,40 @@ const StudentList = () => {
     });
   };
 
-  const handleBlock = async (e, blockId) => {
-    // e.preventDefault()
-    e.stopPropagation();
+  const handleBlock = async (blockId) => {
     console.log("block function hitted")
     console.log(blockId)
     try {
 
-      await axios.patch(`${apiURL}/api/students/block-students/${blockId}`)
+      await axios.patch(`${apiURL}api/students/block-students/${blockId}`)
         .then((response) => {
-          if (response.data.data.status === "blocked") {
+          console.log(response)
+          if (response.data.status === "blocked") {
             toast.success("Student Blocked Successfully");
             refetch();
           }
         })
     } catch (error) {
       toast.error(error.response.data.error);
+    }
+  };
+
+  const handleUnBlock = async (blockId) => {
+    console.log("block function hitted")
+    console.log(blockId)
+    try {
+
+      await axios.patch(`${apiURL}api/students/unblock-students/${blockId}`)
+        .then((response) => {
+          console.log(response)
+          if (response.data.status === "active") {
+            toast.success("Student Unblocked Successfully");
+            refetch();
+          }
+        })
+    } catch (error) {
+      console.table(error);
+      toast.error(error.response.data);
     }
   };
 
@@ -194,21 +213,25 @@ const StudentList = () => {
             <tbody className="relative">
 
               {isPending || isError ? <div className="absolute w-full h-[150px]  top-[50%] translate-y-[50%] flex justify-center  "><Loader /></div> :
-                (data?.data.map((row, indexrow) => (
+                (data?.data.map((row) => (
                   <tr key={row._id}>
                     {columns.map((column, index) => (
 
-                      <td key={column.field}>
+                      <td key={index}>
 
                         {column.field === "actions" ? (
                           <div className="action-container flex items-center justify-center gap-x-2">
 
                             {
                               row.status === "active" ?
-                                (<MdBlock className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={(e) => handleBlock(e, row._id)}
+                                (<MdBlock className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() =>{ 
+                                  const id = row._id
+                                  handleBlock(id)}}
                                 />)
                                 :
-                                (<Check className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "UnBlock Action clicked")} />)
+                                (<Check className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() =>{ 
+                                  const id = row._id;
+                                   handleUnBlock(id)}} />)
                             }
                             <CloseIcon className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "Delete Action clicked")} />
                           </div>

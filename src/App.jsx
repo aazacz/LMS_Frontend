@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React from 'react'
 import './App.css'
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import { useSelector } from 'react-redux';
@@ -8,13 +8,11 @@ import UserRoutes from './routes/UserRoutes';
 import TutorRoutes from './routes/TutorRoutes';
 
 function App() {
-  const token = useSelector((state) => state.token)
-  console.log(token);
 
 
   return (
     <>
-       <Router> 
+  
         <Routes>
           <Route path='/admin/*' element={<AdminRoutes />} />
           <Route path='/tutor/*' element={<TutorRoutes />} />
@@ -22,7 +20,7 @@ function App() {
           <Route path="*" element={<div className='w-screen h-screen'>  <ErrorPage />   </div>} />
         </Routes>
 
-      </Router>
+     
     </>
   )
 }

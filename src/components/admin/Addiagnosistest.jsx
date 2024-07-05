@@ -48,10 +48,8 @@ const baseUrl = process.env.REACT_APP_API_URL;
     });
   };
 
-  //   useEffect to print the test created
-  useEffect(() => {
-    console.log(test, "from UseEffect");
-  }, [test]);
+  //  useEffect to print the test created
+
 
   //   Helper Function to handle input
   const handleInputChange = (e) => {

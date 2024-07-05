@@ -108,9 +108,9 @@ const SideBar = () => {
   ];
 
   return (
-    <div>
-      <div className="h-screen font-poppins text-sm font-medium">
-        <Sidebar collapsed={collapsed} backgroundColor="#fff" width="250px">
+   
+      <div className="h-screen w-full  font-poppins text-sm font-medium ">
+        <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="250px">
           <Menu>
             <MenuItem
               onClick={toggleCollapse}
@@ -185,7 +185,7 @@ const SideBar = () => {
           </Menu>
         </Sidebar>
       </div>
-    </div>
+    
   );
 };
 

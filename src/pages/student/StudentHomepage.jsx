@@ -31,16 +31,17 @@ const StudentHomepage = ({ User }) => {
     setIsSidebarOpen(!isSidebarOpen);
   };
   return (
-    <div className="flex  w-full relative ">
-        <UserSidebar isOpen={isSidebarOpen} />
+    <>
+    <div className="w-screen flex">
+      <div className="w-max">
+
+    <UserSidebar isOpen={isSidebarOpen} />
+      </div>
+    <div className="flex-1  w-full ">
+        
         <div className="w-full px-2 ">
-          {/* <div className="h-auto z-30 sticky top-0 ">
-            <UserNavbar
-              toggleSidebar={toggleSidebar}
-              isSidebarOpen={isSidebarOpen}
-            />
-          </div> */}
-          {/* <UserNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} /> */}
+         
+          
           <Routes>
              <Route path="/*" element={<Dashboard />} />
              <Route
@@ -61,6 +62,8 @@ const StudentHomepage = ({ User }) => {
           </Routes>
         </div>
       </div>
+      </div>
+      </>
   );
 };
 

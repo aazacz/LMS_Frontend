@@ -1,6 +1,432 @@
-.progress:-webkit-progress-inner-element{
-background-color: brown;
+.classes-container {
+  padding-left: 15px;
+  width: 100%;
 }
-/* .progress:-webkit-progress-bar{
+.testt {
+  margin: 0 auto;
+}
 
+.classes-heading {
+  font-family: "Poppins";
+  font-weight: 400;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: row;
+  /* gap: 10px; */
+}
+
+.parent-content-container {
+  border: 2px solid blue;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.left-content {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  /* gap: 95px; */
+  /* background-color:  #F4F5FB; */
+  height: max-content;
+}
+
+.left-sub-content1 {
+  padding-left: 10px;
+  background: #f4f5fb;
+  border-radius: 10px;
+  padding-top: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.left-sub-content1 p {
+  font-weight: 500;
+}
+
+.left-sub-content1 h1 {
+  font-weight: 700;
+  /* margin-left: 65%;
+  margin-top: -6%; */
+}
+
+.left-sub-content-box1 {
+  display: flex;
+  gap: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.left-sub-content-box1 p {
+  font-family: "Poppins";
+  font-weight: 600;
+  background: white;
+  gap: 10px;
+}
+
+.training-dates p {
+  font-weight: 300;
+  font-family: "Poppins";
+}
+
+.training-date-box {
+  padding: 7px 7px;
+  border: 1px solid gray;
+  width: 100%;
+  margin-top: 2%;
+  border-radius: 5px;
+}
+
+.left-sub-content2 {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-around; */
+  background: #f4f5fb;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.left-sub-content2 img {
+  width: 100%;
+  height: 40%;
+  border-radius: 10px;
+  padding: 10px 10px;
+}
+
+.left-sub-content-box2 {
+  /* background-color: #13bf78; */
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 20px;
+}
+
+.left-sub-content-box2 p {
+  font-family: "Poppins";
+  font-weight: 500;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  border-radius: 10px;
+  padding: 10px 10px;
+  font-size: 13px;
+}
+
+.left-sub-content2-heading h1 {
+  padding-left: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+  padding-bottom: 7px;
+}
+
+.left-sub-content2-heading p {
+  font-size: 12px;
+  text-align: left;
+  line-height: 20px;
+  padding-left: 10px;
+}
+
+.left-sub-content2-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 26px;
+  padding: 20px 10px;
+  padding-left: 10px;
+}
+
+.common-button {
+  color: white;
+  font-family: "Poppins";
+  font-size: 11px;
+  padding: 5px 5px;
+  font-weight: 500;
+  border-radius: 5px;
+  width: 45%;
+  border: none;
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.join-now-button {
+  background-color: #13bf78;
+}
+
+.reschedule-button {
+  background-color: #407bff;
+}
+
+.cancel-button {
+  background-color: #f12b2b;
+}
+
+.continue-tests {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5%;
+  gap: 10px;
+  width: 100%;
+}
+
+.continue-tests h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.test-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 100%;
+  gap: 10px;
+  /* background: #f4f5fb; */
+}
+
+.test-image {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.test-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.test-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.test-details h2 {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.test-details p {
+  color: #666;
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.progress {
+  background-color: #ff9900;
+  height: 8px;
+  border-radius: 8px;
+}
+
+.progress-value {
+  margin-left: 10px;
+  color: #ff9900;
+  font-weight: bold;
+}
+
+.continue-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.continue-button svg {
+  width: 24px;
+  height: 24px;
+  fill: #333;
+}
+
+.right-content {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* margin-top: -6%; */
+  /* background-color: #f3f3f3; */
+}
+
+.right-stats {
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px 20px;
+  /* margin: 30px; */
+}
+
+.right-stats p {
+  padding: 10px 20px;
+  font-family: "Poppins";
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
+
+.stats-member {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #13bf78;
+}
+
+.stats-member-box h1 {
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  color: white;
+}
+
+.stats-member-box p {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: right;
+  color: white;
+}
+
+.important-container {
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px 20px;
+  /* margin: 30px; */
+  border-radius: 10px;
+}
+
+.important-container p {
+  padding: 10px 20px;
+  font-family: "Poppins";
+  font-size: 25px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.important-grid {
+  font-family: "Poppins";
+  font-size: 25px;
+  font-weight: 700;
+  text-align: center;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+}
+
+.important-grid img {
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.important-grid p:nth-of-type(1) {
+  font-size: 15px;
+  text-align: left;
+  font-weight: 300;
+}
+
+/* .important-grid p:nth-of-type(1) .course-text {
+  color: black;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.important-grid p:nth-of-type(2) {
+  font-size: 16px;
+  text-align: left;
+  font-weight: 300;
+  font-size: 15px;
 } */
+
+/* button[type="test"] {
+  background-color: #f99406;
+  color: black;
+  font-family: "Poppins";
+  font-size: 12px;
+  padding: 5px 5px;
+  font-weight: 700;
+  border-radius: 10px;
+  width: 45%;
+  margin-left: -45%;
+  margin-bottom: 20px;
+} */
+
+.sats-grid {
+  margin-top: 10%;
+  font-family: "Poppins";
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+  display: flex;
+  gap: 95px;
+  padding: 10px;
+}
+
+.sats-grid p {
+  text-align: left;
+}
+
+.sats-grid span {
+  height: fit-content;
+  margin-top: 4%;
+  padding: 5px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 500;
+  background: #6c51d9;
+}
+
+/* custom-swal.css */
+.my-actions {
+  display: flex;
+  width: 250px !important;
+
+  justify-content: space-between;
+}
+
+.my-confirm-button {
+  background-color: green !important;
+  width: fit-content !important;
+  color: white !important;
+  order: 1 !important;
+}
+
+.my-deny-button {
+  background-color: red !important;
+  color: white !important;
+  order: 2 !important;
+}
+
+.swal2-title {
+  font-size: 24px;
+  color: #333;
+}
+
+.swal2-popup {
+  border-radius: 10px;
+}
+.my-toast-confirm-button {
+  width: 120px !important;
+  color: white !important;
+}

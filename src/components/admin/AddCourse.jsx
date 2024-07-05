@@ -61,7 +61,7 @@ useEffect(() => {
     .catch((err) => {
       console.error(err.message);
     });
-}, [[baseURL, token]]);
+}, [baseURL, token]);
 
 
 //getting the package information from database
@@ -76,7 +76,7 @@ useEffect(()=>{
             console.error(err.message);
           });
 
-},[[baseURL, token]])
+},[baseURL, token])
 
 
 

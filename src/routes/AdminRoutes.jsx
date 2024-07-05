@@ -12,21 +12,11 @@ const HomeRoutes = () => {
 
     return (
 
-
         <Routes>
-
-            <Route path="/" element={user ? <Navigate to="/admin/home" /> : <AdminLogin />} />
-            {/* <Route path="/" element={ <Navigate to="/admin/home" />     } /> */}
-            <Route path="/home/*" element={user ?<Homepage />:<Navigate to="/admin" />} />
-            <Route path="/*" element={<ErrorPage/>} />
-
-
+            <Route path="/"         element={user ?  <Navigate to="/admin/home" /> : <AdminLogin />} />
+            <Route path="/home/*"   element={user ?  <Homepage/>  :  <Navigate to="/admin" />} />
+            <Route path="/*"        element={<ErrorPage/>} />
         </Routes>
-
-
-
-
-
 
     )
 }

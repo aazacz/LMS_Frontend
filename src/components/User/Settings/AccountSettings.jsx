@@ -32,7 +32,7 @@ const AccountSettings = () => {
   };
 
   return (
-    <div className="w-full p-2 h-max flex flex-col justify-center items-start  gap-4  font-poppins ">
+    <div className="w-full p-2  overflow-y-scroll no-scrollbar  flex flex-col justify-center items-start  gap-4  font-poppins ">
       <p className="font-semibold text-sm md:text-lg">Account Settings</p>
       <div className="w-11/12  h-max flex flex-wrap justify-start items-center ">
         <div className="w-11/12 h-max flex flex-col justify-center items-left gap-6">
@@ -43,10 +43,10 @@ const AccountSettings = () => {
             <input
               type={showPassword ? "text" : "password"}
               value={password}
-              className="text-sm w-11/12  text-gray-400 outline-none"
+              className=" p-2 text-sm w-11/12  text-gray-400 outline-none"
               readOnly
             />
-            <button className="text-sm" onClick={togglePasswordVisibility}>
+            <button className="px-4 py-2 bg-[#0066DE] rounded-lg text-sm text-white" onClick={togglePasswordVisibility}>
               {showPassword ? "Hide" : "Show"}
             </button>
           </div>
@@ -57,10 +57,10 @@ const AccountSettings = () => {
             <input
               type={showUsername ? "text" : "password"}
               value={username}
-              className="text-sm w-11/12  text-gray-400 outline-none"
+              className=" p-2 text-sm w-11/12  text-gray-400 outline-none"
               readOnly
             />
-            <button className="text-sm" onClick={toogleUsernameVisibility}>
+            <button className="px-4 py-2 bg-[#0066DE] rounded-lg text-sm text-white" onClick={toogleUsernameVisibility}>
               {showUsername ? "Hide" : "Show"}
             </button>
           </div>
@@ -71,12 +71,12 @@ const AccountSettings = () => {
             <input
               type={showEmail ? "text" : "password"}
               value={email}
-              className="text-sm w-11/12 text-gray-400 outline-none"
+              className="p-2 text-sm w-11/12 text-gray-400 outline-none"
               readOnly
             />
             <button
-              className="text-sm text-grey-400"
-              onClick={toogleEmailVisibility}
+              className="px-4 py-2 bg-[#0066DE] rounded-lg text-sm text-white"
+              onClick={toogleEmailVisibility} 
             >
               {showEmail ? "Hide" : "Show"}
             </button>
@@ -88,10 +88,10 @@ const AccountSettings = () => {
             <input
               type={showLanguage ? "text" : "password"}
               value={language}
-              className="text-sm w-11/12  text-gray-400 outline-none"
+              className="p-2 text-sm w-11/12  text-gray-400 outline-none"
               readOnly
             />
-            <button className="text-sm" onClick={toogleLanguageVisibility}>
+            <button className="px-4 py-2 bg-[#0066DE] rounded-lg text-sm text-white" onClick={toogleLanguageVisibility}>
               {showLanguage ? "Hide" : "Show"}
             </button>
           </div>
@@ -102,10 +102,10 @@ const AccountSettings = () => {
             <input
               type={showTimezone ? "text" : "password"}
               value={timezone}
-              className="text-sm w-11/12  text-gray-400 outline-none"
+              className="p-2 text-sm w-11/12  text-gray-400 outline-none"
               readOnly
             />
-            <button className="text-sm" onClick={toogleTimezoneVisibility}>
+            <button className="px-4 py-2 bg-[#0066DE] rounded-lg text-sm text-white" onClick={toogleTimezoneVisibility}>
               {showTimezone ? "Hide" : "Show"}
             </button>
           </div>
@@ -115,8 +115,8 @@ const AccountSettings = () => {
             services,and we permanently delete your personal data.You can cancel
             the deletion for 14 days.
           </h5>
-          <div className="text-sm text-red-600  ">
-            <input type="checkbox" /> Confirm that I want to delete my account
+          <div className="text-sm text-red-600 flex justify-center items-center gap-4  ">
+            <input type="checkbox" /> <p>Confirm that I want to delete my account</p>
           </div>
           <div className="flex gap-2 text-sm ">
             <buuton className="py-4 px-6 cursor-pointer font-semibold rounded-md  ">

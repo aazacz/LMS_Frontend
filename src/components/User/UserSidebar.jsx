@@ -137,13 +137,9 @@ const SideBar = () => {
                       key={subLink.title}
                       className={`relative side-menu-item ${
                         isActive(subLink.path) ? "bg-blue-500 text-white" : "side-menu-item"
-                      }`}
-                      onClick={() => navigate(subLink.path)}
+                      }`}   onClick={() => navigate(subLink.path)}
                     >
-                      <div className="flex">
-                        {subLink.icon}
-                        <span className="ml-2">{subLink.title}</span>
-                      </div>
+                      <div className="flex">      {subLink.icon}     <span className="ml-2 ">{subLink.title}</span>       </div>
                     </MenuItem>
                   ))}
                 </SubMenu>
@@ -156,7 +152,7 @@ const SideBar = () => {
                 >
                   <MenuItem
                     className={`relative side-menu-item ${
-                      isActive(link.path) ? "bg-blue-500 text-white" : "side-menu-item"
+                      isActive(link.path) ? "bg-blue-500 text-white" : "side-menu-item "
                     }`}
                     icon={link.icon}
                     onClick={() => navigate(link.path)}

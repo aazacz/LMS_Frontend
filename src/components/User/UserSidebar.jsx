@@ -22,6 +22,7 @@ const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -31,7 +32,7 @@ const SideBar = () => {
     return location.pathname === path;
   };
 
-  const dispatch = useDispatch();
+  
 
   const handleLogout = () => {
     Swal.fire({
@@ -109,8 +110,8 @@ const SideBar = () => {
 
   return (
    
-      <div className="h-screen w-full  font-poppins text-sm font-medium ">
-        <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="250px">
+      <div className="font-poppins text-sm font-medium ">
+        <Sidebar collapsed={collapsed} backgroundColor="#fff" width="250px">
           <Menu>
             <MenuItem
               onClick={toggleCollapse}
@@ -136,7 +137,7 @@ const SideBar = () => {
                     <MenuItem
                       key={subLink.title}
                       className={`relative side-menu-item ${
-                        isActive(subLink.path) ? "bg-blue-500 text-white" : "side-menu-item"
+                        isActive(subLink.path) ? "bg-blue-500 text-black" : "side-menu-item"
                       }`}
                       onClick={() => navigate(subLink.path)}
                     >
@@ -174,6 +175,10 @@ const SideBar = () => {
                 </Tooltip>
               )
             )}
+            <Tooltip
+            title="Logout"
+            arrow
+            placement="right">
             <a
               onClick={handleLogout}
               href="#"
@@ -182,6 +187,7 @@ const SideBar = () => {
               <IoLogOut className="text-xl mx-5 h-10" />
               {collapsed ? "" : "Logout"}
             </a>
+            </Tooltip>
           </Menu>
         </Sidebar>
       </div>

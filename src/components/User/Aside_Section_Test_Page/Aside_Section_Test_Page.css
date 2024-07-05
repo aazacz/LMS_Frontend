@@ -1,22 +1,21 @@
 .test-page-user-main-container{
     width: 100%;
-    height: 600px;
     /* border: 2px solid green; */
     display: flex;
 }
 .test-page-user-sub-container1{
-    width: 70%;
+  
     height: 600px;
     /* border: 2px solid orange; */
 
 }
 .test-page-user-sub-container2{
-    width: 30%;
+    width: 100%;
     height: max-content;
     /* border: 2px solid blue; */
     display: flex;
     flex-direction: column;
-    background-color:rgb(246,245,245);
+    /* background-color:rgb(246,245,245); */
 }
 .test-page-aside-section-header{
     width: 100%;
@@ -68,10 +67,7 @@
 }
 .test-aside-page-title{
     width: 100%;
-    height: 50px;
-    font-size: 18px;
     font-weight: 500;
-    padding-top: 2%;
     /* border: 2px solid green; */
 }
 .test-aside-page-incomplete-tasks-container{
@@ -109,15 +105,14 @@
    height: max-content;
    /* border: 2px solid grey; */
    display: flex;
-   justify-content: space-around;
+ 
    
 
 }
 .test-aside-page-content-card{
-    width: 45%;
+    width: 250px;
     height: max-content;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    background-color: rgb(245,241,241);
+    /* background-color: rgb(245,241,241); */
     border-radius: 20px;
     margin:2% 0;
     min-height: 200px;

@@ -8,6 +8,7 @@ export default {
   theme: {
     extend: {
       
+      
       keyframes: {
         
         shinePulse: {

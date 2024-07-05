@@ -56,10 +56,10 @@ const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
             )}
 
             {/* Admin NAME EMAIL AND PROFILE PHOTO */}
-            <div className="flex-1  h-auto md:flex md:flex-row  items-center flex-col  hidden">
+            <div className="w-[75%]  h-auto md:flex md:flex-row  items-center flex-col hidden">
               <img
                 className=" rounded-full object-cover overflow-hidden md:w-[42px] md:h-[42px] w-[20px] "
-                src={user.userImg}
+                src={`${user.userImg}`}
                 alt=""
               />
               <div className="flex items-center">

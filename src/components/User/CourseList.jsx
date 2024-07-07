@@ -26,13 +26,13 @@ const CourseList = () => {
 
             {/*Add Button */}
             <div className='flex justify-end'>
-                <Link replace to={`/admin/home/courses/addcourse`} className='bg-[#F5F1F1]' >
+                {/* <Link replace to={`/admin/home/courses/addcourse`} className='bg-[#F5F1F1]' >
                     <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
                                     p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
                         <FaCirclePlus className='text-slate-600 ' />
                         Add Course
                     </button>
-                </Link>
+                </Link> */}
             </div>
 
             <h1 className='font-poppins font-semibold text-lg py-2'>Recomended Course</h1>

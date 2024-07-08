@@ -15,8 +15,8 @@ import Tooltip from "@mui/material/Tooltip";
 import { IoNotifications } from "react-icons/io5";
 import { FaPencilAlt } from "react-icons/fa";
 import { IoLibrarySharp } from "react-icons/io5";
-import { FaBookAtlas } from "react-icons/fa6";import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; // Import the clearStudentDetails action
-import { clearToken } from "../../store/reducers/tokenSlice"; 
+import { FaBookAtlas } from "react-icons/fa6"; import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; // Import the clearStudentDetails action
+import { clearToken } from "../../store/reducers/tokenSlice"; // Import the clearToken action
 
 const UserSideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -109,28 +109,26 @@ const UserSideBar = () => {
   ];
 
   return (
-   
-      <div className="font-poppins text-sm font-medium ">
-        <Sidebar collapsed={collapsed} backgroundColor="#fff" width="250px">
-          <Menu>
-            <MenuItem
-              onClick={toggleCollapse}
-              className={`side-menu-item ${
-                isActive("/") ? "bg-blue-500 text-white" : "side-menu-item"
+
+    <div className="h-[100%] font-poppins text-sm font-medium ">
+      <Sidebar className=" h-full" collapsed={collapsed} backgroundColor="#fff" width="200px">
+        <Menu>
+          <MenuItem
+            onClick={toggleCollapse}
+            className={`side-menu-item ${isActive("/") ? "bg-blue-500 text-white" : "side-menu-item"
               }`}
-              icon={<img src={Logohalf} alt="" />}
-              // onClick={() => navigate('/')}
-            >
-              <img src={Logohalf2} className="w-[120px]" alt="" />
-            </MenuItem>
-            {navLinks.map((link) =>
-              link.subLinks ? (
-                <SubMenu
-                  key={link.title}
-                  title={link.title}
-                  icon={link.icon}
-                  className={`relative side-menu-item ${
-                    isActive(link.path) ? "bg-blue-500 text-white" : "side-menu-item"
+            icon={<img src={Logohalf} alt="" />}
+          // onClick={() => navigate('/')}
+          >
+            <img src={Logohalf2} className="w-[110px]" alt="" />
+          </MenuItem>
+          {navLinks.map((link) =>
+            link.subLinks ? (
+              <SubMenu
+                key={link.title}
+                label={link.title}
+                icon={link.icon}
+                className={`relative side-menu-item ${isActive(link.path) ? "bg-blue-500 text-white" : "side-menu-item"
                   }`}
                 >
                   {link.subLinks.map((subLink) => (
@@ -139,25 +137,24 @@ const UserSideBar = () => {
                       className={`relative side-menu-item ${
                         isActive(subLink.path) ? "bg-blue-500 text-black" : "side-menu-item"
                       }`}
-                      onClick={() => navigate(subLink.path)}
-                    >
-                      <div className="flex">
-                        {subLink.icon}
-                        <span className="ml-2">{subLink.title}</span>
-                      </div>
-                    </MenuItem>
-                  ))}
-                </SubMenu>
-              ) : (
-                <Tooltip
-                  title={link.title}
-                  key={link.title}
-                  arrow
-                  placement="right"
-                >
-                  <MenuItem
-                    className={`relative side-menu-item ${
-                      isActive(link.path) ? "bg-blue-500 text-black" : "side-menu-item"
+                    onClick={() => navigate(subLink.path)}
+                  >
+                    <div className="flex">
+                      {subLink.icon}
+                      <span className="ml-2">{subLink.title}</span>
+                    </div>
+                  </MenuItem>
+                ))}
+              </SubMenu>
+            ) : (
+              <Tooltip
+                title={link.title}
+                key={link.title}
+                arrow
+                placement="right"
+              >
+                <MenuItem
+                  className={`relative side-menu-item ${isActive(link.path) ? "bg-blue-500 text-black" : "side-menu-item"
                     }`}
                     icon={link.icon}
                     onClick={() => navigate(link.path)}

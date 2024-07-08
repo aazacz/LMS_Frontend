@@ -7,8 +7,7 @@ export default {
   ],
   theme: {
     extend: {
-      
-      
+  
       keyframes: {
         
         shinePulse: {
@@ -66,6 +65,7 @@ export default {
       current: 'currentColor',
       "MediumBlue": "#E7ECFF",
     },
+
   },
   plugins: [],
 }

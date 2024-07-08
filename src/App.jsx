@@ -11,7 +11,7 @@ const UserRoutes = lazy(() => import('./routes/UserRoutes'));
 function App() {
   return (
    
-      <Suspense fallback={<div className='w-screen h-screen flex justify-center items-center  '><Loader/></div>}>
+      <Suspense fallback={<div className='w-screen h-screen flex justify-center items-center '><Loader/></div>}>
         <Routes>
           <Route path='/admin/*' element={<AdminRoutes />} />
           <Route path='/tutor/*' element={<TutorRoutes />} />

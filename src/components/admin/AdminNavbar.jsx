@@ -5,7 +5,7 @@ import { FaBars } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { FiBookOpen, FiBook } from "react-icons/fi";
 import "./AdminNavbar.css"
-
+import  logo from '/Logo.png'
 
 const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
   const [show, setShow] = useState(false)
@@ -25,7 +25,7 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
 
         {/*_________________ left side____________________ */}
         <div className='w-[60%]  font-poppins relative'>
-       
+       <img src={logo} className='md:w-[100px]' alt="" />
           <p className=' md:pl-0 text-sm z-10'>   Welcome Back!</p>
           <p className='  md:pl-0 md:text-sm font-bold block md:hidden z-20'>   {user.userName}</p>
         </div>

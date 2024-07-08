@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { FaCalendarAlt } from "react-icons/fa";
 import { FaClock } from "react-icons/fa6";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { PiNotepadBold } from "react-icons/pi";
 
 const Dashboard = () => {
   const Stats = [
@@ -57,6 +58,14 @@ const Dashboard = () => {
       }
     });
   };
+
+  const assignments1 = [
+    { id: 1, name: "SAT Assignment 1", feedbackLink: "#", score: "25/35" },
+    { id: 2, name: "SAT Assignment 2", feedbackLink: "#", score: "30/35" },
+    { id: 3, name: "SAT Assignment 3", feedbackLink: "#", score: "28/35" },
+    { id: 4, name: "SAT Assignment 4", feedbackLink: "#", score: "27/35" },
+    { id: 5, name: "SAT Assignment 5", feedbackLink: "#", score: "26/35" },
+  ];
 
   return (
     <div className="  font-poppins h-screen overflow-y-scroll no-scrollbar classes-container">
@@ -197,7 +206,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="p-2 right-content sm:hidden md:flex   ">
+          <div className="p-2 right-content hidden md:flex ">
             <div className="rounded-lg right-stats">
               <p>Stats</p>
               <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 gap-4 justify-center items-center">
@@ -230,12 +239,33 @@ const Dashboard = () => {
                   </button>
                 </div>
               </div>
-              <div className="sats-grid">
-                <p className="text-sm ">
-                  SAT Assignment 1<br />
-                  View Feedback
-                </p>
-                <span>25/35</span>
+              <div>
+                <h1 className="font-poppins font-semibold text-xl py-2 pt-8">
+                  Assignment Grading
+                </h1>
+                <div className="overflow-y-scroll no-scrollbar flex flex-col gap-4">
+                  {assignments1.map((assignment1) => (
+                    <div
+                      key={assignment1.id}
+                      className="bg-white justify-between h-max shadow-md rounded-lg p-2 flex"
+                    >
+                      <div className="flex">
+                        <PiNotepadBold className="w-8 h-10" />
+                        <div className="p-1 flex flex-col">
+                          <h2 className="text-blue-gray-600 text-xs font-bold">
+                            {assignment1.name}
+                          </h2>
+                          <p className="text-gray-700 text-xs underline">
+                            <a href={assignment1.feedbackLink}>View Feedback</a>
+                          </p>
+                        </div>
+                      </div>
+                      <button className="ml-5 bg-[#6C51D9] text-white p-1 rounded-lg text-xs">
+                        {assignment1.score}
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

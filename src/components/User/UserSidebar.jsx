@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { PiCirclesFourFill } from "react-icons/pi";
 import Logohalf from "/Logohalf.png";
 import Logohalf2 from "/Logohalf2.png";
 import { useDispatch } from "react-redux";
@@ -15,10 +14,13 @@ import Tooltip from "@mui/material/Tooltip";
 import { IoNotifications } from "react-icons/io5";
 import { FaPencilAlt } from "react-icons/fa";
 import { IoLibrarySharp } from "react-icons/io5";
-import { FaBookAtlas } from "react-icons/fa6"; import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; // Import the clearStudentDetails action
-import { clearToken } from "../../store/reducers/tokenSlice"; // Import the clearToken action
+import { FaBookAtlas } from "react-icons/fa6";
+import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; // Import the clearStudentDetails action
 
-const UserSideBar = () => {
+const UserSideBar = ({isOpen}) => {
+
+  console.log("isOpen from sidebar")
+  console.log(isOpen)
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -48,7 +50,7 @@ const UserSideBar = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(clearStudentDetails());
-        dispatch(clearToken());
+  
         navigate("/");
       }
     });
@@ -110,39 +112,41 @@ const UserSideBar = () => {
 
   return (
 
-    <div className="h-[100%] font-poppins text-sm font-medium ">
-      <Sidebar className=" h-full" collapsed={collapsed} backgroundColor="#fff" width="200px">
+    <div className={`${!isOpen?"hidden ":""} h-screen   font-poppins text-sm font-medium `}>
+      <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="250px">
         <Menu>
+        
+        {/* Menu Logo */}
           <MenuItem
             onClick={toggleCollapse}
-            className={`side-menu-item ${isActive("/") ? "bg-blue-500 text-white" : "side-menu-item"
+            className={`side-menu-item md:py-[7px] py-[2px] border-b-[1px] ${isActive("/") ? "bg-blue-500 text-white " : "side-menu-item"
               }`}
             icon={<img src={Logohalf} alt="" />}
           // onClick={() => navigate('/')}
           >
-            <img src={Logohalf2} className="w-[110px]" alt="" />
+            <img src={Logohalf2} className="w-[120px]" alt="" />
           </MenuItem>
+         
+         
+         
           {navLinks.map((link) =>
             link.subLinks ? (
+            
+            
               <SubMenu
                 key={link.title}
                 label={link.title}
                 icon={link.icon}
-                className={`relative side-menu-item ${isActive(link.path) ? "bg-blue-500 text-white" : "side-menu-item"
+                className={`relative side-menu-item  ${isActive(link.path) ? "bg-blue-500 text-gray-500" : "side-menu-item "
                   }`}
-                >
-                  {link.subLinks.map((subLink) => (
-                    <MenuItem
-                      key={subLink.title}
-                      className={`relative side-menu-item ${
-                        isActive(subLink.path) ? "bg-blue-500 text-black" : "side-menu-item"
-                      }`}
-                    onClick={() => navigate(subLink.path)}
+              >
+                {link.subLinks.map((subLink) => (
+                  <MenuItem
+                    key={subLink.title}
+                    className={`relative side-menu-item  ${isActive(subLink.path) ? "bg-blue-500 " : "side-menu-item text-gray-500"
+                      }`} onClick={() => navigate(subLink.path)}
                   >
-                    <div className="flex">
-                      {subLink.icon}
-                      <span className="ml-2">{subLink.title}</span>
-                    </div>
+                    <div className="flex">      {subLink.icon}     <span className="ml-2 ">{subLink.title}</span>       </div>
                   </MenuItem>
                 ))}
               </SubMenu>

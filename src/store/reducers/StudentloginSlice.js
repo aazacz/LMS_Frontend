@@ -28,3 +28,4 @@ const StudentDetailsSlice = createSlice({
   export const { setStudentDetails, clearStudentDetails } = StudentDetailsSlice.actions;
   export default StudentDetailsSlice.reducer;
 
+ 

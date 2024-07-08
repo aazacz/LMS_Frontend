@@ -23,9 +23,9 @@ import UserSidebar from "../../components/User/UserSidebar";
 import Settings from "../../components/User/Settings/Settings";
 import StudentTests from "../../components/User/StudentTests";
 
-const StudentHomepage = ({ User }) => {
+const StudentHomepage = () => {
   const user = useSelector((state) => state.StudentDetails.token);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -66,7 +66,8 @@ const StudentHomepage = ({ User }) => {
           </div>
         </div>
       </div>
-    </>
+ 
+      </>
   );
 };
 

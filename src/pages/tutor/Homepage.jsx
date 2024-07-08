@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import TutorNavbar from "../../components/tutor/TutorNavbar";
-import Sidebar from "../../components/tutor/Sidebar";
+import TutorSidebar from "../../components/tutor/TutorSidebar";
 import Dashboard from "../../components/tutor/Dashboard/Dashboard";
 import Content from "../../components/tutor/Content";
 import QuestionBank from "../../components/tutor/QuestionBank/QuestionBank";
@@ -33,7 +33,7 @@ const Homepage = () => {
   return (
     <>
       <div className="flex w-full relative ">
-        <Sidebar isOpen={isSidebarOpen} />
+        <TutorSidebar isOpen={isSidebarOpen} />
         <div className="w-full px-2 ">
           <div className="h-auto z-30 sticky top-0 ">
             <TutorNavbar

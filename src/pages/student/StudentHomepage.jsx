@@ -33,8 +33,8 @@ const StudentHomepage = () => {
   return (
     <>
       <div className="flex h-screen w-full ">
-        <UserSidebar className="h-screen z-30" isOpen={isSidebarOpen} />
-        <div className="w-full  flex-1 px-2 ">
+        <UserSidebar className="h-screen z-30" isOpen={isSidebarOpen}/>
+        <div className="w-full flex-1 px-2 ">
           <StudentNavbar
             toggleSidebar={toggleSidebar}
             isSidebarOpen={isSidebarOpen}

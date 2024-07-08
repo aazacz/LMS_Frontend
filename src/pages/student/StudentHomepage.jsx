@@ -29,32 +29,44 @@ const StudentHomepage = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
   return (
-    <div className="flex h-screen w-full">
-      <UserSidebar isOpen={isSidebarOpen} />
-      <div className={` transition-all duration-500 ${!isSidebarOpen ? 'ml-0' : 'flex-1 ml-0'}`}>
-        <div className="w-full">
-          <StudentNavbar
-            toggleSidebar={toggleSidebar}
-            isSidebarOpen={isSidebarOpen}
-          />
+    <>
+      <div className="flex h-full w-screen relative ">
+        <div className="">
+          <UserSidebar className=" z-30" isOpen={isSidebarOpen} />
         </div>
-        <div className="p-4">
-          <Routes>
-            <Route path="/*" element={<Dashboard />} />
-            <Route path="/diagnosistestresult"     element={<DiagnosisTestResult />}  />
-            <Route path="/courses" element={<CourseList />} />
-            <Route path="/courses/:coursedetails" element={<Coursedetails />} />
-            <Route path="/assignments" element={<Assignments />} />
-            <Route path="/tutors" element={<ClassesToday />} />
-            <Route path="/library" element={<Library />} />
-            <Route path="/classestoday" element={<ClassesToday />} />
-            <Route path="/settings/*" element={<Settings />} />
-            <Route path="/cart" element={<ShoppingCart />} />
-            <Route path="/cart/checkout" element={<Checkout />} />
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
+
+        <div className="flex-1 w-full px-2  ">
+          <div className="h-auto z-30 sticky  top-0 ">
+            <StudentNavbar
+              className="  sticky"
+              toggleSidebar={toggleSidebar}
+              isSidebarOpen={isSidebarOpen}
+            />
+          </div>
+          <div className=" ">
+            <Routes>
+              <Route path="/*" element={<Dashboard />} />
+              <Route
+                path="/diagnosistestresult"
+                element={<DiagnosisTestResult />}
+              />
+              <Route path="/courses" element={<CourseList />} />
+              <Route
+                path="/courses/:coursedetails"
+                element={<Coursedetails />}
+              />
+              <Route path="/assignments" element={<Assignments />} />
+              <Route path="/tutors" element={<ClassesToday />} />
+              <Route path="/library" element={<Library />} />
+              <Route path="/classestoday" element={<ClassesToday />} />
+              <Route path="/settings/*" element={<Settings />} />
+              <Route path="/cart" element={<ShoppingCart />} />
+              <Route path="/cart/checkout" element={<Checkout />} />
+
+              <Route path="*" element={<ErrorPage />} />
+            </Routes>
+          </div>
         </div>
       </div>
     </div>

@@ -69,7 +69,8 @@ const StudentHomepage = () => {
           </div>
         </div>
       </div>
-    </div>
+ 
+      </>
   );
 };
 

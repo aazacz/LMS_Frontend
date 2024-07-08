@@ -16,9 +16,9 @@ import { IoNotifications } from "react-icons/io5";
 import { FaPencilAlt } from "react-icons/fa";
 import { IoLibrarySharp } from "react-icons/io5";
 import { FaBookAtlas } from "react-icons/fa6";import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; // Import the clearStudentDetails action
-import { clearToken } from "../../store/reducers/tokenSlice"; // Import the clearToken action
+import { clearToken } from "../../store/reducers/tokenSlice"; 
 
-const SideBar = () => {
+const UserSideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -195,4 +195,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default UserSideBar;

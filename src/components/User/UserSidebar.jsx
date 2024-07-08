@@ -15,7 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { IoNotifications } from "react-icons/io5";
 import { FaPencilAlt } from "react-icons/fa";
 import { IoLibrarySharp } from "react-icons/io5";
-import { FaBookAtlas } from "react-icons/fa6";import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; // Import the clearStudentDetails action
+import { FaBookAtlas } from "react-icons/fa6"; import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; // Import the clearStudentDetails action
 import { clearToken } from "../../store/reducers/tokenSlice"; // Import the clearToken action
 
 const SideBar = () => {
@@ -108,84 +108,80 @@ const SideBar = () => {
   ];
 
   return (
-   
-      <div className="h-screen w-full  font-poppins text-sm font-medium ">
-        <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="250px">
-          <Menu>
-            <MenuItem
-              onClick={toggleCollapse}
-              className={`side-menu-item ${
-                isActive("/") ? "bg-blue-500 text-white" : "side-menu-item"
+
+    <div className="h-[100%] font-poppins text-sm font-medium ">
+      <Sidebar className=" h-full" collapsed={collapsed} backgroundColor="#fff" width="200px">
+        <Menu>
+          <MenuItem
+            onClick={toggleCollapse}
+            className={`side-menu-item ${isActive("/") ? "bg-blue-500 text-white" : "side-menu-item"
               }`}
-              icon={<img src={Logohalf} alt="" />}
-              // onClick={() => navigate('/')}
-            >
-              <img src={Logohalf2} className="w-[120px]" alt="" />
-            </MenuItem>
-            {navLinks.map((link) =>
-              link.subLinks ? (
-                <SubMenu
-                  key={link.title}
-                  title={link.title}
-                  icon={link.icon}
-                  className={`relative side-menu-item ${
-                    isActive(link.path) ? "bg-blue-500 text-white" : "side-menu-item"
+            icon={<img src={Logohalf} alt="" />}
+          // onClick={() => navigate('/')}
+          >
+            <img src={Logohalf2} className="w-[110px]" alt="" />
+          </MenuItem>
+          {navLinks.map((link) =>
+            link.subLinks ? (
+              <SubMenu
+                key={link.title}
+                label={link.title}
+                icon={link.icon}
+                className={`relative side-menu-item ${isActive(link.path) ? "bg-blue-500 text-white" : "side-menu-item"
                   }`}
-                >
-                  {link.subLinks.map((subLink) => (
-                    <MenuItem
-                      key={subLink.title}
-                      className={`relative side-menu-item ${
-                        isActive(subLink.path) ? "bg-blue-500 text-white" : "side-menu-item"
-                      }`}
-                      onClick={() => navigate(subLink.path)}
-                    >
-                      <div className="flex">
-                        {subLink.icon}
-                        <span className="ml-2">{subLink.title}</span>
-                      </div>
-                    </MenuItem>
-                  ))}
-                </SubMenu>
-              ) : (
-                <Tooltip
-                  title={link.title}
-                  key={link.title}
-                  arrow
-                  placement="right"
-                >
+              >
+                {link.subLinks.map((subLink) => (
                   <MenuItem
-                    className={`relative side-menu-item ${
-                      isActive(link.path) ? "bg-blue-500 text-black" : "side-menu-item"
-                    }`}
-                    icon={link.icon}
-                    onClick={() => navigate(link.path)}
+                    key={subLink.title}
+                    className={`relative side-menu-item ${isActive(subLink.path) ? "bg-blue-500 text-white" : "side-menu-item"
+                      }`}
+                    onClick={() => navigate(subLink.path)}
                   >
-                    {collapsed ? (
-                      <div className="group">
-                        <span className="absolute left-full ml-2 w-full p-2 bg-gray-800 text-white text-sm rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          {link.title}
-                        </span>
-                      </div>
-                    ) : (
-                      link.title
-                    )}
+                    <div className="flex">
+                      {subLink.icon}
+                      <span className="ml-2">{subLink.title}</span>
+                    </div>
                   </MenuItem>
-                </Tooltip>
-              )
-            )}
-            <a
-              onClick={handleLogout}
-              href="#"
-              className="flex items-center p-2 mt-2 text-red-600 hover:bg-gray-200"
-            >
-              <IoLogOut className="text-xl mx-5 h-10" />
-              {collapsed ? "" : "Logout"}
-            </a>
-          </Menu>
-        </Sidebar>
-      </div>
-    
+                ))}
+              </SubMenu>
+            ) : (
+              <Tooltip
+                title={link.title}
+                key={link.title}
+                arrow
+                placement="right"
+              >
+                <MenuItem
+                  className={`relative side-menu-item ${isActive(link.path) ? "bg-blue-500 text-black" : "side-menu-item"
+                    }`}
+                  icon={link.icon}
+                  onClick={() => navigate(link.path)}
+                >
+                  {collapsed ? (
+                    <div className="group">
+                      <span className="absolute left-full ml-2 w-full p-2 bg-gray-800 text-white text-sm rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        {link.title}
+                      </span>
+                    </div>
+                  ) : (
+                    link.title
+                  )}
+                </MenuItem>
+              </Tooltip>
+            )
+          )}
+          <a
+            onClick={handleLogout}
+            href="#"
+            className="flex items-center p-2 mt-2 text-red-600 hover:bg-gray-200"
+          >
+            <IoLogOut className="text-xl mx-5 h-10" />
+            {collapsed ? "" : "Logout"}
+          </a>
+        </Menu>
+      </Sidebar>
+    </div>
+
   );
 };
 

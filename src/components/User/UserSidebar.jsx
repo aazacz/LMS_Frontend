@@ -17,7 +17,10 @@ import { IoLibrarySharp } from "react-icons/io5";
 import { FaBookAtlas } from "react-icons/fa6";
 import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; // Import the clearStudentDetails action
 
-const SideBar = () => {
+const SideBar = ({isOpen}) => {
+
+  console.log("isOpen from sidebar")
+  console.log(isOpen)
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -108,14 +111,14 @@ const SideBar = () => {
 
   return (
 
-    <div className="h-screen   font-poppins text-sm font-medium ">
+    <div className={`${!isOpen?"hidden ":""} h-screen   font-poppins text-sm font-medium `}>
       <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="250px">
         <Menu>
         
         {/* Menu Logo */}
           <MenuItem
             onClick={toggleCollapse}
-            className={`side-menu-item ${isActive("/") ? "bg-blue-500 text-white" : "side-menu-item"
+            className={`side-menu-item md:py-[7px] py-[2px] border-b-[1px] ${isActive("/") ? "bg-blue-500 text-white " : "side-menu-item"
               }`}
             icon={<img src={Logohalf} alt="" />}
           // onClick={() => navigate('/')}

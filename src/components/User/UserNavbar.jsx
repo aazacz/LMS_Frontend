@@ -14,23 +14,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
   const user = useSelector((state) => state.userDetails);
 
   const list = ["Subjects", "Courses", "Library", "Contact"];
-  // const navlist = [
-  //   {
-  //   title: "Courses",
-  //   link: "/student/courses"
-  // },
-  // {
-  //   title: "Tutor",
-  //   link: "/student/tutors"
-  // },
-  // {
-  //   title: "Library",
-  //   link: "/student/Library"
-  // },
 
-
-
-  //   "Subjects", "Courses", "Library", "Contact"];
 
   const handleToggle = () => {
     setShow(!show);
@@ -44,18 +28,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen,User }) => {
     </Link>
       </div>
 
-      {/* <div className='hidden  w-[50%] md:grid grid-flow-row grid-cols-6 px-5'>
-        {navlist.map((val, index) => (
-          <Link key={index} to={val.link}>
-            <h1 className='text-[#0066DE] bg-red-400 font-poppins text-center cursor-pointer  md:text-base font-semibold'>
-              {val.title}
-            </h1>
-          </Link>
-        ))}
-      </div>
-
- */}
-
+  
 
 
       {User?( <div className='w-[40%] flex justify-end    '>

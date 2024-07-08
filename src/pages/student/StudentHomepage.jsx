@@ -22,32 +22,28 @@ import Checkout from "../../components/User/Checkout";
 import UserSidebar from "../../components/User/UserSidebar";
 import Settings from "../../components/User/Settings/Settings";
 
-const StudentHomepage = ({ User }) => {
+const StudentHomepage = () => {
   const user = useSelector((state) => state.StudentDetails.token);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-  return (
-    <>
-      <div className="flex h-screen w-full relative ">
-        <UserSidebar className="h-screen z-30" isOpen={isSidebarOpen} />
-        <div className="w-full px-2 ">
-          <div className="h-auto z-30 sticky top-0 ">
-            <StudentNavbar
-              className="w-screen sticky"
-              toggleSidebar={toggleSidebar}
-              isSidebarOpen={isSidebarOpen}
-            />
-          </div>
 
+  return (
+    <div className="flex h-screen w-full">
+      <UserSidebar isOpen={isSidebarOpen} />
+      <div className={` transition-all duration-500 ${!isSidebarOpen ? 'ml-0' : 'flex-1 ml-0'}`}>
+        <div className="w-full">
+          <StudentNavbar
+            toggleSidebar={toggleSidebar}
+            isSidebarOpen={isSidebarOpen}
+          />
+        </div>
+        <div className="p-4">
           <Routes>
             <Route path="/*" element={<Dashboard />} />
-            <Route
-              path="/diagnosistestresult"
-              element={<DiagnosisTestResult />}
-            />
+            <Route path="/diagnosistestresult"     element={<DiagnosisTestResult />}  />
             <Route path="/courses" element={<CourseList />} />
             <Route path="/courses/:coursedetails" element={<Coursedetails />} />
             <Route path="/assignments" element={<Assignments />} />
@@ -57,12 +53,11 @@ const StudentHomepage = ({ User }) => {
             <Route path="/settings/*" element={<Settings />} />
             <Route path="/cart" element={<ShoppingCart />} />
             <Route path="/cart/checkout" element={<Checkout />} />
-
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

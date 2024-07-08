@@ -7,7 +7,6 @@ import usePasswordToggle from "../../hooks/usePasswordToggle";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setStudentDetails } from "../../store/reducers/StudentloginSlice";
-import { setToken } from "../../store/reducers/tokenSlice";
 import studentLoginimage from "../../assets/SignupPersonalDetails/personal.svg";
 import UserNavbar from "../../components/User/UserNavbar";
 import Loader from "../../components/reusable/Loader";

@@ -1,7 +1,13 @@
 import React, { useState } from "react";
-// import "./SideBar.css";
-// import SettingsIcon from "@mui/icons-material/Settings";
+import Logohalf from "/Logohalf.png";
+import Logohalf2 from "/Logohalf2.png";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+
+
+
+
 import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
 import GroupIcon from "@mui/icons-material/Group";
 import RateReviewIcon from "@mui/icons-material/RateReview";
@@ -14,7 +20,6 @@ import AirlinesIcon from "@mui/icons-material/Airlines";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import InsightsIcon from "@mui/icons-material/Insights";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-// import Nav from "./Nav";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -36,6 +41,81 @@ const AdminSidebar = () => {
   const isActive = (path) => {
     return location.pathname === path;
   };
+
+  const dispatch = useDispatch();
+
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Do you want to Logout?",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: "No",
+      customClass: {
+        actions: "my-actions",
+        confirmButton: "my-confirm-button",
+        denyButton: "my-deny-button",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(clearAdminDetails());
+  
+        navigate("/admin");
+      }
+    });
+  };
+
+
+  const navLinks = [
+    {
+      title: "Dashboard",
+      path: "/admin/home/dashboard",
+      icon: <MdDashboard className="text-xl text-gray-700" />,
+    },
+    {
+      title: "Courses",
+      path: "/admin/home/courses",
+      icon: <FaBookAtlas className="text-xl text-gray-700" />,
+    },
+    {
+      title: "Course Structure",
+      path: "/admin/home/courseStructure",
+      icon: <FaBookReader className="text-xl text-gray-700" />,
+    },
+  
+    { title: "Students", path: "/admin/home/students", icon: <PiCirclesFourFill /> },
+    { title: "Tutors", path: "/admin/home/tutors", icon: <PiCirclesFourFill /> },
+    { title: "Diagnosis Test", path: "/admin/home/diagnosistest", icon: <PiCirclesFourFill /> },
+    { title: "Library", path: "/admin/home/library", icon: <PiCirclesFourFill /> },
+    { title: "Access Management", path: "/admin/home/accessmanagement", icon: <PiCirclesFourFill /> },
+  
+    {
+      title: "Settings",
+      icon: <IoIosSettings className="text-xl text-gray-700" />,
+      subLinks: [
+        {
+          title: "Profile",
+          path: "/admin/home/settings",
+          icon: <IoIosPerson className="text-xl text-gray-700" />,
+        },
+        {
+          title: "Account",
+          path: "/admin/home/settings/accountsettings",
+          icon: <IoIosKey className="text-xl text-gray-700" />,
+        },
+        {
+          title: "Notifications",
+          path: "/admin/home/settings/notifications",
+          icon: <IoNotifications className="text-xl text-gray-700" />,
+        },
+      ],
+    },
+  ];
+
+
+
+
+
 
   return (
     <div>
@@ -101,6 +181,9 @@ const AdminSidebar = () => {
               >
                 Reviews{" "}
               </MenuItem>
+            
+            
+            
               <SubMenu
                 className="side-menu-item"
                 icon={<AccountCircleIcon />}
@@ -118,6 +201,8 @@ const AdminSidebar = () => {
                   {" "}
                   Add User{" "}
                 </MenuItem>
+
+
                 <MenuItem
                   className={`side-bar-text ${
                     isActive("/view-user")
@@ -132,7 +217,14 @@ const AdminSidebar = () => {
                   {" "}
                   View Users{" "}
                 </MenuItem>
+
+
               </SubMenu>
+
+
+
+
+
               <SubMenu
                 className="side-menu-item"
                 icon={<FlightIcon />}

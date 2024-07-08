@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { PiCirclesFourFill } from "react-icons/pi";
-import { clearToken } from '../../store/reducers/tokenSlice';
-import { persistor } from "../../store/index"
 import { useDispatch } from 'react-redux';
 import mindsatlogo from "../../assets/mindsatlogo.webp"
 import Swal from 'sweetalert2';

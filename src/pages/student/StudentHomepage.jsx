@@ -22,9 +22,9 @@ import Checkout from "../../components/User/Checkout";
 import UserSidebar from "../../components/User/UserSidebar";
 import Settings from "../../components/User/Settings/Settings";
 
-const StudentHomepage = ({ User }) => {
+const StudentHomepage = () => {
   const user = useSelector((state) => state.StudentDetails.token);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -69,7 +69,8 @@ const StudentHomepage = ({ User }) => {
           </div>
         </div>
       </div>
-    </>
+ 
+      </>
   );
 };
 

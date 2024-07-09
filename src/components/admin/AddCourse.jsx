@@ -1,14 +1,14 @@
-import React, { useState, useEffect,useCallback  } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TfiWrite } from 'react-icons/tfi';
-import { CiCircleRemove } from "react-icons/ci";
 import { IoIosCloseCircle } from 'react-icons/io';
 import "../../index.css"
 import "./Addcourse.css"
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 const AddCourse = () => {
-
   const navigate = useNavigate();
   const token = useSelector((state) => state.AdminDetails.token);
   const baseURL = process.env.REACT_APP_API_URL;
@@ -18,169 +18,184 @@ const AddCourse = () => {
   const [packages, setpackages] = useState();
   const [CourseStructure, setCourseStructure] = useState([]);
   const [course, setCourse] = useState({
+    courseType: "",
+    courseStructure: '',
     courseName: '',
     package: '',
     trainingDuration: '',
     hoursPerDay: '',
     price: '',
     description: '',
+    trainingDateTimeDetails:"This Course will start from June 1st",
     modules: [
       {
-        moduleName: '',
-        moduleDescription: '',
+        moduleName: "",
+        moduleDescription: "",
         sessions: [
           {
-            sessionName: '',
-            sessionDescription: '',
-            sessionDateTime: '',
-            sessionLink: '',
+            sessionName: "",
+            sessionDescription: "",
+            sessionDateTime: "",
+            sessionLink: "",
           },
         ],
       },
     ],
+    students:[],
+    tutors:[]
   });
 
 
 
-//Getting course structure data from database 
-useEffect(() => {
-  
-  axios
-    .get(`${baseURL}api/structure/get-all-structure`, {
-            headers: { authorization: `Bearer ${token}` } })
-    .then((res) => {
-      const data = res.data.data;
-      setCourseStructure(data);
+  //Getting course structure data from database 
+  useEffect(() => {
 
-      const newDropDownOptions = data.map((value) => ({
-        _id: value._id,
-        courseName: value.courseName,
-      }));
-      setCourseStructureDropDown(newDropDownOptions);
-    })
-    .catch((err) => {
-      console.error(err.message);
-    });
-}, [baseURL, token]);
+    axios
+      .get(`${baseURL}api/structure/get-all-structure`, {
+        headers: { authorization: `Bearer ${token}` }
+      })
+      .then((res) => {
+        const data = res.data.data;
+        setCourseStructure(data);
 
-
-//getting the package information from database
-useEffect(()=>{
-
-  axios.get(`${baseURL}api/package/get-all-package?page=1&pageSize=10&search=`,
-          {headers:{ authorization: `Bearer ${token}` }}  )
-          .then((res)=>{
-             setpackages(res.data.data)
-          })
-          .catch((err) => {
-            console.error(err.message);
-          });
-
-},[baseURL, token])
-
-
-
-
-// function to add a new module
-const addModule = () => {
-    setCourse(prevState => ({
-        ...prevState,
-        modules: [
-                       {
-                moduleName: "",
-                moduleDescription: "",
-                sessions: [
-                    {
-                        sessionName: "",
-                        sessionDescription: "",
-                        sessionDateTime: "",
-                        sessionLink: ""
-                    }
-                ]
-            }, ...prevState.modules
-        ]
-    }));
-}
-
-const handleModuleChange = (e, moduleIndex) => {
-  const { name, value } = e.target;
-  const updatedModules = [...course.modules];
-  updatedModules[moduleIndex][name.split('-')[0]] = value;
-  setCourse(prevState => ({
-    ...prevState,
-    modules: updatedModules
-  }));
-};
-
-const handleSessionChange = (e, moduleIndex, sessionIndex) => {
-  const { name, value } = e.target;
-  const updatedModules = [...course.modules];
-  updatedModules[moduleIndex].sessions[sessionIndex][name.split('-')[0]] = value;
-  setCourse(prevState => ({
-    ...prevState,
-    modules: updatedModules
-  }));
-};
-
-
-// Function to Remove a Module
-const RemoveModule = (moduleIndex,e) => {
-  console.log(moduleIndex)
-
-  setCourse((prevData) => {
-    const updatedModules = prevData.modules.filter((_, index) => index !== moduleIndex);
-    return {
-      ...prevData,
-      modules: updatedModules
-    };
-  })
-
-}
-
-
-
-// function to add a new Session
-const addSession = (moduleIndex) => {
-
-      const updatedModules = [...course.modules];
-     
-      updatedModules[moduleIndex].sessions.push({
-          sessionName: "",
-          sessionDescription: "",
-          sessionDateTime: "",
-          sessionLink: ""
+        const newDropDownOptions = data.map((value) => ({
+          _id: value._id,
+          courseName: value.courseName,
+        }));
+        setCourseStructureDropDown(newDropDownOptions);
+      })
+      .catch((err) => {
+        console.error(err.message);
       });
-      setCourse({ ...course, modules: updatedModules });
+  }, [baseURL, token]);
+
+
+  //getting the package information from database
+  useEffect(() => {
+
+    axios.get(`${baseURL}api/package/get-all-package?page=1&pageSize=10&search=`,
+      { headers: { authorization: `Bearer ${token}` } })
+      .then((res) => {
+        setpackages(res.data.data)
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+
+  }, [baseURL, token])
+
+
+
+
+  // function to add a new module
+  const addModule = () => {
+
+    setCourse(prevState => ({
+      ...prevState,
+      modules: [
+        {
+          moduleName: "",
+          moduleDescription: "",
+          sessions: [
+            {
+              sessionName: "",
+              sessionDescription: "",
+              sessionDateTime: "",
+              sessionLink: ""
+            }
+          ]
+        }, ...prevState.modules
+      ]
+    }));
   }
 
-// Function to Remove a Module
-const RemoveSession = (moduleIndex, sessionIndex, e) => {
-  console.log("moduleIndex, sessionIndex, e", moduleIndex, sessionIndex)
+  // function to chan
+  const handleModuleChange = (e, moduleIndex) => {
 
-  setCourse((prevData) => {
-    
-    // Create a deep copy of the previous state to avoid direct mutation
-    const updatedModules = [...prevData.modules];
+    const { name, value } = e.target;
+    const updatedModules = [...course.modules];
 
-    // Filter out the session to be removed
-    updatedModules[moduleIndex].sessions = updatedModules[moduleIndex].sessions.filter((_, index) => index !== sessionIndex);
-    return {
-      ...prevData,
+    updatedModules[moduleIndex][name.split('-')[0]] = value;
+
+    setCourse(prevState => ({
+      ...prevState,
       modules: updatedModules
-    };
-  });
+    }));
+
+  };
+
+  const handleSessionChange = (e, moduleIndex, sessionIndex) => {
+    const { name, value } = e.target;
+    const updatedModules = [...course.modules];
+    updatedModules[moduleIndex].sessions[sessionIndex][name.split('-')[0]] = value;
+    setCourse(prevState => ({
+      ...prevState,
+      modules: updatedModules
+    }));
+  };
 
 
-}
+  // Function to Remove a Module
+  const RemoveModule = (moduleIndex, e) => {
+    console.log(moduleIndex)
+
+    setCourse((prevData) => {
+      const updatedModules = prevData.modules.filter((_, index) => index !== moduleIndex);
+      return {
+        ...prevData,
+        modules: updatedModules
+      };
+    })
+
+  }
+
+
+
+  // function to add a new Session
+  const addSession = (moduleIndex) => {
+
+    const updatedModules = [...course.modules];
+
+    updatedModules[moduleIndex].sessions.push({
+      sessionName: "",
+      sessionDescription: "",
+      sessionDateTime: "",
+      sessionLink: ""
+    });
+    setCourse({ ...course, modules: updatedModules });
+  }
+
+  // Function to Remove a Module
+  const RemoveSession = (moduleIndex, sessionIndex, e) => {
+    console.log("moduleIndex, sessionIndex, e", moduleIndex, sessionIndex)
+
+    setCourse((prevData) => {
+
+      // Create a deep copy of the previous state to avoid direct mutation
+      const updatedModules = [...prevData.modules];
+
+      // Filter out the session to be removed
+      updatedModules[moduleIndex].sessions = updatedModules[moduleIndex].sessions.filter((_, index) => index !== sessionIndex);
+      return {
+        ...prevData,
+        modules: updatedModules
+      };
+    });
+
+
+  }
 
 
   // Auto Populate function
   const handleAutofill = (e) => {
     const { value } = e.target;
-    const selectedCourse = CourseStructure.find(course => course.courseName === value);
+    const selectedCourse = CourseStructure.find(
+      (course) => course.courseName === value
+    );
 
     if (selectedCourse) {
-      setCourse({
+      setCourse((prevState) => ({
+        ...prevState,
         courseName: selectedCourse.courseName,
         package: selectedCourse.package,
         trainingDuration: selectedCourse.trainingDuration,
@@ -188,20 +203,91 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
         price: selectedCourse.price,
         description: selectedCourse.description,
         modules: selectedCourse.modules,
-      });
+      }));
     }
-  }
-
+  };
 
   // Function to change the input element value
   const handleInputChange = (e) => {
-    
+
     const { name, value } = e.target;
     setCourse((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    console.log(course)
+  }, [course])
+
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+
+    Swal.fire({
+      title: "You are going to create a new course",
+      text: "Please check every field before submitting ",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Create",
+      customClass: {
+        title: 'custom-title',
+        content: 'custom-content'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        axios.post(`${baseURL}api/course/create`, course, {
+          authorisation: `Bearer ${token}`
+        })
+          .then((res) => {
+            console.log(res.data)
+            if (res.data.message === "Course created successfully") {
+
+                toast.success("Course created Successfully")
+                setCourse({
+                  courseType: "",
+                  courseStructure: '',
+                  courseName: '',
+                  package: '',
+                  trainingDuration: '',
+                  hoursPerDay: '',
+                  price: '',
+                  description: '',
+                  trainingDateTimeDetails:"This Course will start from June 1st",
+                  modules: [
+                    {
+                      moduleName: '',
+                      moduleDescription: '',
+                      sessions: [
+                        {
+                          sessionName: '',
+                          sessionDescription: '',
+                          sessionDateTime: '',
+                          sessionLink: '',
+                        },
+                      ],
+                    },
+                  ],
+                  students:[],
+                  tutors:[]
+                })
+
+            }
+
+
+
+          })
+      }
+    });
+
+
+
+
+  }
 
 
 
@@ -221,22 +307,27 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
               id=""
               className="w-full h-10 bg-white border-[1px] border-gray-500 text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             >
-              <option value="">Individual</option>
-              <option value="">Group</option>
+
+              <option defaultChecked disabled value="">Select a course type</option>
+              <option value="Individual">Individual</option>
+              <option value="Group">Group</option>
             </select>
-            {errors.courseName && <p className="text-red-500 text-xs">{errors.courseName}</p>}
+            {errors.courseName && (
+              <p className="text-red-500 text-xs">{errors.courseName}</p>
+            )}
           </div>
 
           <div className="w-full ">
             <label className="text-sm font-semibold">Course Structure</label>
-         
-         
+
+
             <select
               name="courseStructure"
-              onChange={(e) => {  
+              onChange={(e) => {
                 handleInputChange(e);
                 handleAutofill(e);
               }}
+
               value={course.courseStructure}
               id=""
               className="w-full h-10 bg-white text-sm border-[1px] border-gray-500 rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
@@ -245,16 +336,16 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
 
 
 
-              <option disabled value="">
-                Select the Course Structure
-              </option>
+              <option defaultChecked disabled value="">  Select the Course Structure        </option>
               {courseStructureDropDown.map((value, index) => (
                 <option key={index} value={value.courseName}>
                   {value.courseName}
                 </option>
               ))}
             </select>
-            {errors.courseName && <p className="text-red-500 text-xs">{errors.courseName}</p>}
+            {errors.courseName && (
+              <p className="text-red-500 text-xs">{errors.courseName}</p>
+            )}
           </div>
         </div>
         <div className="flex flex-col md:flex-row md:space-x-4">
@@ -269,7 +360,9 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
               placeholder="Course Name"
               className="w-full h-10 bg-white text-sm border-[1px] border-gray-500 rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             />
-            {errors.courseName && <p className="text-red-500 text-xs">{errors.courseName}</p>}
+            {errors.courseName && (
+              <p className="text-red-500 text-xs">{errors.courseName}</p>
+            )}
           </div>
 
           <div className="w-full md:w-1/2">
@@ -280,18 +373,23 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
               value={course.package}
               className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900 border-[1px] border-gray-500"
             >
-              <option value="Select a package" className="font-poppins opac text-slate-500">
+              <option
+                value="Select a package"
+                className="font-poppins opac text-slate-500"
+              >
                 Select a package
               </option>
 
-              {packages && packages.map((val,index)=>{
-                return(
+              {packages && packages.map((val, index) => {
+                return (
                   <option key={index}>{val.packageName}</option>
                 )
               })}
-            
+
             </select>
-            {errors.package && <p className="text-red-500 text-xs">{errors.package}</p>}
+            {errors.package && (
+              <p className="text-red-500 text-xs">{errors.package}</p>
+            )}
           </div>
         </div>
 
@@ -308,7 +406,9 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
               placeholder="Total Hours"
               className="w-full h-10 border-[1px] border-gray-500 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             />
-            {errors.trainingDuration && <p className="text-red-500 text-xs">{errors.trainingDuration}</p>}
+            {errors.trainingDuration && (
+              <p className="text-red-500 text-xs">{errors.trainingDuration}</p>
+            )}
           </div>
 
           <div className="w-full md:w-1/2">
@@ -321,7 +421,9 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
               placeholder="Hours Per Day"
               className="w-full h-10 bg-white border-[1px] border-gray-500 text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             />
-            {errors.hoursPerDay && <p className="text-red-500 text-xs">{errors.hoursPerDay}</p>}
+            {errors.hoursPerDay && (
+              <p className="text-red-500 text-xs">{errors.hoursPerDay}</p>
+            )}
           </div>
 
           <div className="w-full md:w-1/2">
@@ -334,20 +436,24 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
               placeholder="Enter Price of the module"
               className="w-full h-10 bg-white border-[1px] border-gray-500 text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             />
-            {errors.price && <p className="text-red-500 text-xs">{errors.price}</p>}
+            {errors.price && (
+              <p className="text-red-500 text-xs">{errors.price}</p>
+            )}
           </div>
         </div>
 
         <div className="flex flex-col">
           <label className="text-sm font-semibold">Description</label>
-          <textarea 
+          <textarea
             onChange={handleInputChange}
             name="description"
             placeholder="Description"
             value={course.description}
             className="w-full md:h-20 rounded border-[1px] border-gray-500 mt-2 shadow-lg p-2"
           />
-          {errors.description && <p className="text-red-500 text-xs">{errors.description}</p>}
+          {errors.description && (
+            <p className="text-red-500 text-xs">{errors.description}</p>
+          )}
         </div>
 
         {/*________ ADD MODULE BUTTON_____________ */}
@@ -355,22 +461,24 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
           <h1 className="text-xl font-semibold font-poppins">Modules</h1>
         </div>
 
-          <button
-            type='button'
-            onClick={(e) => addModule(e)}
-            className="w-full  md:w-[100%] md:max-w-[150px] h-10 bg-blue-900 rounded-lg text-white font-poppins font-semibold flex  justify-center items-center"
-          >
-            Add Module
-          </button>
-     
+        <button
+          type='button'
+          onClick={(e) => addModule(e)}
+          className="w-full  md:w-[100%] md:max-w-[150px] h-10 bg-blue-900 rounded-lg text-white font-poppins font-semibold flex  justify-center items-center"
+        >
+          Add Module
+        </button>
+
         {course?.modules?.map((module, moduleIndex) => {
           return (
             <div className="w-full h-auto border-2 border-blue-900 bg-white rounded-lg p-4 flex flex-col shadow-lg space-y-4">
               <div className="w-full flex gap-x-6 justify-between items-center ">
-                <h1 className=" font-poppins text-xl text-blue-900 font-semibold">Module {moduleIndex + 1}</h1>
+                <h1 className=" font-poppins text-xl text-blue-900 font-semibold">
+                  Module {moduleIndex + 1}
+                </h1>
                 <div className="  ">
-                 <IoIosCloseCircle  className='font-black text-3xl  text-red-900 ' onClick={(e) => RemoveModule(moduleIndex, e)}/>
-                 
+                  <IoIosCloseCircle className='font-black text-3xl  text-red-900 ' onClick={(e) => RemoveModule(moduleIndex, e)} />
+
                 </div>
               </div>
 
@@ -386,7 +494,9 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
                   />
                 </div>
                 <div className="w-full md:w-1/2">
-                  <label className="text-sm font-semibold">Module Description</label>
+                  <label className="text-sm font-semibold">
+                    Module Description
+                  </label>
                   <input
                     name={`moduleDescription-${moduleIndex}`}
                     value={course.modules[moduleIndex].moduleDescription}
@@ -397,51 +507,67 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
                 </div>
               </div>
 
-                    <div className='flex justify-end px-4 '>
-                      <button
-                      type='button'
-                      onClick={(e) => addSession(moduleIndex, e)}
-                      className="px-5  h-8 bg-blue-900 rounded-md text-sm text-white flex justify-center items-center "
-                      >
-                    Add Session
-                  </button>
-                      </div>
+              <div className='flex justify-end px-4 '>
+                <button
+                  type='button'
+                  onClick={(e) => addSession(moduleIndex, e)}
+                  className="px-5  h-8 bg-blue-900 rounded-md text-sm text-white flex justify-center items-center "
+                >
+                  Add Session
+                </button>
+              </div>
               {module?.sessions?.map((session, sessionIndex) => {
                 return (
                   <div className="w-full bg-gray-200 border-[1px] border-blue-700 rounded-lg p-4 flex flex-col shadow-lg space-y-4">
                     <div className="w-full flex gap-x-6 justify-between items-center ">
                       <h1 className="text-md font-semibold">Session {sessionIndex + 1}</h1>
-                    
-                   
 
-                     
+
+
+
                       <button
-                        type='button'
-                        onClick={(e) => RemoveSession(moduleIndex, sessionIndex, e)}
+                        type="button"
+                        onClick={(e) =>
+                          RemoveSession(moduleIndex, sessionIndex, e)
+                        }
                         className="px-2 h-8 bg-red-900 leading-3  rounded-md text-sm text-white flex items-center "
                       >
                         Remove Session
                       </button>
-                   
+
                     </div>
 
                     <div className="w-full flex flex-col md:flex-row md:gap-x-4">
                       <div className="w-full md:w-1/2">
-                        <label className="text-sm font-semibold">Session Name</label>
+                        <label className="text-sm font-semibold">
+                          Session Name
+                        </label>
                         <input
                           name={`sessionName-${moduleIndex}-${sessionIndex}`}
-                          value={course.modules[moduleIndex].sessions[sessionIndex].sessionName}
-                          onChange={(e) => handleSessionChange(e, moduleIndex, sessionIndex)}
+                          value={
+                            course.modules[moduleIndex].sessions[sessionIndex]
+                              .sessionName
+                          }
+                          onChange={(e) =>
+                            handleSessionChange(e, moduleIndex, sessionIndex)
+                          }
                           placeholder="Session Name"
                           className="w-full h-10 bg-white  text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
                         />
                       </div>
                       <div className="w-full md:w-1/2">
-                        <label className="text-sm font-semibold">Session Description</label>
+                        <label className="text-sm font-semibold">
+                          Session Description
+                        </label>
                         <input
                           name={`sessionDescription-${moduleIndex}-${sessionIndex}`}
-                          value={course.modules[moduleIndex].sessions[sessionIndex].sessionDescription}
-                          onChange={(e) => handleSessionChange(e, moduleIndex, sessionIndex)}
+                          value={
+                            course.modules[moduleIndex].sessions[sessionIndex]
+                              .sessionDescription
+                          }
+                          onChange={(e) =>
+                            handleSessionChange(e, moduleIndex, sessionIndex)
+                          }
                           placeholder="Session Description"
                           className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
                         />
@@ -450,21 +576,35 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
 
                     <div className="w-full flex flex-col md:flex-row md:gap-x-4">
                       <div className="w-full md:w-1/2">
-                        <label className="text-sm font-semibold">Session Date & Time</label>
+                        <label className="text-sm font-semibold">
+                          Session Date & Time
+                        </label>
                         <input
                           type="datetime-local"
                           name={`sessionDateTime-${moduleIndex}-${sessionIndex}`}
-                          value={course.modules[moduleIndex].sessions[sessionIndex].sessionDateTime}
-                          onChange={(e) => handleSessionChange(e, moduleIndex, sessionIndex)}
+                          value={
+                            course.modules[moduleIndex].sessions[sessionIndex]
+                              .sessionDateTime
+                          }
+                          onChange={(e) =>
+                            handleSessionChange(e, moduleIndex, sessionIndex)
+                          }
                           className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
                         />
                       </div>
                       <div className="w-full md:w-1/2">
-                        <label className="text-sm font-semibold">Session Link</label>
+                        <label className="text-sm font-semibold">
+                          Session Link
+                        </label>
                         <input
                           name={`sessionLink-${moduleIndex}-${sessionIndex}`}
-                          value={course.modules[moduleIndex].sessions[sessionIndex].sessionLink}
-                          onChange={(e) => handleSessionChange(e, moduleIndex, sessionIndex)}
+                          value={
+                            course.modules[moduleIndex].sessions[sessionIndex]
+                              .sessionLink
+                          }
+                          onChange={(e) =>
+                            handleSessionChange(e, moduleIndex, sessionIndex)
+                          }
                           placeholder="Session Link"
                           className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
                         />
@@ -478,11 +618,14 @@ const RemoveSession = (moduleIndex, sessionIndex, e) => {
         })}
 
         <div className="flex items-center justify-end ">
-          <button onClick={(e) => submitHandler(e)} type="submit" className=" px-8 py-2 bg-green-900 rounded-md text-white">
+          <button
+            onClick={(e) => submitHandler(e)}
+            type="submit"
+            className=" px-8 py-2 bg-green-900 rounded-md text-white"
+          >
             Submit
           </button>
         </div>
-
       </form>
     </div>
   );

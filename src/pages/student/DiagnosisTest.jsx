@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaGoogleScholar } from "react-icons/fa6";
+// import { FaGoogleScholar } from "react-icons/fa";
 import { PiWarningOctagonDuotone } from "react-icons/pi";
 import { Hourglass } from "react-loader-spinner";
 import Swal from "sweetalert2";
@@ -25,7 +25,7 @@ const DiagnosisTest = () => {
     async function fetchQuestions() {
       try {
         const response = await axios.get(
-          `${baseURL}api/diagnosis/diagnosis/668d1da9933587b3aee16455`
+          `${baseURL}api/diagnosis/diagnosis/665d65c897b3cba27c6c9edf`
         );
         const data = response.data;
         console.log("Fetched Data:", data);
@@ -56,7 +56,7 @@ const DiagnosisTest = () => {
     if (!document.fullscreenElement) {
       Swal.fire({
         title: "Fullscreen Mode Required",
-        text: "You must be in fullscreen mode and not change tabs to take the test.",
+        text: "You must be in fullscreen mode to take the test. Switching tabs is not allowed.",
         icon: "warning",
         confirmButtonText: "Go Fullscreen",
       }).then(() => {
@@ -81,9 +81,9 @@ const DiagnosisTest = () => {
   };
 
   useEffect(() => {
-    //Function to handle visibilty change(tab switch)
+    // Function to handle visibility change (tab switch)
     const handleVisibilityChange = () => {
-      if (document.hidden) {
+      if (document.hidden && document.fullscreenElement) {
         let count = tabSwitchCount + 1;
         setTabSwitchCount(count);
 
@@ -92,15 +92,17 @@ const DiagnosisTest = () => {
         }
       }
     };
-    //timer functionality
+
+    // Timer functionality
     if (timeLeft === 0) {
       handleTestExit("Time's up!");
     }
+
     // Check if fullscreen mode is enabled
     if (!document.fullscreenElement) {
       Swal.fire({
         title: "Fullscreen Mode Required",
-        text: "You must be in fullscreen mode and not change tabs to take the test.",
+        text: "You must be in fullscreen mode to take the test. Switching tabs is not allowed.",
         icon: "warning",
         confirmButtonText: "Go Fullscreen",
       }).then(() => {
@@ -118,18 +120,9 @@ const DiagnosisTest = () => {
     // Clean up event listener
     return () => {
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
-      document.removeEventListener(
-        "mozfullscreenchange",
-        handleFullscreenChange
-      );
-      document.removeEventListener(
-        "webkitfullscreenchange",
-        handleFullscreenChange
-      );
-      document.removeEventListener(
-        "msfullscreenchange",
-        handleFullscreenChange
-      );
+      document.removeEventListener("mozfullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+      document.removeEventListener("msfullscreenchange", handleFullscreenChange);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [tabSwitchCount]);
@@ -141,13 +134,13 @@ const DiagnosisTest = () => {
       icon: "info",
       confirmButtonText: "OK",
     }).then(() => {
-      window.location.href = "/diagnosistest/result";
+      navigate("/diagnosistest/result");
     });
   };
+
   const handleSubmit = () => {
     Swal.fire({
-      title:
-        "Do you want to submit the answers? You will not be able to continue this later.",
+      title: "Do you want to submit the answers? You will not be able to continue this later.",
       showDenyButton: true,
       confirmButtonText: "Yes",
       denyButtonText: "No",
@@ -169,9 +162,7 @@ const DiagnosisTest = () => {
               confirmButton: "my-toast-confirm-button",
             },
           });
-          setTimeout(() => {
-            navigate("/diagnosistest/result");
-          }, 1500);
+          navigate("/diagnosistest/result");
         }, 3000);
       }
     });
@@ -199,7 +190,7 @@ const DiagnosisTest = () => {
     setSelectedAnswers(updatedAnswers);
 
     const updatedStatuses = { ...questionStatuses };
-    updatedStatuses[currentQuestionIndex] = "marked";
+    updatedStatuses[currentQuestionIndex] = "answered";
     setQuestionStatuses(updatedStatuses);
   };
 
@@ -218,9 +209,10 @@ const DiagnosisTest = () => {
     updatedStatuses[currentQuestionIndex] = "notAnswered";
     setQuestionStatuses(updatedStatuses);
   };
+
   const getStatusClass = (status) => {
     switch (status) {
-      case "marked":
+      case "answered":
         return "bg-green-500";
       case "review":
         return "bg-red-500";
@@ -245,10 +237,9 @@ const DiagnosisTest = () => {
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${minutes.toString().padStart(2, "0")}:${secs
-      .toString()
-      .padStart(2, "0")}`;
+    return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
+
   const scrollToQuestion = (index) => {
     setCurrentQuestionIndex(index);
     const element = document.getElementById(`question-${index}`);
@@ -256,20 +247,20 @@ const DiagnosisTest = () => {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
+
   const currentQuestion = questions[currentQuestionIndex];
+
 
   return (
     <>
       {loading && <Loader />}
-      <div className={`Test w-screen h-screen flex overflow-y-scroll relative`}>
+      <div className="Test w-screen h-screen flex overflow-y-scroll relative">
         <div className="max-w-[1000px] w-full p-5 h-full">
           <div className="w-full">
-            <h2 className="font-semibold flex justify-center items-center font-poppins text-sm text-red-800 ">
+            <h2 className="font-semibold flex justify-center items-center font-poppins text-sm text-red-800">
               Switching Tabs will lead to automatic exit
             </h2>
-            <h1 className="font-semibold font-poppins text-lg">
-              Diagnosis Test
-            </h1>
+            <h1 className="font-semibold font-poppins text-lg">Diagnosis Test</h1>
           </div>
 
           <div className="pl-5 mt-5">
@@ -323,7 +314,7 @@ const DiagnosisTest = () => {
               ))}
           </div>
 
-          <div className="w-full flex justify-between items-center mt-5">
+          <div className="w-full mt-5 flex justify-between items-center">
             <div className="flex gap-x-5">
               <button
                 onClick={handlePreviousQuestion}
@@ -388,9 +379,9 @@ const DiagnosisTest = () => {
             <span className="uppercase font-semibold font-poppins text-black ">
               Christian Bale
             </span>
-            <span className="w-10 h-10 bg-[#0047FF] flex rounded-full items-center justify-center text-white">
+            {/* <span className="w-10 h-10 bg-[#0047FF] flex rounded-full items-center justify-center text-white">
               <FaGoogleScholar />{" "}
-            </span>
+            </span> */}
           </div>
 
           <div className="w-full h-[100%] bg-[#EDF8FF] flex">
@@ -420,7 +411,7 @@ const DiagnosisTest = () => {
               onClick={handleMarkForReview}
               className="px-6 font-semibold font-poppins text-sm border-[1px] border-black py-2 rounded-lg"
             >
-              Mark for Review & Nex
+              Mark for Review & Next
             </button>
             <button
               onClick={handleClearResponse}

@@ -1,32 +1,31 @@
 /* custom-swal.css */
 .my-actions {
-    display: flex;
-    width: 200px;
-    
-    justify-content: space-between;
+  display: flex;
+  width: 200px;
+  justify-content: space-between;
 }
 
 .my-confirm-button {
-    background-color: green !important;
-    color: white !important;
-    order: 2; /* Custom order if needed */
+  background-color: green !important;
+  color: white !important;
+  order: 2; /* Custom order if needed */
 }
 
 .my-deny-button {
-    background-color: red !important;
-    color: white !important;
-    order: 3; /* Custom order if needed */
+  background-color: red !important;
+  color: white !important;
+  order: 3; /* Custom order if needed */
 }
 
 .swal2-title {
-    font-size: 24px;
-    color: #333;
+  font-size: 24px;
+  color: #333;
 }
 
 .swal2-popup {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 .my-toast-confirm-button {
-    width: 120px !important;
-    color: white !important;
+  width: 120px !important;
+  color: white !important;
 }

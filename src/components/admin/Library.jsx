@@ -6,11 +6,14 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2"; // Import SweetAlert
 import ReusablePagination from "../reusable/ReusablePagination";
 import { Link } from "react-router-dom";
+import { BsFillFileEarmarkPdfFill } from "react-icons/bs";
+import { IoIosCloseCircleOutline, IoMdRemoveCircle } from "react-icons/io";
+
 
 const baseURL = process.env.REACT_APP_API_URL;
 
 const Library = () => {
-const token = useSelector((state)=>state.AdminDetails.token)
+  const token = useSelector((state) => state.AdminDetails.token)
 
 
   const [courses, setCourses] = useState([]);
@@ -19,6 +22,8 @@ const token = useSelector((state)=>state.AdminDetails.token)
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Default page size
   const [totalRows, setTotalRows] = useState(0); // Total rows for pagination
+  const [Modal, setModal] = useState(false)
+
 
   // Fetch all courses on component mount
   useEffect(() => {
@@ -117,16 +122,16 @@ const token = useSelector((state)=>state.AdminDetails.token)
   //Download Material
   const handleDownloadMaterial = async (materialId) => {
     try {
-    await axios.get(
+      await axios.get(
         `${baseURL}api/library/download-file//${materialId}`,
         {
           responseType: "blob",
           headers: {
-            Accept:"application/pdf",
+            Accept: "application/pdf",
             authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
           },
         }
-      ).then((res)=>{
+      ).then((res) => {
         console.log("res.data in then block")
         console.log(res.data)
       })
@@ -154,11 +159,26 @@ const token = useSelector((state)=>state.AdminDetails.token)
   // Function to handle page size change
   const handlePageSizeChange = (event) => {
     setPageSize(parseInt(event.target.value, 10));
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
+  const [Material, setMaterial] = useState(null)
+  // Function to open and close a modal
+  const openModal = (material) => {
+    console.log("https://mindsat.onrender.com/" + material.filePath)
+    setMaterial("https://mindsat.onrender.com/" + material.filePath)
+    setModal(true)
+  }
+
   return (
-    <div className="w-full flex flex-col font-poppins">
+    <div onClick={() => setModal(false)} className={`w-full flex flex-col font-poppins ${Modal ? " bg-gray-200" : " "}`}>
+      {Modal && (
+        <div className="w-full max-w-[80vw] h-[88vh] flex justify-center items-center absolute left-1/2 -translate-x-1/2">
+          <object data={Material} type="application/pdf" width="100%" height="100%">
+            <img src="/broken.png" alt="PDF not found" />
+          </object>
+        </div>
+      )}
       <div className="w-full flex justify-between items-start p-2">
         <div className="flex">
           <div className="text-sm md:text-base">Choose Course</div>
@@ -182,30 +202,36 @@ const token = useSelector((state)=>state.AdminDetails.token)
         </Link>
       </div>
       <div className="p-2 m-4">
-        <div className="grid grid-flow-row  grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-x-6">
-          {materials.map((material) => (
+        <div className="grid grid-flow-row  grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-5 gap-x-6">
+          {materials.map((material, index) => (
             <div
+              onClick={(e) => { e.stopPropagation(); openModal(material); }}
               key={material._id}
-              className="w-full bg-gray-300 flex flex-col justify-center items-center px-1 py-4 m-4 rounded-md"
+              className="w-[180px] bg-gray-300 flex flex-col justify-center items-center px-2 py-2 m-4 rounded-md"
             >
-              <div className="flex justify-end w-full mr-4">
-                <MdDelete
+              <div className="flex justify-end w-full  ">
+                <IoIosCloseCircleOutline  
                   className="text-xl cursor-pointer"
                   onClick={() => handleDeleteMaterial(material._id)}
                 />
               </div>
-              <div>
-                <Pdflogo />
-              </div>
-              <div className="flex justify-between mt-4 gap-5 items-center">
-                <h1 className="font-poppins font-semibold text-xs line-clamp-1">
-                  {material.fileName}
-                </h1>
+              <div className="">
+                {/* <Pdflogo  /> */}
+                <BsFillFileEarmarkPdfFill className="text-6xl text-red-700" />
 
-                <MdFileDownload
-                  className="text-xl cursor-pointer"
-                  onClick={() => handleDownloadMaterial(material._id)}
-                />
+              </div>
+              <div className="flex justify-between mt-4 gap-5 px-2  items-center w-full relative">
+
+                <h1 className="w-[90%] text-center font-poppins font-semibold text-xs line-clamp-1 uppercase">
+                  {material.fileName.split(".pdf")}
+                </h1>
+                <div className="w-[10%]">
+
+                  <MdFileDownload
+                    className="text-2xl cursor-pointer  "
+                    onClick={() => handleDownloadMaterial(material._id)}
+                  />
+                </div>
               </div>
             </div>
           ))}

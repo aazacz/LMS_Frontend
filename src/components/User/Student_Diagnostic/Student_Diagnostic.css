@@ -1,92 +1,98 @@
-.student-diagnostic-main-container{
-    width: 100%;
+.student-diagnostic-main-container {
+  width: 100%;
+  height: max-content;
+  margin: 0 auto;
+  display: flex;
+}
+
+.student-diagnostic-sub-container1 {
+  width: 60%;
+  height: max-content;
+}
+
+.student-diagnostic-sub-title {
+  font-size: 50px;
+  padding: 5% 5%;
+  font-weight: 700;
+  color: #0066de;
+  line-height: 70px;
+}
+
+.student-diagnostic-sub-button {
+  width: 50%;
+  height: 40px;
+  background-color: #0066de;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  margin-left: 5%;
+  padding: 5% 5%;
+}
+
+.student-diagnostic-sub-container2 {
+  width: 50%;
+  margin-top: 2%;
+}
+
+@media (max-width: 900px) {
+  .student-diagnostic-sub-button {
+    padding: 10% 10%;
+  }
+}
+
+@media (max-width: 700px) {
+  .student-diagnostic-sub-title {
+    font-size: 30px;
+    line-height: 110%;
+  }
+  .student-diagnostic-sub-button {
+    font-size: 15px;
+    width: max-content;
+    padding: 8% 8%;
+  }
+  .student-diagnostic-sub-container2 {
+    width: 30%;
+  }
+  .student-diagnostic-sub-container2 {
+    width: 70%;
+  }
+}
+
+@media (max-width: 500px) {
+  .student-diagnostic-sub-container2 {
+    width: 30%;
+  }
+  .student-diagnostic-sub-container2 {
+    width: 70%;
+  }
+}
+
+@media (max-width: 450px) {
+  .student-diagnostic-sub-container2 {
+    width: 20%;
+  }
+  .student-diagnostic-sub-container2 {
+    width: 80%;
+  }
+}
+
+@media (max-width: 400px) {
+  .student-diagnostic-sub-title {
+    font-size: 20px;
+    line-height: 120%;
+  }
+  .student-diagnostic-sub-button {
+    font-size: 12px;
+    width: max-content;
     height: max-content;
-    margin: 0 auto;
-    display: flex;
-}
-.student-diagnostic-sub-container1{
-    width: 60%;
-    height: max-content;
-
-}
-.student-diagnostic-sub-title{
-    font-size: 50px;
-    padding: 5% 5%;
-    font-weight: 700;
-    color: #0066de;
-    line-height: 70px;
-}
-.student-diagnostic-sub-button{
-    width: 50%;
-    height: 40px;
-    background-color: #0066de;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    font-weight: 500;
-    color: white;
-    margin: 5% 5%;
-    padding: 5% 5%;
-}
-.student-diagnostic-sub-container2{
-    width: 50%;
-    margin-top: 2%;
-}
-
-@media (max-width:900px){
-    .student-diagnostic-sub-button{
-        padding: 10% 10%;
-    }
-}
-
-@media (max-width:700px){
-    .student-diagnostic-sub-title{
-        font-size: 30px;
-        line-height: 110%;
-    }
-    .student-diagnostic-sub-button{
-        font-size: 15px;
-        width: max-content;
-        padding: 8% 8%;
-    }
-    .student-diagnostic-sub-container2{
-        width: 30%;
-    }
-    .student-diagnostic-sub-container2{
-        width: 70%;
-    }
-}
-@media (max-width:500px){
-    .student-diagnostic-sub-container2{
-        width: 30%;
-    }
-    .student-diagnostic-sub-container2{
-        width: 70%;
-    }
-}
-@media (max-width:450px){
-    .student-diagnostic-sub-container2{
-        width: 20%;
-    }
-    .student-diagnostic-sub-container2{
-        width: 80%;
-    }
-}
-@media (max-width:400px){
-    .student-diagnostic-sub-title{
-        font-size: 20px;
-        line-height: 120%;
-    }
-    .student-diagnostic-sub-button{
-        font-size: 12px;
-        width: max-content;
-        height: max-content;
-    }
-    .student-diagnostic-sub-container2{
-        width: 30%;
-    }
-    .student-diagnostic-sub-container2{
-        width: 70%;
-    }
+  }
+  .student-diagnostic-sub-container2 {
+    width: 30%;
+  }
+  .student-diagnostic-sub-container2 {
+    width: 70%;
+  }
 }

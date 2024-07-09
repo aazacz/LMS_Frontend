@@ -8,13 +8,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { IoIosSettings, IoIosPerson, IoIosKey } from "react-icons/io";
 import { FaChalkboardTeacher } from "react-icons/fa";
-import { FaBookReader } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 import Tooltip from "@mui/material/Tooltip";
 import { FaPencilAlt } from "react-icons/fa";
 import { IoLibrarySharp } from "react-icons/io5";
-import { FaBookAtlas } from "react-icons/fa6";
+import { MdGrading } from "react-icons/md";
+import { CgInsights } from "react-icons/cg";
 import { clearStudentDetails } from "../../store/reducers/StudentloginSlice";
+import { MdContentPaste } from "react-icons/md";
+import { FaClipboardQuestion } from "react-icons/fa6";
+import { PiStudentFill } from "react-icons/pi";
 
 const TutorSideBar = ({ isOpen }) => {
   console.log("isOpen from sidebar");
@@ -61,22 +64,22 @@ const TutorSideBar = ({ isOpen }) => {
     {
       title: "Content",
       path: "/tutor/home/content",
-      icon: <FaBookAtlas className="text-xl text-gray-700" />,
+      icon: <MdContentPaste className="text-xl text-gray-700" />,
     },
     {
       title: "Question Bank",
       path: "/tutor/home/questionbank",
-      icon: <FaBookReader className="text-xl text-gray-700" />,
+      icon: <FaClipboardQuestion className="text-xl text-gray-700" />,
     },
     {
       title: "Students",
       path: "/tutor/home/students",
-      icon: <FaPencilAlt className="text-xl text-gray-700" />,
+      icon: <PiStudentFill className="text-xl text-gray-700" />,
     },
     {
       title: "Grading",
       path: "/tutor/home/grading",
-      icon: <FaChalkboardTeacher className="text-xl text-gray-700" />,
+      icon: <MdGrading className="text-xl text-gray-700" />,
     },
     {
       title: "Materials",
@@ -86,7 +89,7 @@ const TutorSideBar = ({ isOpen }) => {
     {
       title: "Insights",
       path: "/tutor/home/insights",
-      icon: <IoLibrarySharp className="text-xl text-gray-700" />,
+      icon: <CgInsights className="text-xl text-gray-700" />,
     },
     {
       title: "Settings",

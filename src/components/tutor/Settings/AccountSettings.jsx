@@ -81,11 +81,11 @@ const AccountSettings = () => {
             <label className="text-sm font-medium">
               Password <br />{" "}
             </label>
-            <div className="flex justify-between">
+            <div className="flex ">
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
-                className="p-2 text-sm w-full text-gray-400 outline-none"
+                className="p-2 text-sm text-gray-400 "
                 readOnly={!isEditable}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -107,7 +107,7 @@ const AccountSettings = () => {
             <input
               type="text"
               value={username}
-              className="p-2 text-sm w-full text-gray-400 outline-none"
+              className="p-2 text-sm text-gray-400  "
               readOnly={!isEditable}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -119,7 +119,7 @@ const AccountSettings = () => {
             <input
               type="text"
               value={email}
-              className="p-2 text-sm w-full text-gray-400 outline-none"
+              className="p-2 text-sm w-full text-gray-400 "
               readOnly={!isEditable}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -131,7 +131,7 @@ const AccountSettings = () => {
             <input
               type="text"
               value={language}
-              className="p-2 text-sm w-full text-gray-400 outline-none"
+              className="p-2 text-sm w-full text-gray-400 "
               readOnly={!isEditable}
               onChange={(e) => setLanguage(e.target.value)}
             />

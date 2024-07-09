@@ -54,34 +54,34 @@ const StudentTests = () => {
           />
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse min-w-full">
-            <thead className="text-base">
+          <table className="text-[12px] w-full border-collapse min-w-full">
+            <thead className="text-[12px] md:text-[14px]">
               <tr >
-                <th className="border-white bg-[#E3EDF9] w-4">Sl.no</th>
-                <th className="border-white bg-[#E3EDF9] w-48">Name</th>
-                <th className="border-white bg-[#E3EDF9] w-4">Attempts</th>
-                <th className="border-white bg-[#E3EDF9] w-2">Questions</th>
-                <th className="border-white bg-[#E3EDF9] w-4">Marks</th>
-                <th className="border-white bg-[#E3EDF9] w-4 ">Status</th>
-                <th className="border-white bg-[#E3EDF9] w-8"></th>
+                <th className="py-2 px-2 bg-[#E3EDF9] w-4">Sl.no</th>
+                <th className="px-2 bg-[#E3EDF9] w-48">Name</th>
+                <th className="px-2 bg-[#E3EDF9] w-4">Attempts</th>
+                <th className=" px-2 bg-[#E3EDF9] w-2">Questions</th>
+                <th className="px-2 bg-[#E3EDF9] w-4">Marks</th>
+                <th className="px-2 bg-[#E3EDF9] w-4 ">Status</th>
+                <th className="px-2 bg-[#E3EDF9] w-8"></th>
               </tr>
             </thead>
             <tbody>
               {filteredTests.map((test, index) => (
                 <tr key={test.id}>
                   <td className="border-none" >{index + 1}</td>
-                  <td className="border-none line-clamp-1" >{test.name}</td>
+                  <td className="border-none " >{test.name}</td>
                   <td className="border-none" >{test.attempts}</td>
                   <td className="border-none" >{test.questions}</td>
                   <td className="border-none" >{test.marks}</td>
                   
                   <td className="border-none" >
-                    <button className={`px-4 py-2 text-white ${test.status === "completed" ? "bg-green-500" : test.status === "failed" ? "bg-red-500" : "bg-blue-500"}`}>
+                    <button className={`px-4 py-2 text-[10px] md:text-sm text-white ${test.status === "completed" ? "bg-green-500" : test.status === "failed" ? "bg-red-500" : "bg-blue-500"}`}>
                       {test.status.charAt(0).toUpperCase() + test.status.slice(1)}
                     </button>
                   </td>
                   <td className="px-4 py-2 border-none">
-                    <button className="px-4 py-2 bg-[#277EE3] text-white">
+                    <button className="px-4 py-2 text-[10px] md:text-sm bg-[#277EE3] text-white">
                       {test.status === "upcoming" ? "Start" : "Review"}
                     </button>
                   </td>

@@ -113,7 +113,7 @@ const UserSideBar = ({isOpen}) => {
 
   return (
 
-    <div className={`${!isOpen?"hidden md:block ":""} h-screen   font-poppins text-sm font-medium `}>
+    <div className={`${!isOpen?" ":"fixed md:relative z-50"} h-screen transition-all duration-500  font-poppins text-sm font-medium `}>
       <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="250px">
         <Menu>
         

@@ -9,8 +9,6 @@ import { useSelector } from "react-redux";
 import Login from "../pages/student/Login";
 import Homepage from "../pages/student/HomePage";
 import StudentHomepage from "../pages/student/StudentHomepage";
-import HomePageContact from "../components/User/HomePageContact/HomePageContact";
-import SettingsPage from "../components/User/SettingsPage/SettingsPage";
 import ErrorPage from "../pages/ErrorPage";
 import SignupRoute from "./SignupRoute";
 import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Diagnostic";

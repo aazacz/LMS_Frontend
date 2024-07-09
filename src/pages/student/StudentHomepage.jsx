@@ -6,13 +6,13 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
-import DiagnosisTest from "./DiagnosisTest";
+// import DiagnosisTest from "./DiagnosisTest";
 import StudentNavbar from "../../components/User/StudentNavbar";
 import ErrorPage from "../ErrorPage";
 import DiagnosisTestResult from "./DiagnosisTestResult";
 import CourseList from "../../components/User/CourseList";
 import Coursedetails from "../../components/User/Coursedetails";
-import TutorListing from "../../components/User/TutorListing";
+// import TutorListing from "../../components/User/TutorListing";
 import Assignments from "./Assignments";
 import Library from "../../components/User/Library";
 import ClassesToday from "../../components/User/ClassesToday/ClassesToday";

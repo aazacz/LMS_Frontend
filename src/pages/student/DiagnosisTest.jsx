@@ -152,7 +152,7 @@ const handleSubmit= ()=>[
                             </div>
                             <div className='w-6 h-6 transform rotate-45 bg-black -ml-[22px] z-10'></div>
                         </div>
-                        <h1 className='font-poppins font-semibold text-xs'>Single Answer :  Correct 4M Wrong -0.5M</h1>
+                        <h1 className='font-poppins font-semibold text-xs'>Single Answer :Correct 4M Wrong -0.5M</h1>
                         <div className='flex gap-x-4 items-center border-2'>
                             <PiWarningOctagonDuotone />
                             <h1>Report Question</h1>

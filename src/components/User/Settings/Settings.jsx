@@ -13,7 +13,7 @@ const Settings = () => {
           <Routes>
             <Route path="/" element={<EditProfile/>}/>
             <Route path="/accountsettings" element={<AccountSettings/>}/>
-            <Route path="/notifications" element={<Notifications/>}/>
+            {/* <Route path="/notifications" element={<Notifications/>}/> */}
           </Routes>
         </div>
       

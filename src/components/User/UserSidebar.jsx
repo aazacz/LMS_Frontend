@@ -14,8 +14,9 @@ import Tooltip from "@mui/material/Tooltip";
 import { IoNotifications } from "react-icons/io5";
 import { FaPencilAlt } from "react-icons/fa";
 import { IoLibrarySharp } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa";
 import { FaBookAtlas } from "react-icons/fa6";
-import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; // Import the clearStudentDetails action
+import { clearStudentDetails } from "../../store/reducers/StudentloginSlice"; 
 
 const UserSideBar = ({isOpen}) => {
 
@@ -101,11 +102,11 @@ const UserSideBar = ({isOpen}) => {
           path: "/student/settings/accountsettings",
           icon: <IoIosKey className="text-xl text-gray-700" />,
         },
-        {
-          title: "Notifications",
-          path: "/student/settings/notifications",
-          icon: <IoNotifications className="text-xl text-gray-700" />,
-        },
+        // {
+        //   title: "Notifications",
+        //   path: "/student/settings/notifications",
+        //   icon: <IoNotifications className="text-xl text-gray-700" />,
+        // },
       ],
     },
   ];

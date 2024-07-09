@@ -158,7 +158,7 @@ const Grading = () => {
       </div>
       <div className="assignment-detail-line"></div>
       <div className="flex gap-16 ">
-        <div className="assignment-detail-cards w-[60%] grid grid-flow-row grid-cols-1 sm:grid-cols-1 tb:grid-cols-1 tab:grid-cols-1 lg:grid-cols-3">
+        <div className="assignment-detail-cards w-full lg:w-[60%] grid grid-flow-row grid-cols-1 sm:grid-cols-1 md:grid-cols-2  lg:grid-cols-3">
           {assignments
             .slice(0, showAllAssignments ? assignments.length : 3)
             .map((assignment, index) => (
@@ -171,7 +171,7 @@ const Grading = () => {
               />
             ))}
         </div>
-        <div className=" bg-[#FFF7F7] w-[35%] h-96 overflow-y-scroll">
+        <div className=" hidden lg:block md:w-[45%] lg:w-[35%]  h-[450px] overflow-y-scroll">
           {data.map((item, index) => (
             <div
               key={index}

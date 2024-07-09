@@ -9,10 +9,10 @@ import Notifications from "./Notifications";
 const Settings = () => {
   return (
     <div className="w-full h-max  flex">
-      <div className="w-[20%] h-max p-2 flex justify-center items-center">
+      {/* <div className="w-[20%] h-max p-2 flex justify-center items-center">
         <SettingsSideBar />
-        </div>
-        <div className="w-[75%] h-64 p-2">
+        </div> */}
+        <div className="w-full h-64 p-2">
           <Routes>
             <Route path="/" element={<EditProfile/>}/>
             <Route path="/accountsettings" element={<AccountSettings/>}/>

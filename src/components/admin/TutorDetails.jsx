@@ -84,7 +84,9 @@ const TutorDetails = () => {
             />
           </div>
           <div className="w-[90%] ml-1">
-            <h1 className="text-base md:text-lg lg:text-2xl font-poppins capitalize">{tutor.name}</h1>
+            <h1 className="text-base md:text-lg lg:text-2xl font-poppins capitalize">
+              {tutor.name}
+            </h1>
             <h1 className="text-xs lg:text-sm text-[#999999] font-poppins capitalize">
               {tutor.tutorAddress.city}, {tutor.tutorAddress.country}
             </h1>
@@ -110,20 +112,22 @@ const TutorDetails = () => {
         </div>
 
         {/* Right Side */}
-        <div className="flex flex-col gap-y-4 overflow-y-scroll no-scrollbar w-full">
-          <div className="flex w-full justify-center items-center gap-2 flex-wrap">
-            <div className="w-full md:w-[20%] flex justify-between p-2 gap-2 flex-wrap">
-              <p className="text-base lg:text-lg font-semibold ">About</p>
-              <FaArrowAltCircleRight className="text-xl lg:text-4xl" />
+        <div className="flex border-2 border-red-400 flex-col gap-y-4 overflow-y-scroll no-scrollbar w-full">
+          <div className="flex w-full border-2 border-yellow-400 justify-center items-center gap-2 flex-wrap">
+            <div className="w-full border-2 border-pink-600 md:w-[20%] flex justify-between flex-wrap">
+              <p className="text-[15px] text-[#666666] font-semibold">
+                ABOUT ME
+              </p>
+              <FaArrowAltCircleRight className="text-xl" />
             </div>
-            <div className="w-full md:w-[75%] p-5 rounded-md bg-[#E5F0FC]">
-              <h1 className="text-base lg:text-lg font-semibold text-[#333333] font-poppins border-b-2 border-[#DFE7EF]">
+            <div className="w-full  md:w-[75%] p-5 rounded-md bg-[#E5F0FC]">
+              <h1 className="text-[20px] font-semibold text-[#333333] font-poppins border-b-2 border-[#DFE7EF]">
                 About Tutor
               </h1>
               <div className="mt-5">
                 {isEditing ? (
                   <textarea
-                    className="bg-[#E5F0FC] text-xs outline-none w-full p-2 "
+                    className="bg-[white] text-xs outline-none w-full p-2 rounded-lg"
                     name="about"
                     value={tutor.about}
                     onChange={handleChange}
@@ -137,12 +141,14 @@ const TutorDetails = () => {
             </div>
           </div>
           <div className="flex w-full justify-center items-center gap-2 flex-wrap">
-            <div className="w-full md:w-[20%] flex justify-between p-2 gap-2 flex-wrap">
-              <p className="text-base lg:text-lg font-semibold">File Uploads</p>
-              <FaArrowAltCircleRight className="text-xl lg:text-4xl" />
+            <div className="w-full border-2 border-pink-600 md:w-[20%] flex justify-between gap-2 flex-wrap">
+              <p className="text-[15px] text-[#666666] font-semibold">
+                FILE UPLOADS
+              </p>
+              <FaArrowAltCircleRight className="text-xl" />
             </div>
             <div className="w-full md:w-[75%] p-5 rounded-lg bg-[#E5F0FC]">
-              <h1 className="text-base lg:text-lg font-semibold text-[#333333]  border-b-2 border-[#DFE7EF]">
+              <h1 className="text-[20px] font-semibold text-[#333333] font-poppins border-b-2 border-[#DFE7EF]">
                 File Uploads
               </h1>
               <div className="mt-4">
@@ -190,8 +196,10 @@ const TutorDetails = () => {
           </div>
           <div className="flex w-full justify-center items-center gap-2 flex-wrap">
             <div className="w-full md:w-[20%] flex justify-between p-2 gap-2 flex-wrap">
-              <p className="text-base lg:text-lg font-semibold ">Experience</p>
-              <FaArrowAltCircleRight className="text-xl lg:text-4xl" />
+              <p className="text-[15px] text-[#666666] font-semibold">
+                WORK EXPERIENCE
+              </p>
+              <FaArrowAltCircleRight className="text-xl" />
             </div>
             <div className="w-full md:w-[75%] p-5 rounded-lg bg-[#E5F0FC]">
               <h1 className="text-base lg:text-lg font-semibold text-[#333333] font-poppins  border-b-2 border-[#DFE7EF]">
@@ -226,8 +234,8 @@ const TutorDetails = () => {
           </div>
           <div className="flex w-full justify-center items-center gap-2 flex-wrap">
             <div className="w-full md:w-[20%] flex justify-between p-2 gap-2 flex-wrap">
-              <p className="text-base lg:text-lg font-semibold">Skills</p>
-              <FaArrowAltCircleRight className="text-xl lg:text-4xl" />
+              <p className="text-[15px] text-[#666666] font-semibold">SKILLS</p>
+              <FaArrowAltCircleRight className="text-xl" />
             </div>
             <div className="w-full md:w-[75%] p-5 rounded-lg bg-[#E5F0FC]">
               <h1 className="text-base lg:text-lg font-semibold text-[#333333] font-poppins  border-b-2 border-[#DFE7EF]">
@@ -290,8 +298,10 @@ const TutorDetails = () => {
 
           <div className="flex w-full justify-center items-center gap-2 flex-wrap">
             <div className="w-full md:w-[20%] flex justify-between p-2 gap-2 flex-wrap">
-              <p className="text-base lg:text-lg font-semibold">Projects</p>
-              <FaArrowAltCircleRight className="text-xl lg:text-4xl" />
+              <p className="text-[15px] text-[#666666] font-semibold">
+                PROJECTS
+              </p>
+              <FaArrowAltCircleRight className="text-xl" />
             </div>
             <div className="p-5 w-full md:w-[75%] rounded-lg bg-[#E5F0FC]">
               <h1 className="text-base lg:text-lg font-semibold text-[#333333] font-poppins  border-b-2 border-[#DFE7EF]">
@@ -354,8 +364,8 @@ const TutorDetails = () => {
 
           <div className="flex w-full justify-center items-center gap-2 flex-wrap">
             <div className="w-full md:w-[20%] flex justify-between p-2 gap-2 flex-wrap">
-              <p className="text-base lg:text-lg font-semibold">Awards</p>
-              <FaArrowAltCircleRight className="text-xl lg:text-4xl" />
+              <p className="text-[15px] text-[#666666] font-semibold">AWARDS</p>
+              <FaArrowAltCircleRight className="text-xl" />
             </div>
             <div className="w-full md:w-[75%] p-5 rounded-lg bg-[#E5F0FC]">
               <h1 className="text-base lg:text-lg font-semibold text-[#333333] font-poppins  border-b-2 border-[#DFE7EF]">

@@ -23,6 +23,7 @@ import Admin_Material from '../../components/admin/UploadMaterial/Admin_Material
 import AddCourseStructure from '../../components/admin/AddCourseStructure';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AdminSidebar from '../../components/admin/AdminSidebar';
+import DiagnosisiTestDetailsPage from "../../components/admin/DiagnosisiTestDetailsPage";
 
 
 
@@ -60,6 +61,7 @@ const Homepage = () => {
                 <Route path="/students" element={<StudentList />} />
                 <Route path="/tutors/addtutor" element={<AddTutor />} />
                 <Route path="/diagnosistest/addiagnosistest"        element={<Addiagnosistest />}         />
+                <Route path="/diagnosistest/:diagnosisiTestDetailsPage" element={<DiagnosisiTestDetailsPage />} />
                 <Route path="/diagnosistest" element={<DiagnosisTest />} />
                 <Route path="/tutors/:tutorId" element={<TutorDetails />} />
                 {/* <Route path="/tutors/tutorform/" element={<TutorForm />} /> */}

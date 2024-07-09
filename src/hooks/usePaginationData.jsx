@@ -17,6 +17,8 @@ const usePaginationData = (apiURL, initialPage = 1, initialPageSize = 10, initia
       const response = await axios.get(
         `${apiURL}?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`
       );
+      
+      // 
       setData(response.data.data);
       setTotalRows(response.data.totalRows);
       setLoading(false);

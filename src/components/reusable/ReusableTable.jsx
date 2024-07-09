@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Check } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Link } from "react-router-dom";
 
 const ReusableTable = ({ columns, data, link }) => {
 
@@ -52,7 +53,9 @@ const ReusableTable = ({ columns, data, link }) => {
 
 
                   {column.field === "packageName" ? (
+                    <Link to={`/admin/home/diagnosistest/${row._id}`}>
                     <span className="action-container text-sm font-semibold">Diagnose Test {indexrow +1}</span>
+                    </Link>
                   ) : ( <></> )}
 
                   {column.field === "createdAt" ? (

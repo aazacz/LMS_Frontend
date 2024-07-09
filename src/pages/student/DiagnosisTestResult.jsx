@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import DoughnutChart from "./DoughnutChart";
 import Background from "../../components/reusable/Background";
 
@@ -23,10 +24,12 @@ const DiagnosisTestResult = () => {
         {/*  Button  */}
         <div className="mt-5">
           <div className="w-full flex gap-x-8">
-            <button className="text-[#0066DE] rounded-md  border-[1px] border-[#0066DE] px-5 py-1 text-lg font-poppins font-semibold">
-              {" "}
-              Go to Dashboard
-            </button>
+            <Link to="/student">
+              <button className="text-[#0066DE] rounded-md  border-[1px] border-[#0066DE] px-5 py-1 text-lg font-poppins font-semibold">
+                {" "}
+                Go to Dashboard
+              </button>
+            </Link>
             <button className="bg-[#0066DE] rounded-md px-5 py-1 text-white font-semibold font-poppins">
               {" "}
               View Solutions

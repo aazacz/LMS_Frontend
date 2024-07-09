@@ -53,16 +53,16 @@ const AdminSidebar = ({ isOpen }) => {
 
   const dispatch = useDispatch();
 
-  const handlecollapse=()=>{
-    if(collapsed===true){
+  const handlecollapse = () => {
+    if (collapsed === true) {
       return
     }
-    else{
+    else {
       setCollapsed(true)
-      setTimeout(()=>{
-        
+      setTimeout(() => {
+
         setCollapsed(false)
-      },1000)
+      }, 1000)
 
     }
   }
@@ -139,25 +139,25 @@ const AdminSidebar = ({ isOpen }) => {
 
 
   return (
-    <div  className={`relative ${!false ? " " : "fixed md:relative z-50"} h-screen transition-all duration-500  font-poppins text-sm font-medium `}>
+    <div className={`relative ${!false ? " " : "fixed md:relative z-50"} h-screen transition-all duration-500  font-poppins text-sm font-medium `}>
       <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="210px">
         <Menu
-        className=""
-        menuItemStyles={{
-          icon: { fontSize: '20px' },
-        }}
+          className=""
+          menuItemStyles={{
+            icon: { fontSize: '20px' },
+          }}
         >
-      
+
 
           {/* Menu Logo */}
           <MenuItem
             onClick={toggleCollapse}
             className={`side-menu-item   h-12    ${isActive("/") ? "bg-blue-500 text-white " : "side-menu-item"
               }`}
-            icon={<> <RxHamburgerMenu /></>      }
-          
+            icon={<> <RxHamburgerMenu /></>}
+
           >
-              </MenuItem>
+          </MenuItem>
 
 
 
@@ -183,34 +183,34 @@ const AdminSidebar = ({ isOpen }) => {
                 ))}
               </SubMenu>
             ) : (
-            
-                <MenuItem className={`relative side-menu-item menu  ${isActive(link.path) ? "bg-blue-500 text-black" : "side-menu-item"}`}
-                  icon={link.icon}
-                  onClick={() => navigate(link.path)}
-                >
-                  {collapsed ? (
-                    <div className="group">
-                      <span className="absolute left-full ml-2 w-full p-2 bg-gray-800 text-white text-sm rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        {link.title}
-                      </span>
-                    </div>
-                  ) : (
-                    link.title
-                  )}
-                </MenuItem>
-         
+
+              <MenuItem className={`relative side-menu-item menu  ${isActive(link.path) ? "bg-blue-500 text-black" : "side-menu-item"}`}
+                icon={link.icon}
+                onClick={() => navigate(link.path)}
+              >
+                {collapsed ? (
+                  <div className="group">
+                    <span className="absolute left-full ml-2 w-full p-2 bg-gray-800 text-white text-sm rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {link.title}
+                    </span>
+                  </div>
+                ) : (
+                  link.title
+                )}
+              </MenuItem>
+
             )
           )}
-        
-            <a
-              onClick={handleLogout}
-              href="#"
-              className="flex items-center p-2 mt-2 text-red-600 hover:bg-gray-200"
-            >
-              <IoLogOut className="text-xl mx-5 h-10" />
-              {collapsed ? "" : "Logout"}
-            </a>
-        
+
+          <a
+            onClick={handleLogout}
+            href="#"
+            className="flex items-center p-2 mt-2 text-red-600 hover:bg-gray-200"
+          >
+            <IoLogOut className="text-xl mx-5 h-10" />
+            {collapsed ? "" : "Logout"}
+          </a>
+
         </Menu>
       </Sidebar>
     </div>

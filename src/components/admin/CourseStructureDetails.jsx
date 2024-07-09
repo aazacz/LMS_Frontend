@@ -296,11 +296,11 @@ const AsideBAr = ({ course, id }) => {
                                 }}
                               />
                             </div>
-                            <h1 className="w-[35%] text-right text-xs text-gray-400">
+                            {/* <h1 className="w-[35%] text-right text-xs text-gray-400">
                               {session.sessionDateTime
                                 ? session.sessionDateTime
                                 : "No date"}
-                            </h1>
+                            </h1> */}
                           </div>
                         ))}
                       </div>

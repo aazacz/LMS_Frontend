@@ -6,12 +6,9 @@ import ReusablePagination from "../reusable/ReusablePagination";
 import SearchIcon from "@mui/icons-material/Search";
 import { FaCirclePlus } from "react-icons/fa6";
 import useDebounce from "../../hooks/useDebounce";
-import { FaPlusCircle } from "react-icons/fa";
-import { toast } from "react-toastify";
 
 const apiURL =
-  process.env.REACT_APP_API_URL +
-  "api/diagnosis/get-diagnosis?page=1&pageSize=5&search";
+  process.env.REACT_APP_API_URL + "api/diagnosis/get-diagnosis?page=1&pageSize=5&search";
 
 const DiagnosisTest = () => {
   const {

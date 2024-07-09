@@ -28,14 +28,16 @@ const DiagnosisiTestDetailsPage = () => {
           <table className="table-auto w-full text-left border-collapse border  border-gray-400">
             <thead >
               <tr  className=''> 
+                <th className="border text-white w-[5%] bg-[#00729c] border-gray-300 px-4 py-2">Sl No</th>
                 <th className="border text-white w-[50%] bg-[#00729c] border-gray-300 px-4 py-2">Question</th>
-                <th className="border text-white w-[20%] bg-[#00729c] border-gray-300 px-4 py-2">Choices</th>
-                <th className="border text-white  bg-[#00729c] border-gray-300 px-4 py-2">Explanation</th>
+                <th className="border text-white w-[15%] bg-[#00729c] border-gray-300 px-4 py-2">Choices</th>
+                <th className="border text-white w-[35%] bg-[#00729c] border-gray-300 px-4 py-2">Explanation</th>
               </tr>
             </thead>
             <tbody>
               {test.questions.map((question, qIndex) => (
-                <tr key={qIndex} className="hover:bg-gray-100 even:bg-[#b8e5f5]">
+                <tr key={qIndex} className="hover:bg-gray-100 even:bg-[#dbf5ff]">
+                  <td className="border border-gray-300 px-4 py-2 text-center">{qIndex+1}</td>
                   <td className="border border-gray-300 px-4 py-2">{question.question}</td>
                   <td className="border border-gray-300 px-4 py-2">
                     <ul className='px-3'>

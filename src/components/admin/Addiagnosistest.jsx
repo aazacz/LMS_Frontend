@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { FiPlusCircle } from "react-icons/fi";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const Addiagnosistest = () => {
@@ -24,6 +25,7 @@ const baseUrl = process.env.REACT_APP_API_URL;
         whyIsIncorrect: "",
       },
     ],
+    isActive:false
   };
 
   const [test, setTest] = useState(initialTestState);
@@ -123,7 +125,16 @@ const baseUrl = process.env.REACT_APP_API_URL;
   const submitHandler = (event) => {
     event.preventDefault();
     console.log(test);
-    axios.post(`${baseUrl}api/diagnosis/create-diagnosis`);
+
+    axios.post(`${baseUrl}api/diagnosis/create-diagnosis`,test).then((res)=>{
+      console.log(res)
+      if(res.data.status===201){
+
+        toast.success("Diagnosis test created successfully")
+        setTest(initialTestState)
+      }
+      console.log(res.data)
+    }).catch(err=>console.log(err))
   };
 
   //helper function to change the background colour of the checkbox button

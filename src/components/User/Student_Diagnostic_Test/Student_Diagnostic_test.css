@@ -5,17 +5,21 @@
     flex-direction: column;
     padding: 20px 50px;
 }
+
 .student-diagnostic-test-main-title{
     font-size: 25px;
     font-weight: 700;
-    margin-top: 5%;
+    margin-top: 2%;
 }
+
 .student-diagnostic-test-sub-title{
     font-size: 18px;
 }
+
 .text-bold{
     font-weight: 600;
 }
+
 .student-diagnostic-test-submit-button{
     width: 15%;
     font-size: 18px;
@@ -29,14 +33,15 @@
     padding: 10px 2%;
     cursor: pointer;
     transition: 0.1s ease-in-out;
-    
 }
+
 .student-diagnostic-test-submit-button:hover{
    width:15% ;
    background-color: #079e55;
    height: 22%;
    font-size: 18px;
 }
+
 @media(max-width:700px){
     .student-diagnostic-test-main-title{
         font-size: 20px;
@@ -46,9 +51,9 @@
     }
     .student-diagnostic-test-submit-button{
        font-size: 12px;
-        
     }
 }
+
 @media(max-width:400px){
     .student-diagnostic-test-main-title{
         font-size: 18px;
@@ -58,6 +63,5 @@
     }
     .student-diagnostic-test-submit-button{
        font-size: 12px;
-        
     }
 }

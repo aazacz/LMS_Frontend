@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { FaCirclePlus } from "react-icons/fa6";
 import axios from "axios"
 import { useState } from 'react';
-
+import ReusablePagination from '../reusable/ReusablePagination';
 
 const baseURL = process.env.REACT_APP_API_URL;
 
@@ -58,6 +58,9 @@ const TutorCard = ({ tutor }) => {
 const TutorListing = () => {
 
 const [TutorList,setTutorList] = useState([])
+const [currentPage, setCurrentPage] = useState(1);
+const [pageSize, setPageSize] = useState(10); 
+const [totalRows, setTotalRows] = useState(0);
 
     useEffect( () => {
       axios.get(`${baseURL}api/tutor/tutors?page=1&pageSize=5&search=`,
@@ -71,9 +74,18 @@ const [TutorList,setTutorList] = useState([])
         }).catch((error) => {
             console.error("Error fetching tutors:", error);
         });
-    
-    
+   
     }, [])
+
+    const handlePageChange = (event, page) => {
+        setCurrentPage(page);
+      };
+    
+      // Function to handle page size change
+      const handlePageSizeChange = (event) => {
+        setPageSize(parseInt(event.target.value, 10));
+        setCurrentPage(1); 
+      };
     
 
     return (
@@ -101,6 +113,15 @@ const [TutorList,setTutorList] = useState([])
                     
                 )}
             </div>
+            
+            <ReusablePagination
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                    totalRows={totalRows}
+                    handlePageChange={handlePageChange}
+                    handlePageSizeChange={handlePageSizeChange}
+        />
+        
         </div>
     );
 };

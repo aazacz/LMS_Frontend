@@ -35,7 +35,7 @@ const Library = () => {
 
             <div className='grid grid-flow-row grid-cols-7 gap-4  '>
 
-                {pdf.map((valuem,index) => {
+                {pdf.map((value,index) => {
                     return (
 
                         <div key={index} onClick={(e) => { e.stopPropagation(); openModal(); }}>

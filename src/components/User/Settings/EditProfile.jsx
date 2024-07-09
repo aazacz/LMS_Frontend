@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Settings1 from "../../../assets/Settings1.jpg";
 import { IoMdCloudUpload } from "react-icons/io";
+import { FaEyeSlash } from "react-icons/fa";
+
 
 const EditProfile = () => {
 
@@ -86,7 +88,7 @@ const EditProfile = () => {
             id="profile-picture-upload"
             type="file"
             accept="image/png, image/jpeg, image/jpg"
-            style={{ display: "none" }} // Hide the input visually
+            style={{ display: "none" }}
             onChange={handleImageUpload}
           />
         </div>

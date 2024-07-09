@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import { MdBlock } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../reusable/Loader";
+import { AiTwotoneDelete } from "react-icons/ai";
+import Swal from "sweetalert2";
 
 
 
@@ -123,6 +125,70 @@ const StudentList = () => {
     });
   };
 
+
+  const handleSoftDelete = (Studentid) => {
+    console.log(Studentid)
+    try {
+
+      Swal.fire({
+        title: "Are you sure delete the student permanently ?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        timer: 1500,
+        timerProgressBar: true,
+        timerProgressBarColor:"#3085d6",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Delete",
+        didOpen: () => {
+          const progressBar = Swal.getHtmlContainer().querySelector('.swal2-timer-progress-bar');
+          if (progressBar) {
+            progressBar.style.backgroundColor = "#3085d6";
+          }
+        }
+      
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          axios.delete(`${baseUrl}api/students/delete-students/${Studentid}`)
+          .then((res) => {
+            console.log(res)
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success"
+            });
+          })
+
+
+      
+        }
+      });
+   
+
+    } catch (error) {
+      console.log(error.message)
+
+    }
+
+  }
+
+
+
+
+  const handleStudentBliocking = (Status, blockId) => {
+
+    if (Status === "active") {
+      handleBlock(blockId)
+    }
+    else {
+      handleUnBlock(blockId)
+    }
+  }
+
+
   const handleBlock = async (blockId) => {
     console.log("block function hitted")
     console.log(blockId)
@@ -222,7 +288,7 @@ const StudentList = () => {
                         {column.field === "actions" ? (
                           <div className="action-container flex items-center justify-center gap-x-2">
 
-                            {
+                            {/* {
                               row.status === "active" ?
                                 (<MdBlock className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() =>{ 
                                   const id = row._id
@@ -232,8 +298,8 @@ const StudentList = () => {
                                 (<Check className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() =>{ 
                                   const id = row._id;
                                    handleUnBlock(id)}} />)
-                            }
-                            <CloseIcon className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() => console.log(row._id + "Delete Action clicked")} />
+                            } */}
+                            <AiTwotoneDelete onClick={() => handleSoftDelete(row._id)} className="hover:text-gray-600 text-red-700 text-xl duration-300 transition-all cursor-pointer"  />
                           </div>
                         ) : <></>}
 
@@ -271,9 +337,9 @@ const StudentList = () => {
                           <></>
                         )}
                         {column.field === "status" ? (
-                          <div className="action-container">
-                            {row.status === "active" ? <div className="font-poppins text-sm  border-[1px] border-blue-700 bg-blue-700 text-white cursor-pointer flex justify-center items-center"> Active</div>
-                              : <div className="font-poppins text-sm  border-[1px] border-blue-700  cursor-pointer text-blue-700  flex justify-center items-center"> Inactive</div>
+                          <div className="action-container ">
+                            {row.status === "active" ? <div onClick={() => handleStudentBliocking("active", row._id)} className="font-poppins text-sm  border-[1px] border-blue-700 bg-blue-700 text-white cursor-pointer flex justify-center items-center"> Active</div>
+                              : <div onClick={() => handleStudentBliocking("inactive", row._id)} className="font-poppins text-sm  border-[1px] border-blue-700  cursor-pointer text-blue-700  flex justify-center items-center"> Inactive</div>
                             }
 
                           </div>

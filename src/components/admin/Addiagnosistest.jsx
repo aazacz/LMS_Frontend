@@ -48,7 +48,7 @@ const baseUrl = process.env.REACT_APP_API_URL;
     });
   };
 
-  //  useEffect to print the test created
+
 
 
   //   Helper Function to handle input
@@ -77,13 +77,26 @@ const baseUrl = process.env.REACT_APP_API_URL;
   };
 
   //handle correct and incorrect answers
-  const handleIsCorrectChange = (e, questionIndex, choiceIndex) => {
-    const { checked } = e.target;
-    console.log(checked);
+  const handleIsCorrectChange = (choice, questionIndex, choiceIndex) => {
+ 
+   console.log(choice)
     const updatedQuestions = [...test.questions];
-    updatedQuestions[questionIndex].choices[choiceIndex].isCorrect = !checked;
-    setTest({ ...test, questions: updatedQuestions });
-    getBackgroundColor();
+
+    const correctIndex = updatedQuestions[questionIndex].choices.findIndex(choice => choice.isCorrect)
+    console.log(correctIndex) 
+
+    if(correctIndex===-1){
+      updatedQuestions[questionIndex].choices[choiceIndex].isCorrect = true;
+      setTest({ ...test, questions: updatedQuestions });
+      getBackgroundColor();
+    }
+    else{
+      updatedQuestions[questionIndex].choices[choiceIndex].isCorrect = true;
+      updatedQuestions[questionIndex].choices[correctIndex].isCorrect = false;
+      setTest({ ...test, questions: updatedQuestions });
+      getBackgroundColor();
+    }
+   
   };
 
   //Helper function to add a new question array
@@ -95,10 +108,10 @@ const baseUrl = process.env.REACT_APP_API_URL;
         {
           question: "",
           choices: [
-            { choiceText: "", isCorrect: true },
-            { choiceText: "", isCorrect: true },
-            { choiceText: "", isCorrect: true },
-            { choiceText: "", isCorrect: true },
+            { choiceText: "", isCorrect: false },
+            { choiceText: "", isCorrect: false },
+            { choiceText: "", isCorrect: false },
+            { choiceText: "", isCorrect: false },
           ],
           whyIsIncorrect: "",
         },
@@ -191,22 +204,18 @@ const baseUrl = process.env.REACT_APP_API_URL;
                   onChange={(e) => handleChoiceInputChange(e, qIndex, cIndex)}
                   type="text"
                   placeholder={`Choice ${cIndex + 1}`}
-                  className="w-full h-6 bg-white  text-sm rounded border-[1px] border-gray-600 shadow-lg px-3  focus:outline-blue-900"
+                  className="w-full h-9 bg-white  text-sm rounded border-[1px] border-gray-600 shadow-lg px-3  focus:outline-blue-900"
                 />
 
                 <div
-                  className={`flex w-20  justify-between shadow-[0_3px_10px_rgb(0,0,0,0.2)] ${getBackgroundColor(
+                   onClick={() => handleIsCorrectChange(choice.isCorrect, qIndex, cIndex)}
+                  className={`flex w-20 h-9 items-center cursor-pointer  justify-center text-center shadow-[0_3px_10px_rgb(0,0,0,0.2)] ${getBackgroundColor(
                     choice.isCorrect
                   )} px-2 rounded-sm `}
                 >
-                  <input
-                    className="w-[20%] "
-                    type="checkbox"
-                    onChange={(e) => handleIsCorrectChange(e, qIndex, cIndex)}
-                  />
-                  <label className="w-[90%] text-right font-light font-plusjakartasans text-sm ">
+                               
                     {choice.isCorrect ? "True" : "False"}
-                  </label>
+              
                 </div>
               </div>
             ))}

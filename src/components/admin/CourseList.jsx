@@ -19,7 +19,7 @@ const CourseList = () => {
         const getdata = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get(`${baseUrl}api/course/get-all-course?page=1&pageSize=&search=`, {
+                const response = await axios.get(`${baseUrl}api/course/get-all-course?page=1&pageSize=0&search=`, {
                     headers: { authorization: `Bearer ${token}` }
                 });
                 console.log(response.data.data);

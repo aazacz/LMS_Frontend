@@ -145,24 +145,22 @@ const DiagnosisTest = () => {
             </h1>
           </div>
 
-          {/* DIV 3 Question Number */}
-          <div className="pl-5 mt-5">
-            <div className="w-full bg-gray-200 h-10 relative flex justify-between pl-10 items-center pr-4">
-              <div className="absolute left-0 z-10 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
-                <div className="w-10 h-10 rounded-full z-20 bg-black text-white flex items-center justify-center">
-                  {currentQuestionIndex + 1}
+                {/* DIV 3 Question Number */}
+                <div className='pl-5 mt-5'>
+                    <div className='w-full bg-gray-200 h-10 relative flex justify-between pl-10 items-center pr-4'>
+                        <div className='absolute left-0 z-10 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center'>
+                            <div className='w-10 h-10 rounded-full z-20 bg-black text-white flex items-center justify-center'>
+                                {currentQuestionIndex + 1}
+                            </div>
+                            <div className='w-6 h-6 transform rotate-45 bg-black -ml-[22px] z-10'></div>
+                        </div>
+                        <h1 className='font-poppins font-semibold text-xs'>Single Answer :Correct 4M Wrong -0.5M</h1>
+                        <div className='flex gap-x-4 items-center border-2'>
+                            <PiWarningOctagonDuotone />
+                            <h1>Report Question</h1>
+                        </div>
+                    </div>
                 </div>
-                <div className="w-6 h-6 transform rotate-45 bg-black -ml-[22px] z-10"></div>
-              </div>
-              <h1 className="font-poppins font-semibold text-xs">
-                Single Answer : Correct 4M Wrong -0.5M
-              </h1>
-              <div className="flex gap-x-4 items-center border-2">
-                <PiWarningOctagonDuotone />
-                <h1>Report Question</h1>
-              </div>
-            </div>
-          </div>
 
           {/* DIV 4 Question Text */}
           <div className="w-full mt-4">

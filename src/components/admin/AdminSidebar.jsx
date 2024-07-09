@@ -25,11 +25,20 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
 import { HiArrowRightCircle } from "react-icons/hi2";
+import { MdDashboard } from "react-icons/md";
+import { FaBookAtlas } from "react-icons/fa6";
+import { FaBookReader } from "react-icons/fa";
+import { PiCirclesFourFill } from "react-icons/pi";
+import { IoIosKey, IoIosPerson, IoIosSettings } from "react-icons/io";
+import { IoLogOut, IoNotifications } from "react-icons/io5";
+import { Tooltip } from "react-tooltip";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 
 
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ isOpen }) => {
+
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -44,7 +53,19 @@ const AdminSidebar = () => {
 
   const dispatch = useDispatch();
 
+  const handlecollapse = () => {
+    if (collapsed === true) {
+      return
+    }
+    else {
+      setCollapsed(true)
+      setTimeout(() => {
 
+        setCollapsed(false)
+      }, 1000)
+
+    }
+  }
   const handleLogout = () => {
     Swal.fire({
       title: "Do you want to Logout?",
@@ -59,7 +80,7 @@ const AdminSidebar = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(clearAdminDetails());
-  
+
         navigate("/admin");
       }
     });
@@ -70,25 +91,25 @@ const AdminSidebar = () => {
     {
       title: "Dashboard",
       path: "/admin/home/dashboard",
-      icon: <MdDashboard className="text-xl text-gray-700" />,
+      icon: <PiCirclesFourFill className="text-xl text-gray-700" />,
     },
     {
       title: "Courses",
       path: "/admin/home/courses",
-      icon: <FaBookAtlas className="text-xl text-gray-700" />,
+      icon: <PiCirclesFourFill className="text-xl text-gray-700" />,
     },
     {
       title: "Course Structure",
       path: "/admin/home/courseStructure",
-      icon: <FaBookReader className="text-xl text-gray-700" />,
+      icon: <PiCirclesFourFill className="text-xl text-gray-700" />,
     },
-  
+
     { title: "Students", path: "/admin/home/students", icon: <PiCirclesFourFill /> },
     { title: "Tutors", path: "/admin/home/tutors", icon: <PiCirclesFourFill /> },
     { title: "Diagnosis Test", path: "/admin/home/diagnosistest", icon: <PiCirclesFourFill /> },
     { title: "Library", path: "/admin/home/library", icon: <PiCirclesFourFill /> },
-    { title: "Access Management", path: "/admin/home/accessmanagement", icon: <PiCirclesFourFill /> },
-  
+    // { title: "Access Management", path: "/admin/home/accessmanagement", icon: <PiCirclesFourFill /> },
+
     {
       title: "Settings",
       icon: <IoIosSettings className="text-xl text-gray-700" />,
@@ -118,171 +139,80 @@ const AdminSidebar = () => {
 
 
   return (
-    <div>
-      <div className="relative">
-        {/* <Nav collapse={toggleCollapse} /> */}
-        <div className="">
-
-        <div className="w-full h-10   flex"> 
-            {collapsed? <HiArrowCircleLeft  className="text-2xl z-30 absolute right-0 translate-x-1/2" onClick={toggleCollapse}  /> 
-                      : <HiArrowCircleRight className="text-2xl z-30 absolute right-0 translate-x-1/2" onClick={toggleCollapse} />} 
-
-                      </div>
-
-        </div>
-
-        <div className="sidebar-container">
-          <Sidebar collapsed={collapsed} backgroundColor="#fff" width="220px">
-            <Menu>
-              <MenuItem
-                onClick={() => {
-                  navigate("/");
-                }}
-                className={`side-menu-item ${
-                  isActive("/") ? "side-bar-active" : "side-menu-item"
-                }`}
-                icon={<InsightsIcon className="side-bar-icon" />}
-              >
-                {" "}
-                Anayltics
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  navigate("/bookings");
-                }}
-                className={`side-menu-item ${
-                  isActive("/bookings") ? "side-bar-active" : "side-menu-item"
-                }`}
-                icon={<AirplaneTicketIcon className="side-bar-icon" />}
-              >
-                {" "}
-                Bookings
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  navigate("/customers");
-                }}
-                className={`side-menu-item ${
-                  isActive("/customers") ? "side-bar-active" : "side-menu-item"
-                }`}
-                icon={<GroupIcon />}
-              >
-                {" "}
-                Customers{" "}
-              </MenuItem>
-              <MenuItem
-                className={`side-menu-item ${
-                  isActive("/reviews") ? "side-bar-active" : "side-menu-item"
-                }`}
-                icon={<RateReviewIcon />}
-                onClick={() => {
-                  navigate("/reviews");
-                }}
-              >
-                Reviews{" "}
-              </MenuItem>
-            
-            
-            
-              <SubMenu
-                className="side-menu-item"
-                icon={<AccountCircleIcon />}
-                label="Users"
-              >
-                <MenuItem
-                  className={`side-bar-text ${
-                    isActive("/add-user") ? "side-bar-active" : "side-menu-item"
-                  }`}
-                  icon={<PersonAddIcon />}
-                  onClick={() => {
-                    navigate("/add-user");
-                  }}
-                >
-                  {" "}
-                  Add User{" "}
-                </MenuItem>
+    <div className={`relative ${!false ? " " : "fixed md:relative z-50"} h-screen transition-all duration-500  font-poppins text-sm font-medium `}>
+      <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="210px">
+        <Menu
+          className=""
+          menuItemStyles={{
+            icon: { fontSize: '20px' },
+          }}
+        >
 
 
-                <MenuItem
-                  className={`side-bar-text ${
-                    isActive("/view-user")
-                      ? "side-bar-active"
-                      : "side-menu-item"
-                  }`}
-                  icon={<PeopleIcon />}
-                  onClick={() => {
-                    navigate("/view-user");
-                  }}
-                >
-                  {" "}
-                  View Users{" "}
-                </MenuItem>
+          {/* Menu Logo */}
+          <MenuItem
+            onClick={toggleCollapse}
+            className={`side-menu-item   h-12    ${isActive("/") ? "bg-blue-500 text-white " : "side-menu-item"
+              }`}
+            icon={<> <RxHamburgerMenu /></>}
 
-
-              </SubMenu>
+          >
+          </MenuItem>
 
 
 
+          {navLinks.map((link) =>
+            link.subLinks ? (
 
 
               <SubMenu
-                className="side-menu-item"
-                icon={<FlightIcon />}
-                label="Flight Data"
+                key={link.title}
+                label={link.title}
+                icon={link.icon}
+                className={`relative side-menu-item  ${isActive(link.path) ? "bg-blue-500 text-gray-500" : "side-menu-item "
+                  }`}
               >
-                <MenuItem
-                  icon={<FlightLandIcon />}
-                  className={`side-bar-text ${
-                    isActive("/airports") ? "side-bar-active" : "side-menu-item"
-                  }`}
-                  onClick={() => {
-                    navigate("/airports");
-                  }}
-                >
-                  {" "}
-                  Airports{" "}
-                </MenuItem>
-                <MenuItem
-                  icon={<AirlinesIcon />}
-                  className={`side-bar-text ${
-                    isActive("/airlines") ? "side-bar-active" : "side-menu-item"
-                  }`}
-                  onClick={() => {
-                    navigate("/airlines");
-                  }}
-                >
-                  {" "}
-                  Airlines{" "}
-                </MenuItem>
+                {link.subLinks.map((subLink) => (
+                  <MenuItem
+                    key={subLink.title}
+                    className={`relative side-menu-item  ${isActive(subLink.path) ? "bg-blue-500 " : "side-menu-item text-gray-500"
+                      }`} onClick={() => navigate(subLink.path)}
+                  >
+                    <div className="flex ">      {subLink.icon}     <span className="ml-2 ">{subLink.title}</span>       </div>
+                  </MenuItem>
+                ))}
               </SubMenu>
+            ) : (
 
-              <MenuItem
-                icon={<CurrencyRupeeIcon />}
-                className={`side-bar-text ${
-                  isActive("/mark-up") ? "side-bar-active" : "side-menu-item"
-                }`}
-                onClick={() => {
-                  navigate("/mark-up");
-                }}
+              <MenuItem className={`relative side-menu-item menu  ${isActive(link.path) ? "bg-blue-500 text-black" : "side-menu-item"}`}
+                icon={link.icon}
+                onClick={() => navigate(link.path)}
               >
-                Mark Up
+                {collapsed ? (
+                  <div className="group">
+                    <span className="absolute left-full ml-2 w-full p-2 bg-gray-800 text-white text-sm rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {link.title}
+                    </span>
+                  </div>
+                ) : (
+                  link.title
+                )}
               </MenuItem>
 
-              <MenuItem
-                icon={<AdminPanelSettingsIcon />}
-                className={`side-bar-text ${
-                  isActive("/profile") ? "side-bar-active" : "side-menu-item"
-                }`}
-                onClick={() => {
-                  navigate("/profile");
-                }}
-              >
-                Profile
-              </MenuItem>
-            </Menu>
-          </Sidebar>
-        </div>
-      </div>
+            )
+          )}
+
+          <a
+            onClick={handleLogout}
+            href="#"
+            className="flex items-center p-2 mt-2 text-red-600 hover:bg-gray-200"
+          >
+            <IoLogOut className="text-xl mx-5 h-10" />
+            {collapsed ? "" : "Logout"}
+          </a>
+
+        </Menu>
+      </Sidebar>
     </div>
   );
 };

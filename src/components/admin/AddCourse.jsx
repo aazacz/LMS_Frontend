@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { TfiWrite } from "react-icons/tfi";
-import { CiCircleRemove } from "react-icons/ci";
-import { IoIosCloseCircle } from "react-icons/io";
-import "../../index.css";
-import "./Addcourse.css";
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { TfiWrite } from 'react-icons/tfi';
+import { IoIosCloseCircle } from 'react-icons/io';
+import "../../index.css"
+import "./Addcourse.css"
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 const AddCourse = () => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.AdminDetails.token);
@@ -17,12 +18,15 @@ const AddCourse = () => {
   const [packages, setpackages] = useState();
   const [CourseStructure, setCourseStructure] = useState([]);
   const [course, setCourse] = useState({
-    courseName: "",
-    package: "",
-    trainingDuration: "",
-    hoursPerDay: "",
-    price: "",
-    description: "",
+    courseType: "",
+    courseStructure: '',
+    courseName: '',
+    package: '',
+    trainingDuration: '',
+    hoursPerDay: '',
+    price: '',
+    description: '',
+    trainingDateTimeDetails:"This Course will start from June 1st",
     modules: [
       {
         moduleName: "",
@@ -37,13 +41,18 @@ const AddCourse = () => {
         ],
       },
     ],
+    students:[],
+    tutors:[]
   });
 
-  //Getting course structure data from database
+
+
+  //Getting course structure data from database 
   useEffect(() => {
+
     axios
       .get(`${baseURL}api/structure/get-all-structure`, {
-        headers: { authorization: `Bearer ${token}` },
+        headers: { authorization: `Bearer ${token}` }
       })
       .then((res) => {
         const data = res.data.data;
@@ -60,23 +69,28 @@ const AddCourse = () => {
       });
   }, [baseURL, token]);
 
+
   //getting the package information from database
   useEffect(() => {
-    axios
-      .get(`${baseURL}api/package/get-all-package?page=1&pageSize=10&search=`, {
-        headers: { authorization: `Bearer ${token}` },
-      })
+
+    axios.get(`${baseURL}api/package/get-all-package?page=1&pageSize=10&search=`,
+      { headers: { authorization: `Bearer ${token}` } })
       .then((res) => {
-        setpackages(res.data.data);
+        setpackages(res.data.data)
       })
       .catch((err) => {
         console.error(err.message);
       });
-  }, [baseURL, token]);
+
+  }, [baseURL, token])
+
+
+
 
   // function to add a new module
   const addModule = () => {
-    setCourse((prevState) => ({
+
+    setCourse(prevState => ({
       ...prevState,
       modules: [
         {
@@ -87,82 +101,90 @@ const AddCourse = () => {
               sessionName: "",
               sessionDescription: "",
               sessionDateTime: "",
-              sessionLink: "",
-            },
-          ],
-        },
-        ...prevState.modules,
-      ],
+              sessionLink: ""
+            }
+          ]
+        }, ...prevState.modules
+      ]
     }));
-  };
+  }
 
+  // function to chan
   const handleModuleChange = (e, moduleIndex) => {
+
     const { name, value } = e.target;
     const updatedModules = [...course.modules];
-    updatedModules[moduleIndex][name.split("-")[0]] = value;
-    setCourse((prevState) => ({
+
+    updatedModules[moduleIndex][name.split('-')[0]] = value;
+
+    setCourse(prevState => ({
       ...prevState,
-      modules: updatedModules,
+      modules: updatedModules
     }));
+
   };
 
   const handleSessionChange = (e, moduleIndex, sessionIndex) => {
     const { name, value } = e.target;
     const updatedModules = [...course.modules];
-    updatedModules[moduleIndex].sessions[sessionIndex][name.split("-")[0]] =
-      value;
-    setCourse((prevState) => ({
+    updatedModules[moduleIndex].sessions[sessionIndex][name.split('-')[0]] = value;
+    setCourse(prevState => ({
       ...prevState,
-      modules: updatedModules,
+      modules: updatedModules
     }));
   };
 
+
   // Function to Remove a Module
   const RemoveModule = (moduleIndex, e) => {
-    console.log(moduleIndex);
+    console.log(moduleIndex)
 
     setCourse((prevData) => {
-      const updatedModules = prevData.modules.filter(
-        (_, index) => index !== moduleIndex
-      );
+      const updatedModules = prevData.modules.filter((_, index) => index !== moduleIndex);
       return {
         ...prevData,
-        modules: updatedModules,
+        modules: updatedModules
       };
-    });
-  };
+    })
+
+  }
+
+
 
   // function to add a new Session
   const addSession = (moduleIndex) => {
+
     const updatedModules = [...course.modules];
 
     updatedModules[moduleIndex].sessions.push({
       sessionName: "",
       sessionDescription: "",
       sessionDateTime: "",
-      sessionLink: "",
+      sessionLink: ""
     });
     setCourse({ ...course, modules: updatedModules });
-  };
+  }
 
   // Function to Remove a Module
   const RemoveSession = (moduleIndex, sessionIndex, e) => {
-    console.log("moduleIndex, sessionIndex, e", moduleIndex, sessionIndex);
+    console.log("moduleIndex, sessionIndex, e", moduleIndex, sessionIndex)
 
     setCourse((prevData) => {
+
       // Create a deep copy of the previous state to avoid direct mutation
       const updatedModules = [...prevData.modules];
 
       // Filter out the session to be removed
-      updatedModules[moduleIndex].sessions = updatedModules[
-        moduleIndex
-      ].sessions.filter((_, index) => index !== sessionIndex);
+      updatedModules[moduleIndex].sessions = updatedModules[moduleIndex].sessions.filter((_, index) => index !== sessionIndex);
       return {
         ...prevData,
-        modules: updatedModules,
+        modules: updatedModules
       };
     });
-  };
+
+
+  }
+
 
   // Auto Populate function
   const handleAutofill = (e) => {
@@ -172,7 +194,8 @@ const AddCourse = () => {
     );
 
     if (selectedCourse) {
-      setCourse({
+      setCourse((prevState) => ({
+        ...prevState,
         courseName: selectedCourse.courseName,
         package: selectedCourse.package,
         trainingDuration: selectedCourse.trainingDuration,
@@ -180,18 +203,93 @@ const AddCourse = () => {
         price: selectedCourse.price,
         description: selectedCourse.description,
         modules: selectedCourse.modules,
-      });
+      }));
     }
   };
 
   // Function to change the input element value
   const handleInputChange = (e) => {
+
     const { name, value } = e.target;
     setCourse((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    console.log(course)
+  }, [course])
+
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+
+    Swal.fire({
+      title: "You are going to create a new course",
+      text: "Please check every field before submitting ",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Create",
+      customClass: {
+        title: 'custom-title',
+        content: 'custom-content'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        axios.post(`${baseURL}api/course/create`, course, {
+          authorisation: `Bearer ${token}`
+        })
+          .then((res) => {
+            console.log(res.data)
+            if (res.data.message === "Course created successfully") {
+
+                toast.success("Course created Successfully")
+                setCourse({
+                  courseType: "",
+                  courseStructure: '',
+                  courseName: '',
+                  package: '',
+                  trainingDuration: '',
+                  hoursPerDay: '',
+                  price: '',
+                  description: '',
+                  trainingDateTimeDetails:"This Course will start from June 1st",
+                  modules: [
+                    {
+                      moduleName: '',
+                      moduleDescription: '',
+                      sessions: [
+                        {
+                          sessionName: '',
+                          sessionDescription: '',
+                          sessionDateTime: '',
+                          sessionLink: '',
+                        },
+                      ],
+                    },
+                  ],
+                  students:[],
+                  tutors:[]
+                })
+
+            }
+
+
+
+          })
+      }
+    });
+
+
+
+
+  }
+
+
 
   return (
     <div className="w-full p-5 px-16 bg-slate-200 rounded-lg mt-2">
@@ -209,8 +307,10 @@ const AddCourse = () => {
               id=""
               className="w-full h-10 bg-white border-[1px] border-gray-500 text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             >
-              <option value="">Individual</option>
-              <option value="">Group</option>
+
+              <option defaultChecked disabled value="">Select a course type</option>
+              <option value="Individual">Individual</option>
+              <option value="Group">Group</option>
             </select>
             {errors.courseName && (
               <p className="text-red-500 text-xs">{errors.courseName}</p>
@@ -220,19 +320,23 @@ const AddCourse = () => {
           <div className="w-full ">
             <label className="text-sm font-semibold">Course Structure</label>
 
+
             <select
               name="courseStructure"
               onChange={(e) => {
                 handleInputChange(e);
                 handleAutofill(e);
               }}
+
               value={course.courseStructure}
               id=""
               className="w-full h-10 bg-white text-sm border-[1px] border-gray-500 rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             >
-              <option disabled value="">
-                Select the Course Structure
-              </option>
+
+
+
+
+              <option defaultChecked disabled value="">  Select the Course Structure        </option>
               {courseStructureDropDown.map((value, index) => (
                 <option key={index} value={value.courseName}>
                   {value.courseName}
@@ -276,10 +380,12 @@ const AddCourse = () => {
                 Select a package
               </option>
 
-              {packages &&
-                packages.map((val, index) => {
-                  return <option key={index}>{val.packageName}</option>;
-                })}
+              {packages && packages.map((val, index) => {
+                return (
+                  <option key={index}>{val.packageName}</option>
+                )
+              })}
+
             </select>
             {errors.package && (
               <p className="text-red-500 text-xs">{errors.package}</p>
@@ -356,7 +462,7 @@ const AddCourse = () => {
         </div>
 
         <button
-          type="button"
+          type='button'
           onClick={(e) => addModule(e)}
           className="w-full  md:w-[100%] md:max-w-[150px] h-10 bg-blue-900 rounded-lg text-white font-poppins font-semibold flex  justify-center items-center"
         >
@@ -371,10 +477,8 @@ const AddCourse = () => {
                   Module {moduleIndex + 1}
                 </h1>
                 <div className="  ">
-                  <IoIosCloseCircle
-                    className="font-black text-3xl  text-red-900 "
-                    onClick={(e) => RemoveModule(moduleIndex, e)}
-                  />
+                  <IoIosCloseCircle className='font-black text-3xl  text-red-900 ' onClick={(e) => RemoveModule(moduleIndex, e)} />
+
                 </div>
               </div>
 
@@ -403,9 +507,9 @@ const AddCourse = () => {
                 </div>
               </div>
 
-              <div className="flex justify-end px-4 ">
+              <div className='flex justify-end px-4 '>
                 <button
-                  type="button"
+                  type='button'
                   onClick={(e) => addSession(moduleIndex, e)}
                   className="px-5  h-8 bg-blue-900 rounded-md text-sm text-white flex justify-center items-center "
                 >
@@ -416,9 +520,10 @@ const AddCourse = () => {
                 return (
                   <div className="w-full bg-gray-200 border-[1px] border-blue-700 rounded-lg p-4 flex flex-col shadow-lg space-y-4">
                     <div className="w-full flex gap-x-6 justify-between items-center ">
-                      <h1 className="text-md font-semibold">
-                        Session {sessionIndex + 1}
-                      </h1>
+                      <h1 className="text-md font-semibold">Session {sessionIndex + 1}</h1>
+
+
+
 
                       <button
                         type="button"
@@ -429,6 +534,7 @@ const AddCourse = () => {
                       >
                         Remove Session
                       </button>
+
                     </div>
 
                     <div className="w-full flex flex-col md:flex-row md:gap-x-4">

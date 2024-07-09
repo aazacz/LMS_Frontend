@@ -6,13 +6,13 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
-import DiagnosisTest from "./DiagnosisTest";
+// import DiagnosisTest from "./DiagnosisTest";
 import StudentNavbar from "../../components/User/StudentNavbar";
 import ErrorPage from "../ErrorPage";
 import DiagnosisTestResult from "./DiagnosisTestResult";
 import CourseList from "../../components/User/CourseList";
 import Coursedetails from "../../components/User/Coursedetails";
-import TutorListing from "../../components/User/TutorListing";
+// import TutorListing from "../../components/User/TutorListing";
 import Assignments from "./Assignments";
 import Library from "../../components/User/Library";
 import ClassesToday from "../../components/User/ClassesToday/ClassesToday";
@@ -21,6 +21,7 @@ import ShoppingCart from "../../components/User/ShoppingCart";
 import Checkout from "../../components/User/Checkout";
 import UserSidebar from "../../components/User/UserSidebar";
 import Settings from "../../components/User/Settings/Settings";
+import StudentTests from "../../components/User/StudentTests";
 
 const StudentHomepage = () => {
   const user = useSelector((state) => state.StudentDetails.token);
@@ -31,20 +32,15 @@ const StudentHomepage = () => {
   };
   return (
     <>
-      <div className="flex h-full w-screen relative ">
-        <div className="">
-          <UserSidebar className=" z-30" isOpen={isSidebarOpen} />
-        </div>
+      <div className="flex h-screen w-full ">
+        <UserSidebar className="h-screen z-30" isOpen={isSidebarOpen}/>
+        <div className="w-full flex-1 px-2 ">
+          <StudentNavbar
+            toggleSidebar={toggleSidebar}
+            isSidebarOpen={isSidebarOpen}
+          />
 
-        <div className="flex-1 w-full px-2  ">
-          <div className="h-auto z-30 sticky  top-0 ">
-            <StudentNavbar
-              className="  sticky"
-              toggleSidebar={toggleSidebar}
-              isSidebarOpen={isSidebarOpen}
-            />
-          </div>
-          <div className=" ">
+          <div>
             <Routes>
               <Route path="/*" element={<Dashboard />} />
               <Route
@@ -52,6 +48,7 @@ const StudentHomepage = () => {
                 element={<DiagnosisTestResult />}
               />
               <Route path="/courses" element={<CourseList />} />
+              <Route path="/tests" element={<StudentTests />} />
               <Route
                 path="/courses/:coursedetails"
                 element={<Coursedetails />}

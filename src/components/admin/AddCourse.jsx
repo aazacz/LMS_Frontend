@@ -9,7 +9,6 @@ import "./Addcourse.css"
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 const AddCourse = () => {
-
   const navigate = useNavigate();
   const token = useSelector((state) => state.AdminDetails.token);
   const baseURL = process.env.REACT_APP_API_URL;
@@ -30,14 +29,14 @@ const AddCourse = () => {
     trainingDateTimeDetails:"This Course will start from June 1st",
     modules: [
       {
-        moduleName: '',
-        moduleDescription: '',
+        moduleName: "",
+        moduleDescription: "",
         sessions: [
           {
-            sessionName: '',
-            sessionDescription: '',
-            sessionDateTime: '',
-            sessionLink: '',
+            sessionName: "",
+            sessionDescription: "",
+            sessionDateTime: "",
+            sessionLink: "",
           },
         ],
       },
@@ -190,7 +189,9 @@ const AddCourse = () => {
   // Auto Populate function
   const handleAutofill = (e) => {
     const { value } = e.target;
-    const selectedCourse = CourseStructure.find(course => course.courseName === value);
+    const selectedCourse = CourseStructure.find(
+      (course) => course.courseName === value
+    );
 
     if (selectedCourse) {
       setCourse((prevState) => ({
@@ -204,8 +205,7 @@ const AddCourse = () => {
         modules: selectedCourse.modules,
       }));
     }
-  }
-
+  };
 
   // Function to change the input element value
   const handleInputChange = (e) => {
@@ -312,7 +312,9 @@ const AddCourse = () => {
               <option value="Individual">Individual</option>
               <option value="Group">Group</option>
             </select>
-            {errors.courseName && <p className="text-red-500 text-xs">{errors.courseName}</p>}
+            {errors.courseName && (
+              <p className="text-red-500 text-xs">{errors.courseName}</p>
+            )}
           </div>
 
           <div className="w-full ">
@@ -341,7 +343,9 @@ const AddCourse = () => {
                 </option>
               ))}
             </select>
-            {errors.courseName && <p className="text-red-500 text-xs">{errors.courseName}</p>}
+            {errors.courseName && (
+              <p className="text-red-500 text-xs">{errors.courseName}</p>
+            )}
           </div>
         </div>
         <div className="flex flex-col md:flex-row md:space-x-4">
@@ -356,7 +360,9 @@ const AddCourse = () => {
               placeholder="Course Name"
               className="w-full h-10 bg-white text-sm border-[1px] border-gray-500 rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             />
-            {errors.courseName && <p className="text-red-500 text-xs">{errors.courseName}</p>}
+            {errors.courseName && (
+              <p className="text-red-500 text-xs">{errors.courseName}</p>
+            )}
           </div>
 
           <div className="w-full md:w-1/2">
@@ -367,7 +373,10 @@ const AddCourse = () => {
               value={course.package}
               className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900 border-[1px] border-gray-500"
             >
-              <option value="Select a package" className="font-poppins opac text-slate-500">
+              <option
+                value="Select a package"
+                className="font-poppins opac text-slate-500"
+              >
                 Select a package
               </option>
 
@@ -378,7 +387,9 @@ const AddCourse = () => {
               })}
 
             </select>
-            {errors.package && <p className="text-red-500 text-xs">{errors.package}</p>}
+            {errors.package && (
+              <p className="text-red-500 text-xs">{errors.package}</p>
+            )}
           </div>
         </div>
 
@@ -395,7 +406,9 @@ const AddCourse = () => {
               placeholder="Total Hours"
               className="w-full h-10 border-[1px] border-gray-500 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             />
-            {errors.trainingDuration && <p className="text-red-500 text-xs">{errors.trainingDuration}</p>}
+            {errors.trainingDuration && (
+              <p className="text-red-500 text-xs">{errors.trainingDuration}</p>
+            )}
           </div>
 
           <div className="w-full md:w-1/2">
@@ -408,7 +421,9 @@ const AddCourse = () => {
               placeholder="Hours Per Day"
               className="w-full h-10 bg-white border-[1px] border-gray-500 text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             />
-            {errors.hoursPerDay && <p className="text-red-500 text-xs">{errors.hoursPerDay}</p>}
+            {errors.hoursPerDay && (
+              <p className="text-red-500 text-xs">{errors.hoursPerDay}</p>
+            )}
           </div>
 
           <div className="w-full md:w-1/2">
@@ -421,7 +436,9 @@ const AddCourse = () => {
               placeholder="Enter Price of the module"
               className="w-full h-10 bg-white border-[1px] border-gray-500 text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             />
-            {errors.price && <p className="text-red-500 text-xs">{errors.price}</p>}
+            {errors.price && (
+              <p className="text-red-500 text-xs">{errors.price}</p>
+            )}
           </div>
         </div>
 
@@ -434,7 +451,9 @@ const AddCourse = () => {
             value={course.description}
             className="w-full md:h-20 rounded border-[1px] border-gray-500 mt-2 shadow-lg p-2"
           />
-          {errors.description && <p className="text-red-500 text-xs">{errors.description}</p>}
+          {errors.description && (
+            <p className="text-red-500 text-xs">{errors.description}</p>
+          )}
         </div>
 
         {/*________ ADD MODULE BUTTON_____________ */}
@@ -454,7 +473,9 @@ const AddCourse = () => {
           return (
             <div className="w-full h-auto border-2 border-blue-900 bg-white rounded-lg p-4 flex flex-col shadow-lg space-y-4">
               <div className="w-full flex gap-x-6 justify-between items-center ">
-                <h1 className=" font-poppins text-xl text-blue-900 font-semibold">Module {moduleIndex + 1}</h1>
+                <h1 className=" font-poppins text-xl text-blue-900 font-semibold">
+                  Module {moduleIndex + 1}
+                </h1>
                 <div className="  ">
                   <IoIosCloseCircle className='font-black text-3xl  text-red-900 ' onClick={(e) => RemoveModule(moduleIndex, e)} />
 
@@ -473,7 +494,9 @@ const AddCourse = () => {
                   />
                 </div>
                 <div className="w-full md:w-1/2">
-                  <label className="text-sm font-semibold">Module Description</label>
+                  <label className="text-sm font-semibold">
+                    Module Description
+                  </label>
                   <input
                     name={`moduleDescription-${moduleIndex}`}
                     value={course.modules[moduleIndex].moduleDescription}
@@ -503,8 +526,10 @@ const AddCourse = () => {
 
 
                       <button
-                        type='button'
-                        onClick={(e) => RemoveSession(moduleIndex, sessionIndex, e)}
+                        type="button"
+                        onClick={(e) =>
+                          RemoveSession(moduleIndex, sessionIndex, e)
+                        }
                         className="px-2 h-8 bg-red-900 leading-3  rounded-md text-sm text-white flex items-center "
                       >
                         Remove Session
@@ -514,21 +539,35 @@ const AddCourse = () => {
 
                     <div className="w-full flex flex-col md:flex-row md:gap-x-4">
                       <div className="w-full md:w-1/2">
-                        <label className="text-sm font-semibold">Session Name</label>
+                        <label className="text-sm font-semibold">
+                          Session Name
+                        </label>
                         <input
                           name={`sessionName-${moduleIndex}-${sessionIndex}`}
-                          value={course.modules[moduleIndex].sessions[sessionIndex].sessionName}
-                          onChange={(e) => handleSessionChange(e, moduleIndex, sessionIndex)}
+                          value={
+                            course.modules[moduleIndex].sessions[sessionIndex]
+                              .sessionName
+                          }
+                          onChange={(e) =>
+                            handleSessionChange(e, moduleIndex, sessionIndex)
+                          }
                           placeholder="Session Name"
                           className="w-full h-10 bg-white  text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
                         />
                       </div>
                       <div className="w-full md:w-1/2">
-                        <label className="text-sm font-semibold">Session Description</label>
+                        <label className="text-sm font-semibold">
+                          Session Description
+                        </label>
                         <input
                           name={`sessionDescription-${moduleIndex}-${sessionIndex}`}
-                          value={course.modules[moduleIndex].sessions[sessionIndex].sessionDescription}
-                          onChange={(e) => handleSessionChange(e, moduleIndex, sessionIndex)}
+                          value={
+                            course.modules[moduleIndex].sessions[sessionIndex]
+                              .sessionDescription
+                          }
+                          onChange={(e) =>
+                            handleSessionChange(e, moduleIndex, sessionIndex)
+                          }
                           placeholder="Session Description"
                           className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
                         />
@@ -537,21 +576,35 @@ const AddCourse = () => {
 
                     <div className="w-full flex flex-col md:flex-row md:gap-x-4">
                       <div className="w-full md:w-1/2">
-                        <label className="text-sm font-semibold">Session Date & Time</label>
+                        <label className="text-sm font-semibold">
+                          Session Date & Time
+                        </label>
                         <input
                           type="datetime-local"
                           name={`sessionDateTime-${moduleIndex}-${sessionIndex}`}
-                          value={course.modules[moduleIndex].sessions[sessionIndex].sessionDateTime}
-                          onChange={(e) => handleSessionChange(e, moduleIndex, sessionIndex)}
+                          value={
+                            course.modules[moduleIndex].sessions[sessionIndex]
+                              .sessionDateTime
+                          }
+                          onChange={(e) =>
+                            handleSessionChange(e, moduleIndex, sessionIndex)
+                          }
                           className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
                         />
                       </div>
                       <div className="w-full md:w-1/2">
-                        <label className="text-sm font-semibold">Session Link</label>
+                        <label className="text-sm font-semibold">
+                          Session Link
+                        </label>
                         <input
                           name={`sessionLink-${moduleIndex}-${sessionIndex}`}
-                          value={course.modules[moduleIndex].sessions[sessionIndex].sessionLink}
-                          onChange={(e) => handleSessionChange(e, moduleIndex, sessionIndex)}
+                          value={
+                            course.modules[moduleIndex].sessions[sessionIndex]
+                              .sessionLink
+                          }
+                          onChange={(e) =>
+                            handleSessionChange(e, moduleIndex, sessionIndex)
+                          }
                           placeholder="Session Link"
                           className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
                         />
@@ -565,11 +618,14 @@ const AddCourse = () => {
         })}
 
         <div className="flex items-center justify-end ">
-          <button onClick={(e) => submitHandler(e)} type="submit" className=" px-8 py-2 bg-green-900 rounded-md text-white">
+          <button
+            onClick={(e) => submitHandler(e)}
+            type="submit"
+            className=" px-8 py-2 bg-green-900 rounded-md text-white"
+          >
             Submit
           </button>
         </div>
-
       </form>
     </div>
   );

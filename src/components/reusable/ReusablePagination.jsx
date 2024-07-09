@@ -4,7 +4,9 @@ import Pagination from "@mui/material/Pagination";
 
 const ReusablePagination = ({ currentPage, pageSize, totalRows, handlePageChange, handlePageSizeChange }) => {
   return (
-    <div className="pagination-container">
+   
+   <div className="pagination-container">
+     
       <div className="select-container">
         <select value={pageSize} onChange={handlePageSizeChange}>
           <option value="2">2</option>
@@ -14,6 +16,7 @@ const ReusablePagination = ({ currentPage, pageSize, totalRows, handlePageChange
         </select>
         <div>Total Items: {totalRows}</div>
       </div>
+
       <Pagination
         count={Math.ceil(totalRows / pageSize)}
         page={currentPage}

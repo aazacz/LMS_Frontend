@@ -1,43 +1,24 @@
 import React, { useState } from "react";
-import Logohalf from "/Logohalf.png";
-import Logohalf2 from "/Logohalf2.png";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-
-
-
-
-import AirplaneTicketIcon from "@mui/icons-material/AirplaneTicket";
-import GroupIcon from "@mui/icons-material/Group";
-import RateReviewIcon from "@mui/icons-material/RateReview";
-import GroupAddIcon from "@mui/icons-material/GroupAdd";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import PeopleIcon from "@mui/icons-material/People";
-import FlightIcon from "@mui/icons-material/Flight";
-import AirlinesIcon from "@mui/icons-material/Airlines";
-import FlightLandIcon from "@mui/icons-material/FlightLand";
-import InsightsIcon from "@mui/icons-material/Insights";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
-import { HiArrowRightCircle } from "react-icons/hi2";
 import { MdDashboard } from "react-icons/md";
 import { FaBookAtlas } from "react-icons/fa6";
 import { FaBookReader } from "react-icons/fa";
-import { PiCirclesFourFill } from "react-icons/pi";
+import { PiChalkboardTeacherFill, PiCirclesFourFill, PiExamFill, PiStudentBold } from "react-icons/pi";
 import { IoIosKey, IoIosPerson, IoIosSettings } from "react-icons/io";
-import { IoLogOut, IoNotifications } from "react-icons/io5";
+import { IoLibrary, IoLogOut, IoNotifications } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { GiBookmarklet } from "react-icons/gi";
+import { PiTreeStructureFill } from "react-icons/pi";
 
 
 
 
-const AdminSidebar = ({ isOpen }) => {
+const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
 
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
@@ -85,34 +66,34 @@ const AdminSidebar = ({ isOpen }) => {
       }
     });
   };
-
+ 
 
   const navLinks = [
     {
       title: "Dashboard",
       path: "/admin/home/dashboard",
-      icon: <PiCirclesFourFill className="text-xl text-gray-700" />,
+      icon: <MdDashboard  className="text-xl text-gray-900" />,
     },
     {
       title: "Courses",
       path: "/admin/home/courses",
-      icon: <PiCirclesFourFill className="text-xl text-gray-700" />,
-    },
+      icon: <GiBookmarklet  className="text-xl text-gray-900" />,
+    }, 
     {
       title: "Course Structure",
       path: "/admin/home/courseStructure",
-      icon: <PiCirclesFourFill className="text-xl text-gray-700" />,
+      icon: <PiTreeStructureFill className="text-xl text-gray-900" />,
     },
 
-    { title: "Students", path: "/admin/home/students", icon: <PiCirclesFourFill /> },
-    { title: "Tutors", path: "/admin/home/tutors", icon: <PiCirclesFourFill /> },
-    { title: "Diagnosis Test", path: "/admin/home/diagnosistest", icon: <PiCirclesFourFill /> },
-    { title: "Library", path: "/admin/home/library", icon: <PiCirclesFourFill /> },
+    { title: "Students", path: "/admin/home/students", icon: <PiStudentBold className="text-xl text-gray-900" /> },
+    { title: "Tutors", path: "/admin/home/tutors", icon: <PiChalkboardTeacherFill className="text-xl text-gray-900" /> },
+    { title: "Diagnosis Test", path: "/admin/home/diagnosistest", icon: <PiExamFill className="text-xl text-gray-900"/> },
+    { title: "Library", path: "/admin/home/library", icon: <IoLibrary /> },
     // { title: "Access Management", path: "/admin/home/accessmanagement", icon: <PiCirclesFourFill /> },
 
     {
       title: "Settings",
-      icon: <IoIosSettings className="text-xl text-gray-700" />,
+      icon: <IoIosSettings className="text-xl text-gray-900" />,
       subLinks: [
         {
           title: "Profile",
@@ -139,7 +120,9 @@ const AdminSidebar = ({ isOpen }) => {
 
 
   return (
-    <div className={`relative ${!false ? " " : "fixed md:relative z-50"} h-screen transition-all duration-500  font-poppins text-sm font-medium `}>
+    <div className={` absolute  md:relative  *
+                       ${isSidebarOpen ? "" : " -translate-x-full md:translate-x-0"}
+                        h-screen transition-all duration-500  font-poppins text-sm font-medium `}>
       <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="210px">
         <Menu
           className=""
@@ -175,10 +158,10 @@ const AdminSidebar = ({ isOpen }) => {
                 {link.subLinks.map((subLink) => (
                   <MenuItem
                     key={subLink.title}
-                    className={`relative side-menu-item  ${isActive(subLink.path) ? "bg-blue-500 " : "side-menu-item text-gray-500"
-                      }`} onClick={() => navigate(subLink.path)}
+                    className={`relative side-menu-item  ${isActive(subLink.path) ? "bg-blue-500 " : "side-menu-item text-gray-400"
+                      }`} onClick={() => {setIsSidebarOpen(); navigate(subLink.path)}}
                   >
-                    <div className="flex ">      {subLink.icon}     <span className="ml-2 ">{subLink.title}</span>       </div>
+                    <div className="flex  ">      {subLink.icon}     <span className="ml-2 ">{subLink.title}</span>       </div>
                   </MenuItem>
                 ))}
               </SubMenu>
@@ -202,14 +185,14 @@ const AdminSidebar = ({ isOpen }) => {
             )
           )}
 
-          <a
+          <button
             onClick={handleLogout}
             href="#"
-            className="flex items-center p-2 mt-2 text-red-600 hover:bg-gray-200"
+            className="flex w-full items-center p-2 mt-2 text-red-600 hover:bg-gray-200"
           >
             <IoLogOut className="text-xl mx-5 h-10" />
             {collapsed ? "" : "Logout"}
-          </a>
+          </button>
 
         </Menu>
       </Sidebar>

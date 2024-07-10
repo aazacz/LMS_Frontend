@@ -6,23 +6,22 @@ import ReusablePagination from "../reusable/ReusablePagination";
 import SearchIcon from "@mui/icons-material/Search";
 import { FaCirclePlus } from "react-icons/fa6";
 import useDebounce from "../../hooks/useDebounce";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
-const apiURL =
-  process.env.REACT_APP_API_URL + "api/diagnosis/get-diagnosis?page=1&pageSize=5&search";
+const apiURL = process.env.REACT_APP_API_URL + "api/diagnosis/get-diagnosis?page=1&pageSize=5&search";
 
 const DiagnosisTest = () => {
+
   const {
-    data,
     currentPage,
     pageSize,
     totalRows,
     searchQuery,
-    loading,
-    error,
     handlePageChange,
     handlePageSizeChange,
-    handleSearchChange,
-  } = usePaginationData(apiURL);
+    handleSearchChange, } = usePaginationData(apiURL);
+
   const [searchTerm, setSearchTerm] = useState(searchQuery);
 
   const link = "/admin/home/diagnosistest/";
@@ -34,18 +33,55 @@ const DiagnosisTest = () => {
   }, [debouncedSearchTerm, handleSearchChange]);
 
   const columns = [
-    { field: "packageName", headerName: "Name" },
-    { field: "createdAt", headerName: "Test Attended" },
-    { field: "actions", headerName: "Questions" },
-    { field: "actions", headerName: "Marks" },
-    { field: "actions", headerName: "Passed" },
-    { field: "actions", headerName: "Failed" },
-    { field: "button", headerName: "Reports" },
-    { field: "status", headerName: "Status" },
-  ];
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+    { field: "packageName", headerName: "Name"          },
+    { field: "createdAt",   headerName: "Test Attended" },
+    { field: "questions",   headerName: "Questions"     },
+    { field: "marks",       headerName: "Marks"         },
+    { field: "actions",     headerName: "Passed"        },
+    { field: "actions",     headerName: "Failed"        },
+    { field: "button",      headerName: "Reports"       },
+    { field: "status",      headerName: "Status"        },
+
+  ]
+
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>Error: {error.message}</div>;
+
+
+  //function to fetch the data
+  const fetchDiagnosisData = async () => {
+    try {
+      const response = await axios.get(`${apiURL}api/diagnosis/get-diagnosis?page=1&pageSize=&search`)
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.log(error)
+      // toast.error(error.response.data.error);
+    }
+  };
+
+
+  const { data, isPending, isError, error, refetch } = useQuery({
+    queryKey: ["diagnosisiTestData"],
+    queryFn: fetchDiagnosisData,
+    staleTime: 1000,
+    refetchInterval: 600000,
+  })
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  console.log("data")
+  console.log(data)
+  console.log("error")
+  console.log(error)
+  console.log("isError")
+  console.log(isError)
+
+
+
 
   return (
     <div className="w-full h-full p-2">
@@ -84,8 +120,13 @@ const DiagnosisTest = () => {
           <div>
             <div className="heading-column-toggle-container"></div>
           </div>
-          <ReusableTable columns={columns} data={data} link={link} />
+
+          {/* imported the reusable table and the pagination component */}
+
+          <ReusableTable columns={columns} data={data} link={link} isPending={isPending} />
+
           <ReusablePagination
+            data={data}
             currentPage={currentPage}
             pageSize={pageSize}
             totalRows={totalRows}

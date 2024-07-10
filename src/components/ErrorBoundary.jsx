@@ -1,7 +1,7 @@
 import React from "react";
 import erroricon from "/errorBoundary.webp";
 import mindsatlogo from "../assets/mindsatlogo.webp"
-
+import './ErrorBoundary.css'
 
 class ErrorBoundary extends React.Component {
     
@@ -41,19 +41,20 @@ class ErrorBoundary extends React.Component {
         if (this.state.hasError) {
 
             const componentStackLines = this.state.componentStack
-                ? this.state.componentStack.split('\n').slice(0, 2).join('\n')
+                ? this.state.componentStack
                 : '';
             return (
-                <div className="w-full h-full p-3 flex items-center flex-col">
-                    <div className="w-full mt-4 flex justify-center">
+                <div className="w-full h-screen relative bg-gray-100 p-3 flex items-center flex-col">
+                    
+                    <div className="w-full mt-4 flex  justify-center \">
 
-                        <img src={mindsatlogo} className="w-36" alt="" />
+                        <img src={mindsatlogo} className="w-36  " alt="" />
                     </div>
                     <div className="flex justify-center">
-                        <img src={erroricon} className="w-[350px]" alt="Error icon" />
+                        <img src={erroricon} className="w-[250px]" alt="Error icon" />
 
                     </div>
-                    <h1 className="font-plusjakartasans font-bold text-4xl text-gray-400">Oops! Something went wrong</h1>
+                    <h1 className="font-plusjakartasans font-bold text-3xl text-gray-400">Oops! Something went wrong</h1>
                     <div className="w-full h-auto   flex flex-col justify-center items-center">
 
                         <div className="w-full text-lg mt-3  flex justify-center text-red-700">
@@ -64,9 +65,12 @@ class ErrorBoundary extends React.Component {
                         </div>
 
                         {componentStackLines && (
-                            <div className="w-full text-lg text-gray-600 mt-4 flex justify-center">
-                                <p>Component Stack  : </p>
-                                <p>{componentStackLines}</p>
+
+                            <div className="w-full   px-2 md:px-28 h-[200px]  text-lg text-gray-600 mt-4 flex justify-center">
+                            <div className="w-full scroll  rounded-xl border-2 border-[#01729c]  px-2  overflow-y-scroll text-lg text-gray-600 mt-4 ">
+                                <p className="text-base text-black font-semibold  font-poppins">Component Stack  : </p>
+                                <p className="w-full font-poppins  text-sm"  >{componentStackLines}</p>
+                            </div>
                             </div>
                         )}
                     </div>

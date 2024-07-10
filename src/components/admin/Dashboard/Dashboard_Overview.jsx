@@ -81,14 +81,14 @@ const Dashboard_Overview = () => {
     );
   };
   return (
-    <div className=" w-full  h-max flex flex-col bg-[#E0EDFB] p-2 rounded-md shadow-md  ">
-      <div className="w-full h-1/5 flex justify-between items-center ">
-        <div className="w-1/2 h-full flex justify-start items-center font-semibold text-xs md:text-sm lg:text-lg font-poppins">
+    <div className=" w-full  md:h-full h-max flex flex-col bg-[#E0EDFB] p-2 rounded-md shadow-md  ">
+      <div className="w-full  h-1/5 flex justify-between items-center ">
+        <div className="w-1/2  h-full flex justify-start items-center font-semibold text-xs md:text-sm lg:text-lg font-poppins">
           Income Overview
         </div>
         <div className="w-1/2 h-full bg-gray-200"> Toggle Button</div>
       </div>
-      <div className="w-full  h-4/5 flex flex-wrap ">
+      <div className="w-full   h-4/5 flex flex-wrap ">
         <div className="w-[30%] h-max  flex flex-col justify-center items-stretch">
           <div>
             <AiOutlinePieChart className="w-12 md:w-16 lg:w-20 text-[#0EA5E9] h-16" />

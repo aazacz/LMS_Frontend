@@ -57,23 +57,23 @@ const StudentTests = () => {
           <table className="text-[12px] w-full border-collapse min-w-full">
             <thead className="text-[12px] md:text-[14px]">
               <tr >
-                <th className="py-2 px-2 bg-[#E3EDF9] w-4">Sl.no</th>
-                <th className="px-2 bg-[#E3EDF9] w-48">Name</th>
-                <th className="px-2 bg-[#E3EDF9] w-4">Attempts</th>
-                <th className=" px-2 bg-[#E3EDF9] w-2">Questions</th>
-                <th className="px-2 bg-[#E3EDF9] w-4">Marks</th>
-                <th className="px-2 bg-[#E3EDF9] w-4 ">Status</th>
-                <th className="px-2 bg-[#E3EDF9] w-8"></th>
+                <th className=" px-2   bg-[#E3EDF9] w-4">Sl.no</th>
+                <th className=" px-2   bg-[#E3EDF9] w-[180px] ">Name</th>
+                <th className=" px-2   bg-[#E3EDF9] w-4">Attempts</th>
+                <th className=" px-2   bg-[#E3EDF9] w-2">Questions</th>
+                <th className=" px-2   bg-[#E3EDF9] w-4">Marks</th>
+                <th className=" px-2   bg-[#E3EDF9] w-4 ">Status</th>
+                <th className=" px-2   bg-[#E3EDF9] w-8"></th>
               </tr>
             </thead>
             <tbody>
               {filteredTests.map((test, index) => (
-                <tr key={test.id}>
-                  <td className="border-none" >{index + 1}</td>
-                  <td className="border-none " >{test.name}</td>
-                  <td className="border-none" >{test.attempts}</td>
-                  <td className="border-none" >{test.questions}</td>
-                  <td className="border-none" >{test.marks}</td>
+                <tr key={test.id} className="f">
+                  <td className="border-none py-4  h-10  text-center" >{index + 1}</td>
+                  <td className="border-none py-4  h-10  line-clamp-1 w-[180px]  " >"weuifhuiwefhuwehfuewhuewheuiwhdfeuiwhfweuihfieuhfiwhfifhiuwefhwuh"</td>
+                  <td className="border-none py-4  h-10  text-center" >{test.attempts}</td>
+                  <td className="border-none py-4  h-10  text-center" >{test.questions}</td>
+                  <td className="border-none py-4  h-10  text-center" >{test.marks}</td>
                   
                   <td className="border-none" >
                     <button className={`px-4 py-2 text-[10px] md:text-sm text-white ${test.status === "completed" ? "bg-green-500" : test.status === "failed" ? "bg-red-500" : "bg-blue-500"}`}>

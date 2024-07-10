@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { FaBell } from "react-icons/fa6";
+import { FaBell, FaBook, FaBookOpen } from "react-icons/fa6";
 import { FaBars } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { FiBookOpen, FiBook } from "react-icons/fi";
@@ -50,8 +50,8 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
 
 
             {/* hamburger button */}
-            {isSidebarOpen ? <FiBookOpen onClick={() => toggleSidebar()} className='block md:hidden z-30  text-2xl ' />
-                    : <FiBook onClick={() => toggleSidebar()} className='block md:hidden z-30  text-2xl ' />
+            {isSidebarOpen ? <FaBookOpen  onClick={() => toggleSidebar()} className='block md:hidden z-30  text-2xl ' />
+                    : <FaBook onClick={() => toggleSidebar()} className='block md:hidden z-30  text-2xl ' />
                   }          
 
           

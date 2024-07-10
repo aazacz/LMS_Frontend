@@ -18,7 +18,9 @@ import { PiTreeStructureFill } from "react-icons/pi";
 
 
 
-const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
+const AdminSidebar = ({ isOpen ,isSidebarOpen,setIsSidebarOpen}) => {
+
+
 
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
@@ -34,7 +36,8 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
 
   const dispatch = useDispatch();
 
-  const handlecollapse = () => {
+  // Handle logout function
+    const handlecollapse = () => {
     if (collapsed === true) {
       return
     }
@@ -47,6 +50,9 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
 
     }
   }
+
+
+  // Handle logout function
   const handleLogout = () => {
     Swal.fire({
       title: "Do you want to Logout?",
@@ -116,11 +122,8 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
 
 
 
-
-
-
   return (
-    <div className={` absolute  md:relative  *
+    <div className={` absolute  md:relative  z-50
                        ${isSidebarOpen ? "" : " -translate-x-full md:translate-x-0"}
                         h-screen transition-all duration-500  font-poppins text-sm font-medium `}>
       <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="210px">
@@ -152,14 +155,16 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
                 key={link.title}
                 label={link.title}
                 icon={link.icon}
-                className={`relative side-menu-item  ${isActive(link.path) ? "bg-blue-500 text-gray-500" : "side-menu-item "
-                  }`}
+                className={`relative side-menu-item  ${isActive(link.path) ? "bg-blue-500 text-gray-500" : "side-menu-item " }`}
               >
+
                 {link.subLinks.map((subLink) => (
                   <MenuItem
                     key={subLink.title}
                     className={`relative side-menu-item  ${isActive(subLink.path) ? "bg-blue-500 " : "side-menu-item text-gray-400"
-                      }`} onClick={() => {setIsSidebarOpen(); navigate(subLink.path)}}
+                      }`} 
+                      onClick={() =>{setIsSidebarOpen(false);
+                                     navigate(subLink.path)}}
                   >
                     <div className="flex  ">      {subLink.icon}     <span className="ml-2 ">{subLink.title}</span>       </div>
                   </MenuItem>
@@ -169,7 +174,10 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
 
               <MenuItem className={`relative side-menu-item menu  ${isActive(link.path) ? "bg-blue-500 text-black" : "side-menu-item"}`}
                 icon={link.icon}
-                onClick={() => navigate(link.path)}
+                onClick={() =>
+                              { setIsSidebarOpen(false); 
+                                navigate(link.path) 
+                              }}
               >
                 {collapsed ? (
                   <div className="group">

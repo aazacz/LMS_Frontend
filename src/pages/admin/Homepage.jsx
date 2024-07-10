@@ -41,13 +41,16 @@ const Homepage = () => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
+      
+        <div className="">
         <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+        </div>
        
-        <div className="flex  w-full relative  bg-red-400">
+        <div className="flex  w-full     ">
           {/* <Sidebar isOpen={isSidebarOpen} /> */} 
 
           <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-          <div className="flex-1    ">
+          <div className="flex-1   w-full h-full  overflow-y-auto ">
 
             <div className="w-full h-auto  ">
               <Routes>

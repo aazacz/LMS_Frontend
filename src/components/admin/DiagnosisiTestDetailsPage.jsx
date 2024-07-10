@@ -13,7 +13,7 @@ const DiagnosisiTestDetailsPage = () => {
  useEffect(()=>{
 
     axios.get(`${baseUrl}api/diagnosis/diagnosis/${diagnosisiTestDetailsPage}`)
-             .then((res)=>{
+         .then((res)=>{
                 console.log("res.data from the Diagnosis test page")
                 console.log(res.data)
                 setdata([res.data])   
@@ -21,6 +21,7 @@ const DiagnosisiTestDetailsPage = () => {
         },[])
 
   return (
+
     <div className="container h-screen overflow-y-auto mx-auto p-4">
       {data.map((test, index) => (
         <div key={index} className="mb-8">

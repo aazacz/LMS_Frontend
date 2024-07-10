@@ -45,7 +45,7 @@ const Coursedetails = ({ height }) => {
         </div>
       ) : (
         <>
-          <div className="h-full flex bg-red-500">
+          <div className="h-full flex">
             <div className="w-[70%]  scroll overflow-y-scroll  p-4 flex flex-col ">
               <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-3xl">
                 {" "}
@@ -183,7 +183,7 @@ const AsideBAr = ({ course, id }) => {
 
   const handleDeleteCourse = () => {
     Swal.fire({
-        
+
       title: `Are you sure you want to delete this course?`,
       text: "You won't be able to revert this!",
       icon: "warning",

@@ -144,9 +144,9 @@ const TutorCard = ({ tutor }) => (
           </div>
         </div>
       </div>
-      <div className="w-[10%] flex justify-center items-center">
+      {/* <div className="w-[10%] flex justify-center items-center">
         <FaAngleRight />
-      </div>
+      </div> */}
     </div>
   // </Link>
 );

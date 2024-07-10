@@ -23,6 +23,7 @@ import Admin_Material from '../../components/admin/UploadMaterial/Admin_Material
 import AddCourseStructure from '../../components/admin/AddCourseStructure';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AdminSidebar from '../../components/admin/AdminSidebar';
+import DiagnosisiTestDetailsPage from "../../components/admin/DiagnosisiTestDetailsPage";
 
 
 
@@ -40,32 +41,35 @@ const Homepage = () => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-            <AdminNavbar       toggleSidebar={toggleSidebar}     isSidebarOpen={isSidebarOpen}       />
-        <div className="flex w-full relative ">
-          {/* <Sidebar isOpen={isSidebarOpen} /> */}
-<AdminSidebar/>
-          <div className="flex-1  px-2  ">
+        <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+       
+        <div className="flex  w-full relative  bg-red-400">
+          {/* <Sidebar isOpen={isSidebarOpen} /> */} 
+
+          <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+          <div className="flex-1    ">
 
             <div className="w-full h-auto  ">
               <Routes>
                 <Route path="/*" element={<Dashboard />} />
                 <Route path="/courses/addcourse" element={<AddCourse />} />
                 <Route path="/courses" element={<CourseList />} />
-                <Route path="/courses/:courseId"   element={<Coursedetails height={Ref} />}               />
-                <Route path="/coursestructure"     element={<CourseStructureList />}                      />
-                <Route path="/courseStructure/addcoursestructure"   element={<AddCourseStructure />}      />
-                <Route path="/coursestructure/:structureId"         element={<CourseStructureDetails />}  />
+                <Route path="/courses/:courseId" element={<Coursedetails height={Ref} />} />
+                <Route path="/coursestructure" element={<CourseStructureList />} />
+                <Route path="/courseStructure/addcoursestructure" element={<AddCourseStructure />} />
+                <Route path="/coursestructure/:structureId" element={<CourseStructureDetails />} />
                 {/* <Route path="/coursestructure" element={<CourseStructure />} /> */}
-                <Route path="/students/:studentId"  element={<StudentDetail />}                           />
+                <Route path="/students/:studentId" element={<StudentDetail />} />
                 <Route path="/students" element={<StudentList />} />
                 <Route path="/tutors/addtutor" element={<AddTutor />} />
-                <Route path="/diagnosistest/addiagnosistest"        element={<Addiagnosistest />}         />
+                <Route path="/diagnosistest/addiagnosistest" element={<Addiagnosistest />} />
+                <Route path="/diagnosistest/:diagnosisiTestDetailsPage" element={<DiagnosisiTestDetailsPage />} />
                 <Route path="/diagnosistest" element={<DiagnosisTest />} />
                 <Route path="/tutors/:tutorId" element={<TutorDetails />} />
                 {/* <Route path="/tutors/tutorform/" element={<TutorForm />} /> */}
                 <Route path="/tutors" element={<TutorListing />} />
                 <Route path="/library" element={<Library />} />
-                <Route path="/library/uploadmaterial"               element={<Admin_Material />}           />
+                <Route path="/library/uploadmaterial" element={<Admin_Material />} />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
             </div>

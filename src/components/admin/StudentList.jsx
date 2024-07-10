@@ -4,8 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SearchIcon from "@mui/icons-material/Search";
 import Pagination from "@mui/material/Pagination";
-import CloseIcon from "@mui/icons-material/Close";
-import Check from "@mui/icons-material/Check";
+
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { MdBlock } from "react-icons/md";
@@ -28,7 +27,6 @@ const StudentList = () => {
   const fetchStudents = async () => {
     try {
       const response = await axios.get(`${apiURL}api/students/getAll-students`)
-      console.log(response.data)
       return response.data;
     } catch (error) {
       toast.error(error.response.data.error);
@@ -42,6 +40,7 @@ const StudentList = () => {
     staleTime: 1000,
     refetchInterval: 600000,
   });
+
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -178,7 +177,7 @@ const StudentList = () => {
 
 
 
-  const handleStudentBliocking = (Status, blockId) => {
+  const handleStudentBlocking = (Status, blockId) => {
 
     if (Status === "active") {
       handleBlock(blockId)
@@ -338,8 +337,8 @@ const StudentList = () => {
                         )}
                         {column.field === "status" ? (
                           <div className="action-container ">
-                            {row.status === "active" ? <div onClick={() => handleStudentBliocking("active", row._id)} className="font-poppins text-sm  border-[1px] border-blue-700 bg-blue-700 text-white cursor-pointer flex justify-center items-center"> Active</div>
-                              : <div onClick={() => handleStudentBliocking("inactive", row._id)} className="font-poppins text-sm  border-[1px] border-blue-700  cursor-pointer text-blue-700  flex justify-center items-center"> Inactive</div>
+                            {row.status === "active" ? <div onClick={() => handleStudentBlocking("active", row._id)} className="font-poppins text-sm  border-[1px] border-blue-700 bg-blue-700 text-white cursor-pointer flex justify-center items-center"> Active</div>
+                              : <div onClick={() => handleStudentBlocking("inactive", row._id)} className="font-poppins text-sm  border-[1px] border-blue-700  cursor-pointer text-blue-700  flex justify-center items-center"> Inactive</div>
                             }
 
                           </div>

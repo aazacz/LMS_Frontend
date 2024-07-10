@@ -21,17 +21,17 @@ const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
 
       {/* ___________________NAVBAR STARTS HERE________________________  */}
 
-      <div className='navbar-container md:px-4  px-2 sticky top-0 w-full h-[10vh]  border-b-[1px] flex justify-between items-center md:py-8 py-5   bg-white     '>
+      <div className='navbar-container md:px-4 b  px-2 sticky top-0 w-full h-[10vh]   border-b-[1px] flex justify-between items-center  bg-white     '>
 
         {/*_________________ left side____________________ */}
-        <div className='w-[60%]  font-poppins relative'>
-       <img src={logo} className='md:w-[100px]' alt="" />
+        <div className='w-[60%] h-max font-poppins relative '>
+         <img src={logo} className='md:w-[100px] w-[80px]' alt="" />
           <p className=' md:pl-0 text-sm z-10'>   Welcome Back!</p>
           <p className='  md:pl-0 md:text-sm font-bold block md:hidden z-20'>   {user.userName}</p>
         </div>
 
         {/* _________________right side__________________ */}
-        <div className='w-[40%] flex justify-end    '>
+        <div className='w-[40%] flex justify-end  h-max  '>
 
           <div className='flex items-center'>
 

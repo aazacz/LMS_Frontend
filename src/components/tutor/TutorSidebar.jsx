@@ -164,7 +164,7 @@ const TutorSideBar = ({ isOpen }) => {
                     <div className="flex">
                       {" "}
                       {subLink.icon}{" "}
-                      <span className="ml-2 ">{subLink.title}</span>{" "}
+                      <span className="ml-2  ">{subLink.title}</span>{" "}
                     </div>
                   </MenuItem>
                 ))}

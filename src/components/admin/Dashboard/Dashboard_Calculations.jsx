@@ -45,7 +45,7 @@ const Dashboard_Calculations = () => {
     ].map((item, index) => (
       <div
         key={index}
-        className="w-[46%] h-max bg-[#E0EDFB] flex flex-col p-4 rounded-md shadow-md "
+        className="w-[46%] h-max bg-[#E0EDFB] flex flex-col p-4 md:p-3 rounded-md shadow-md "
       >
         <div className="flex justify-between items-center">
           <p className="font-poppins text-sm font-semibold flex gap-2">

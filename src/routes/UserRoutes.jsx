@@ -12,9 +12,7 @@ import StudentHomepage from "../pages/student/StudentHomepage";
 import ErrorPage from "../pages/ErrorPage";
 import SignupRoute from "./SignupRoute";
 import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Diagnostic";
-import Student_Diagnostic_Test from "../components/User/Student_Diagnostic_Test/Student_Diagnostic_Test";
-import DiagnosisTest from "../pages/student/DiagnosisTest";
-import DiagnosisTestResult from "../pages/student/DiagnosisTestResult";
+import DiagnosisTestRoute from "./DiagnosisTestRoute";
 
 const UserRoutes = () => {
   const user = useSelector((state) => state.StudentDetails.token);
@@ -27,10 +25,8 @@ const UserRoutes = () => {
       <Route path="/student/*" element={user?<StudentHomepage User={true} /> : <Navigate to="/login" />} />
       <Route path="/signup/*" element={<SignupRoute />} />
       <Route path="/diagnosistest" element={<Student_Diagnostic />} />
-      <Route path="/diagnosistest/intructions"   element={<Student_Diagnostic_Test />}     />
-      <Route path="/diagnosistest/test1" element={<DiagnosisTest />} />
-      <Route path="/diagnosistest/result" element={<DiagnosisTestResult />} />
-
+      <Route path="/diagnosistest/*" element={<DiagnosisTestRoute/>} />
+     
       <Route
         path="*"
         element={

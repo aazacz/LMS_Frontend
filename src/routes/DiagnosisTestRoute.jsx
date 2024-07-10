@@ -13,7 +13,7 @@ import ErrorPage from "../pages/ErrorPage";
 const DiagnosisTestRoute = () => {
   return (
     <Routes>
-      <Route path="/intructions" element={<Student_Diagnostic_Test />} />
+      <Route path="/instructions" element={<Student_Diagnostic_Test />} />
       <Route path="/test1" element={<DiagnosisTest />} />
       <Route path="/result" element={<DiagnosisTestResult />} />
 

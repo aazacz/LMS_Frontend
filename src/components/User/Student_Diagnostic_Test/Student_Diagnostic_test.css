@@ -7,22 +7,19 @@
 }
 
 .student-diagnostic-test-main-title{
-    font-size: 25px;
     font-weight: 700;
     margin-top: 2%;
 }
 
-.student-diagnostic-test-sub-title{
-    font-size: 18px;
-}
+
 
 .text-bold{
     font-weight: 600;
 }
 
 .student-diagnostic-test-submit-button{
-    width: 15%;
-    font-size: 18px;
+  
+
     color: white;
     background-color: #00B45D;
     border-radius: 10px;
@@ -30,7 +27,7 @@
     justify-content: center;
     align-items: center;
     margin-top: 5%;
-    padding: 10px 2%;
+
     cursor: pointer;
     transition: 0.1s ease-in-out;
 }

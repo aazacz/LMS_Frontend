@@ -46,11 +46,14 @@ const Homepage = () => {
         <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
         </div>
        
-        <div className="flex  w-full     ">
+        <div className="flex  w-full h-full ">
           {/* <Sidebar isOpen={isSidebarOpen} /> */} 
-
+        
+        <div className="h-full bg-red-300">
           <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-          <div className="flex-1   w-full h-full  overflow-y-auto ">
+        </div>
+        
+        <div className="flex-1   w-full h-full   ">
 
             <div className="w-full h-auto  ">
               <Routes>

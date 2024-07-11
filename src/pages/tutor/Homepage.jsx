@@ -34,7 +34,7 @@ const Homepage = () => {
     <>
       <div className="flex w-full relative ">
         <TutorSidebar isOpen={isSidebarOpen} />
-        <div className="w-full px-2 ">
+        <div  className="w-full px-2 ">
           <div className="h-auto z-30 sticky top-0 ">
             <TutorNavbar
               toggleSidebar={toggleSidebar}

@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import Loader from '../reusable/Loader'; // Ensure Loader is correctly imported
 import { RotatingLines } from 'react-loader-spinner';
 
-const CourseList = () => {
+const CourseList = ({name}) => {
     const baseUrl = process.env.REACT_APP_API_URL;
     const token = useSelector((state) => state.AdminDetails.token);
     const [courses, setCourses] = useState([]);
@@ -67,7 +67,7 @@ const CourseList = () => {
                                     
                   {      courses.map((course, index) => (
                             <Link key={index} to={`/admin/home/courses/${course._id}`}>
-                                <CourseCard course={course} />
+                                <CourseCard  course={course} />
                             </Link>
                         ))}
                 

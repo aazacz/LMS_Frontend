@@ -7,12 +7,11 @@ import { FiBookOpen, FiBook } from "react-icons/fi";
 import "./AdminNavbar.css"
 import  logo from '/Logo.png'
 
-const AdminNavbar = ({ toggleSidebar,isSidebarOpen }) => {
+const AdminNavbar = ({ toggleSidebar,isSidebarOpen,name }) => {
   const [show, setShow] = useState(false)
   const dispatch = useDispatch();
   const user = useSelector((state) => state.AdminDetails);
 
-  console.log(user);
 
 
   return (

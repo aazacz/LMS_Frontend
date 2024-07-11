@@ -24,6 +24,7 @@ import AddCourseStructure from '../../components/admin/AddCourseStructure';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AdminSidebar from '../../components/admin/AdminSidebar';
 import DiagnosisiTestDetailsPage from "../../components/admin/DiagnosisiTestDetailsPage";
+import Settings from "../../components/admin/Settings/Settings";
 
 
 
@@ -38,28 +39,30 @@ const Homepage = () => {
   };
   const [Ref, SetRef] = useState();
 
+  const name= "abhilash"
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
-      
+
         <div className="">
-        <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+          <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} name={name} />
         </div>
-       
+
         <div className="flex  w-full h-full ">
-          {/* <Sidebar isOpen={isSidebarOpen} /> */} 
-        
-        <div className="h-full bg-red-300">
-          <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-        </div>
-        
-        <div className="flex-1   w-full h-full   ">
+          {/* <Sidebar isOpen={isSidebarOpen} /> */}
+
+          <div className="h-full bg-red-300">
+            <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+          </div>
+
+          <div className="flex-1   w-full h-full   ">
 
             <div className="w-full h-auto  ">
               <Routes>
                 <Route path="/*" element={<Dashboard />} />
                 <Route path="/courses/addcourse" element={<AddCourse />} />
-                <Route path="/courses" element={<CourseList />} />
+                <Route path="/courses" element={<CourseList name={name}/>} />
                 <Route path="/courses/:courseId" element={<Coursedetails height={Ref} />} />
                 <Route path="/coursestructure" element={<CourseStructureList />} />
                 <Route path="/courseStructure/addcoursestructure" element={<AddCourseStructure />} />
@@ -76,12 +79,14 @@ const Homepage = () => {
                 <Route path="/tutors" element={<TutorListing />} />
                 <Route path="/library" element={<Library />} />
                 <Route path="/library/uploadmaterial" element={<Admin_Material />} />
+                <Route path="/settings/*" element={<Settings />} />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
             </div>
           </div>
         </div>
       </QueryClientProvider>
+
     </>
   );
 };

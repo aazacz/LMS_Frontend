@@ -11,8 +11,9 @@ const Content = () => {
   const baseURL = process.env.REACT_APP_API_URL;
   const [courses, setCourses] = useState([]);
   const [Loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  //fetch all the courses
+  // Fetch all the courses
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -38,7 +39,6 @@ const Content = () => {
     };
     fetchCourses();
   }, []);
-
 
   const assignments = [
     {
@@ -71,12 +71,32 @@ const Content = () => {
       reports: "view",
       action: "Start grading",
     },
+    {
+      id: 4,
+      name: "Eng PSAT",
+      status: "Pending",
+      course: "Math-PSAT",
+      students: 30,
+      submission: 30,
+      reports: "view",
+      action: "Start grading",
+    },
+    {
+      id: 5,
+      name: "Eng PSAT",
+      status: "Pending",
+      course: "Math-PSAT",
+      students: 30,
+      submission: 30,
+      reports: "view",
+      action: "Start grading",
+    },
   ];
 
   return (
-    <div className="w-full flex">
+    <div className="w-full flex ">
       {Loading && <FullscreenLoader />}
-      <div className="w-[100%]">
+      <div className="w-full overflow-x-auto">
         <div className="p-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {courses &&
@@ -87,15 +107,21 @@ const Content = () => {
               ))}
           </div>
 
-          <table className=" w-full overflow-x-auto no-scrollbar border border-gray-200 mt-10">
+          <table className="w-full overflow-x-scroll mt-10  border border-gray-200">
             <thead>
               <tr>
                 <th className="px-4 py-2 border-b text-left">SL No</th>
-                <th className="px-4 py-2 border-b text-left">Assignment Name</th>
+                <th className="px-4 py-2 border-b text-left">
+                  Assignment Name
+                </th>
                 <th className="px-4 py-2 border-b text-left">Status</th>
                 <th className="px-4 py-2 border-b text-left">Course</th>
-                <th className="px-4 py-2 border-b hidden lg:table-cell text-left">Students</th>
-                <th className="px-4 py-2 border-b hidden lg:table-cell text-left">Submission</th>
+                <th className="px-4 py-2 border-b hidden lg:table-cell text-left">
+                  Students
+                </th>
+                <th className="px-4 py-2 border-b hidden lg:table-cell text-left">
+                  Submission
+                </th>
                 <th className="px-4 py-2 border-b text-left">Reports</th>
                 <th className="px-4 py-2 border-b text-left">Action</th>
               </tr>
@@ -121,25 +147,6 @@ const Content = () => {
           </table>
         </div>
       </div>
-
-      {/* <div className="w-[30%] border-l-2">
-        <div className="pl-5">
-          {data.map((item, index) => (
-            <div
-              key={index}
-              className="w-[90%] h-max flex justify-start items-start p-2"
-            >
-              <div className="w-80 flex flex-row items-center border-[1px] border-black p-2 rounded">
-                <div className="w-10 h-10 rounded-full border-[1px] border-black"></div>
-                <div className="flex flex-col ml-2 justify-start items-start text-xs">
-                  <p>{item.name}</p>
-                  <p className="text-gray-500">{item.email}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div> */}
     </div>
   );
 };

@@ -62,10 +62,8 @@ const UserRoutes = () => {
       <Route path="/student/*" element={user?<StudentHomepage User={true} /> : <Navigate to="/login" />} />
       <Route path="/signup/*" element={<SignupRoute />} />
       <Route path="/diagnosistest" element={<Student_Diagnostic />} />
-      <Route path="/diagnosistest/intructions"   element={<Student_Diagnostic_Test />}     />
-      <Route path="/diagnosistest/test1" element={<DiagnosisTest />} />
-      <Route path="/diagnosistest/result" element={<DiagnosisTestResult />} />
-
+      <Route path="/diagnosistest/*" element={<DiagnosisTestRoute/>} />
+     
       <Route
         path="*"
         element={

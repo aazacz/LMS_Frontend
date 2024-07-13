@@ -35,7 +35,8 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
 
   const dispatch = useDispatch();
 
-  const handlecollapse = () => {
+  // Handle logout function
+    const handlecollapse = () => {
     if (collapsed === true) {
       return;
     } else {
@@ -44,7 +45,10 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
         setCollapsed(false);
       }, 1000);
     }
-  };
+  }
+
+
+  // Handle logout function
   const handleLogout = () => {
     Swal.fire({
       title: "Do you want to Logout?",
@@ -122,6 +126,11 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
     },
   ];
 
+
+
+
+
+
   return (
     <div
       className={`absolute  md:relative  *
@@ -164,24 +173,15 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
                 key={link.title}
                 label={link.title}
                 icon={link.icon}
-                className={`relative side-menu-item  ${
-                  isActive(link.path)
-                    ? "bg-blue-500 text-gray-500"
-                    : "side-menu-item "
-                }`}
+                className={`relative side-menu-item  ${isActive(link.path) ? "bg-blue-500 text-gray-500" : "side-menu-item "
+                  }`}
               >
+
                 {link.subLinks.map((subLink) => (
                   <MenuItem
                     key={subLink.title}
-                    className={`relative side-menu-item  ${
-                      isActive(subLink.path)
-                        ? "bg-blue-500 "
-                        : "side-menu-item text-gray-400"
-                    }`}
-                    onClick={() => {
-                      setIsSidebarOpen();
-                      navigate(subLink.path);
-                    }}
+                    className={`relative side-menu-item  ${isActive(subLink.path) ? "bg-blue-500 " : "side-menu-item text-gray-400"
+                      }`} onClick={() => {setIsSidebarOpen(); navigate(subLink.path)}}
                   >
                     <div className="flex  ">
                       {" "}
@@ -199,7 +199,10 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
                     : "side-menu-item"
                 }`}
                 icon={link.icon}
-                onClick={() => navigate(link.path)}
+                onClick={() =>
+                              { setIsSidebarOpen(false); 
+                                navigate(link.path) 
+                              }}
               >
                 {collapsed ? (
                   <div className="group">

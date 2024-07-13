@@ -40,12 +40,17 @@ const Homepage = () => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
+      
+        <div className="">
         <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-        <div className="flex w-full relative  ">
+        </div>
+       
+        <div className="flex  w-full     ">
           {/* <Sidebar isOpen={isSidebarOpen} /> */} 
           <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-          <div className="flex-1">
-            <div className="w-full h-auto">
+          <div className="flex-1   w-full h-full  overflow-y-auto ">
+
+            <div className="w-full h-auto  ">
               <Routes>
                 <Route path="/*" element={<Dashboard />} />
                 <Route path="/courses/addcourse" element={<AddCourse />} />

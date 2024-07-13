@@ -39,14 +39,14 @@ const Homepage = () => {
   };
   const [Ref, SetRef] = useState();
 
-  const name= "abhilash"
+ 
 
   return (
     <>
       <QueryClientProvider client={queryClient}>
 
         <div className="">
-          <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} name={name} />
+          <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}  />
         </div>
 
         <div className="flex  w-full h-full ">

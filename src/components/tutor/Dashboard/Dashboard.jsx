@@ -17,10 +17,10 @@ const Dashboard = () => {
       </div>
       <div className="w-full h-max flex ">
         <div className="w-full lg:w-[75%] h-max flex flex-col p-2 gap-2 ">
-          <Dashboard_Calendar />
+          <Dashboard_Calendar  />
           <Dashboard_TrainingList />
         </div>
-        <div className=" w-0 lg:w-[25%] h-max  flex-col p-2  hidden lg:block">
+        <div className="w-[25%] h-max  flex-col p-2  hidden lg:block">
           <Dashboard_StudentRequest />
           <Dashboard_Notifications />
         </div>

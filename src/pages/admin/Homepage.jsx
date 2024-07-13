@@ -24,6 +24,9 @@ import AddCourseStructure from "../../components/admin/AddCourseStructure";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import DiagnosisiTestDetailsPage from "../../components/admin/DiagnosisiTestDetailsPage";
+import Settings from "../../components/admin/Settings/Settings";
+
+
 
 const Homepage = () => {
   const queryClient = new QueryClient();
@@ -36,19 +39,24 @@ const Homepage = () => {
   };
   const [Ref, SetRef] = useState();
 
+  const name= "abhilash"
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
-      
-        <div className="">
-        <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-        </div>
-       
-        <div className="flex  w-full     ">
-          {/* <Sidebar isOpen={isSidebarOpen} /> */} 
 
-          <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-          <div className="flex-1   w-full h-full  overflow-y-auto ">
+        <div className="">
+          <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} name={name} />
+        </div>
+
+        <div className="flex  w-full h-full ">
+          {/* <Sidebar isOpen={isSidebarOpen} /> */}
+
+          <div className="h-full bg-red-300">
+            <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+          </div>
+
+          <div className="flex-1   w-full h-full   ">
 
             <div className="w-full h-auto  ">
               <Routes>
@@ -101,6 +109,7 @@ const Homepage = () => {
           </div>
         </div>
       </QueryClientProvider>
+
     </>
   );
 };

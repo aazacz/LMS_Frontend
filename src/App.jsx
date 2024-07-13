@@ -8,6 +8,7 @@ const AdminRoutes = lazy(() => import('./routes/AdminRoutes'));
 const TutorRoutes = lazy(() => import('./routes/TutorRoutes'));
 const UserRoutes = lazy(() => import('./routes/UserRoutes'));
 
+
 function App() {
   return (
    

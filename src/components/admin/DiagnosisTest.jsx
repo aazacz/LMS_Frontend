@@ -45,9 +45,6 @@ const DiagnosisTest = () => {
 
   ]
 
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error: {error.message}</div>;
-
 
   //function to fetch the data
   const fetchDiagnosisData = async () => {
@@ -63,15 +60,19 @@ const DiagnosisTest = () => {
 
 
   const { data, isPending, isError, error, refetch } = useQuery({
-    queryKey: ["diagnosisiTestData"],
-    queryFn: fetchDiagnosisData,
-    staleTime: 1000,
-    refetchInterval: 600000,
-  })
+          queryKey: ["diagnosisiTestData"],
+          queryFn: fetchDiagnosisData,
+          staleTime: 1000,
+          refetchInterval: 600000,
+        })
+
+
 
   useEffect(() => {
     refetch();
   }, []);
+
+  
 
 
 

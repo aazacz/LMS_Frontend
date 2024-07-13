@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import { AdminAxiosInstance } from '../../routes/AdminRoutes';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TfiWrite } from 'react-icons/tfi';
@@ -50,10 +51,8 @@ const AddCourse = () => {
   //Getting course structure data from database 
   useEffect(() => {
 
-    axios
-      .get(`${baseURL}api/structure/get-all-structure`, {
-        headers: { authorization: `Bearer ${token}` }
-      })
+    AdminAxiosInstance
+      .get(`api/structure/get-all-structure`)
       .then((res) => {
         const data = res.data.data;
         setCourseStructure(data);
@@ -67,14 +66,13 @@ const AddCourse = () => {
       .catch((err) => {
         console.error(err.message);
       });
-  }, [baseURL, token]);
+  }, [token]);
 
 
   //getting the package information from database
   useEffect(() => {
 
-    axios.get(`${baseURL}api/package/get-all-package?page=1&pageSize=10&search=`,
-      { headers: { authorization: `Bearer ${token}` } })
+    AdminAxiosInstance.get(`api/package/get-all-package?page=1&pageSize=10&search=`)
       .then((res) => {
         setpackages(res.data.data)
       })
@@ -212,8 +210,7 @@ const AddCourse = () => {
 
     const { name, value } = e.target;
     setCourse((prevState) => ({
-      ...prevState,
-      [name]: value,
+      ...prevState,  [name]: value,
     }));
   };
 
@@ -240,9 +237,7 @@ const AddCourse = () => {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        axios.post(`${baseURL}api/course/create`, course, {
-          authorisation: `Bearer ${token}`
-        })
+        AdminAxiosInstance.post(`api/course/create`, course)
           .then((res) => {
             console.log(res.data)
             if (res.data.message === "Course created successfully") {
@@ -292,7 +287,7 @@ const AddCourse = () => {
 
 
   return (
-    <div className="w-full p-5 px-16 bg-slate-200 rounded-lg mt-2">
+    <div className="w-full p-5 md:px-16 bg-slate-200 rounded-lg mt-2">
       <h1 className="font-bold font-poppins text-2xl pb-6 flex items-center gap-x-4">
         Create a new Course {<TfiWrite className="text-lg " />}
       </h1>
@@ -352,6 +347,7 @@ const AddCourse = () => {
           {/* Course Name */}
           <div className="w-full md:w-1/2">
             <label className="text-sm font-semibold">Course Name</label>
+      
             <input
               onChange={handleInputChange}
               name="courseName"
@@ -360,12 +356,14 @@ const AddCourse = () => {
               placeholder="Course Name"
               className="w-full h-10 bg-white text-sm border-[1px] border-gray-500 rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
             />
+
+
             {errors.courseName && (
               <p className="text-red-500 text-xs">{errors.courseName}</p>
             )}
           </div>
 
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-1/2 pt-4 md:pt-0">
             <label className="text-sm font-semibold">Package</label>
             <select
               onChange={handleInputChange}
@@ -393,9 +391,9 @@ const AddCourse = () => {
           </div>
         </div>
 
-        <div className="flex gap-x-4">
+        <div className="flex gap-x-4  items-end" >
           <div className="w-full md:w-1/2">
-            <label className="text-sm font-semibold">Training Duration</label>
+            <label className="text-sm font-semibold line-clamp-1">Duration</label>
             <input
               min="0"
               oninput="validity.valid||(value='');"
@@ -442,14 +440,14 @@ const AddCourse = () => {
           </div>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           <label className="text-sm font-semibold">Description</label>
           <textarea
             onChange={handleInputChange}
             name="description"
             placeholder="Description"
             value={course.description}
-            className="w-full md:h-20 rounded border-[1px] border-gray-500 mt-2 shadow-lg p-2"
+            className="w-full h-20 md:h-20 rounded border-[1px] border-gray-500 mt-2 shadow-lg p-2"
           />
           {errors.description && (
             <p className="text-red-500 text-xs">{errors.description}</p>
@@ -555,7 +553,7 @@ const AddCourse = () => {
                           className="w-full h-10 bg-white  text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
                         />
                       </div>
-                      <div className="w-full md:w-1/2">
+                      <div className="w-full md:w-1/2 pt-4 md:pt-0">
                         <label className="text-sm font-semibold">
                           Session Description
                         </label>

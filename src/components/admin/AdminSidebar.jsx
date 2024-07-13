@@ -136,14 +136,13 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen,setIsSidebarOpen}) => {
 
 
   return (
-    <div className={` absolute  md:relative  z-50
+    <div className={`h-full bg-white  absolute  md:relative  z-50
                        ${isSidebarOpen ? "" : " -translate-x-full md:translate-x-0"}
-                        h-screen transition-all duration-500  font-poppins text-sm font-medium `}>
-      <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="210px">
+                         transition-all duration-500  font-poppins text-sm font-medium `}>
+      <Sidebar  collapsed={collapsed} backgroundColor="#fff"  width="210px">
         <Menu
-          className=""
-          menuItemStyles={{
-            icon: { fontSize: "20px" },
+            menuItemStyles={{
+            icon: { fontSize: '20px' },
           }}
         >
           {/* Menu Logo */}

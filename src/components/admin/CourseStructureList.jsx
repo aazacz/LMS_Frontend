@@ -50,34 +50,42 @@ const CourseStructureList = () => {
                     wrapperClass=""
                 />
 
-            </div>) : 
-            (<div className=' p-4'>
+            </div>) :
+                (<div className=' p-4'>
 
 
 
-                {/* heading and button div */}
-                <div className=' flex justify-between py-2 border-b-2'>
-                    <h1 className='font-poppins font-semibold text-2xl '>Course Structure</h1>
+                    {/* heading and button div */}
+                    <div className=' flex justify-between py-2 border-b-2'>
+                        <h1 className='font-poppins font-semibold md:text-2xl text-xl '>Course Structure</h1>
 
-                    <Link replace to={`/admin/home/courseStructure/addcoursestructure`} className='bg-[#F5F1F1]'>
-                        <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
-                            <FaCirclePlus className='text-slate-600 ' />     Add Course Structure         </button>
-                    </Link>
+                        <Link replace to={`/admin/home/courseStructure/addcoursestructure`} className='bg-[#F5F1F1] hidden md:block '>
+                            <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
+                                <FaCirclePlus className='text-slate-600 ' />     Add Course Structure         </button>
+                        </Link>
 
-                </div>
+                    </div>
 
-                <div className='grid grid-cols-1 mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-                    {loading ? (
-                        <Loader />
-                    ) : (
-                        courses.map((course, index) => (
-                            <Link key={index} to={`/admin/home/coursestructure/${course._id}`}>
-                                <CourseCard course={course} />
-                            </Link>
-                        ))
-                    )}
-                </div>
-            </div>)}
+                    <div className='w-full flex py-3 justify-end md:hidden '>
+
+                        <Link replace to={`/admin/home/courseStructure/addcoursestructure`} className=' '>
+                            <button className='flex  items-center  gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-[#F5F1F1] p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
+                                <FaCirclePlus className='text-slate-600 ' />     Add Course Structure         </button>
+                        </Link>
+                    </div>
+
+                    <div className='grid grid-cols-2 mt-4  md:grid-cols-3 lg:grid-cols-4 gap-4'>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            courses.map((course, index) => (
+                                <Link key={index} to={`/admin/home/coursestructure/${course._id}`}>
+                                    <CourseCard course={course} />
+                                </Link>
+                            ))
+                        )}
+                    </div>
+                </div>)}
 
 
         </>
@@ -93,15 +101,18 @@ export default CourseStructureList
 
 const CourseCard = ({ course }) => {
     return (
-        <div className='bg-gray-200 p-4 rounded-2xl min-h-[16rem] h-auto'>
+        <div className='bg-gray-200 md:p-4 p-1 rounded-2xl min-h-[12rem] h-auto'>
             <div className='w-full rounded-lg'>
                 <img src={coursephoto} className='rounded-lg w-full object-contain' alt="Course" />
             </div>
-            <div className='w-full mt-4'>
-                <div className='min-h-[3rem]'>
-                    <h1 className='font-plusjakartasans font-semibold text-base line-clamp-2'>{course.courseName}</h1>
+
+            <div className='w-full md:mt-4 mt-2 pb-2 px-2 md:px-0'>
+
+                <div className=' md:min-h-[3rem]'>
+                    <h1 className='font-plusjakartasans font-semibold text-base line-clamp-1 md:line-clamp-2'>{course.courseName}</h1>
                 </div>
-                <div className='flex items-center gap-x-6 mt-2'>
+
+                <div className='flex md:flex-row flex-col md:items-center gap-x-6 mt-2'>
                     <span className='flex items-center gap-x-1 text-sm font-plusjakartasans'>
                         <BiSpreadsheet className='text-gray-400' /> {course.modules.length}  Modules
                     </span>

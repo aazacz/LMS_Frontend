@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AdminAxiosInstance } from "../../routes/AdminRoutes";
 import React, { useState, useEffect } from "react";
 import { FiPlusCircle } from "react-icons/fi";
 import { toast } from "react-toastify";
@@ -126,7 +127,7 @@ const baseUrl = process.env.REACT_APP_API_URL;
     event.preventDefault();
     console.log(test);
 
-    axios.post(`${baseUrl}api/diagnosis/create-diagnosis`,test).then((res)=>{
+    AdminAxiosInstance.post(`api/diagnosis/create-diagnosis`,test).then((res)=>{
       console.log(res)
       if(res.data.status===201){
 

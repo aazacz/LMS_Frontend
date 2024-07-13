@@ -14,6 +14,7 @@ import { Tooltip } from "react-tooltip";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GiBookmarklet } from "react-icons/gi";
 import { PiTreeStructureFill } from "react-icons/pi";
+import { clearAdminDetails } from "../../store/reducers/AdminloginSlice";
 
 
 

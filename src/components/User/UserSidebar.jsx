@@ -19,6 +19,7 @@ import { Tooltip } from "react-tooltip";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GiBookmarklet } from "react-icons/gi";
 import { PiTreeStructureFill } from "react-icons/pi";
+import { clearStudentDetails } from "../../store/reducers/StudentloginSlice";
 
 const UserSideBar = ({ isOpen, isSidebarOpen }) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -59,7 +60,7 @@ const UserSideBar = ({ isOpen, isSidebarOpen }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(clearStudentDetails());
-        navigate("/student");
+        navigate("/");
       }
     });
   };

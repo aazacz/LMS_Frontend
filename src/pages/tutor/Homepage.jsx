@@ -22,7 +22,7 @@ import MarksGrading from "../../components/tutor/MarksGrading";
 import AllMaterials from "../../components/tutor/AllMaterials";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const Homepage = () => {
+const Homepage = ( ) => {
   const queryClient = new QueryClient();
 
   const divRef = useRef(null);

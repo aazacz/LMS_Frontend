@@ -16,8 +16,9 @@ import { MdContentPaste } from "react-icons/md";
 import { FaClipboardQuestion } from "react-icons/fa6";
 import { PiStudentFill } from "react-icons/pi";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { clearTutorDetails } from "../../store/reducers/TutorloginSlice";
 
-const TutorSideBar = ({ isOpen, isSidebarOpen }) => {
+const TutorSideBar = ({ isOpen, isSidebarOpen,setIsSidebarOpen  }) => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -55,9 +56,9 @@ const TutorSideBar = ({ isOpen, isSidebarOpen }) => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(clearStudentDetails());
+        dispatch(clearTutorDetails());
 
-        navigate("/");
+        navigate("/tutor");
       }
     });
   };

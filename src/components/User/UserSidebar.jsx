@@ -19,8 +19,9 @@ import { Tooltip } from 'react-tooltip'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { GiBookmarklet } from 'react-icons/gi'
 import { PiTreeStructureFill } from 'react-icons/pi'
+import { clearStudentDetails } from '../../store/reducers/StudentloginSlice'
 
-const UserSideBar = ({ isOpen, isSidebarOpen }) => {
+const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
     const [collapsed, setCollapsed] = useState(false)
     const location = useLocation()
     const navigate = useNavigate()
@@ -45,7 +46,6 @@ const UserSideBar = ({ isOpen, isSidebarOpen }) => {
             }, 1000)
         }
     }
-  };
   const handleLogout = () => {
     Swal.fire({
       title: "Do you want to Logout?",
@@ -157,10 +157,10 @@ const UserSideBar = ({ isOpen, isSidebarOpen }) => {
                         }
                     ></MenuItem>
 
-                    {navLinks.map((link) =>
+                    {navLinks.map((link, index) =>
                         link.subLinks ? (
                             <SubMenu
-                                key={link.title}
+                                key={index}
                                 label={link.title}
                                 icon={link.icon}
                                 className={`relative side-menu-item  ${
@@ -169,9 +169,9 @@ const UserSideBar = ({ isOpen, isSidebarOpen }) => {
                                         : 'side-menu-item '
                                 }`}
                             >
-                                {link.subLinks.map((subLink) => (
+                                {link.subLinks.map((subLink,index) => (
                                     <MenuItem
-                                        key={subLink.title}
+                                        key={index}
                                         className={`relative side-menu-item  ${
                                             isActive(subLink.path)
                                                 ? 'bg-blue-500 '

@@ -79,7 +79,7 @@ const Library = () => {
   };
 
   return (
-    <div className="w-full h-screen overflow-y-scroll no-scrollbar ">
+    <div className="w-full h-screen -z-10 overflow-y-scroll no-scrollbar  ">
       <div
         onClick={() => setModal(false)}
         className={`w-full flex  ${Modal ? " bg-gray-200" : " "}`}

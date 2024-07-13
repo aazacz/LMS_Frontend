@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import { AdminAxiosInstance } from '../../routes/AdminRoutes';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TfiWrite } from 'react-icons/tfi';
@@ -50,10 +51,8 @@ const AddCourse = () => {
   //Getting course structure data from database 
   useEffect(() => {
 
-    axios
-      .get(`${baseURL}api/structure/get-all-structure`, {
-        headers: { authorization: `Bearer ${token}` }
-      })
+    AdminAxiosInstance
+      .get(`api/structure/get-all-structure`)
       .then((res) => {
         const data = res.data.data;
         setCourseStructure(data);
@@ -73,8 +72,7 @@ const AddCourse = () => {
   //getting the package information from database
   useEffect(() => {
 
-    axios.get(`${baseURL}api/package/get-all-package?page=1&pageSize=10&search=`,
-      { headers: { authorization: `Bearer ${token}` } })
+    AdminAxiosInstance.get(`api/package/get-all-package?page=1&pageSize=10&search=`)
       .then((res) => {
         setpackages(res.data.data)
       })
@@ -239,9 +237,7 @@ const AddCourse = () => {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        axios.post(`${baseURL}api/course/create`, course, {
-          authorisation: `Bearer ${token}`
-        })
+        AdminAxiosInstance.post(`api/course/create`, course)
           .then((res) => {
             console.log(res.data)
             if (res.data.message === "Course created successfully") {

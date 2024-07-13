@@ -1,13 +1,11 @@
 import  axios  from "axios";
-import { useSelector } from 'react-redux';
-import {StudentToken} from "../api/TokenStore/studenttoken"
 
 
-const token = StudentToken()
+
 const baseURL = process.env.REACT_APP_API_URL;
 
 
-const axiosInstanceStudent = axios.create()
+export const axiosInstanceStudent = axios.create()
 
 
 axiosInstanceStudent.interceptors.request.use(function(config){

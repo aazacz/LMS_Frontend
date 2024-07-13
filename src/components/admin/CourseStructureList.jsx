@@ -50,42 +50,42 @@ const CourseStructureList = () => {
                     wrapperClass=""
                 />
 
-            </div>) : 
-            (<div className=' p-4'>
+            </div>) :
+                (<div className=' p-4'>
 
 
 
-                {/* heading and button div */}
-                <div className=' flex justify-between py-2 border-b-2'>
-                    <h1 className='font-poppins font-semibold md:text-2xl text-xl '>Course Structure</h1>
+                    {/* heading and button div */}
+                    <div className=' flex justify-between py-2 border-b-2'>
+                        <h1 className='font-poppins font-semibold md:text-2xl text-xl '>Course Structure</h1>
 
-                    <Link replace to={`/admin/home/courseStructure/addcoursestructure`} className='bg-[#F5F1F1] hidden md:block '>
-                        <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
-                            <FaCirclePlus className='text-slate-600 ' />     Add Course Structure         </button>
-                    </Link>
+                        <Link replace to={`/admin/home/courseStructure/addcoursestructure`} className='bg-[#F5F1F1] hidden md:block '>
+                            <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
+                                <FaCirclePlus className='text-slate-600 ' />     Add Course Structure         </button>
+                        </Link>
 
-                </div>
+                    </div>
 
-<div className='w-full flex py-3 justify-end md:hidden '>
+                    <div className='w-full flex py-3 justify-end md:hidden '>
 
-                <Link replace to={`/admin/home/courseStructure/addcoursestructure`} className=' '>
-                        <button className='flex  items-center  gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-[#F5F1F1] p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
-                            <FaCirclePlus className='text-slate-600 ' />     Add Course Structure         </button>
-                    </Link>
-</div>
+                        <Link replace to={`/admin/home/courseStructure/addcoursestructure`} className=' '>
+                            <button className='flex  items-center  gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-[#F5F1F1] p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
+                                <FaCirclePlus className='text-slate-600 ' />     Add Course Structure         </button>
+                        </Link>
+                    </div>
 
-                <div className='grid grid-cols-2 mt-4  md:grid-cols-3 lg:grid-cols-4 gap-4'>
-                    {loading ? (
-                        <Loader />
-                    ) : (
-                        courses.map((course, index) => (
-                            <Link key={index} to={`/admin/home/coursestructure/${course._id}`}>
-                                <CourseCard course={course} />
-                            </Link>
-                        ))
-                    )}
-                </div>
-            </div>)}
+                    <div className='grid grid-cols-2 mt-4  md:grid-cols-3 lg:grid-cols-4 gap-4'>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            courses.map((course, index) => (
+                                <Link key={index} to={`/admin/home/coursestructure/${course._id}`}>
+                                    <CourseCard course={course} />
+                                </Link>
+                            ))
+                        )}
+                    </div>
+                </div>)}
 
 
         </>
@@ -105,7 +105,7 @@ const CourseCard = ({ course }) => {
             <div className='w-full rounded-lg'>
                 <img src={coursephoto} className='rounded-lg w-full object-contain' alt="Course" />
             </div>
-          
+
             <div className='w-full md:mt-4 mt-2 pb-2 px-2 md:px-0'>
 
                 <div className=' md:min-h-[3rem]'>

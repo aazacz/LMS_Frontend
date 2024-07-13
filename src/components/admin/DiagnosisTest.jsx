@@ -45,9 +45,6 @@ const DiagnosisTest = () => {
 
   ]
 
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error: {error.message}</div>;
-
 
   //function to fetch the data
   const fetchDiagnosisData = async () => {

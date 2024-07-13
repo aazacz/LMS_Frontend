@@ -1,9 +1,7 @@
-import  axios  from "axios";
-import { useSelector } from 'react-redux';
-import {TutorToken} from "../api/TokenStore/TutorToken"
+import  axios      from "axios";
+import TutorToken  from "../api/TokenStore/TutorToken"
 
 
-const token = TutorToken()
 const baseURL = process.env.REACT_APP_API_URL;
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TfiWrite } from 'react-icons/tfi';
 import "./AddCourseStructure.css"
@@ -7,7 +7,7 @@ import { IoIosCloseCircle } from 'react-icons/io';
 import "../../index.css"
 import "./Addcourse.css"
 import Swal from 'sweetalert2';
-import axios from "../../api/AdminAxiosInstance" 
+import { AdminAxiosInstance } from '../../routes/AdminRoutes';
 
 
 
@@ -17,10 +17,11 @@ const AddCourseStructure = () => {
   const token = useSelector((state) => state.AdminDetails.token);
   const baseURL = process.env.REACT_APP_API_URL;
 
+  const{structureId} = useParams()
+
+
   const [errors, setErrors] = useState({});
-  const [courseStructureDropDown, setCourseStructureDropDown] = useState([]);
   const [packages, setpackages] = useState();
-  const [CourseStructure, setCourseStructure] = useState([]);
   const [durationType, setDurationType] = useState('');
 
   const [course, setCourse] = useState({
@@ -49,32 +50,31 @@ const AddCourseStructure = () => {
   });
 
 
-
-  //Getting course structure data from database 
+  // This checks whether there is course Structure Id is present
   useEffect(() => {
-
-      axios
-      .get(`api/structure/get-all-structure`)
-      .then((res) => {
-        const data = res.data.data;
-        setCourseStructure(data);
-
-        const newDropDownOptions = data.map((value) => ({
-          _id: value._id,
-          courseName: value.courseName,
-        }));
-        setCourseStructureDropDown(newDropDownOptions);
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
-  }, [baseURL, token]);
-
+    const fetchStructure = async () => {
+      try {
+        if (structureId) {
+          // const response = await AdminAxiosInstance.get(`api/structure/get/66516cde0f76885562eb6bbf/${structureId}`);
+          const response = await AdminAxiosInstance.get(`api/structure/get/66516cde0f76885562eb6bbf`);
+          console.log("res.data structureId", response.data);
+          if (response.data) {
+            setCourse(response.data);
+          }
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+  
+    fetchStructure();
+  }, [structureId]); // Include only structureId as a dependency
+  
 
   //getting the package information from database
   useEffect(() => {
 
-    axios.get(`api/package/get-all-package?page=1&pageSize=10&search=`)
+    AdminAxiosInstance.get(`api/package/get-all-package?page=1&pageSize=10&search=`)
       .then((res) => {
         setpackages(res.data.data)
       })
@@ -190,6 +190,18 @@ const AddCourseStructure = () => {
       ...prevCourse,
       [name]: type === 'checkbox' ? checked : value,
     }));
+
+    if (name === 'trainingDuration' || name === 'durationType') {
+      setCourse((prevCourse) => ({
+        ...prevCourse,
+        trainingDuration: name === 'trainingDuration'
+          ? `${value} ${durationType}`
+          : `${prevCourse.trainingDuration.split(' ')[0]} ${value}`,
+      }));
+    }
+
+
+
   };
 
   useEffect(() => {
@@ -201,7 +213,7 @@ const AddCourseStructure = () => {
 
   const axiosHandler = () => {
 
-    axios.post(`api/structure/create`, course)
+    AdminAxiosInstance.post(`api/structure/create`, course)
          .then((res) => {
 
         console.log(res)
@@ -328,17 +340,22 @@ const AddCourseStructure = () => {
               <input
                 min="0"
                 oninput="validity.valid||(value='');"
-                onChange={handleInputChange}
+                onChange={()=>handleInputChange}
                 name="trainingDuration"
+                value={course.trainingDuration.split(' ')[0]}
                 type="number"
-                value={course?.trainingDuration}
+            
                 placeholder="Total Duration"
                 className="w-1/2 h-10 border-[1px] border-gray-500 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
               />
 
-              <select onChange={handleInputChange}
-                name="package"
-                value={course.package}
+              <select 
+              
+              onChange={(e) => setDurationType(e.target.value)}
+              name="durationType"
+              value={durationType}
+                
+                
                 className="  w-1/2 h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900 border-[1px] border-gray-500">
 
                 <option value="select Duration" defaultChecked className=" font-poppins opac text-slate-500">  Select duration     </option>

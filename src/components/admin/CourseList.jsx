@@ -4,12 +4,12 @@ import { BiSpreadsheet } from "react-icons/bi";
 import { LuTimer } from "react-icons/lu";
 import { Link } from 'react-router-dom';
 import { FaCirclePlus } from 'react-icons/fa6';
-import axios from 'axios';
+import { AdminAxiosInstance } from '../../routes/AdminRoutes';
 import { useSelector } from 'react-redux';
 import Loader from '../reusable/Loader'; // Ensure Loader is correctly imported
 import { RotatingLines } from 'react-loader-spinner';
 
-const CourseList = ({name}) => {
+const CourseList = ({ name }) => {
     const baseUrl = process.env.REACT_APP_API_URL;
     const token = useSelector((state) => state.AdminDetails.token);
     const [courses, setCourses] = useState([]);
@@ -19,16 +19,14 @@ const CourseList = ({name}) => {
         const getdata = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get(`${baseUrl}api/course/get-all-course?page=1&pageSize=0&search=`, {
-                    headers: { authorization: `Bearer ${token}` }
-                });
+                const response = await AdminAxiosInstance.get(`api/course/get-all-course?page=1&pageSize=0&search=`);
                 console.log(response.data.data);
                 setCourses(response.data.data);
                 setLoading(false)
             } catch (err) {
                 console.log(err);
                 setLoading(true);
-            } 
+            }
         };
 
         getdata();
@@ -63,14 +61,14 @@ const CourseList = ({name}) => {
                     </Link>
                 </div>
 
-                <div className='grid xs:grid-cols-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-                                    
-                  {      courses.map((course, index) => (
-                            <Link key={index} to={`/admin/home/courses/${course._id}`}>
-                                <CourseCard  course={course} />
-                            </Link>
-                        ))}
-                
+                <div className='grid grid-cols-2 mt-4  md:grid-cols-3 lg:grid-cols-4 gap-4'>
+
+                    {courses.map((course, index) => (
+                        <Link key={index} to={`/admin/home/courses/${course._id}`}>
+                            <CourseCard course={course} />
+                        </Link>
+                    ))}
+
                 </div>
             </div>)}
 

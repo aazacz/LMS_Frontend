@@ -20,7 +20,13 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { GiBookmarklet } from "react-icons/gi";
 import { PiTreeStructureFill } from "react-icons/pi";
 
-const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
+
+
+
+const AdminSidebar = ({ isOpen ,isSidebarOpen,setIsSidebarOpen}) => {
+
+
+
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -35,7 +41,8 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
 
   const dispatch = useDispatch();
 
-  const handlecollapse = () => {
+  // Handle logout function
+    const handlecollapse = () => {
     if (collapsed === true) {
       return;
     } else {
@@ -44,7 +51,10 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
         setCollapsed(false);
       }, 1000);
     }
-  };
+  }
+
+
+  // Handle logout function
   const handleLogout = () => {
     Swal.fire({
       title: "Do you want to Logout?",
@@ -123,22 +133,13 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
     },
   ];
 
+
+
   return (
-    <div
-      className={` absolute  md:relative  *
-                       ${
-                         isSidebarOpen
-                           ? ""
-                           : " -translate-x-full md:translate-x-0"
-                       }
-                        h-screen transition-all duration-500  font-poppins text-sm font-medium `}
-    >
-      <Sidebar
-        className="h-screen"
-        collapsed={collapsed}
-        backgroundColor="#fff"
-        width="210px"
-      >
+    <div className={` absolute  md:relative  z-50
+                       ${isSidebarOpen ? "" : " -translate-x-full md:translate-x-0"}
+                        h-screen transition-all duration-500  font-poppins text-sm font-medium `}>
+      <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="210px">
         <Menu
           className=""
           menuItemStyles={{
@@ -165,24 +166,16 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
                 key={link.title}
                 label={link.title}
                 icon={link.icon}
-                className={`relative side-menu-item  ${
-                  isActive(link.path)
-                    ? "bg-blue-500 text-gray-500"
-                    : "side-menu-item "
-                }`}
+                className={`relative side-menu-item  ${isActive(link.path) ? "bg-blue-500 text-gray-500" : "side-menu-item " }`}
               >
+
                 {link.subLinks.map((subLink) => (
                   <MenuItem
                     key={subLink.title}
-                    className={`relative side-menu-item  ${
-                      isActive(subLink.path)
-                        ? "bg-blue-500 "
-                        : "side-menu-item text-gray-400"
-                    }`}
-                    onClick={() => {
-                      setIsSidebarOpen();
-                      navigate(subLink.path);
-                    }}
+                    className={`relative side-menu-item  ${isActive(subLink.path) ? "bg-blue-500 " : "side-menu-item text-gray-400"
+                      }`} 
+                      onClick={() =>{setIsSidebarOpen(false);
+                                     navigate(subLink.path)}}
                   >
                     <div className="flex  ">
                       {" "}
@@ -200,7 +193,10 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
                     : "side-menu-item"
                 }`}
                 icon={link.icon}
-                onClick={() => navigate(link.path)}
+                onClick={() =>
+                              { setIsSidebarOpen(false); 
+                                navigate(link.path) 
+                              }}
               >
                 {collapsed ? (
                   <div className="group">

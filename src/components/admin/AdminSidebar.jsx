@@ -81,6 +81,11 @@ const AdminSidebar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
             path: '/admin/home/courseStructure',
             icon: <PiTreeStructureFill className="text-xl text-gray-900" />,
         },
+        {
+            title: 'Package',
+            path: '/admin/home/package',
+            icon: <PiStudentBold className="text-xl text-gray-900" />,
+        },
 
         {
             title: 'Students',

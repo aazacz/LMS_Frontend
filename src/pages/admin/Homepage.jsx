@@ -68,6 +68,7 @@ const Homepage = () => {
                 <Route path="/courseStructure/addcoursestructure" element={<AddCourseStructure />} />
                 <Route path="/coursestructure/:structureId" element={<CourseStructureDetails />} />
                 <Route path="/coursestructure/editcoursestructure/:structureId" element={<AddCourseStructure />} />
+                <Route path="/package" element={< Package/>} />
                 <Route path="/students/:studentId" element={<StudentDetail />} />
                 <Route path="/students" element={<StudentList />} />
                 <Route path="/tutors/addtutor" element={<AddTutor />} />

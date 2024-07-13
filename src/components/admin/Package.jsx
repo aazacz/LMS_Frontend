@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaCirclePlus } from "react-icons/fa6";
 import axios from "axios";
 import Swal from "sweetalert2";
-import PackageModal from "./Modal/PackageModal"; // Adjust the path as needed
+import PackageModal from "./Modal/PackageModal"; 
 
 const Package = () => {
   const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000/';
@@ -10,7 +10,7 @@ const Package = () => {
   const [editingPackageId, setEditingPackageId] = useState(null);
   const [editPackageValue, setEditPackageValue] = useState("");
   const [deleteSuccess, setDeleteSuccess] = useState(false);
-  const [addSuccess, setAddSuccess] = useState(false); // Add state for success message
+  const [addSuccess, setAddSuccess] = useState(false); 
   const [error, setError] = useState();
   const [showModal, setShowModal] = useState(false);
   const [newPackageName, setNewPackageName] = useState("");
@@ -27,7 +27,7 @@ const Package = () => {
       }
     };
     fetchPackages();
-  }, [deleteSuccess]);
+  }, [baseURL ,deleteSuccess]);
 
   const handleEdit = (id, initialPackageName) => {
     setEditingPackageId(id);
@@ -97,24 +97,23 @@ const Package = () => {
 
   const closeModal = () => {
     setShowModal(false);
-    setNewPackageName(""); // Reset modal input value
+    setNewPackageName(""); 
   };
 
   const handleModalSave = async () => {
     try {
       const response = await axios.post(`${baseURL}api/package/create`, {
         packageName: newPackageName,
-        // Add other fields as needed
       });
 
-      setPackages([...packages, response.data]); // Assuming response.data is the new package object
-      setAddSuccess(true); // Show success message
+      setPackages([...packages, response.data]); 
+      setAddSuccess(true); 
 
       setTimeout(() => {
-        setAddSuccess(false); // Hide success message after 3 seconds
+        setAddSuccess(false); 
       }, 3000);
 
-      closeModal(); // Close modal after successful save
+      closeModal(); 
     } catch (error) {
       setError(error.message);
     }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { FiPlusCircle } from "react-icons/fi"
 import { toast } from 'react-toastify'
 import { coursestructureform } from "../../utils/adminSide/Formvalidation"
@@ -51,6 +52,9 @@ const CourseStructure = () => {
         ]
     })
 
+
+
+    
 
     // function to add a new module
     const addModule = () => {
@@ -450,5 +454,6 @@ const CourseStructure = () => {
         </div>
     )
 }
+
 
 export default CourseStructure

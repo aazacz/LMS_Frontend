@@ -1,4 +1,4 @@
-.student-diagnostic-test-rules-main-container{
+.student-diagnostic-test-rules-main-container {
     width: 100%;
     height: max-content;
     display: flex;
@@ -6,22 +6,18 @@
     padding: 20px 50px;
 }
 
-.student-diagnostic-test-main-title{
+.student-diagnostic-test-main-title {
     font-weight: 700;
     margin-top: 2%;
 }
 
-
-
-.text-bold{
+.text-bold {
     font-weight: 600;
 }
 
-.student-diagnostic-test-submit-button{
-  
-
+.student-diagnostic-test-submit-button {
     color: white;
-    background-color: #00B45D;
+    background-color: #00b45d;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -32,33 +28,33 @@
     transition: 0.1s ease-in-out;
 }
 
-.student-diagnostic-test-submit-button:hover{
-   width:15% ;
-   background-color: #079e55;
-   height: 22%;
-   font-size: 18px;
+.student-diagnostic-test-submit-button:hover {
+    width: 15%;
+    background-color: #079e55;
+    height: 22%;
+    font-size: 18px;
 }
 
-@media(max-width:700px){
-    .student-diagnostic-test-main-title{
+@media (max-width: 700px) {
+    .student-diagnostic-test-main-title {
         font-size: 20px;
     }
-    .student-diagnostic-test-sub-title{
+    .student-diagnostic-test-sub-title {
         font-size: 15px;
     }
-    .student-diagnostic-test-submit-button{
-       font-size: 12px;
+    .student-diagnostic-test-submit-button {
+        font-size: 12px;
     }
 }
 
-@media(max-width:400px){
-    .student-diagnostic-test-main-title{
+@media (max-width: 400px) {
+    .student-diagnostic-test-main-title {
         font-size: 18px;
     }
-    .student-diagnostic-test-sub-title{
+    .student-diagnostic-test-sub-title {
         font-size: 15px;
     }
-    .student-diagnostic-test-submit-button{
-       font-size: 12px;
+    .student-diagnostic-test-submit-button {
+        font-size: 12px;
     }
 }

@@ -1,143 +1,142 @@
 .personaldetailscontainer {
-  border: 2px solid #0062cc;
-  border-radius: 50px;
-  z-index: -10;
+    border: 2px solid #0062cc;
+    border-radius: 50px;
+    z-index: -10;
 }
 
 .personaldetailsphoto {
-  /* border: 1px solid black; */
-  display: flex;
-  margin-left: 5%;
-  align-items: center;
-  gap: 20px;
-  z-index: -10;
-
+    /* border: 1px solid black; */
+    display: flex;
+    margin-left: 5%;
+    align-items: center;
+    gap: 20px;
+    z-index: -10;
 }
 
 .details-content-container {
-  /* border: 1px solid black; */
-  /* margin-left: 40px; */
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-top: 20px;
+    /* border: 1px solid black; */
+    /* margin-left: 40px; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 20px;
 }
 
 .details-content {
-  /* border: 1px solid black; */
-  font-family: "Poppins";
-  font-size: 1.2rem;
-  font-weight: 700;
+    /* border: 1px solid black; */
+    font-family: 'Poppins';
+    font-size: 1.2rem;
+    font-weight: 700;
 }
 
 .details-sub-content {
-  font-family: "Poppins";
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 18px;
-  /* border: 1px solid black; */
+    font-family: 'Poppins';
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 18px;
+    /* border: 1px solid black; */
 }
 
-.personal-details-heading{
-  /* border: 1px solid black; */
-  display: flex;
-  justify-content: center;
+.personal-details-heading {
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: center;
 }
 
 .details-heading {
-  /* border: 1px solid black; */
-  display: flex;
-  width: fit-content;
-  flex-direction: column;
-  margin-top: 20px;
-  gap: 2px;
+    /* border: 1px solid black; */
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 2px;
 }
 
 .deatils-sub-heading {
-  font-family: "Poppins";
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 28px;
-  text-align: justify;
+    font-family: 'Poppins';
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 28px;
+    text-align: justify;
 }
 
 .details-sub-sub-heading {
-  font-family: "Poppins";
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 18px;
-  text-align: left;
-  color: #555;
+    font-family: 'Poppins';
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: left;
+    color: #555;
 }
 
 .detail-section {
-  margin-bottom: 15px;
-  /* border: 1px solid black; */
-  width: 100%;
-  padding-top: 10px;
+    margin-bottom: 15px;
+    /* border: 1px solid black; */
+    width: 100%;
+    padding-top: 10px;
 }
 
 .input-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-  margin-bottom: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-bottom: 25px;
 }
 
 .detail-input {
-  display: flex;
-  flex: 1;
-  height: 40px;
-  padding-left: 5px;
-  font-size: 12px;
-  border-radius: 4px;
-  box-sizing: border-box;
-  border: 1.5px solid #e2e2e2;
-  outline: none;
-  background-color: #fafafa;
+    display: flex;
+    flex: 1;
+    height: 40px;
+    padding-left: 5px;
+    font-size: 12px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: 1.5px solid #e2e2e2;
+    outline: none;
+    background-color: #fafafa;
 }
 
 .personal-detail-submit {
-  display: flex;
-  justify-content: center;
-  width: max-content;
-  padding: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  background-color: #0066de;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    width: max-content;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #0066de;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .personal-detail-submit:hover {
-  background-color: #0062cc;
-  outline: none;
+    background-color: #0062cc;
+    outline: none;
 }
 
 @media (max-width: 680px) {
-  .personal-details-heading {
-    padding: 0 30px;
-  }
+    .personal-details-heading {
+        padding: 0 30px;
+    }
 }
 
 @media (max-width: 540px) {
-  .personaldetailsphoto {
-    flex-direction: column;
-    justify-content: left;
-    display: flex;
-  }
-  .details-content-container {
-    margin-left: 8px;
-    flex-direction: column;
-    padding-top: 5px;
-  }
+    .personaldetailsphoto {
+        flex-direction: column;
+        justify-content: left;
+        display: flex;
+    }
+    .details-content-container {
+        margin-left: 8px;
+        flex-direction: column;
+        padding-top: 5px;
+    }
 }
 
 @media (max-width: 480px) {
-  .personaldetailscontainer {
-    border: none;
-  }
+    .personaldetailscontainer {
+        border: none;
+    }
 }

@@ -1,24 +1,19 @@
 .scroll {
     overflow: auto;
     margin-right: 20px;
-  }
-  
-  .scroll::-webkit-scrollbar {
+}
+
+.scroll::-webkit-scrollbar {
     width: 12px;
-    
-  }
-  
-  .scroll::-webkit-scrollbar-track {
+}
+
+.scroll::-webkit-scrollbar-track {
     border-radius: 13px;
     height: 50px;
-    
-  }
-  
-  /* Optionally, you can also style the scrollbar thumb */
-  .scroll::-webkit-scrollbar-thumb {
-    
+}
+
+/* Optionally, you can also style the scrollbar thumb */
+.scroll::-webkit-scrollbar-thumb {
     background-color: #0d7297; /* color of the scroll thumb */
     border-radius: 10px; /* roundness of the scroll thumb */
-
-  }
-  
+}

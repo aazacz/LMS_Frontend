@@ -5,7 +5,11 @@ import mindsatLoader from '/Single_Loader.gif'
 const Loader = () => {
     return (
         <div className="w-full     flex justify-center items-center  bg-opacity-25 z-10">
-            <img src={mindsatLoader} className='w-[80px] animate-spin animate-opacitychange  ' alt="Loading..." />
+            <img
+                src={mindsatLoader}
+                className="w-[80px] animate-spin animate-opacitychange  "
+                alt="Loading..."
+            />
         </div>
     )
 }

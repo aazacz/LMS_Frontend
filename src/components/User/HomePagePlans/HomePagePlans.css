@@ -1,153 +1,151 @@
 .plans-container {
-  border: 2px solid #0262ff;
-  padding: 20px 20px;
-  border-radius: 30px;
-  
+    border: 2px solid #0262ff;
+    padding: 20px 20px;
+    border-radius: 30px;
 }
 
 .plans-heading {
-  /* border: 1px solid black; */
-  display: flex;
-  flex-direction: column;
-  color: #3a343a;
-  margin-left: 4%;
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    color: #3a343a;
+    margin-left: 4%;
 }
 
 .plans-heading h3 {
-  font-weight: 600;
-  font-family: "Poppins";
-  font-size: 50px;
+    font-weight: 600;
+    font-family: 'Poppins';
+    font-size: 50px;
 }
 
 .plans-heading p {
-  font-weight: 500;
-  color: #0262ff;
-  font-family: "Poppins";
-  font-size: 12px;
-  width: 35%;
+    font-weight: 500;
+    color: #0262ff;
+    font-family: 'Poppins';
+    font-size: 12px;
+    width: 35%;
 }
 
 .plans-button-explore {
-  width: 10%;
-  padding: 3px 3px;
-  border-radius: 8px;
-  background-color: #0262ff;
-  font-family: "Poppins";
-  color: white;
-  margin-top: 2%;
-  font-weight: 500;
+    width: 10%;
+    padding: 3px 3px;
+    border-radius: 8px;
+    background-color: #0262ff;
+    font-family: 'Poppins';
+    color: white;
+    margin-top: 2%;
+    font-weight: 500;
 }
 
 .pricing-cards {
-  display: flex;
-  gap: 20px;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 20px;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .pricing-card {
-  margin-top: 2%;
-  background-color: white;
-  border-radius: 10px;
-  border: 1.5px solid #0262ff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  width: 250px;
+    margin-top: 2%;
+    background-color: white;
+    border-radius: 10px;
+    border: 1.5px solid #0262ff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 250px;
 }
 
 .pricing-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 10px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .pricing-card h3 {
-  background: #0262ff;
-  width: 40%;
-  font-size: 15px;
-  color: white;
-  margin-bottom: 5px;
-  margin-left: 4%;
-  margin-top: 8%;
+    background: #0262ff;
+    width: 40%;
+    font-size: 15px;
+    color: white;
+    margin-bottom: 5px;
+    margin-left: 4%;
+    margin-top: 8%;
 }
 
 .pricing-card p {
-  font-size: 18px;
-  color: #0262ff;
-  font-weight: 500;
-  margin-left: 55%;
-  margin-top: -12%;
+    font-size: 18px;
+    color: #0262ff;
+    font-weight: 500;
+    margin-left: 55%;
+    margin-top: -12%;
 }
 
 .start-button {
-  background-color: #0262ff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-bottom: 15px;
-  margin-top: 25px;
+    background-color: #0262ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 15px;
+    margin-top: 25px;
 }
 
 .features {
-  font-family: "Poppins";
-  list-style: none;
-  padding: 0;
-  text-align: left;
-  /* border: 1px solid black; */
-  margin-left: 4%;
+    font-family: 'Poppins';
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    /* border: 1px solid black; */
+    margin-left: 4%;
 }
 
 .features li {
-  font-size: 0.9rem;
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .features li::before {
-  color: green;
-  margin-right: 10px;
+    color: green;
+    margin-right: 10px;
 }
 
-@media (max-width:725px){
+@media (max-width: 725px) {
     .plans-button-explore {
         width: 35%;
-      }
-      .plans-heading {
+    }
+    .plans-heading {
         align-items: center;
-      }
-      .plans-heading h3 {
+    }
+    .plans-heading h3 {
         font-size: 40px;
-      }
-      .plans-heading p {
+    }
+    .plans-heading p {
         width: 65%;
-      }
+    }
 }
 
-@media (max-width:480px){
+@media (max-width: 480px) {
     .plans-heading h3 {
         font-size: 30px;
-      }
-      .plans-button-explore {
+    }
+    .plans-button-explore {
         width: 45%;
-      }
-      .plans-heading p {
+    }
+    .plans-heading p {
         width: 75%;
-      }
+    }
 }
 
-@media (max-width:300px){
-      .plans-button-explore {
+@media (max-width: 300px) {
+    .plans-button-explore {
         width: 55%;
-      }
-      .plans-heading p {
+    }
+    .plans-heading p {
         width: 85%;
-      }
+    }
 }
-

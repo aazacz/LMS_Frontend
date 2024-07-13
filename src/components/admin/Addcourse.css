@@ -9,10 +9,10 @@
   }
   */
 
-  .swal2-title.custom-title {
+.swal2-title.custom-title {
     font-size: 24px; /* Adjust the font size as needed */
-  }
-  
-  .swal2-content.custom-content {
+}
+
+.swal2-content.custom-content {
     font-size: 18px; /* Adjust the font size as needed */
-  }
+}

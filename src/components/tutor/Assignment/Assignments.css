@@ -1,105 +1,105 @@
 .new-assignment-container {
-  /* border: 1px solid black; */
-  padding: 10px 20px;
+    /* border: 1px solid black; */
+    padding: 10px 20px;
 }
 
 .new-assignment-title {
-  color: #666666;
-  font-size: 15px;
-  font-weight: 500;
-  padding: 5px 0;
-  font-family: "Poppins";
+    color: #666666;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 5px 0;
+    font-family: 'Poppins';
 }
 
 .new-assignment-instruction {
-  font-family: "Poppins";
-  font-size: 12px;
-  font-weight: 400;
-  padding: 15px 0;
-  color: #454545;
+    font-family: 'Poppins';
+    font-size: 12px;
+    font-weight: 400;
+    padding: 15px 0;
+    color: #454545;
 }
 
 .new-assignment-name {
-  border: 1.5px solid #d0d0d0;
-  /* border: 2px solid red; */
-  border-radius: 5px;
-  width: 100%;
-  padding: 10px 10px;
-  font-size: 12px;
-  font-family: "Poppins";
+    border: 1.5px solid #d0d0d0;
+    /* border: 2px solid red; */
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px 10px;
+    font-size: 12px;
+    font-family: 'Poppins';
 }
 
 .new-assignment-select {
-  border: 1.5px solid #d0d0d0;
-  border-radius: 5px;
-  width: 100%;
-  padding: 10px 10px;
-  font-size: 12px;
-  font-family: "Poppins";
+    border: 1.5px solid #d0d0d0;
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px 10px;
+    font-size: 12px;
+    font-family: 'Poppins';
 }
 
 .file-input {
-  display: flex;
-  max-width: fit-content;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-family: "Poppins";
-  padding-left: 10px;
-  /* text-align: center; */
-  padding-top: 10px;
-  font-size: 12px;
+    display: flex;
+    max-width: fit-content;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Poppins';
+    padding-left: 10px;
+    /* text-align: center; */
+    padding-top: 10px;
+    font-size: 12px;
 }
 
 .input::placeholder {
-  display: flex;
-  justify-items: center;
-  align-items: center;
+    display: flex;
+    justify-items: center;
+    align-items: center;
 }
 
 .file-input-button {
-  background-color: #407bff;
-  color: white;
-  padding: 10px 10px;
-  font-size: 12px;
-  cursor: pointer;
-  font-family: "Poppins";
-  margin-top: -3.5%;
-}
-
-.btn-webkit-file-upload-button {
-  display: none;
-}
-
-.btn::file-selector-button {
-  display: none !important;
-}
-
-.create-assignment {
-  background-color: #407bff;
-  color: white;
-  padding: 10px 30px;
-  border-radius: 5px;
-  margin-top: 4%;
-  margin-bottom: 5%;
-  align-items: left;
-  justify-content: left;
-}
-
-@media (max-width: 450px) {
-  .create-assignment {
-    margin-top: 10%;
-    margin-left: 25%;
-  }
-}
-
-@media (max-width: 352px) {
-  .file-input-button {
     background-color: #407bff;
     color: white;
     padding: 10px 10px;
     font-size: 12px;
     cursor: pointer;
-    font-family: "Poppins";
-    margin-top: -4%;
-  }
+    font-family: 'Poppins';
+    margin-top: -3.5%;
+}
+
+.btn-webkit-file-upload-button {
+    display: none;
+}
+
+.btn::file-selector-button {
+    display: none !important;
+}
+
+.create-assignment {
+    background-color: #407bff;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 5px;
+    margin-top: 4%;
+    margin-bottom: 5%;
+    align-items: left;
+    justify-content: left;
+}
+
+@media (max-width: 450px) {
+    .create-assignment {
+        margin-top: 10%;
+        margin-left: 25%;
+    }
+}
+
+@media (max-width: 352px) {
+    .file-input-button {
+        background-color: #407bff;
+        color: white;
+        padding: 10px 10px;
+        font-size: 12px;
+        cursor: pointer;
+        font-family: 'Poppins';
+        margin-top: -4%;
+    }
 }

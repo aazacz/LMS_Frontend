@@ -32,42 +32,39 @@ const StudentHomepage = () => {
   };
   return (
     <>
-      <div className="flex h-screen w-full ">
-        <UserSidebar className="h-screen z-30" isOpen={isSidebarOpen}/>
-        <div className="w-full flex-1 px-2 ">
-          <StudentNavbar
-            toggleSidebar={toggleSidebar}
+      <StudentNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+        <div className="flex  w-full relative  ">
+          <UserSidebar
             isSidebarOpen={isSidebarOpen}
+            setIsSidebarOpen={setIsSidebarOpen}
           />
-
-          <div>
-            <Routes>
-              <Route path="/*" element={<Dashboard />} />
-              <Route
-                path="/diagnosistestresult"
-                element={<DiagnosisTestResult />}
-              />
-              <Route path="/courses" element={<CourseList />} />
-              <Route path="/tests" element={<StudentTests />} />
-              <Route
-                path="/courses/:coursedetails"
-                element={<Coursedetails />}
-              />
-              <Route path="/assignments" element={<Assignments />} />
-              <Route path="/tutors" element={<ClassesToday />} />
-              <Route path="/library" element={<Library />} />
-              <Route path="/classestoday" element={<ClassesToday />} />
-              <Route path="/settings/*" element={<Settings />} />
-              <Route path="/cart" element={<ShoppingCart />} />
-              <Route path="/cart/checkout" element={<Checkout />} />
-
-              <Route path="*" element={<ErrorPage />} />
-            </Routes>
+          <div className="flex-1    ">
+            <div className="w-full h-auto">
+              <Routes>
+                <Route path="/*" element={<Dashboard />} />
+                <Route
+                  path="/diagnosistestresult"
+                  element={<DiagnosisTestResult />}
+                />
+                <Route path="/courses" element={<CourseList />} />
+                <Route path="/tests" element={<StudentTests />} />
+                <Route
+                  path="/courses/:coursedetails"
+                  element={<Coursedetails />}
+                />
+                <Route path="/assignments" element={<Assignments />} />
+                <Route path="/tutors" element={<ClassesToday />} />
+                <Route path="/library" element={<Library />} />
+                <Route path="/classestoday" element={<ClassesToday />} />
+                <Route path="/settings/*" element={<Settings />} />
+                <Route path="/cart" element={<ShoppingCart />} />
+                <Route path="/cart/checkout" element={<Checkout />} />
+                <Route path="*" element={<ErrorPage />} />
+              </Routes>
+            </div>
           </div>
         </div>
-      </div>
- 
-      </>
+    </>
   );
 };
 

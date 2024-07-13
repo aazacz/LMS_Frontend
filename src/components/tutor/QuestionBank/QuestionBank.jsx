@@ -83,7 +83,7 @@ const QuestionBank = () => {
     <div className="font-poppins w-full h-max flex flex-col justify-left items-left p-4 ">
       <p className="text-sm md:text-base lg:text-lg font-semibold p-2">Tests</p>
 
-      <div className="w-[100%] h-80 flex ">
+      <div className="w-full h-80 flex ">
         <div className="w-full lg:w-[70%] h-full   flex flex-col p-2">
           <div className="w-full h-max bg-white  flex justify-between items-center text-xs md:text-[14px] rounded-lg p-2">
           <input
@@ -99,9 +99,9 @@ const QuestionBank = () => {
             </button>
           </div>
           {/*Table Starts Here*/}
-          <div className="h-full w-full  ">
-            <div className="overflow-x-auto">
-              <table className="mx-auto max-w-4xl w-full whitespace-nowrap  bg-white  overflow-hidden">
+          <div className="min-w-full sm:w-full">
+            <div className="overflow-x-auto w-full bg-yellow-400">
+              <table className="mx-auto min-w-44 w-full whitespace-nowrap  bg-white  overflow-x-scroll">
                 <thead className="bg-gray-50">
                   <tr className="text-gray-600 text-left">
                     <th className="font-semibold text-sm uppercase px-2 py-2">

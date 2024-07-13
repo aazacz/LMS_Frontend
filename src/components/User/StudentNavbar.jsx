@@ -5,21 +5,22 @@ import { FaBars } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { FiBookOpen, FiBook } from "react-icons/fi";
 import "../admin/AdminNavbar.css";
+import logo from "/Logo.png";
 
 const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.StudentDetails);
-
   console.log(user);
 
   return (
     <>
       {/* ___________________NAVBAR STARTS HERE________________________  */}
 
-      <div className="navbar-container md:px-4  px-2 sticky top-0 w-full h-[10vh]  border-b-[1px] flex justify-between items-center md:py-8 py-5   bg-white     ">
+      <div className="navbar-container md:px-4 px-2 sticky top-0 w-full h-[10vh]   border-b-[1px] flex justify-between items-center  bg-white     ">
         {/*_________________ left side____________________ */}
-        <div className="w-[60%]  font-poppins relative">
+        <div className="w-[60%] h-max font-poppins relative">
+          <img src={logo} className="md:w-[100px] w-[80px]" alt="" />
           <p className=" md:pl-0 text-sm z-10"> Welcome Back!</p>
           <p className="  md:pl-0 md:text-sm font-bold block md:hidden z-20">
             {" "}
@@ -28,7 +29,7 @@ const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
         </div>
 
         {/* _________________right side__________________ */}
-        <div className="w-[40%] flex justify-end    ">
+        <div className="w-[40%] flex justify-end  h-max  ">
           <div className="flex items-center">
             {/* notification bell */}
             <div className=" w-16 flex h-9  justify-start px-2">
@@ -56,10 +57,10 @@ const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
             )}
 
             {/* Admin NAME EMAIL AND PROFILE PHOTO */}
-            <div className="w-[75%]  h-auto md:flex md:flex-row  items-center flex-col hidden">
+            <div className="flex-1  h-auto md:flex md:flex-row  items-center flex-col  hidden">
               <img
                 className=" rounded-full object-cover overflow-hidden md:w-[42px] md:h-[42px] w-[20px] "
-                src={`${user.userImg}`}
+                src={user.userImg}
                 alt=""
               />
               <div className="flex items-center">
@@ -67,7 +68,7 @@ const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
                   <p className=" font-poppins">{user.userName}</p>
                   <p className="text-gray-500 font-poppins">{user.email}</p>
                 </div>
-                {/* <IoIosArrowForward className="text-2xl" /> */}
+                <IoIosArrowForward className="text-2xl" />
               </div>
             </div>
           </div>

@@ -34,9 +34,9 @@ const data = [
 const Dashboard_Calendar = () => {
   return (
     <div className="w-full h-max flex justify-between items-center flex-wrap shadow-md bg-[#E5F0FC]" >
-      <div className="w-full  lg:w-[45%] h-max"><Calendar className="w-full font-poppins border-none border-r-2  bg-[#E5F0FC] object-"/></div>
+      <div className="w-full flex justify-center items-center lg:w-[45%] h-max"><Calendar className=" font-poppins border-none border-r-2  bg-[#E5F0FC] object-"/></div>
       <div className="w-full  lg:w-[55%] h-max ">
-        <div className="w-full h-8 flex  border-b-2 border-dashed border-black justify-between items-center ">
+        <div className="w-full mt-4 h-8 flex  border-b-2 border-dashed border-black justify-between items-center ">
           <p className=" ml-2 text-xs font-semibold font-poppins">
             Upcoming Training on{" "}
             <span className="font-semibold">13 Jan 2022</span>

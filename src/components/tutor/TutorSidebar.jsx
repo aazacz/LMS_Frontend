@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import Logohalf from "/Logohalf.png";
-import Logohalf2 from "/Logohalf2.png";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { IoIosSettings, IoIosPerson, IoIosKey } from "react-icons/io";
-import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 import Tooltip from "@mui/material/Tooltip";
-import { FaPencilAlt } from "react-icons/fa";
+// import { FaPencilAlt } from "react-icons/fa";
 import { IoLibrarySharp } from "react-icons/io5";
 import { MdGrading } from "react-icons/md";
 import { CgInsights } from "react-icons/cg";
@@ -18,10 +15,9 @@ import { clearStudentDetails } from "../../store/reducers/StudentloginSlice";
 import { MdContentPaste } from "react-icons/md";
 import { FaClipboardQuestion } from "react-icons/fa6";
 import { PiStudentFill } from "react-icons/pi";
+import { RxHamburgerMenu } from "react-icons/rx";
 
-const TutorSideBar = ({ isOpen }) => {
-  console.log("isOpen from sidebar");
-  console.log(isOpen);
+const TutorSideBar = ({ isOpen, isSidebarOpen }) => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,6 +29,17 @@ const TutorSideBar = ({ isOpen }) => {
 
   const isActive = (path) => {
     return location.pathname === path;
+  };
+
+  const handlecollapse = () => {
+    if (collapsed === true) {
+      return;
+    } else {
+      setCollapsed(true);
+      setTimeout(() => {
+        setCollapsed(false);
+      }, 1000);
+    }
   };
 
   const handleLogout = () => {
@@ -59,51 +66,51 @@ const TutorSideBar = ({ isOpen }) => {
     {
       title: "Dashboard",
       path: "/tutor/home/dashboard",
-      icon: <MdDashboard className="text-xl text-gray-700" />,
+      icon: <MdDashboard className="text-xl text-black" />,
     },
     {
       title: "Content",
       path: "/tutor/home/content",
-      icon: <MdContentPaste className="text-xl text-gray-700" />,
+      icon: <MdContentPaste className="text-xl text-black" />,
     },
     {
       title: "Question Bank",
       path: "/tutor/home/questionbank",
-      icon: <FaClipboardQuestion className="text-xl text-gray-700" />,
+      icon: <FaClipboardQuestion className="text-xl text-black" />,
     },
     {
       title: "Students",
       path: "/tutor/home/students",
-      icon: <PiStudentFill className="text-xl text-gray-700" />,
+      icon: <PiStudentFill className="text-xl text-black" />,
     },
     {
       title: "Grading",
       path: "/tutor/home/grading",
-      icon: <MdGrading className="text-xl text-gray-700" />,
+      icon: <MdGrading className="text-xl text-black" />,
     },
     {
       title: "Materials",
       path: "/tutor/home/allmaterials",
-      icon: <IoLibrarySharp className="text-xl text-gray-700" />,
+      icon: <IoLibrarySharp className="text-xl text-black" />,
     },
     {
       title: "Insights",
       path: "/tutor/home/insights",
-      icon: <CgInsights className="text-xl text-gray-700" />,
+      icon: <CgInsights className="text-xl text-black" />,
     },
     {
       title: "Settings",
-      icon: <IoIosSettings className="text-xl text-gray-700" />,
+      icon: <IoIosSettings className="text-xl text-black" />,
       subLinks: [
         {
           title: "Profile",
-          path: "/tutor/home/settings",
-          icon: <IoIosPerson className="text-xl text-gray-700" />,
+          path: "/tutor/home/settings/",
+          icon: <IoIosPerson className="text-xl text-black" />,
         },
         {
           title: "Account",
           path: "/tutor/home/settings/accountsettings",
-          icon: <IoIosKey className="text-xl text-gray-700" />,
+          icon: <IoIosKey className="text-xl text-black" />,
         },
         // {
         //   title: "Notifications",
@@ -116,28 +123,30 @@ const TutorSideBar = ({ isOpen }) => {
 
   return (
     <div
-      className={`${
-        !isOpen ? "hidden md:block " : ""
-      } h-screen   font-poppins text-sm font-medium `}
+      className={`absolute md:relative * ${
+        isSidebarOpen ? "" : "-translate-x-full md:translate-x-0"
+      }
+       h-screen transition-all duration-500  font-poppins text-sm font-medium `}
     >
       <Sidebar
         className="h-screen"
         collapsed={collapsed}
         backgroundColor="#fff"
-        width="250px"
+        width="210px"
       >
-        <Menu>
+        <Menu className="" menuItemStyles={{ icon: { fontSize: "20px" } }}>
           {/* Menu Logo */}
           <MenuItem
             onClick={toggleCollapse}
-            className={`side-menu-item md:py-[7px] py-[2px] border-b-[1px] ${
+            className={`side-menu-item h-12 ${
               isActive("/") ? "bg-blue-500 text-white " : "side-menu-item"
             }`}
-            icon={<img src={Logohalf} alt="" />}
-            // onClick={() => navigate('/')}
-          >
-            <img src={Logohalf2} className="w-[120px]" alt="" />
-          </MenuItem>
+            icon={
+              <>
+                <RxHamburgerMenu />
+              </>
+            }
+          ></MenuItem>
 
           {navLinks.map((link) =>
             link.subLinks ? (
@@ -159,7 +168,10 @@ const TutorSideBar = ({ isOpen }) => {
                         ? "bg-blue-500 "
                         : "side-menu-item text-gray-500"
                     }`}
-                    onClick={() => navigate(subLink.path)}
+                    onClick={() => {
+                      setIsSidebarOpen();
+                      navigate(subLink.path);
+                    }}
                   >
                     <div className="flex">
                       {" "}
@@ -177,7 +189,7 @@ const TutorSideBar = ({ isOpen }) => {
                 placement="right"
               >
                 <MenuItem
-                  className={`relative side-menu-item ${
+                  className={`relative side-menu-item menu ${
                     isActive(link.path)
                       ? "bg-blue-500 text-black"
                       : "side-menu-item"
@@ -199,14 +211,14 @@ const TutorSideBar = ({ isOpen }) => {
             )
           )}
           <Tooltip title="Logout" arrow placement="right">
-            <a
+            <button
               onClick={handleLogout}
               href="#"
               className="flex items-center p-2 mt-2 text-red-600 hover:bg-gray-200"
             >
               <IoLogOut className="text-xl mx-5 h-10" />
               {collapsed ? "" : "Logout"}
-            </a>
+            </button>
           </Tooltip>
         </Menu>
       </Sidebar>

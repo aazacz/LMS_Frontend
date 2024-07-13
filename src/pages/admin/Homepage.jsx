@@ -26,7 +26,6 @@ import AdminSidebar from '../../components/admin/AdminSidebar';
 import DiagnosisiTestDetailsPage from "../../components/admin/DiagnosisiTestDetailsPage";
 
 
-
 const Homepage = () => {
   const queryClient = new QueryClient();
 
@@ -42,14 +41,11 @@ const Homepage = () => {
     <>
       <QueryClientProvider client={queryClient}>
         <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-       
-        <div className="flex  w-full relative  bg-red-400">
+        <div className="flex w-full relative  ">
           {/* <Sidebar isOpen={isSidebarOpen} /> */} 
-
           <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-          <div className="flex-1    ">
-
-            <div className="w-full h-auto  ">
+          <div className="flex-1">
+            <div className="w-full h-auto">
               <Routes>
                 <Route path="/*" element={<Dashboard />} />
                 <Route path="/courses/addcourse" element={<AddCourse />} />

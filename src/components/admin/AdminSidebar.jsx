@@ -5,28 +5,21 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
-import { FaBookAtlas } from "react-icons/fa6";
-import { FaBookReader } from "react-icons/fa";
+
 import {
   PiChalkboardTeacherFill,
   PiCirclesFourFill,
   PiExamFill,
   PiStudentBold,
 } from "react-icons/pi";
+
 import { IoIosKey, IoIosPerson, IoIosSettings } from "react-icons/io";
 import { IoLibrary, IoLogOut, IoNotifications } from "react-icons/io5";
-import { Tooltip } from "react-tooltip";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GiBookmarklet } from "react-icons/gi";
 import { PiTreeStructureFill } from "react-icons/pi";
 
-
-
-
-const AdminSidebar = ({ isOpen ,isSidebarOpen,setIsSidebarOpen}) => {
-
-
-
+const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -47,10 +40,8 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen,setIsSidebarOpen}) => {
       return;
     } else {
       setCollapsed(true);
-      setTimeout(() => {
-        setCollapsed(false);
-      }, 1000);
-    }
+      return;
+    } 
   }
 
 
@@ -69,7 +60,6 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen,setIsSidebarOpen}) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(clearAdminDetails());
-
         navigate("/admin");
       }
     });
@@ -107,6 +97,11 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen,setIsSidebarOpen}) => {
       path: "/admin/home/diagnosistest",
       icon: <PiExamFill className="text-xl text-gray-900" />,
     },
+    {
+      title: "Students",
+      path: "/admin/home/students",
+      icon: <PiStudentBold className="text-xl text-gray-900" />,
+    },
     { title: "Library", path: "/admin/home/library", icon: <IoLibrary /> },
     // { title: "Access Management", path: "/admin/home/accessmanagement", icon: <PiCirclesFourFill /> },
 
@@ -135,26 +130,41 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen,setIsSidebarOpen}) => {
 
 
 
+
+
+
   return (
-    <div className={`h-full bg-white  absolute  md:relative  z-50
-                       ${isSidebarOpen ? "" : " -translate-x-full md:translate-x-0"}
-                         transition-all duration-500  font-poppins text-sm font-medium `}>
-      <Sidebar  collapsed={collapsed} backgroundColor="#fff"  width="210px">
+    <div
+      className={`absolute  md:relative  *
+                       ${
+                         isSidebarOpen
+                           ? ""
+                           : " -translate-x-full md:translate-x-0"
+                       }
+                        h-screen transition-all duration-500  font-poppins text-sm font-medium `}
+    >
+      <Sidebar
+        className="h-screen"
+        collapsed={collapsed}
+        backgroundColor="#fff"
+        width="210px"
+      >
         <Menu
-            menuItemStyles={{
-            icon: { fontSize: '20px' },
+          className=""
+          menuItemStyles={{
+            icon: { fontSize: "20px" },
           }}
         >
           {/* Menu Logo */}
           <MenuItem
             onClick={toggleCollapse}
-            className={`side-menu-item   h-12    ${
+            className={` side-menu-item   h-12    ${
               isActive("/") ? "bg-blue-500 text-white " : "side-menu-item"
             }`}
             icon={
               <>
                 {" "}
-                <RxHamburgerMenu />
+                <RxHamburgerMenu/>
               </>
             }
           ></MenuItem>
@@ -165,16 +175,15 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen,setIsSidebarOpen}) => {
                 key={link.title}
                 label={link.title}
                 icon={link.icon}
-                className={`relative side-menu-item  ${isActive(link.path) ? "bg-blue-500 text-gray-500" : "side-menu-item " }`}
+                className={`relative side-menu-item  ${isActive(link.path) ? "bg-blue-500 text-gray-500" : "side-menu-item "
+                  }`}
               >
 
                 {link.subLinks.map((subLink) => (
                   <MenuItem
                     key={subLink.title}
                     className={`relative side-menu-item  ${isActive(subLink.path) ? "bg-blue-500 " : "side-menu-item text-gray-400"
-                      }`} 
-                      onClick={() =>{setIsSidebarOpen(false);
-                                     navigate(subLink.path)}}
+                      }`} onClick={() => {setIsSidebarOpen(); navigate(subLink.path)}}
                   >
                     <div className="flex  ">
                       {" "}

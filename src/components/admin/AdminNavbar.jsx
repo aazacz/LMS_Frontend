@@ -16,7 +16,7 @@ const AdminNavbar = ({ toggleSidebar, isSidebarOpen }) => {
     <>
       {/* ___________________NAVBAR STARTS HERE________________________  */}
 
-      <div className="navbar-container md:px-4 b  px-2 sticky top-0 w-full h-[10vh]   border-b-[1px] flex justify-between items-center  bg-white     ">
+      <div className=" navbar-container md:px-4 px-2 sticky top-0 w-full h-[10vh]   border-b-[1px] flex justify-between items-center  bg-white     ">
         {/*_________________ left side____________________ */}
         <div className="w-[60%] h-max font-poppins relative ">
           <img src={logo} className="md:w-[100px] w-[80px]" alt="" />
@@ -44,12 +44,12 @@ const AdminNavbar = ({ toggleSidebar, isSidebarOpen }) => {
 
             {/* hamburger button */}
             {isSidebarOpen ? (
-              <FaBookOpen
+              <FiBookOpen
                 onClick={() => toggleSidebar()}
                 className="block md:hidden z-30  text-2xl "
               />
             ) : (
-              <FaBook
+              <FiBook
                 onClick={() => toggleSidebar()}
                 className="block md:hidden z-30  text-2xl "
               />

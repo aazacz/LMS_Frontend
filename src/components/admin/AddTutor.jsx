@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { AdminAxiosInstance } from '../../routes/AdminRoutes';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import generator from 'generate-password-browser'
@@ -298,9 +299,7 @@ const AddTutor = () => {
         console.log(tutor);
         try {
 
-            const response = await axios.post(`${baseURL}api/tutor/create-tutor`, tutor,{
-                headers:{authorization:`Bearer ${token}`}
-            });
+            const response = await AdminAxiosInstance.post(`api/tutor/create-tutor`, tutor);
 
             toast.success(response.data.message);
             console.log(response.data);

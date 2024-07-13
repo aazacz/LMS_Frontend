@@ -9,7 +9,8 @@ import { persistor } from "../src/store/index.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
-import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -29,7 +30,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             theme="light"
             transition="Bounce" />
           <Router>
+       
             <App />
+       
           </Router>
 
           <ToastContainer />

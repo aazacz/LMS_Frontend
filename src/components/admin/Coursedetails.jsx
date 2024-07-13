@@ -4,6 +4,7 @@ import { BiSpreadsheet } from "react-icons/bi";
 import { LuTimer } from "react-icons/lu";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 import { useSelector } from "react-redux";
 import Loader from "../reusable/Loader";
 import Swal from "sweetalert2";
@@ -45,12 +46,13 @@ const Coursedetails = () => {
         </div>
       ) : (
         <div className="flex flex-col lg:flex-row h-full">
-          <div className="lg:w-[70%] w-full bg-blue-800 overflow-y-auto p-4 flex flex-col">
-            <div className="w-full h-[200px] md:h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-2xl md:text-3xl">
+          
+          <div className="lg:w-[70%] w-full   p-4 flex flex-col">
+            <div className="w-full h-[200px]  md:h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-2xl md:text-3xl">
               Introduction to SAT & DSAT
             </div>
 
-            <div className="w-full mt-4">
+            <div className="w-full  mt-4">
               <h1 className="font-bold text-lg md:text-xl font-plusjakartasans">
                 Introduction to Basic SAT & DSAT
               </h1>
@@ -132,6 +134,8 @@ const ReviewContent = () => {
   return <div className="bg-yellow-300">Review Content</div>;
 };
 
+
+//Aside bar component
 const AsideBAr = ({ course }) => {
   const { courseId } = useParams();
   const baseUrl = process.env.REACT_APP_API_URL;
@@ -203,7 +207,7 @@ const AsideBAr = ({ course }) => {
   };
 
   return (
-    <div className="lg:sticky top-[10vh] bg-slate-200 lg:w-[30%] w-full flex flex-col">
+    <div className="lg:sticky top-[10vh] bg-slate-200 lg:w-[30%] w-full  flex flex-col">
       <div className="p-6">
         <h1 className="font-plusjakartasans font-bold">Modules List</h1>
 
@@ -237,7 +241,7 @@ const AsideBAr = ({ course }) => {
         </div>
       </div>
 
-      <div className="w-full h-7 px-4">
+      <div className="w-full mb-4 px-4">
         <div
           className="cursor-pointer w-full h-8 rounded-xl flex justify-center items-center text-base font-semibold font-poppins border-[1px] text-red-700 border-red-600 bg-opacity-30 bg-red-500"
           onClick={handleDeleteCourse}

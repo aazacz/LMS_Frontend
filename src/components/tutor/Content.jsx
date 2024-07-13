@@ -106,45 +106,52 @@ const Content = () => {
                 </Link>
               ))}
           </div>
-
-          <table className="w-full overflow-x-scroll mt-10  border border-gray-200">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 border-b text-left">SL No</th>
-                <th className="px-4 py-2 border-b text-left">
-                  Assignment Name
-                </th>
-                <th className="px-4 py-2 border-b text-left">Status</th>
-                <th className="px-4 py-2 border-b text-left">Course</th>
-                <th className="px-4 py-2 border-b hidden lg:table-cell text-left">
-                  Students
-                </th>
-                <th className="px-4 py-2 border-b hidden lg:table-cell text-left">
-                  Submission
-                </th>
-                <th className="px-4 py-2 border-b text-left">Reports</th>
-                <th className="px-4 py-2 border-b text-left">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {assignments.map((assignment, index) => (
-                <tr key={assignment.id}>
-                  <td className="px-4 py-2 border-b">{index + 1}</td>
-                  <td className="px-4 py-2 border-b">{assignment.name}</td>
-                  <td className="px-4 py-2 border-b">{assignment.status}</td>
-                  <td className="px-4 py-2 border-b">{assignment.course}</td>
-                  <td className="px-4 py-2 border-b hidden lg:table-cell">
-                    {assignment.students}
-                  </td>
-                  <td className="px-4 py-2 border-b hidden lg:table-cell">
-                    {assignment.submission}
-                  </td>
-                  <td className="px-4 py-2 border-b">{assignment.reports}</td>
-                  <td className="px-4 py-2 border-b">{assignment.action}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="p-2">
+            <div className="border border-gray-200">
+              <table className="overflow-x-scroll min-w-[300px]">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-2 border-b text-left">SL No</th>
+                    <th className="px-4 py-2 border-b text-left">
+                      Assignment Name
+                    </th>
+                    <th className="px-4 py-2 border-b text-left">Status</th>
+                    <th className="px-4 py-2 border-b text-left">Course</th>
+                    <th className="px-4 py-2 border-b hidden lg:table-cell text-left">
+                      Students
+                    </th>
+                    <th className="px-4 py-2 border-b hidden lg:table-cell text-left">
+                      Submission
+                    </th>
+                    <th className="px-4 py-2 border-b text-left">Reports</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {assignments.map((assignment, index) => (
+                    <tr key={assignment.id} className="hover:bg-gray-100">
+                      <td className="px-4 py-2 border-b">{index + 1}</td>
+                      <td className="px-4 py-2 border-b">{assignment.name}</td>
+                      <td className="px-4 py-2 border-b">
+                        {assignment.status}
+                      </td>
+                      <td className="px-4 py-2 border-b">
+                        {assignment.course}
+                      </td>
+                      <td className="px-4 py-2 border-b hidden lg:table-cell">
+                        {assignment.students}
+                      </td>
+                      <td className="px-4 py-2 border-b hidden lg:table-cell">
+                        {assignment.submission}
+                      </td>
+                      <td className="px-4 py-2 border-b">
+                        {assignment.reports}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

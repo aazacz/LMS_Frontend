@@ -158,7 +158,7 @@ const token = useSelector((state)=>state.AdminDetails.token)
   };
 
   return (
-    <div className="w-full flex flex-col font-poppins">
+    <div className="w-full  flex flex-col font-poppins">
       <div className="w-full flex justify-between items-start p-2">
         <div className="flex">
           <div className="text-sm md:text-base">Choose Course</div>
@@ -181,12 +181,12 @@ const token = useSelector((state)=>state.AdminDetails.token)
           </button>
         </Link> */}
       </div>
-      <div className="p-2 m-4">
-        <div className="grid grid-flow-row  grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 gap-x-6">
+      <div className="w-full ">
+        <div className="grid grid-flow-row grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-4">
           {materials.map((material) => (
             <div
               key={material._id}
-              className="w-full bg-gray-300 flex flex-col justify-center items-center px-1 py-4 m-4 rounded-md"
+              className="min-w-[140px] bg-gray-300 flex flex-col justify-center items-center p-4  rounded-md m-2"
             >
               {/* <div className="flex justify-end w-full mr-4">
                 <MdDelete
@@ -198,7 +198,7 @@ const token = useSelector((state)=>state.AdminDetails.token)
                 <Pdflogo />
               </div>
               <div className="flex justify-between mt-4 gap-5 items-center">
-                <h1 className="font-poppins font-semibold text-xs line-clamp-1">
+                <h1 className="font-poppins font-semibold  text-xs line-clamp-1">
                   {material.fileName}
                 </h1>
 

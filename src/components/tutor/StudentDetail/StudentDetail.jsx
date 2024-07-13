@@ -5,6 +5,7 @@ import "./StudentDetail.css";
 import student from "../../../components/admin/StudentDetail/studentdetail.png";
 import { FaBookOpen } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
+import { HiDotsVertical } from 'react-icons/hi';
 
 const StudentDetail = () => {
   const [showAllCourses, setShowAllCourses] = useState(false);
@@ -188,7 +189,7 @@ const StudentDetail = () => {
         </p>
       </div>
       <div className="student-detail-line"></div>
-      <div className="student-detail-cards grid grid-flow-row grid-cols-1 sm:grid-cols-2 tb:grid-cols-2 tab:grid-cols-3 lg:grid-cols-4">
+      <div className="student-detail-cards grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {courses
           .slice(0, showAllCourses ? courses.length : 4)
           .map((course, index) => (
@@ -216,7 +217,7 @@ const StudentDetail = () => {
         </p>
       </div>
       <div className="student-detail-line"></div>
-      <div className="student-detail-cards grid grid-flow-row grid-cols-1 sm:grid-cols-2 tb:grid-cols-2 tab:grid-cols-3 lg:grid-cols-4">
+      <div className="student-detail-cards grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {assignments
           .slice(0, showAllAssignments ? assignments.length : 4)
           .map((assignment, index) => (
@@ -239,8 +240,8 @@ const StudentDetail = () => {
         </p>
       </div>
       <div className="student-detail-line"></div>
-      <div className="exam-board-table">
-        <table>
+      <div className="overflow-auto w-full">
+        <table className="w-full border-collapse min-w-[600px] " >
           <thead>
             <tr>
               <th>Exam Name</th>

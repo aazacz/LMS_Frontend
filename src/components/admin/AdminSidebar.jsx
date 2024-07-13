@@ -13,6 +13,12 @@ import {
   PiExamFill,
   PiStudentBold,
 } from "react-icons/pi";
+import {
+  PiChalkboardTeacherFill,
+  PiCirclesFourFill,
+  PiExamFill,
+  PiStudentBold,
+} from "react-icons/pi";
 import { IoIosKey, IoIosPerson, IoIosSettings } from "react-icons/io";
 import { IoLibrary, IoLogOut, IoNotifications } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
@@ -41,7 +47,12 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
       return;
     } else {
       setCollapsed(true);
+      return;
+    } else {
+      setCollapsed(true);
       setTimeout(() => {
+        setCollapsed(false);
+      }, 1000);
         setCollapsed(false);
       }, 1000);
     }
@@ -73,10 +84,13 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
       title: "Dashboard",
       path: "/admin/home/dashboard",
       icon: <MdDashboard className="text-xl text-gray-900" />,
+      icon: <MdDashboard className="text-xl text-gray-900" />,
     },
     {
       title: "Courses",
       path: "/admin/home/courses",
+      icon: <GiBookmarklet className="text-xl text-gray-900" />,
+    },
       icon: <GiBookmarklet className="text-xl text-gray-900" />,
     },
     {
@@ -85,6 +99,21 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
       icon: <PiTreeStructureFill className="text-xl text-gray-900" />,
     },
 
+    {
+      title: "Students",
+      path: "/admin/home/students",
+      icon: <PiStudentBold className="text-xl text-gray-900" />,
+    },
+    {
+      title: "Tutors",
+      path: "/admin/home/tutors",
+      icon: <PiChalkboardTeacherFill className="text-xl text-gray-900" />,
+    },
+    {
+      title: "Diagnosis Test",
+      path: "/admin/home/diagnosistest",
+      icon: <PiExamFill className="text-xl text-gray-900" />,
+    },
     {
       title: "Students",
       path: "/admin/home/students",

@@ -13,12 +13,6 @@ import {
   PiExamFill,
   PiStudentBold,
 } from "react-icons/pi";
-import {
-  PiChalkboardTeacherFill,
-  PiCirclesFourFill,
-  PiExamFill,
-  PiStudentBold,
-} from "react-icons/pi";
 import { IoIosKey, IoIosPerson, IoIosSettings } from "react-icons/io";
 import { IoLibrary, IoLogOut, IoNotifications } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
@@ -47,14 +41,7 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
       return;
     } else {
       setCollapsed(true);
-      return;
-    } else {
-      setCollapsed(true);
-      setTimeout(() => {
-        setCollapsed(false);
-      }, 1000);
-        setCollapsed(false);
-      }, 1000);
+      return;z
     }
   }
 
@@ -84,14 +71,11 @@ const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
       title: "Dashboard",
       path: "/admin/home/dashboard",
       icon: <MdDashboard className="text-xl text-gray-900" />,
-      icon: <MdDashboard className="text-xl text-gray-900" />,
     },
     {
       title: "Courses",
       path: "/admin/home/courses",
-      icon: <GiBookmarklet className="text-xl text-gray-900" />,
-    },
-      icon: <GiBookmarklet className="text-xl text-gray-900" />,
+      icon: <GiBookmarklet className="text-xl text-gray-900" />
     },
     {
       title: "Course Structure",

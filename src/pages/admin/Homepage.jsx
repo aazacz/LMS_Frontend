@@ -39,7 +39,7 @@ const Homepage = () => {
   };
   const [Ref, SetRef] = useState();
 
-  const name= "abhilash"
+
 
   return (
     <>

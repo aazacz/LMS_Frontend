@@ -58,13 +58,13 @@ const TutorNavbar = ({ toggleSidebar, isSidebarOpen }) => {
           </div>
 
           {/* Admin NAME EMAIL AND PROFILE PHOTO */}
-          <div className="w-[75%] bg-yellow-400 h-auto md:flex md:flex-row  items-center flex-col  hidden">
+          <div className="w-[75%]  h-auto md:flex md:flex-row  items-center flex-col  hidden">
             <img
               className=" rounded-full object-cover overflow-hidden md:w-[42px] md:h-[42px] w-[20px] "
               src={`${user.userImg}`}
               alt=""
             />
-            <div className="w-[100%] flex bg-green-400 justify-between items-center">
+            <div className="w-[100%] flex  justify-between items-center">
               <div className="md:px-3">
                 <p className=" font-poppins">{user.userName}</p>
                 <p className="text-gray-500 font-poppins">{user.email}</p>

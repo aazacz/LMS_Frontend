@@ -7,7 +7,12 @@ import { useLocation } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { FaBookAtlas } from "react-icons/fa6";
 import { FaBookReader } from "react-icons/fa";
-import { PiChalkboardTeacherFill, PiCirclesFourFill, PiExamFill, PiStudentBold } from "react-icons/pi";
+import {
+  PiChalkboardTeacherFill,
+  PiCirclesFourFill,
+  PiExamFill,
+  PiStudentBold,
+} from "react-icons/pi";
 import { IoIosKey, IoIosPerson, IoIosSettings } from "react-icons/io";
 import { IoLibrary, IoLogOut, IoNotifications } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
@@ -15,11 +20,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { GiBookmarklet } from "react-icons/gi";
 import { PiTreeStructureFill } from "react-icons/pi";
 
-
-
-
-const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
-
+const AdminSidebar = ({ isOpen, isSidebarOpen }) => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,17 +37,14 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
 
   const handlecollapse = () => {
     if (collapsed === true) {
-      return
-    }
-    else {
-      setCollapsed(true)
+      return;
+    } else {
+      setCollapsed(true);
       setTimeout(() => {
-
-        setCollapsed(false)
-      }, 1000)
-
+        setCollapsed(false);
+      }, 1000);
     }
-  }
+  };
   const handleLogout = () => {
     Swal.fire({
       title: "Do you want to Logout?",
@@ -66,28 +64,39 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
       }
     });
   };
- 
 
   const navLinks = [
     {
       title: "Dashboard",
       path: "/admin/home/dashboard",
-      icon: <MdDashboard  className="text-xl text-gray-900" />,
+      icon: <MdDashboard className="text-xl text-gray-900" />,
     },
     {
       title: "Courses",
       path: "/admin/home/courses",
-      icon: <GiBookmarklet  className="text-xl text-gray-900" />,
-    }, 
+      icon: <GiBookmarklet className="text-xl text-gray-900" />,
+    },
     {
       title: "Course Structure",
       path: "/admin/home/courseStructure",
       icon: <PiTreeStructureFill className="text-xl text-gray-900" />,
     },
 
-    { title: "Students", path: "/admin/home/students", icon: <PiStudentBold className="text-xl text-gray-900" /> },
-    { title: "Tutors", path: "/admin/home/tutors", icon: <PiChalkboardTeacherFill className="text-xl text-gray-900" /> },
-    { title: "Diagnosis Test", path: "/admin/home/diagnosistest", icon: <PiExamFill className="text-xl text-gray-900"/> },
+    {
+      title: "Students",
+      path: "/admin/home/students",
+      icon: <PiStudentBold className="text-xl text-gray-900" />,
+    },
+    {
+      title: "Tutors",
+      path: "/admin/home/tutors",
+      icon: <PiChalkboardTeacherFill className="text-xl text-gray-900" />,
+    },
+    {
+      title: "Diagnosis Test",
+      path: "/admin/home/diagnosistest",
+      icon: <PiExamFill className="text-xl text-gray-900" />,
+    },
     { title: "Library", path: "/admin/home/library", icon: <IoLibrary /> },
     // { title: "Access Management", path: "/admin/home/accessmanagement", icon: <PiCirclesFourFill /> },
 
@@ -114,60 +123,82 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
     },
   ];
 
-
-
-
-
-
   return (
-    <div className={` absolute  md:relative  *
-                       ${isSidebarOpen ? "" : " -translate-x-full md:translate-x-0"}
-                        h-screen transition-all duration-500  font-poppins text-sm font-medium `}>
-      <Sidebar className="h-screen" collapsed={collapsed} backgroundColor="#fff" width="210px">
+    <div
+      className={` absolute  md:relative  *
+                       ${
+                         isSidebarOpen
+                           ? ""
+                           : " -translate-x-full md:translate-x-0"
+                       }
+                        h-screen transition-all duration-500  font-poppins text-sm font-medium `}
+    >
+      <Sidebar
+        className="h-screen"
+        collapsed={collapsed}
+        backgroundColor="#fff"
+        width="210px"
+      >
         <Menu
           className=""
           menuItemStyles={{
-            icon: { fontSize: '20px' },
+            icon: { fontSize: "20px" },
           }}
         >
-
-
           {/* Menu Logo */}
           <MenuItem
             onClick={toggleCollapse}
-            className={`side-menu-item   h-12    ${isActive("/") ? "bg-blue-500 text-white " : "side-menu-item"
-              }`}
-            icon={<> <RxHamburgerMenu /></>}
-
-          >
-          </MenuItem>
-
-
+            className={`side-menu-item   h-12    ${
+              isActive("/") ? "bg-blue-500 text-white " : "side-menu-item"
+            }`}
+            icon={
+              <>
+                {" "}
+                <RxHamburgerMenu />
+              </>
+            }
+          ></MenuItem>
 
           {navLinks.map((link) =>
             link.subLinks ? (
-
-
               <SubMenu
                 key={link.title}
                 label={link.title}
                 icon={link.icon}
-                className={`relative side-menu-item  ${isActive(link.path) ? "bg-blue-500 text-gray-500" : "side-menu-item "
-                  }`}
+                className={`relative side-menu-item  ${
+                  isActive(link.path)
+                    ? "bg-blue-500 text-gray-500"
+                    : "side-menu-item "
+                }`}
               >
                 {link.subLinks.map((subLink) => (
                   <MenuItem
                     key={subLink.title}
-                    className={`relative side-menu-item  ${isActive(subLink.path) ? "bg-blue-500 " : "side-menu-item text-gray-400"
-                      }`} onClick={() => {setIsSidebarOpen(); navigate(subLink.path)}}
+                    className={`relative side-menu-item  ${
+                      isActive(subLink.path)
+                        ? "bg-blue-500 "
+                        : "side-menu-item text-gray-400"
+                    }`}
+                    onClick={() => {
+                      setIsSidebarOpen();
+                      navigate(subLink.path);
+                    }}
                   >
-                    <div className="flex  ">      {subLink.icon}     <span className="ml-2 ">{subLink.title}</span>       </div>
+                    <div className="flex  ">
+                      {" "}
+                      {subLink.icon}{" "}
+                      <span className="ml-2 ">{subLink.title}</span>{" "}
+                    </div>
                   </MenuItem>
                 ))}
               </SubMenu>
             ) : (
-
-              <MenuItem className={`relative side-menu-item menu  ${isActive(link.path) ? "bg-blue-500 text-black" : "side-menu-item"}`}
+              <MenuItem
+                className={`relative side-menu-item menu  ${
+                  isActive(link.path)
+                    ? "bg-blue-500 text-black"
+                    : "side-menu-item"
+                }`}
                 icon={link.icon}
                 onClick={() => navigate(link.path)}
               >
@@ -181,7 +212,6 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
                   link.title
                 )}
               </MenuItem>
-
             )
           )}
 
@@ -193,7 +223,6 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen}) => {
             <IoLogOut className="text-xl mx-5 h-10" />
             {collapsed ? "" : "Logout"}
           </button>
-
         </Menu>
       </Sidebar>
     </div>

@@ -3,7 +3,7 @@ import React from 'react'
 const Pdflogo = () => {
     return (
         <>
-      <svg width="80" height="93" viewBox="0 0 80 93" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="60" height="93" viewBox="0 0 80 93" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_4_2)">
 <mask id="path-1-inside-1_4_2" fill="white">
 <path d="M14 4C14 1.79086 15.7909 0 18 0H45C62.1208 0 76 13.8792 76 31V81C76 83.2091 74.2091 85 72 85H18C15.7909 85 14 83.2091 14 81V4Z"/>

@@ -8,15 +8,14 @@ import { IoIosSettings, IoIosPerson, IoIosKey } from 'react-icons/io'
 import { IoLogOut } from 'react-icons/io5'
 import Tooltip from '@mui/material/Tooltip'
 // import { FaPencilAlt } from "react-icons/fa";
-import { IoLibrarySharp } from "react-icons/io5";
-import { MdGrading } from "react-icons/md";
-import { CgInsights } from "react-icons/cg";
-import { clearStudentDetails } from "../../store/reducers/StudentloginSlice";
-import { MdContentPaste } from "react-icons/md";
-import { FaClipboardQuestion } from "react-icons/fa6";
-import { PiStudentFill } from "react-icons/pi";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { clearTutorDetails } from "../../store/reducers/TutorloginSlice";
+import { IoLibrarySharp } from 'react-icons/io5'
+import { MdGrading } from 'react-icons/md'
+import { CgInsights } from 'react-icons/cg'
+import { clearTutorDetails } from '../../store/reducers/TutorloginSlice'
+import { MdContentPaste } from 'react-icons/md'
+import { FaClipboardQuestion } from 'react-icons/fa6'
+import { PiStudentFill } from 'react-icons/pi'
+import { RxHamburgerMenu } from 'react-icons/rx'
 
 const TutorSideBar = ({ isOpen, isSidebarOpen,setIsSidebarOpen  }) => {
   const [collapsed, setCollapsed] = useState(false);

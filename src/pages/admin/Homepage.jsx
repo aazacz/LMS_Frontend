@@ -25,6 +25,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AdminSidebar from '../../components/admin/AdminSidebar';
 import DiagnosisiTestDetailsPage from "../../components/admin/DiagnosisiTestDetailsPage";
 import Settings from "../../components/admin/Settings/Settings";
+import Package from "../../components/admin/Package";
 
 
 
@@ -40,13 +41,12 @@ const Homepage = () => {
   const [Ref, SetRef] = useState();
 
 
-
   return (
     <>
       <QueryClientProvider client={queryClient}>
 
         <div className="">
-          <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} name={name} />
+          <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}  />
         </div>
 
         <div className="flex  w-full h-full ">
@@ -68,6 +68,7 @@ const Homepage = () => {
                 <Route path="/courseStructure/addcoursestructure" element={<AddCourseStructure />} />
                 <Route path="/coursestructure/:structureId" element={<CourseStructureDetails />} />
                 <Route path="/coursestructure/editcoursestructure/:structureId" element={<AddCourseStructure />} />
+                <Route path="/package" element={< Package/>} />
                 <Route path="/students/:studentId" element={<StudentDetail />} />
                 <Route path="/students" element={<StudentList />} />
                 <Route path="/tutors/addtutor" element={<AddTutor />} />

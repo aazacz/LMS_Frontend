@@ -13,6 +13,7 @@ import {
     PiExamFill,
     PiStudentBold,
 } from 'react-icons/pi'
+import { clearStudentDetails } from '../../store/reducers/StudentloginSlice'
 import { IoIosKey, IoIosPerson, IoIosSettings } from 'react-icons/io'
 import { IoLibrary, IoLogOut, IoNotifications } from 'react-icons/io5'
 import { Tooltip } from 'react-tooltip'
@@ -20,7 +21,7 @@ import { RxHamburgerMenu } from 'react-icons/rx'
 import { GiBookmarklet } from 'react-icons/gi'
 import { PiTreeStructureFill } from 'react-icons/pi'
 
-const UserSideBar = ({ isOpen, isSidebarOpen }) => {
+const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
     const [collapsed, setCollapsed] = useState(false)
     const location = useLocation()
     const navigate = useNavigate()

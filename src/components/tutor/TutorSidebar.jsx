@@ -11,7 +11,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { IoLibrarySharp } from 'react-icons/io5'
 import { MdGrading } from 'react-icons/md'
 import { CgInsights } from 'react-icons/cg'
-import { clearStudentDetails } from '../../store/reducers/StudentloginSlice'
+import { clearTutorDetails } from '../../store/reducers/TutorloginSlice'
 import { MdContentPaste } from 'react-icons/md'
 import { FaClipboardQuestion } from 'react-icons/fa6'
 import { PiStudentFill } from 'react-icons/pi'
@@ -55,7 +55,7 @@ const TutorSideBar = ({ isOpen, isSidebarOpen }) => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(clearStudentDetails())
+                dispatch(clearTutorDetails())
 
                 navigate('/')
             }

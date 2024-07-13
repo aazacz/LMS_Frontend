@@ -13,15 +13,15 @@ import {
     PiExamFill,
     PiStudentBold,
 } from 'react-icons/pi'
-import { clearStudentDetails } from '../../store/reducers/StudentloginSlice'
 import { IoIosKey, IoIosPerson, IoIosSettings } from 'react-icons/io'
 import { IoLibrary, IoLogOut, IoNotifications } from 'react-icons/io5'
 import { Tooltip } from 'react-tooltip'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { GiBookmarklet } from 'react-icons/gi'
 import { PiTreeStructureFill } from 'react-icons/pi'
+import { clearStudentDetails } from '../../store/reducers/StudentloginSlice'
 
-const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
+const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
     const [collapsed, setCollapsed] = useState(false)
     const location = useLocation()
     const navigate = useNavigate()
@@ -46,25 +46,24 @@ const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
             }, 1000)
         }
     }
-    const handleLogout = () => {
-        Swal.fire({
-            title: 'Do you want to Logout?',
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: 'No',
-            customClass: {
-                actions: 'my-actions',
-                confirmButton: 'my-confirm-button',
-                denyButton: 'my-deny-button',
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(clearStudentDetails())
-                console.log('logged out')
-                navigate('/')
-            }
-        })
-    }
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Do you want to Logout?",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: "No",
+      customClass: {
+        actions: "my-actions",
+        confirmButton: "my-confirm-button",
+        denyButton: "my-deny-button",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(clearStudentDetails());
+        navigate("/");
+      }
+    });
+  };
 
     const navLinks = [
         {
@@ -158,10 +157,10 @@ const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
                         }
                     ></MenuItem>
 
-                    {navLinks.map((link) =>
+                    {navLinks.map((link, index) =>
                         link.subLinks ? (
                             <SubMenu
-                                key={link.title}
+                                key={index}
                                 label={link.title}
                                 icon={link.icon}
                                 className={`relative side-menu-item  ${
@@ -170,9 +169,9 @@ const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
                                         : 'side-menu-item '
                                 }`}
                             >
-                                {link.subLinks.map((subLink) => (
+                                {link.subLinks.map((subLink,index) => (
                                     <MenuItem
-                                        key={subLink.title}
+                                        key={index}
                                         className={`relative side-menu-item  ${
                                             isActive(subLink.path)
                                                 ? 'bg-blue-500 '

@@ -24,6 +24,8 @@ import AddCourseStructure from '../../components/admin/AddCourseStructure';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AdminSidebar from '../../components/admin/AdminSidebar';
 import DiagnosisiTestDetailsPage from "../../components/admin/DiagnosisiTestDetailsPage";
+import Settings from "../../components/admin/Settings/Settings";
+
 
 
 const Homepage = () => {
@@ -37,12 +39,14 @@ const Homepage = () => {
   };
   const [Ref, SetRef] = useState();
 
+  const name= "abhilash"
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
-      
+
         <div className="">
-        <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+          <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} name={name} />
         </div>
        
         <div className="flex  w-full     ">
@@ -54,11 +58,12 @@ const Homepage = () => {
               <Routes>
                 <Route path="/*" element={<Dashboard />} />
                 <Route path="/courses/addcourse" element={<AddCourse />} />
-                <Route path="/courses" element={<CourseList />} />
+                <Route path="/courses" element={<CourseList name={name}/>} />
                 <Route path="/courses/:courseId" element={<Coursedetails height={Ref} />} />
                 <Route path="/coursestructure" element={<CourseStructureList />} />
                 <Route path="/courseStructure/addcoursestructure" element={<AddCourseStructure />} />
                 <Route path="/coursestructure/:structureId" element={<CourseStructureDetails />} />
+                <Route path="/coursestructure/editcoursestructure/:structureId" element={<AddCourseStructure />} />
                 {/* <Route path="/coursestructure" element={<CourseStructure />} /> */}
                 <Route path="/students/:studentId" element={<StudentDetail />} />
                 <Route path="/students" element={<StudentList />} />
@@ -71,12 +76,14 @@ const Homepage = () => {
                 <Route path="/tutors" element={<TutorListing />} />
                 <Route path="/library" element={<Library />} />
                 <Route path="/library/uploadmaterial" element={<Admin_Material />} />
+                <Route path="/settings/*" element={<Settings />} />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
             </div>
           </div>
         </div>
       </QueryClientProvider>
+
     </>
   );
 };

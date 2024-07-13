@@ -8,6 +8,7 @@ import ReusablePagination from "../reusable/ReusablePagination";
 import { Link } from "react-router-dom";
 import { BsFillFileEarmarkPdfFill } from "react-icons/bs";
 import { IoIosCloseCircleOutline, IoMdRemoveCircle } from "react-icons/io";
+import { FaCirclePlus } from "react-icons/fa6";
 
 
 const baseURL = process.env.REACT_APP_API_URL;
@@ -179,14 +180,17 @@ const Library = () => {
           </object>
         </div>
       )}
-      <div className="w-full flex justify-between items-start p-2">
-        <div className="flex">
-          <div className="text-sm md:text-base">Choose Course</div>
-          <select
-            className="ml-2 text-sm p-1 h-max rounded"
+
+      <div className="w-full  flex md:flex-row px-6  flex-col justify-between items-start p-2">
+        
+        <div className="w-full md:w-auto   flex  justify-between items-center  ">
+        
+        <div className="text-sm md:text-base">Choose Course</div>
+        
+          <select className="ml-2 text-sm p-1 h-max rounded"
             onChange={handleCourseChange}
-            value={selectedCourse}
-          >
+            value={selectedCourse}  >
+
             <option value="">All courses</option>
             {courses.map((course) => (
               <option key={course._id} value={course._id}>
@@ -195,19 +199,25 @@ const Library = () => {
             ))}
           </select>
         </div>
+
+<div className="">
+
         <Link to="uploadMaterial">
-          <button className="text-sm px-6 py-2 bg-[#BFDBFE] text-black rounded-md">
-            Upload Material
+          <button className="text-sm px-6 py-2 bg-[#f5f1f1] hover:bg-[#f5e3e3] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text-black rounded-md flex gap-x-2 items-center">
+          <FaCirclePlus />    Upload Material
           </button>
         </Link>
       </div>
-      <div className="p-2 m-4">
-        <div className="grid grid-flow-row  grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-5 gap-x-6">
+</div>
+
+
+      <div className=" ">
+        <div className="px-2 md:px-0 justify-center spac grid  grid-flow-row place-content-center grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-5  md:gap-x-4">
           {materials.map((material, index) => (
             <div
               onClick={(e) => { e.stopPropagation(); openModal(material); }}
               key={material._id}
-              className="w-[180px] bg-gray-300 flex flex-col justify-center items-center px-2 py-2 m-4 rounded-md"
+              className=" md:w-[180px] bg-gray-300 flex flex-col justify-center items-center px-2 py-2 m-4 rounded-md"
             >
               <div className="flex justify-end w-full  ">
                 <IoIosCloseCircleOutline  

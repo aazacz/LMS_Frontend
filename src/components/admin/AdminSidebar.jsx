@@ -7,12 +7,14 @@ import { useLocation } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { FaBookAtlas } from "react-icons/fa6";
 import { FaBookReader } from "react-icons/fa";
+import { FiPackage } from "react-icons/fi";
 import { PiChalkboardTeacherFill, PiCirclesFourFill, PiExamFill, PiStudentBold } from "react-icons/pi";
 import { IoIosKey, IoIosPerson, IoIosSettings } from "react-icons/io";
 import { IoLibrary, IoLogOut, IoNotifications } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GiBookmarklet } from "react-icons/gi";
 import { PiTreeStructureFill } from "react-icons/pi";
+import { clearAdminDetails } from "../../store/reducers/AdminloginSlice";
 
 
 
@@ -89,7 +91,11 @@ const AdminSidebar = ({ isOpen ,isSidebarOpen,setIsSidebarOpen}) => {
       path: "/admin/home/courseStructure",
       icon: <PiTreeStructureFill className="text-xl text-gray-900" />,
     },
-
+    {
+      title: "Package",
+      path: "/admin/home/package",
+      icon: <FiPackage className="text-xl text-gray-900" />,
+    },
     { title: "Students", path: "/admin/home/students", icon: <PiStudentBold className="text-xl text-gray-900" /> },
     { title: "Tutors", path: "/admin/home/tutors", icon: <PiChalkboardTeacherFill className="text-xl text-gray-900" /> },
     { title: "Diagnosis Test", path: "/admin/home/diagnosistest", icon: <PiExamFill className="text-xl text-gray-900"/> },

@@ -25,6 +25,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AdminSidebar from '../../components/admin/AdminSidebar';
 import DiagnosisiTestDetailsPage from "../../components/admin/DiagnosisiTestDetailsPage";
 import Settings from "../../components/admin/Settings/Settings";
+import Package from "../../components/admin/Package";
 
 
 
@@ -68,6 +69,7 @@ const Homepage = () => {
                 <Route path="/coursestructure/:structureId" element={<CourseStructureDetails />} />
                 <Route path="/coursestructure/editcoursestructure/:structureId" element={<AddCourseStructure />} />
                 {/* <Route path="/coursestructure" element={<CourseStructure />} /> */}
+                <Route path="/package" element={<Package/>}/>
                 <Route path="/students/:studentId" element={<StudentDetail />} />
                 <Route path="/students" element={<StudentList />} />
                 <Route path="/tutors/addtutor" element={<AddTutor />} />

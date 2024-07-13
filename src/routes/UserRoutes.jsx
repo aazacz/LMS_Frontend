@@ -11,6 +11,7 @@ import Student_Diagnostic_Test from "../components/User/Student_Diagnostic_Test/
 import DiagnosisTest from "../pages/student/DiagnosisTest";
 import DiagnosisTestResult from "../pages/student/DiagnosisTestResult";
 import  axios  from "axios";
+import DiagnosisTestRoute from "./DiagnosisTestRoute";
 
 let token
 const baseURL = process.env.REACT_APP_API_URL;

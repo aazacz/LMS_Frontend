@@ -1,9 +1,23 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import coursephoto from '/coursephoto.jpeg'
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 import { FaCirclePlus } from 'react-icons/fa6'
+import { useQuery } from '@tanstack/react-query'
+import { axiosInstanceStudent } from '../../routes/UserRoutes'
+
+
+const getCourseList = async()=>{
+
+    await axiosInstanceStudent.get("api/course/get-all-course?page=1&pageSize=2&search=")
+                              .then((res)=>{
+                                console.log(res.data)
+                            })
+
+
+}
+
 
 const CourseList = () => {
     const courses = [
@@ -63,6 +77,10 @@ const CourseList = () => {
 
 export default CourseList
 
+
+
+
+// Course Card Component
 const CourseCard = ({ title }) => {
     return (
         <div className="bg-[#F4F5FB] p-4 rounded-2xl min-h-[16rem] h-auto">

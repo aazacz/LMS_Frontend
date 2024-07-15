@@ -3,10 +3,13 @@ import React, { useState } from 'react'
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
-
+import "./Coursedetails.css"
 const Coursedetails = ({ height }) => {
     const [activeTab, setActiveTab] = useState('about')
     const [slideDirection, setSlideDirection] = useState('left')
+
+
+    
 
     const handleTabClick = (tab) => {
         setSlideDirection(
@@ -18,7 +21,7 @@ const Coursedetails = ({ height }) => {
     return (
         <div className="w-full flex flex-wrap">
             {/* LEFT SIDE  */}
-            <div className="w-full lg:w-[70%] scroll overflow-y-scroll p-4 flex flex-col Test ">
+            <div className="w-full md:w-[70%] lg:w-[70%]  no-scrollbar overflow-y-scroll p-4 flex flex-col  ">
                 <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-3xl">
                     Introduction to SAT & DSAT
                 </div>
@@ -159,7 +162,7 @@ const AsideBAr = ({ Height }) => {
     ]
 
     return (
-        <div className="bg-slate-200 w-full lg:w-[30%] h-[1005] flex flex-col ">
+        <div className="bg-slate-200 w-full md:w-[30%] h-[1005] flex flex-col ">
             <div className="p-6">
                 <h1 className="font-plusjakartasans font-bold">Modules List</h1>
                 <div className="bg-white rounded-lg flex flex-col mt-5 p-5 items-center">

@@ -32,12 +32,20 @@ const StudentHomepage = () => {
   };
   return (
     <>
+  {/* Navbar component */}
       <StudentNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+      
+      
         <div className="flex  w-full relative  ">
+
+   {/* Side Bar component  */}
           <UserSidebar
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
-          />
+            />
+
+
+{/* Body components  */}
           <div className="flex-1    ">
             <div className="w-full h-auto">
               <Routes>
@@ -48,10 +56,7 @@ const StudentHomepage = () => {
                 />
                 <Route path="/courses" element={<CourseList />} />
                 <Route path="/tests" element={<StudentTests />} />
-                <Route
-                  path="/courses/:coursedetails"
-                  element={<Coursedetails />}
-                />
+                <Route path="/courses/:coursedetails"    element={<Coursedetails />}   />
                 <Route path="/assignments" element={<Assignments />} />
                 <Route path="/tutors" element={<ClassesToday />} />
                 <Route path="/library" element={<Library />} />

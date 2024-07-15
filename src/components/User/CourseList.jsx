@@ -1,62 +1,124 @@
-import React,{useEffect} from 'react'
-import coursephoto from '/coursephoto.jpeg'
-import { BiSpreadsheet } from 'react-icons/bi'
-import { LuTimer } from 'react-icons/lu'
-import { Link } from 'react-router-dom'
-import { FaCirclePlus } from 'react-icons/fa6'
-import { useQuery } from '@tanstack/react-query'
-import { axiosInstanceStudent } from '../../routes/UserRoutes'
+import React, { useEffect,useState } from 'react';
+import coursephoto from '/coursephoto.jpeg';
+import { BiSpreadsheet } from 'react-icons/bi';
+import { LuTimer } from 'react-icons/lu';
+import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { axiosInstanceStudent } from '../../routes/UserRoutes';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+const getCourseList = async () => {
+    const response = await axiosInstanceStudent.get("api/student-course/all-active-courses");
+    return response.data;
+};
 
 
-const getCourseList = async()=>{
-
-    await axiosInstanceStudent.get("api/course/get-all-course?page=1&pageSize=2&search=")
-                              .then((res)=>{
-                                console.log(res.data)
-                            })
-
-
-}
 
 
 const CourseList = () => {
-    const courses = [
-        { title: 'Introduction Basic SAT & DSAT' },
-        { title: 'Introduction Basic SAT & DSAT' },
-        { title: 'Introduction Basic SAT & DSAT' },
-        { title: 'Introduction Basic SAT & DSAT' },
-    ]
+
+    const [EnrolledCourse,SetEnrolledCourse]= useState()
+
+    const { data, isLoading, isError, error, refetch } = useQuery({
+        queryKey: ['ActiveCourse'],
+        queryFn: getCourseList,
+        staleTime: 1000,
+        refetchInterval: 60000,
+    });
+
+    const getEnrolledList= async ()=>{
+        const response = await axiosInstanceStudent.get("api/student-course/enrolled-courses");
+        SetEnrolledCourse(response.data)
+        // return response.data;
+    }
+
+
+    useEffect(()=>{
+        getEnrolledList()
+
+    },[])
+    
 
     const bestinmarket = [
         { title: 'Introduction Basic SAT & DSAT' },
         { title: 'Introduction Basic SAT & DSAT' },
         { title: 'Introduction Basic SAT & DSAT' },
         { title: 'Introduction Basic SAT & DSAT' },
-    ]
+    ];
 
     return (
-        <div className="p-4 h-screen overflow-y-scroll no-scrollbar w-full  ">
-            {/*Add Button */}
-            <div className="flex justify-end">
-                {/* <Link replace to={`/admin/home/courses/addcourse`} className='bg-[#F5F1F1]' >
-                    <button className='flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
-                                    p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm'>
-                        <FaCirclePlus className='text-slate-600 ' />
-                        Add Course
-                    </button>
-                </Link> */}
+        <div className="p-4 h-screen overflow-y-scroll no-scrollbar w-full">
+          
+          
+            <div>
+                <h1 className="font-poppins font-semibold text-lg py-2">
+                    Enrolled Course
+                </h1>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {isLoading ? (
+                        <>
+                            {[...Array(4)].map((_, index) => (
+                                <SkeletonCard key={index} />
+                            ))}
+                        </>
+                    ) : (
+
+
+                        EnrolledCourse.map((course, index) => (
+                            <Link key={index} to={`/student/courses/${course._id}/individual`}>
+                                <CourseCard course={course} />
+                            </Link>
+                        ))
+                    )
+                    
+                    
+                    }
+                </div>
             </div>
+            <div>
+                <h1 className="font-poppins font-semibold text-lg py-2">
+                    Individual Course
+                </h1>
 
-            <h1 className="font-poppins font-semibold text-lg py-2">
-                Recomended Course
-            </h1>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {isLoading ? (
+                        <>
+                            {[...Array(4)].map((_, index) => (
+                                <SkeletonCard key={index} />
+                            ))}
+                        </>
+                    ) : (
+                        data.individual.map((course, index) => (
+                            <Link key={index} to={`/student/courses/${course._id}/individual`}>
+                                <CourseCard course={course} />
+                            </Link>
+                        ))
+                    )}
+                </div>
+            </div>
+           
+            <div>
+                <h1 className="font-poppins font-semibold text-lg py-2">
+                    Group Course
+                </h1>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {courses.map((course, index) => (
-                    <Link key={index} to={`/student/courses/1`}>
-                        <CourseCard title={course.title} />
-                    </Link>
-                ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {isLoading ? (
+                        <>
+                            {[...Array(4)].map((_, index) => (
+                                <SkeletonCard key={index} />
+                            ))}
+                        </>
+                    ) : (
+                        data.group.map((course, index) => (
+                            <Link key={index} to={`/student/courses/${course._id}/group`}>
+                                 <CourseCard course={course} />
+                            </Link>
+                        ))
+                    )}
+                </div>
             </div>
 
             <div className="mt-5">
@@ -66,22 +128,22 @@ const CourseList = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {bestinmarket.map((course, index) => (
                         <Link key={index} to={`/admin/home/courses/1`}>
-                            <CourseCard title={course.title} />
+                             <CourseCard course={course} />
                         </Link>
                     ))}
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CourseList
+export default CourseList;
 
 
 
 
 // Course Card Component
-const CourseCard = ({ title }) => {
+const CourseCard = ({ course }) => {
     return (
         <div className="bg-[#F4F5FB] p-4 rounded-2xl min-h-[16rem] h-auto">
             <div className="w-full rounded-lg">
@@ -94,7 +156,7 @@ const CourseCard = ({ title }) => {
             <div className="w-full mt-4">
                 <div className="min-h-[3rem]">
                     <h1 className="font-plusjakartasans font-semibold text-base line-clamp-2">
-                        {title}
+                        {course.courseName}
                     </h1>
                 </div>
                 <div className="flex items-center gap-x-6 mt-2">
@@ -107,5 +169,31 @@ const CourseCard = ({ title }) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
+
+
+
+// Skeleton Card Component
+const SkeletonCard = () => {
+    return (
+        <div className="bg-[#F4F5FB] p-4 rounded-2xl min-h-[16rem] h-auto">
+            <div className="w-full rounded-lg bg-gray-300 h-48">
+                <Skeleton height={192} />
+            </div>
+            <div className="w-full mt-4">
+                <div className="min-h-[3rem]">
+                    <Skeleton height={24} width={`80%`} />
+                </div>
+                <div className="flex items-center gap-x-6 mt-2">
+                    <span className="flex items-center gap-x-1 text-sm font-plusjakartasans bg-gray-300 rounded w-20 h-6">
+                        <Skeleton width={80} />
+                    </span>
+                    <span className="flex items-center gap-x-1 text-sm font-plusjakartasans bg-gray-300 rounded w-20 h-6">
+                        <Skeleton width={80} />
+                    </span>
+                </div>
+            </div>
+        </div>
+    );
+};

@@ -22,16 +22,26 @@ import Checkout from "../../components/User/Checkout";
 import UserSidebar from "../../components/User/UserSidebar";
 import Settings from "../../components/User/Settings/Settings";
 import StudentTests from "../../components/User/StudentTests";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const StudentHomepage = () => {
+
   const user = useSelector((state) => state.StudentDetails.token);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const cartItem =  sessionStorage.getItem("PersonalCart")
+
+
+  
+  const queryClient = new QueryClient();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
   return (
     <>
+        <QueryClientProvider client={queryClient}>
+
+
   {/* Navbar component */}
       <StudentNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
       
@@ -56,19 +66,20 @@ const StudentHomepage = () => {
                 />
                 <Route path="/courses" element={<CourseList />} />
                 <Route path="/tests" element={<StudentTests />} />
-                <Route path="/courses/:coursedetails"    element={<Coursedetails />}   />
+                <Route path="/courses/:coursedetails/:courseType"    element={<Coursedetails />}   />
                 <Route path="/assignments" element={<Assignments />} />
                 <Route path="/tutors" element={<ClassesToday />} />
                 <Route path="/library" element={<Library />} />
                 <Route path="/classestoday" element={<ClassesToday />} />
                 <Route path="/settings/*" element={<Settings />} />
-                <Route path="/cart" element={<ShoppingCart />} />
-                <Route path="/cart/checkout" element={<Checkout />} />
+                <Route path="/courses/cart" element={<ShoppingCart />} />
+                <Route path="/courses/checkout" element={<Checkout />} />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
             </div>
           </div>
         </div>
+        </QueryClientProvider>
     </>
   );
 };

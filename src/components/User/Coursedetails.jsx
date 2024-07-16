@@ -54,7 +54,7 @@ const Coursedetails = () => {
     return (
 
         
-       isLoading ? <div className='w-full h-full flex justify-center items-center'> <Loader/></div> : <div className="w-full flex flex-wrap">
+       isLoading ? <div className='w-full h-screen flex justify-center items-center'> <Loader/></div> : <div className="w-full flex flex-wrap">
             {/* LEFT SIDE  */}
             <div className="w-full md:w-[70%] lg:w-[70%]  no-scrollbar overflow-y-scroll p-4 flex flex-col  ">
                 <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-3xl">

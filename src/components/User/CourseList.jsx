@@ -7,36 +7,42 @@ import { useQuery } from '@tanstack/react-query';
 import { axiosInstanceStudent } from '../../routes/UserRoutes';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-
-const getCourseList = async () => {
-    const response = await axiosInstanceStudent.get("api/student-course/all-active-courses");
-    return response.data;
-};
-
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 
 
 const CourseList = () => {
-
+    const baseUrl = process.env.REACT_APP_API_URL
+    const token = useSelector((state) => state.AdminDetails.token);
+  
     const [EnrolledCourse,SetEnrolledCourse]= useState()
-
-    const { data, isLoading, isError, error, refetch } = useQuery({
-        queryKey: ['ActiveCourse'],
-        queryFn: getCourseList,
-        staleTime: 8000,
-        refetchInterval: 60000,
-    });
-
+    const [Course,SetCourse]= useState()
+    
     const getEnrolledList= async ()=>{
         const response = await axiosInstanceStudent.get("api/student-course/enrolled-courses");
         SetEnrolledCourse(response.data)
         // return response.data;
     }
+    const getCourseList = async () => {
+          const response = await axios.get(`${baseUrl}api/student-course/all-active-courses`,  {
+            'authorisation': `Bearer ${token}`,
+            });
+            SetCourse(response.data)
+        return response.data;
+    };
+  
+    
+        const { data, isLoading, isError, error, refetch } = useQuery({
+            queryKey: ['ActiveCourse'],
+            queryFn: getCourseList,
+            staleTime: 8000,
+            refetchInterval: 60000,
+        });
 
-
+    
     useEffect(()=>{
         getEnrolledList()
-
     },[])
     
 
@@ -90,7 +96,7 @@ const CourseList = () => {
                             ))}
                         </>
                     ) : (
-                        data&&data.individual.map((course, index) => (
+                        Course&&Course.individual.map((course, index) => (
                             <Link key={index} to={`/student/courses/${course._id}/individual`}>
                                 <CourseCard course={course} />
                             </Link>
@@ -112,7 +118,7 @@ const CourseList = () => {
                             ))}
                         </>
                     ) : (
-                     data&&data.group.map((course, index) => (
+                        Course&&Course.group.map((course, index) => (
                             <Link key={index} to={`/student/courses/${course._id}/group`}>
                                  <CourseCard course={course} />
                             </Link>

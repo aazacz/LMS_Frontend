@@ -1,24 +1,62 @@
-import React, { useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 // import coursephoto from '/coursephoto.jpeg';
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
+import "./Coursedetails.css"
+import { useQuery } from '@tanstack/react-query'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css';
+import { axiosInstanceStudent } from '../../routes/UserRoutes'
+import { useParams,useNavigate } from 'react-router-dom'
+import Loader from '../reusable/Loader'
 
-const Coursedetails = ({ height }) => {
-    const [activeTab, setActiveTab] = useState('about')
-    const [slideDirection, setSlideDirection] = useState('left')
+
+const Coursedetails = () => {
+    const [activeTab, setActiveTab] = useState('about');
+    const [slideDirection, setSlideDirection] = useState('left');
+    const navigate = useNavigate();
+    const { coursedetails,courseType } = useParams();
+    
+    const getCourseDetails = async () => {
+        console.log("axios is hitted")
+        if(courseType==="individual"){
+            const response = await axiosInstanceStudent.get(`api/structure/get/${coursedetails}`);
+            console.log('individual response.data');
+            console.log(response.data);
+            return response.data;
+        }
+        else{
+            const response = await axiosInstanceStudent.get(`api/course/get-course/${coursedetails}`);
+            console.log('group response.data');
+            console.log(response.data);
+            return response.data;
+
+        }
+       
+    };
+
+    // useQuery function to get the course details
+    const { data, isLoading, isError, refetch } = useQuery({
+        queryKey: ['CourseDetails'],
+        queryFn: getCourseDetails,
+        staleTime: 1000,
+        refreshInterval: 60000,
+    });
 
     const handleTabClick = (tab) => {
-        setSlideDirection(
-            activeTab === 'about' && tab === 'module' ? 'left' : 'right'
-        )
-        setActiveTab(tab)
-    }
+        setSlideDirection(activeTab === 'about' && tab === 'module' ? 'left' : 'right');
+        setActiveTab(tab);
+    };
+         
+
 
     return (
-        <div className="w-full flex flex-wrap">
+
+        
+       isLoading ? <div className='w-full h-screen flex justify-center items-center'> <Loader/></div> : <div className="w-full flex flex-wrap">
             {/* LEFT SIDE  */}
-            <div className="w-full lg:w-[70%] scroll overflow-y-scroll p-4 flex flex-col Test ">
+            <div className="w-full md:w-[70%] lg:w-[70%]  no-scrollbar overflow-y-scroll p-4 flex flex-col  ">
                 <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-3xl">
                     Introduction to SAT & DSAT
                 </div>
@@ -68,8 +106,12 @@ const Coursedetails = ({ height }) => {
                     </div>
                 </div>
             </div>
-            <AsideBAr Height={height} />
+            {
+                !isLoading &&       <AsideBAr data={data} courseType={courseType} navigate={navigate} />
+            }
+      
         </div>
+
     )
 }
 
@@ -149,7 +191,18 @@ const ReviewContent = () => (
     </div>
 )
 
-const AsideBAr = ({ Height }) => {
+const AsideBAr = ({data,courseType,navigate}) => {
+
+    // if (!data) {
+    //     return null;
+    // }
+
+    console.log('data in the asidebar');
+    console.log(data);
+
+    // Access and print the _id
+    const dataId = data?._id;
+  
     const modules = [
         'Introduction',
         'What is UX Design',
@@ -158,8 +211,26 @@ const AsideBAr = ({ Height }) => {
         'How to implement',
     ]
 
+    const handleEnrollCourse = ()=>{
+        event.preventDefault()
+
+        console.log(courseType)
+        console.log(dataId)
+        console.log("handleEnrollCourse is Clicked")
+
+        // sessionStorage.setItem('PersonalCart', dataId )
+
+        navigate(`/student/courses/checkout/`,{
+                 state: {
+                    courseId: data?._id,
+                    courseType: courseType
+                 }
+            })
+    }
+
+
     return (
-        <div className="bg-slate-200 w-full lg:w-[30%] h-[1005] flex flex-col ">
+        <div className="bg-slate-200 w-full md:w-[30%] h-[1005] flex flex-col ">
             <div className="p-6">
                 <h1 className="font-plusjakartasans font-bold">Modules List</h1>
                 <div className="bg-white rounded-lg flex flex-col mt-5 p-5 items-center">
@@ -188,9 +259,10 @@ const AsideBAr = ({ Height }) => {
                     ))}
 
                     <div className="w-[90%] flex justify-center items-center bg-[#FFBB54] text-black rounded-md py-2">
-                        <Link replace to={'/student/cart'}>
-                            Enroll Now{' '}
-                        </Link>
+                        <button type='button' onClick={handleEnrollCourse}>
+                            Enroll Now
+                        </button>
+                       
                     </div>
                 </div>
             </div>

@@ -17,6 +17,7 @@ function App() {
           <Route path='/admin/*' element={<AdminRoutes />} />
           <Route path='/tutor/*' element={<TutorRoutes />} />
           <Route path='/*' element={<UserRoutes />} />
+          <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Suspense>

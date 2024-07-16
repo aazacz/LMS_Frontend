@@ -194,6 +194,7 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
                             </SubMenu>
                         ) : (
                             <MenuItem
+                                 key={index}
                                 className={`relative side-menu-item menu  ${
                                     isActive(link.path)
                                         ? 'bg-blue-500 text-black'

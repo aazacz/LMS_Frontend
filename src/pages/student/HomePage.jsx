@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import ErrorPage from '../ErrorPage';
 import UserNavbar from '../../components/User/UserNavbar';
 import AnimationScreen from '../../components/User/AnimationScreen';
+import { QueryClientProvider } from 'react-query';
 
 
 const Homepage = () => {

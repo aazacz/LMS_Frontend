@@ -14,8 +14,8 @@ const Checkout = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log("courseType"+courseType)
-         console.log("courseId"+courseId)
+        console.log("courseType "+courseType)
+         console.log("courseId "+courseId)
 
         const getCourseDetails = async()=>{
           

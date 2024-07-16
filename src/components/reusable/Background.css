@@ -10,8 +10,7 @@
         rgba(0, 212, 255, 1) 10%,
         rgba(45, 18, 249, 0) 41%
     );
-    width: 71px;
-    height: 54px;
+ 
 }
 
 .mover1 {
@@ -22,8 +21,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 71px;
-    height: 54px;
+   
 }
 
 .mover2 {
@@ -34,8 +32,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 71px;
-    height: 54px;
 }
 
 .mover3 {
@@ -46,8 +42,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 71px;
-    height: 54px;
+
 }
 
 .mover4 {
@@ -58,8 +53,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 71px;
-    height: 54px;
+
 }
 
 @keyframes opposite {

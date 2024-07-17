@@ -4,10 +4,14 @@ import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-
+import { Tooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css'
 import { useSelector } from 'react-redux'
 import Loader from '../reusable/Loader'
 import Swal from 'sweetalert2'
+import { FaChalkboardTeacher } from 'react-icons/fa'
+import { PiStudentBold } from 'react-icons/pi'
+import { IoIosCloseCircle } from 'react-icons/io'
 
 const Coursedetails = () => {
     const baseUrl = process.env.REACT_APP_API_URL
@@ -16,6 +20,7 @@ const Coursedetails = () => {
     const [Loading, SetLoading] = useState(false)
     const [activeTab, setActiveTab] = useState('about')
     const [slideDirection, setSlideDirection] = useState('left')
+    const [Modal, setModal] = useState(false)
 
     const { courseId } = useParams()
 
@@ -38,6 +43,8 @@ const Coursedetails = () => {
             })
     }, [baseUrl, courseId, token])
 
+    useEffect
+
     return (
         <>
             {Loading ? (
@@ -45,7 +52,38 @@ const Coursedetails = () => {
                     <Loader />
                 </div>
             ) : (
-                <div className="flex flex-col lg:flex-row h-full">
+
+                <>
+                {Modal? (<div className='w-screen flex justify-center items-center  h-full bg-black bg-opacity-60 absolute top-0 left-0 z-[999] '>
+
+
+<div className='w-2/4 h-[300px] p-8 bg-white relative rounded-xl'>
+
+<IoIosCloseCircle className='absolute right-3 top-3 text-2xl  ' />
+
+<div className='w-full flex h-[40px] gap-x-4 justify-between mt-5'>
+
+<select className='w-[300px]  border-[1px] border-black rounded-[3px] ' name="" id="" >
+
+<option defaultValue="select a tutor from the list" >hai</option>
+<option value="">hai</option>
+<option value="">hai</option>
+
+</select>
+
+<button className='bg-blue-700 w-[90px] rounded-lg text-white'> Add</button>
+</div>
+
+</div>
+
+
+
+                </div>):null}
+                <div className="flex  flex-col lg:flex-row h-screen overflow-y-scroll ">
+                
+                    
+                    
+                    
                     <div className="lg:w-[70%] w-full   p-4 flex flex-col">
                         <div className="w-full h-[200px]  md:h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-2xl md:text-3xl">
                             Introduction to SAT & DSAT
@@ -99,8 +137,9 @@ const Coursedetails = () => {
                             </div>
                         </div>
                     </div>
-                    <AsideBAr course={Course} />
+                    <AsideBAr course={Course} Modal={Modal} setModal={setModal} />
                 </div>
+            </> 
             )}
         </>
     )
@@ -141,7 +180,7 @@ const ReviewContent = () => {
 }
 
 //Aside bar component
-const AsideBAr = ({ course }) => {
+const AsideBAr = ({ course,setModal}) => {
     const { courseId } = useParams()
     const baseUrl = process.env.REACT_APP_API_URL
     const token = useSelector((state) => state.AdminDetails.token)
@@ -212,8 +251,44 @@ const AsideBAr = ({ course }) => {
     }
 
     return (
-        <div className="lg:sticky top-[10vh] bg-slate-200 lg:w-[30%] w-full  flex flex-col">
-            <div className="p-6">
+        <div className="relative bg-slate-200 lg:w-[30%] w-full h-full  flex flex-col">
+
+                {/* adding student and tutor */}
+           <div className='w-full  flex justify-evenly h-max p-4 '>
+
+                <div 
+                onClick={()=>setModal(true)}
+                   data-tooltip-id="assigntutor"
+                   data-tooltip-content="Assign Tutor"
+                className='rounded-full border-[3px] text-gray-700 hover:text-gray-900  border-gray-700 hover:border-gray-900 transition-all duration-200 bg-white  w-14 h-14 flex justify-center items-center  ' >
+                    +<FaChalkboardTeacher className='text-2xl' />
+                
+                <Tooltip 
+                                id="assigntutor"
+                                place="bottom"
+                                type="dark"
+                                effect="solid"
+                            />
+                </div> 
+                <div 
+                   data-tooltip-id="assignstudent"
+                   data-tooltip-content="Assign Student"
+                className='rounded-full border-[3px] text-gray-700 hover:text-gray-900  border-gray-700 hover:border-gray-900 transition-all duration-200 bg-white  w-14 h-14 flex justify-center items-center  ' >
+                                        
+                    +<PiStudentBold className='text-2xl' />
+                
+                <Tooltip 
+                                id="assignstudent"
+                                place="bottom"
+                                type="dark"
+                                effect="solid"
+                            />
+                </div> 
+
+                    </div>
+
+
+            <div className="px-6">
                 <h1 className="font-plusjakartasans font-bold">Modules List</h1>
 
                 <div className="bg-white rounded-lg flex flex-col mt-5 p-5 items-center">
@@ -247,7 +322,7 @@ const AsideBAr = ({ course }) => {
                 </div>
             </div>
 
-            <div className="w-full mb-4 px-4">
+            <div className="absolute bottom-2 w-full mb-4 px-4">
                 <div
                     className="cursor-pointer w-full h-8 rounded-xl flex justify-center items-center text-base font-semibold font-poppins border-[1px] text-red-700 border-red-600 bg-opacity-30 bg-red-500"
                     onClick={handleDeleteCourse}

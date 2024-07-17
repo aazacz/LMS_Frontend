@@ -8,6 +8,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { axiosInstanceStudent } from '../../routes/UserRoutes';
 import Loader from '../reusable/Loader';
 import "./Coursedetails.css";
+import { FaChalkboardTeacher } from 'react-icons/fa';
 
 const Coursedetails = () => {
     const [activeTab, setActiveTab] = useState('about');
@@ -206,11 +207,12 @@ const AsideBAr = ({ data, courseType, navigate }) => {
 
     return (
         <div className="bg-slate-200 w-full md:w-[30%] h-[1005] flex flex-col">
+
             <div className="p-6">
                 <h1 className="font-plusjakartasans font-bold">Modules List</h1>
                 <div className="bg-white rounded-lg flex flex-col mt-5 p-5 items-center">
                     <h1 className="font-plusjakartasans font-bold line-clamp-2">
-                        Introduction Basic SAT & DSAT
+                        Introduction Basic SAT & DSAT 
                     </h1>
                     {modules.map((value, index) => (
                         <div

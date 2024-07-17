@@ -351,7 +351,8 @@ const AddTutor = () => {
     
 
     return (
-        <div className="flex-1 h-full p-5 bg-slate-200 rounded-2xl mt-5">
+        <div className=" w-full   h-screen overflow-y-scroll no-scrollbar p-5   mt-5">
+        <div className=" w-full h-max p-5 px-8 bg-slate-200 rounded-2xl ">
             <h1 className="text-2xl font-poppins font-semibold">Tutor Form</h1>
             <form  className="">
                 <div className="grid grid-flow-row grid-cols-2 gap-4">
@@ -414,7 +415,7 @@ const AddTutor = () => {
                                 onMouseDown={handleMouseDown}
                                 onMouseUp={handleMouseUp}
                                 data-tooltip-id="my-tooltip"
-                                data-tooltip-content="Hello world!"
+                                data-tooltip-content=""
                                 className={`p-2 px-3  bg-slate-400 h-10 mt-2 flex justify-center rounded-md items-center ${isClicked ? 'scale-95 bg-bg-slate-300' : ''}`}
                             >
                                 <IoMdKey />
@@ -916,6 +917,7 @@ const AddTutor = () => {
                     </button>
                 </div>
             </form>
+        </div>
         </div>
     )
 }

@@ -130,7 +130,7 @@ const AdminSidebar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
 
     return (
         <div
-            className={`h-full bg-white  absolute  md:relative  z-50
+            className={`h-full bg-white  absolute  md:sticky  z-50
                        ${isSidebarOpen ? '' : ' -translate-x-full md:translate-x-0'}
                          transition-all duration-500  font-poppins text-sm font-medium `}
         >

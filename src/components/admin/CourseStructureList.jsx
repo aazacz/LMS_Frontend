@@ -39,7 +39,7 @@ const CourseStructureList = () => {
     return (
         <>
             {loading ? (
-                <div className="w-full h-screen origin-center  bg-gray-200 flex justify-center items-center">
+                <div className="w-full  h-screen origin-center  bg-gray-200 flex justify-center items-center">
                     <RotatingLines
                         visible={true}
                         height="96"

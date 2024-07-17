@@ -14,12 +14,14 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
     const [Showsidebar,setShowsidebar] = useState(false) 
 
     const user = useSelector((state) => state.StudentDetails.token);
-          
+    const userName = useSelector((state) => state.StudentDetails);
+          console.log("userName")
+          console.log(userName)
     const list = ['Subjects', 'Courses', 'Library', 'Contact'];
 
     const handleToggle = () => {
         setShow(!show);
-    };
+    }; 
 
     useEffect(() => {
    
@@ -29,22 +31,34 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
     
 
     return (
-        <div className=" Test md:px-4 px-4 justify-between w-full bg-white h-[7vh] md:h-[12vh] border-b-[1px] flex items-center md:py-0 relative transition-all duration-500">
+        <div className=" Test md:px-4 px-4 justify-between w-full bg-white h-[7vh]
+                              md:h-[12vh] border-b-[1px] flex items-center md:py-0 relative 
+                              transition-all duration-500">
             <div className="md:w-[10%] w-[30%] h-full font-poppins flex justify-center items-center">
                 <Link to="/">
                     <img src={logo} className="w-full cursor-pointer" alt="logo" />
                 </Link>
             </div>
- <AnimatePresence>
-    {Showsidebar && (
-        <motion.div 
-            initial={{ opacity: 0, x:0, y: -10 }}
-            animate={{ opacity: 1, x:0, y: 0 }}
-            exit=   {{ opacity: 0, x:0, y: -10 }}
-            className='transition-all duration-500 absolute top-[12vh] right-3 w-[200px] bg-red-700 h-[300px]'
-        />
-    )}
-</AnimatePresence>
+
+            <AnimatePresence>
+                {Showsidebar && (
+                    <motion.div 
+                        onMouseOver={()=>setShowsidebar(true)}
+                        onMouseOut={()=>setShowsidebar(false)}
+
+                        initial={{ opacity: 0, y: "20px" }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit=   {{ opacity: 0, y: "20px" }}
+                        className=' absolute top-[8vh] right-3 w-[200px] cursor-pointer z-[9] bg-transparent h-[300px]'
+                    >
+
+                    <div className='relative top-[20px] bg-red-600 w-full h-full'>
+
+                    </div>
+
+                        </motion.div>
+                )}
+            </AnimatePresence>
 
          
 
@@ -80,7 +94,12 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
             ) : (
                 user ? (
                    <div className="hidden md:flex md:w-[40%] justify-end items-center h-full">
-                     <IoReorderThreeOutline onMouseOver={()=>setShowsidebar(true)} onMouseOut={()=>setShowsidebar(false)} className='text-3xl'/>
+                     <div onMouseOver={()=>setShowsidebar(true)} onMouseOut={()=>setShowsidebar(false)}
+                          className='rounded-full z-10 cursor-pointer w-12 h-12 flex justify-center items-center bg-gray-600 text-3xl'> 
+
+
+
+                     </div>
 
                     </div>
                 ) : (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import coursephoto from '/coursephoto.jpeg'
+// import coursephoto from '/coursephoto.jpeg'
 import axios from 'axios'
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'

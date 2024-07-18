@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import coursephoto from '/coursephoto.jpeg'
+import coursephoto from '../../assets/Tutor/coursephoto.jpeg'
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
 import { Link } from 'react-router-dom'

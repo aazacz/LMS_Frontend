@@ -7,8 +7,8 @@ import usePasswordToggle from '../../hooks/usePasswordToggle';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAdminDetails } from '../../store/reducers/AdminloginSlice';
-import adminBg from "/adminBg.jpg"
-import Logo from "/Logoo.png"
+import adminBg from "../../assets/Admin/adminBg.jpg"
+import Logo from "../../assets/Admin/Logoo.png"
 
 
 const AdminLogin = () => {

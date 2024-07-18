@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { MdFileDownload } from 'react-icons/md'
-import sample from '/sample.pdf'
+import sample from '../../assets/Tutor/sample.pdf'
 import Pdflogo from './Pdflogo.jsx'
 
 const Library = () => {

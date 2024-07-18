@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import axios from 'axios'
-import sat from '/sat.jpg'
+import sat from '../../assets/Admin/sat.jpg'
 import { useLocation,useNavigate } from 'react-router-dom';
 import { axiosInstanceStudent } from '../../routes/UserRoutes';
 
@@ -14,8 +14,8 @@ const Checkout = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log("courseType"+courseType)
-         console.log("courseId"+courseId)
+        console.log("courseType "+courseType)
+         console.log("courseId "+courseId)
 
         const getCourseDetails = async()=>{
           

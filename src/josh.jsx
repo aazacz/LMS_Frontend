@@ -119,7 +119,7 @@ return (
 )
 
 
-
+{{loading ? loader : "data"}: "no data t show"}
 
 
 

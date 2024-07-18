@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import React from 'react'
 import './Animation_Courses.css'
-import PopularCourses from '/PopularCourses.png'
+import PopularCourses from '../../../assets/Student/PopularCourses.png'
 
 const MathsSAT = () => (
     <div className="animation-courses-maths">

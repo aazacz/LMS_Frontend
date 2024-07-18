@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react';
-import coursephoto from '/coursephoto.jpeg';
+import coursephoto from '../../assets/Student/coursephoto.jpeg';
 import { BiSpreadsheet } from 'react-icons/bi';
 import { LuTimer } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
@@ -15,7 +15,7 @@ import axios from 'axios';
 const CourseList = () => {
     const baseUrl = process.env.REACT_APP_API_URL
     const token = useSelector((state) => state.AdminDetails.token);
-  
+
     const [EnrolledCourse,SetEnrolledCourse]= useState()
     const [Course,SetCourse]= useState()
     
@@ -25,11 +25,21 @@ const CourseList = () => {
         // return response.data;
     }
     const getCourseList = async () => {
-          const response = await axios.get(`${baseUrl}api/student-course/all-active-courses`,  {
-            'authorisation': `Bearer ${token}`,
-            });
-            SetCourse(response.data)
-        return response.data;
+
+        try {
+            console.log("useQuery funciton hitted")
+            const response = await axiosInstanceStudent.get(`api/student-course/all-active-courses`            
+              );
+              console.log("response.data")
+              console.log(response.data)
+              SetCourse(response.data)
+          return response.data;
+       
+        } catch (error) {
+            console.log("error")
+            console.log(error)
+        }
+      
     };
   
     
@@ -44,6 +54,11 @@ const CourseList = () => {
     useEffect(()=>{
         getEnrolledList()
     },[])
+
+    useEffect(()=>{
+        console.log("EnrolledCourse")
+        console.log(EnrolledCourse)
+    },[EnrolledCourse])
     
 
     const bestinmarket = [
@@ -54,7 +69,7 @@ const CourseList = () => {
     ];
 
     return (
-        <div className="p-4 h-screen overflow-y-scroll no-scrollbar w-full">
+        <div className="p-4  h-screen overflow-y-scroll no-scrollbar w-full">
           
           
             <div>
@@ -73,7 +88,7 @@ const CourseList = () => {
 
 
                         EnrolledCourse&&EnrolledCourse?.map((course, index) => (
-                            <Link key={index} to={`/student/courses/${course._id}/individual`}>
+                            <Link key={index} to={`/student/courses/${course._id}/${course?.courseType}`}>
                                 <CourseCard course={course} />
                             </Link>
                         ))
@@ -83,12 +98,15 @@ const CourseList = () => {
                     }
                 </div>
             </div>
-            <div>
+
+
+
+            <div className='mt-3 w-full'>
                 <h1 className="font-poppins font-semibold text-lg py-2">
                     Individual Course
                 </h1>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {isLoading ? (
                         <>
                             {[...Array(4)].map((_, index) => (
@@ -96,16 +114,24 @@ const CourseList = () => {
                             ))}
                         </>
                     ) : (
-                        Course&&Course.individual.map((course, index) => (
+                        Course&&Course.individual.length>0?
+
+                    (   
+                       
+                        Course.individual.map((course, index) => (
                             <Link key={index} to={`/student/courses/${course._id}/individual`}>
                                 <CourseCard course={course} />
                             </Link>
-                        ))
+                     ))
+
+                      )
+                      :
+                      (<div className='w-full   text-center'> There are no courses no show </div>)
                     )}
                 </div>
             </div>
            
-            <div>
+            <div className='mt-3'>
                 <h1 className="font-poppins font-semibold text-lg py-2">
                     Group Course
                 </h1>
@@ -118,11 +144,15 @@ const CourseList = () => {
                             ))}
                         </>
                     ) : (
-                        Course&&Course.group.map((course, index) => (
+                        Course&&Course.group.length>0 ? 
+                        (Course.group.map((course, index) => (
                             <Link key={index} to={`/student/courses/${course._id}/group`}>
                                  <CourseCard course={course} />
                             </Link>
                         ))
+                    )
+                    :
+                    (<p> There are no courses no show </p>)
                     )}
                 </div>
             </div>

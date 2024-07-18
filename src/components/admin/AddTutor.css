@@ -1,0 +1,10 @@
+
+ .choose::file-selector-button{
+    display: none !important;
+  }
+
+  input[type="file"]:-webkit-file-upload-button{
+    width: 0 !important;
+    display: none !important;
+  }
+ 

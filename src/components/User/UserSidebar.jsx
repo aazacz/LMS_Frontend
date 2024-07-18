@@ -5,17 +5,10 @@ import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { MdDashboard } from 'react-icons/md'
-import { FaBookAtlas } from 'react-icons/fa6'
 import { FaBookReader } from 'react-icons/fa'
-import {
-    PiChalkboardTeacherFill,
-    PiCirclesFourFill,
-    PiExamFill,
-    PiStudentBold,
-} from 'react-icons/pi'
+import { PiChalkboardTeacherFill,PiExamFill,   } from 'react-icons/pi'
 import { IoIosKey, IoIosPerson, IoIosSettings } from 'react-icons/io'
-import { IoLibrary, IoLogOut, IoNotifications } from 'react-icons/io5'
-import { Tooltip } from 'react-tooltip'
+import { IoLibrary, IoLogOut } from 'react-icons/io5'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { GiBookmarklet } from 'react-icons/gi'
 import { PiTreeStructureFill } from 'react-icons/pi'
@@ -121,7 +114,7 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
 
     return (
         <div
-            className={` absolute  md:relative  *
+            className={` absolute  md:sticky top-[12vh]  
                        ${
                            isSidebarOpen
                                ? ''

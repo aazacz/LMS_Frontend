@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import coursephoto from '/coursephoto.jpeg'
+import coursephoto from '../../assets/Admin/coursephoto.jpeg'
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
@@ -39,7 +39,7 @@ const CourseStructureList = () => {
     return (
         <>
             {loading ? (
-                <div className="w-full h-screen origin-center  bg-gray-200 flex justify-center items-center">
+                <div className="w-full  h-screen origin-center  bg-gray-200 flex justify-center items-center">
                     <RotatingLines
                         visible={true}
                         height="96"

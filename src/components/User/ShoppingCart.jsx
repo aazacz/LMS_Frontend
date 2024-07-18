@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaTrashAlt } from 'react-icons/fa'
-import sat from '/sat.jpg'
+import sat from '../../assets/Student/sat.jpg'
 import { Link } from 'react-router-dom'
 const ShoppingCart = () => {
     return (

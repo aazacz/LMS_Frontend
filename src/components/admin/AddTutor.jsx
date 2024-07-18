@@ -10,6 +10,10 @@ import 'react-tooltip/dist/react-tooltip.css'
 import usePasswordToggle from '../../hooks/usePasswordToggle'
 import { FiPlusCircle } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
+import "./AddTutor.css"
+
+
+
 const AddTutor = () => {
     const navigate = useNavigate()
     const baseURL = process.env.REACT_APP_API_URL
@@ -253,18 +257,86 @@ const AddTutor = () => {
     }
 
     //  MAIN FUNCTION to submit the form ==============================
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault()
+    //     console.log('tutor Before Submit')
+    //     console.log(tutor)
+    //     try {
+    //         const response = await AdminAxiosInstance.post(
+    //             `api/tutor/create-tutor`,
+    //             tutor
+    //         )
+
+    //         toast.success(response.data.message)
+    //         console.log(response.data)
+    //     } catch (error) {
+    //         console.log(error)
+    //         if (error?.response?.data?.action === 'logout') {
+    //             setErrors(error.response.data.error)
+    //             toast.error('Session Expired')
+    //         } else {
+    //             setErrors(error.response.data.error)
+    //             toast.error(error.response.data.error)
+    //         }
+    //     }
+    // }
+
+
+
     const handleSubmit = async (event) => {
         event.preventDefault()
         console.log('tutor Before Submit')
         console.log(tutor)
+    
+        const formData = new FormData()
+    
+        // Append the tutor details to the formData
+        formData.append('name', tutor.name)
+        formData.append('email', tutor.email)
+        formData.append('password', tutor.password)
+        formData.append('number', tutor.number)
+        formData.append('experience', tutor.experience)
+        formData.append('status', tutor.status)
+        formData.append('address', JSON.stringify(tutor.tutorAddress))
+    
+        // Append skills, projects, educations, and awards as JSON strings
+        formData.append('skills', JSON.stringify(tutor.skills))
+        formData.append('projects', JSON.stringify(tutor.projects))
+        formData.append('educations', JSON.stringify(tutor.educations))
+        formData.append('awards', JSON.stringify(tutor.awards))
+    
+        // Append the CV file
+        if (tutor.cv.File) {
+            formData.append('cv', tutor.cv.File)
+        }
+    
+        // Append the education files
+        tutor.educations.forEach((education, index) => {
+            if (education.File) {
+                formData.append(`educationFile${index}`, education.File)
+            }
+        })
+    
+        // Append the award files
+        tutor.awards.forEach((award, index) => {
+            if (award.File) {
+                formData.append(`awardFile${index}`, award.File)
+            }
+        })
+    
         try {
+       
             const response = await AdminAxiosInstance.post(
-                `api/tutor/create-tutor`,
-                tutor
-            )
+                `api/tutor/create-tutor`, formData              
+              )
+    
+            // toast.success(response.data.message)
+            console.log(response)
+            if(response.data){
 
-            toast.success(response.data.message)
-            console.log(response.data)
+                navigate("/admin/home/tutors/")
+
+            }
         } catch (error) {
             console.log(error)
             if (error?.response?.data?.action === 'logout') {
@@ -276,11 +348,13 @@ const AddTutor = () => {
             }
         }
     }
+    
 
     return (
-        <div className="flex-1 h-full p-5 bg-slate-200 rounded-2xl mt-5">
+        <div className=" w-full   h-screen overflow-y-scroll no-scrollbar p-5   mt-5">
+        <div className=" w-full h-max p-5 px-8 bg-slate-200 rounded-2xl ">
             <h1 className="text-2xl font-poppins font-semibold">Tutor Form</h1>
-            <form onSubmit={handleSubmit} className="">
+            <form  className="">
                 <div className="grid grid-flow-row grid-cols-2 gap-4">
                     {/* Tutor Name */}
                     <div className="w-full">
@@ -341,7 +415,7 @@ const AddTutor = () => {
                                 onMouseDown={handleMouseDown}
                                 onMouseUp={handleMouseUp}
                                 data-tooltip-id="my-tooltip"
-                                data-tooltip-content="Hello world!"
+                                data-tooltip-content=""
                                 className={`p-2 px-3  bg-slate-400 h-10 mt-2 flex justify-center rounded-md items-center ${isClicked ? 'scale-95 bg-bg-slate-300' : ''}`}
                             >
                                 <IoMdKey />
@@ -512,7 +586,7 @@ const AddTutor = () => {
                                 name="cv"
                                 value={tutor.cv[0]?.file?.name}
                                 type="file"
-                                className=" focus:outline-blue-900 cursor-pointer"
+                                className="choose focus:outline-blue-900 cursor-pointer"
                                 id="file-upload"
                             />
                             <label
@@ -536,17 +610,18 @@ const AddTutor = () => {
                     <label className="text-sm font-semibold  ">
                         Educational Qualificatons
                     </label>
-
+{/* 
                     <button
                         onClick={addEducation}
                         type="button"
                         className="absolute right-3  top-3  flex gap-3  py-2 text-sm font-poppins content-center items-center rounded-[10px] px-3 bg-blue-600 text-white hover:bg-blue-800"
                     >
                         <FiPlusCircle /> Add
-                    </button>
+                    </button> */}
+                    {/* grid grid-flow-row grid-cols-2  */}
+                    <div className=" flex   mt-4 gap-4 border-2  relative">
 
-                    <div className="grid grid-flow-row grid-cols-2  mt-4 gap-4 border-2  relative">
-                        <div className="">
+                        <div className="w-1/2">
                             <label className="text-sm font-semibold text-gray-500">
                                 Institute/University/Certification*
                             </label>
@@ -561,7 +636,7 @@ const AddTutor = () => {
                                 name="name"
                                 type="text"
                                 placeholder="Qualification"
-                                className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-1 focus:outline-blue-900"
+                                className=" w-full -pl-8 h-10 bg-white text-sm rounded shadow-lg px-3 mt-1 focus:outline-blue-900"
                             />
                             {errors.experience && (
                                 <p className="text-red-500 text-xs">
@@ -570,31 +645,42 @@ const AddTutor = () => {
                             )}
                         </div>
 
-                        <div>
-                            <label className="text-sm font-semibold text-gray-500">
-                                Add Supporting Document
-                            </label>
-                            <div className="w-full relative overflow-hidden h-10 bg-white text-sm rounded shadow-lg px-3  mt-1 flex items-center">
-                                <input
-                                    onChange={(e) =>
-                                        setTempEducation((prev) => ({
-                                            ...prev,
-                                            File: e.target.files[0],
-                                        }))
-                                    }
-                                    name="File"
-                                    // value={tempEducation.File.name}
-                                    type="file"
-                                    className=" focus:outline-blue-900 cursor-pointer"
-                                    id="file-upload"
-                                />
-                                <label
-                                    htmlFor="file-upload"
-                                    className="text-blue-500 font-semibold  text-sm cursor-pointer font-plusjakartasans absolute right-2 top-1/2 -translate-y-1/2"
-                                >
-                                    Upload
-                                </label>
+                        <div className='w-1/2 flex '>
+                            <div className='w-full flex  items-end  gap-x-2'>
+
+                                <div className='flex-1 '>
+                                    <label className="text-sm font-semibold text-gray-500">
+                                        Add Supporting Document
+                                    </label>
+                                    <div className="w-full relative overflow-hidden h-10 bg-white text-sm rounded shadow-lg px-3  mt-1 flex items-center">
+                                        <input
+                                            onChange={(e) =>
+                                                setTempEducation((prev) => ({
+                                                    ...prev,
+                                                    File: e.target.files[0],
+                                                }))
+                                            }
+                                            name="File"
+                                            // value={tempEducation.File.name}
+                                            type="file"
+                                            className="choose focus:outline-blue-900 cursor-pointer"
+                                            id="file-upload"
+                                        />
+                                        <label
+                                            htmlFor="file-upload"
+                                            className="text-blue-500 font-semibold  text-sm cursor-pointer font-plusjakartasans absolute right-2 top-1/2 -translate-y-1/2"
+                                        >
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                                <button onClick={addEducation} type="button"
+                                    className=" flex h-10 gap-3  py-2 text-sm font-poppins content-center
+                                     items-center rounded-[10px] px-3 bg-blue-600 text-white
+                                     hover:bg-blue-800"
+                                >    <FiPlusCircle /> Add   </button>
                             </div>
+
 
                             {errors.experience && (
                                 <p className="text-red-500 text-xs">
@@ -625,17 +711,17 @@ const AddTutor = () => {
                     )}
                 </div>
 
-                <div className="w-full pt-4 mt-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-3 ">
+                <div className="w-full flex flex-col pt-4 justify-between gap-x-2  mt-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-3 ">
                     <label className="text-sm font-semibold bg">Skills</label>
 
-                    <div className="w-full h-10 flex items-center gap-10 mt-2 ">
+                    <div className="w-full h-10 flex items-center gap-x-2 mt-2 ">
                         <input
                             value={tempSkill}
                             onChange={(e) => setTempSkill(e.target.value)}
                             type="text"
                             placeholder="Add Skill"
                             name="skill"
-                            className="w-[90%] h-full bg-white text-sm rounded shadow-lg px-3  focus:outline-blue-900"
+                            className="w-full h-full bg-white text-sm rounded shadow-lg px-3  focus:outline-blue-900"
                         />
 
                         <button
@@ -671,14 +757,14 @@ const AddTutor = () => {
                 <div className="w-full pt-4 mt-4 shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] p-3  ">
                     <label className="text-sm font-semibold bg">Projects</label>
 
-                    <div className="w-full h-10 flex items-center gap-10 mt-2 ">
+                    <div className="w-full h-10 flex items-center justify-between gap-x-2  mt-2 ">
                         <input
                             value={tempProject}
                             onChange={(e) => setTempProjects(e.target.value)}
                             type="text"
                             placeholder="Add Projects"
                             name="name"
-                            className="w-[90%] h-full bg-white text-sm rounded shadow-lg px-3  focus:outline-blue-900"
+                            className="w-full h-full bg-white text-sm rounded shadow-lg px-3  focus:outline-blue-900"
                         />
 
                         <button
@@ -714,16 +800,17 @@ const AddTutor = () => {
                 {/* Awards  */}
                 <div className="w-full mt-5 border-[1px] rounded-md p-2 pt-2 relative  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]  ">
                     <label className="text-sm font-semibold  ">Awards</label>
-
+{/* 
                     <button
                         onClick={addAward}
                         type="button"
                         className="absolute right-3 h-10 top-3  flex gap-3  py-2 text-sm font-poppins content-center items-center rounded-[10px] px-3 bg-blue-600 text-white hover:bg-blue-800"
                     >
                         <FiPlusCircle /> Add
-                    </button>
-                    <div className="grid grid-flow-row grid-cols-2  mt-4 gap-4  relative">
-                        <div className="">
+                    </button> */}
+
+                    <div className="flex  mt-4 gap-4  relative">
+                        <div className="w-1/2">
                             <label className="text-sm font-semibold text-gray-500">
                                 Title
                             </label>
@@ -738,7 +825,7 @@ const AddTutor = () => {
                                 name="name"
                                 type="text"
                                 placeholder="Title of Award"
-                                className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-1 focus:outline-blue-900"
+                                className=" w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-1 focus:outline-blue-900"
                             />
                             {errors.experience && (
                                 <p className="text-red-500 text-xs">
@@ -747,7 +834,12 @@ const AddTutor = () => {
                             )}
                         </div>
 
-                        <div>
+                        <div className='w-1/2 flex '>
+                            <div className='w-full flex  items-end  gap-x-2'>
+
+                                <div className='flex-1 '>
+
+                  
                             <label className="text-sm font-semibold text-gray-500">
                                 Add Supporting Document
                             </label>
@@ -762,7 +854,7 @@ const AddTutor = () => {
                                     value={tempAward[0]?.File?.name}
                                     name="File"
                                     type="file"
-                                    className=" focus:outline-blue-900 cursor-pointer"
+                                    className="choose focus:outline-blue-900 cursor-pointer"
                                     id="file-upload"
                                 />
                                 <label
@@ -771,6 +863,17 @@ const AddTutor = () => {
                                 >
                                     Upload
                                 </label>
+
+
+                            </div>
+                            </div>
+                            <button
+                        onClick={addAward}
+                        type="button"
+                        className=" h-10 top-3  flex gap-3  py-2 text-sm font-poppins content-center items-center rounded-[10px] px-3 bg-blue-600 text-white hover:bg-blue-800"
+                    >
+                        <FiPlusCircle /> Add
+                    </button>
                             </div>
 
                             {errors.experience && (
@@ -806,12 +909,15 @@ const AddTutor = () => {
                 <div className="flex justify-center mt-5">
                     <button
                         className="px-20 py-2 bg-green-600 rounded-md text-white font-poppins"
-                        type="submit"
-                    >
-                        Create Tutor
+                        type="button"
+                        onClick={handleSubmit} >
+                            
+                      Create Tutor
+
                     </button>
                 </div>
             </form>
+        </div>
         </div>
     )
 }

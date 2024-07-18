@@ -52,7 +52,7 @@ const Homepage = () => {
         <div className="flex  w-full h-full ">
           {/* <Sidebar isOpen={isSidebarOpen} /> */}
 
-          <div className="h-full bg-red-300">
+          <div className="h-full ">
             <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
           </div>
 

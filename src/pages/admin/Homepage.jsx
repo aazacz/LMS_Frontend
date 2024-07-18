@@ -11,7 +11,7 @@ import StudentList from '../../components/admin/StudentList';
 import TutorDetails from '../../components/admin/TutorDetails';
 import DiagnosisTest from '../../components/admin/DiagnosisTest';
 import Addiagnosistest from '../../components/admin/Addiagnosistest';
-import Coursedetails from '../../components/admin/Coursedetails';
+import Coursedetails from '../../components/admin/CourseDetails/Coursedetails';
 import CourseList from '../../components/admin/CourseList';
 import Library from '../../components/admin/Library';
 import AddCourse from '../../components/admin/AddCourse';

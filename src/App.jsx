@@ -3,6 +3,9 @@ import './App.css';
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from './pages/ErrorPage';
 import Loader from './components/reusable/Loader';
+// import AdminRoutes from './routes/AdminRoutes';
+// import TutorRoutes from './routes/TutorRoutes';
+// import UserRoutes from './routes/UserRoutes';
 
 const AdminRoutes = lazy(() => import('./routes/AdminRoutes'));
 const TutorRoutes = lazy(() => import('./routes/TutorRoutes'));

@@ -5,7 +5,7 @@ import usePasswordToggle from "../../hooks/usePasswordToggle";
 import tutorBg from "../../assets/Tutor/adminBg.jpg";
 import Logo from "../../assets/Tutor/Logoo.png";
 import { setTutorDetails } from "../../store/reducers/TutorloginSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 

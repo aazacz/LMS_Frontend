@@ -1,8 +1,7 @@
 import React from 'react'
-import error from "/404.png"
-// import error from "../assets/404notfound.png"
+import error from "../assets/Common/404.png"
 import { Link } from 'react-router-dom'
-import Logo from "/Logoo.png"
+import Logo from "../assets/Common/Logoo.png"
 const ErrorPage = () => {
   return (
     <div className='flex flex-col justify-center  min-h-screen bg-cyan-200'>

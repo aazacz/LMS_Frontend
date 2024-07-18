@@ -1,5 +1,5 @@
 import React from 'react'
-import erroricon from '/errorBoundary.webp'
+import erroricon from '../assets/Common/errorBoundary.webp'
 import mindsatlogo from '../assets/mindsatlogo.webp'
 import './ErrorBoundary.css'
 

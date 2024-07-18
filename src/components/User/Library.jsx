@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Pdflogo from './Pdflogo.jsx'
 import { MdFileDownload } from 'react-icons/md'
-import sample from '/sample.pdf'
+import sample from '../../assets/Student/sample.pdf'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import ReusablePagination from '../reusable/ReusablePagination.jsx'

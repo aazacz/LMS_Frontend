@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import coursephoto from '/coursephoto.jpeg'
+import coursephoto from '../../assets/Admin/coursephoto.jpeg'
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -12,6 +12,7 @@ import Swal from 'sweetalert2'
 import { FaChalkboardTeacher } from 'react-icons/fa'
 import { PiStudentBold } from 'react-icons/pi'
 import { IoIosCloseCircle } from 'react-icons/io'
+import { AdminAxiosInstance } from '../../routes/AdminRoutes'
 
 const Coursedetails = () => {
     const baseUrl = process.env.REACT_APP_API_URL
@@ -43,7 +44,38 @@ const Coursedetails = () => {
             })
     }, [baseUrl, courseId, token])
 
-    useEffect
+
+    const [DropDownList, SetDropDownList] = useState()
+
+    const getModalDropDownList = async (List) => {
+
+        try {
+
+            if (List==="TutorList") {
+
+                const response = await AdminAxiosInstance.get("api/tutor/tutors?page=1&pageSize=")
+                console.log(response.data.data)
+                if(response.data){
+                    SetDropDownList(response.data.data)
+                    return                    
+                }
+            }
+            else {
+                const response = await AdminAxiosInstance.get("api/students/getAll-students")
+                console.log(response.data)
+                if(response.data){
+                    SetDropDownList(response.data.data)
+                    return
+                }
+
+            }
+
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <>
@@ -54,92 +86,99 @@ const Coursedetails = () => {
             ) : (
 
                 <>
-                {Modal? (<div className='w-screen flex justify-center items-center  h-full bg-black bg-opacity-60 absolute top-0 left-0 z-[999] '>
+                    {Modal ? (<div  className='w-full  fixed flex justify-center items-center  h-full bg-black bg-opacity-60  top-0 left-0 z-[99999] '>
 
 
-<div className='w-2/4 h-[300px] p-8 bg-white relative rounded-xl'>
+                        <div className='w-2/4 h-[300px] p-8 bg-white relative rounded-xl'>
 
-<IoIosCloseCircle className='absolute right-3 top-3 text-2xl  ' />
+                            <IoIosCloseCircle
+                                onClick={() => setModal(false)}
+                                className='absolute right-3 top-3 text-3xl  ' />
 
-<div className='w-full flex h-[40px] gap-x-4 justify-between mt-5'>
+                            <div className='w-full flex  h-[40px] gap-x-4  mt-5'>
 
-<select className='w-[300px]  border-[1px] border-black rounded-[3px] ' name="" id="" >
+                                <select className='w-full border-[1px] border-black rounded-[3px] max-h-32 overflow-auto' name="" id="">
+                                    <option defaultValue="select a tutor from the list" >select a tutor from the list</option>
+                                  
+                                {DropDownList && DropDownList?.map((value,index)=>{
 
-<option defaultValue="select a tutor from the list" >hai</option>
-<option value="">hai</option>
-<option value="">hai</option>
+                                    <option key={index} value={value.id}>
+                                        {value.name}
+                                    </option>
+                                 
+                                })
+                                  }
+                                  
+                                </select>
 
-</select>
-
-<button className='bg-blue-700 w-[90px] rounded-lg text-white'> Add</button>
-</div>
-
-</div>
-
-
-
-                </div>):null}
-                <div className="flex  flex-col lg:flex-row h-screen overflow-y-scroll ">
-                
-                    
-                    
-                    
-                    <div className="lg:w-[70%] w-full   p-4 flex flex-col">
-                        <div className="w-full h-[200px]  md:h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-2xl md:text-3xl">
-                            Introduction to SAT & DSAT
-                        </div>
-
-                        <div className="w-full  mt-4">
-                            <h1 className="font-bold text-lg md:text-xl font-plusjakartasans">
-                                Introduction to Basic SAT & DSAT
-                            </h1>
-                            <div className="flex items-center gap-x-6 mt-2">
-                                <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
-                                    <BiSpreadsheet className="text-gray-400" />
-                                    {Course ? Course.modules.length : 0} Modules
-                                </span>
-                                <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
-                                    <LuTimer className="text-gray-400" />
-                                    {Course && Course.trainingDuration}Hrs
-                                </span>
+                                <button className='bg-blue-700 w-[90px] rounded-lg text-white'> Add</button>
                             </div>
+
                         </div>
 
-                        <div className="w-full bg-blue-400 mt-4">
-                            <div className="flex w-full gap-x-4">
-                                {['about', 'module', 'tests', 'review'].map(
-                                    (tab, index) => (
-                                        <button
-                                            key={index}
-                                            className={`relative py-2 ${
-                                                activeTab === tab
+
+
+                    </div>) : null}
+                    <div className="flex  flex-col lg:flex-row h-screen overflow-y-scroll ">
+
+
+
+
+                        <div className="lg:w-[70%] w-full   p-4 flex flex-col">
+                            <div className="w-full h-[200px]  md:h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-2xl md:text-3xl">
+                                Introduction to SAT & DSAT
+                            </div>
+
+                            <div className="w-full  mt-4">
+                                <h1 className="font-bold text-lg md:text-xl font-plusjakartasans">
+                                    Introduction to Basic SAT & DSAT
+                                </h1>
+                                <div className="flex items-center gap-x-6 mt-2">
+                                    <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
+                                        <BiSpreadsheet className="text-gray-400" />
+                                        {Course ? Course.modules.length : 0} Modules
+                                    </span>
+                                    <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
+                                        <LuTimer className="text-gray-400" />
+                                        {Course && Course.trainingDuration}Hrs
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="w-full bg-blue-400 mt-4">
+                                <div className="flex w-full gap-x-4">
+                                    {['about', 'module', 'tests', 'review'].map(
+                                        (tab, index) => (
+                                            <button
+                                                key={index}
+                                                className={`relative py-2 ${activeTab === tab
                                                     ? 'border-b-4 border-amber-500'
                                                     : ''
-                                            }`}
-                                            onClick={() => handleTabClick(tab)}
-                                        >
-                                            {tab.charAt(0).toUpperCase() +
-                                                tab.slice(1)}
-                                        </button>
-                                    )
-                                )}
+                                                    }`}
+                                                onClick={() => handleTabClick(tab)}
+                                            >
+                                                {tab.charAt(0).toUpperCase() +
+                                                    tab.slice(1)}
+                                            </button>
+                                        )
+                                    )}
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="relative mt-4 overflow-hidden h-64">
-                            <div className={`slide-content ${slideDirection}`}>
-                                {activeTab === 'about' && <AboutContent />}
-                                {activeTab === 'module' && (
-                                    <ModuleContent course={Course} />
-                                )}
-                                {activeTab === 'tests' && <TestsContent />}
-                                {activeTab === 'review' && <ReviewContent />}
+                            <div className="relative mt-4 overflow-hidden h-64">
+                                <div className={`slide-content ${slideDirection}`}>
+                                    {activeTab === 'about' && <AboutContent />}
+                                    {activeTab === 'module' && (
+                                        <ModuleContent course={Course} />
+                                    )}
+                                    {activeTab === 'tests' && <TestsContent />}
+                                    {activeTab === 'review' && <ReviewContent />}
+                                </div>
                             </div>
                         </div>
+                        <AsideBAr course={Course} Modal={Modal} setModal={setModal} getModalDropDownList={getModalDropDownList} />
                     </div>
-                    <AsideBAr course={Course} Modal={Modal} setModal={setModal} />
-                </div>
-            </> 
+                </>
             )}
         </>
     )
@@ -180,7 +219,7 @@ const ReviewContent = () => {
 }
 
 //Aside bar component
-const AsideBAr = ({ course,setModal}) => {
+const AsideBAr = ({ course, setModal ,getModalDropDownList}) => {
     const { courseId } = useParams()
     const baseUrl = process.env.REACT_APP_API_URL
     const token = useSelector((state) => state.AdminDetails.token)
@@ -253,39 +292,46 @@ const AsideBAr = ({ course,setModal}) => {
     return (
         <div className="relative bg-slate-200 lg:w-[30%] w-full h-full  flex flex-col">
 
-                {/* adding student and tutor */}
-           <div className='w-full  flex justify-evenly h-max p-4 '>
+            {/* adding student and tutor */}
+            <div className='w-full  flex justify-evenly h-max p-4 '>
 
-                <div 
-                onClick={()=>setModal(true)}
-                   data-tooltip-id="assigntutor"
-                   data-tooltip-content="Assign Tutor"
-                className='rounded-full border-[3px] text-gray-700 hover:text-gray-900  border-gray-700 hover:border-gray-900 transition-all duration-200 bg-white  w-14 h-14 flex justify-center items-center  ' >
+                <div
+                    onClick={() => {
+                                    setModal(true); 
+                                    getModalDropDownList("TutorList")}
+                                }
+                    data-tooltip-id="assigntutor"
+                    data-tooltip-content="Assign Tutor"
+                    className='rounded-full border-[3px] text-gray-700 hover:text-gray-900  border-gray-700 hover:border-gray-900 transition-all duration-200 bg-white  w-14 h-14 flex justify-center items-center  ' >
                     +<FaChalkboardTeacher className='text-2xl' />
-                
-                <Tooltip 
-                                id="assigntutor"
-                                place="bottom"
-                                type="dark"
-                                effect="solid"
-                            />
-                </div> 
-                <div 
-                   data-tooltip-id="assignstudent"
-                   data-tooltip-content="Assign Student"
-                className='rounded-full border-[3px] text-gray-700 hover:text-gray-900  border-gray-700 hover:border-gray-900 transition-all duration-200 bg-white  w-14 h-14 flex justify-center items-center  ' >
-                                        
-                    +<PiStudentBold className='text-2xl' />
-                
-                <Tooltip 
-                                id="assignstudent"
-                                place="bottom"
-                                type="dark"
-                                effect="solid"
-                            />
-                </div> 
 
-                    </div>
+                    <Tooltip
+                        id="assigntutor"
+                        place="bottom"
+                        type="dark"
+                        effect="solid"
+                    />
+                </div>
+                <div
+                    onClick={() => {
+                        setModal(true); 
+                        getModalDropDownList(StudentList)}
+                    }
+                    data-tooltip-id="assignstudent"
+                    data-tooltip-content="Assign Student"
+                    className='rounded-full border-[3px] text-gray-700 hover:text-gray-900  border-gray-700 hover:border-gray-900 transition-all duration-200 bg-white  w-14 h-14 flex justify-center items-center  ' >
+
+                    +<PiStudentBold className='text-2xl' />
+
+                    <Tooltip
+                        id="assignstudent"
+                        place="bottom"
+                        type="dark"
+                        effect="solid"
+                    />
+                </div>
+
+            </div>
 
 
             <div className="px-6">

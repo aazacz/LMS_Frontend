@@ -6,7 +6,7 @@ import { FiBookOpen, FiBook } from 'react-icons/fi';
 import { IoReorderThreeOutline, IoSearch } from 'react-icons/io5';
 import logo from '../../assets/mindsatlogo.webp';
 import { Link } from 'react-router-dom';
-import profile from '/profile.jpeg';
+import profile from '../../assets/Student/profile.jpeg';
 import { motion, AnimatePresence } from "framer-motion"
 
 const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {

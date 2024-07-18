@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { FaStar, FaAngleRight } from 'react-icons/fa'
+import { FaStar } from 'react-icons/fa'
 import Loader from '../../reusable/Loader'
-import profile from '/profile.jpeg'
-import AssignmentImage from '/AssignmentImage.png'
+import profile from '../../../assets/Student/profile.jpeg'
+import AssignmentImage from '../../../assets/Student/AssignmentImage.png'
 import { FaArrowRight } from 'react-icons/fa'
 import './ClassesToday.css'
 const ClassesToday = () => {

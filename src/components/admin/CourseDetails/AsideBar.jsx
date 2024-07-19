@@ -13,7 +13,8 @@ import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
 
 
 
-const Asidebar = ({ course, setModal ,setTutorDrop,setStudentDrop}) => {
+const Asidebar = ({ course, setTutorModal,setStudentModal}) => {
+   
     const { courseId } = useParams()
     const baseUrl = process.env.REACT_APP_API_URL
     const token = useSelector((state) => state.AdminDetails.token)
@@ -91,8 +92,7 @@ const Asidebar = ({ course, setModal ,setTutorDrop,setStudentDrop}) => {
 
                 <div
                     onClick={() => {
-                                    setModal(true); 
-                                    setTutorDrop(true)}
+                            setTutorModal(true)}
                                 }
                     data-tooltip-id="assigntutor"
                     data-tooltip-content="Assign Tutor"
@@ -108,8 +108,7 @@ const Asidebar = ({ course, setModal ,setTutorDrop,setStudentDrop}) => {
                 </div>
                 <div
                     onClick={() => {
-                        setModal(true); 
-                        setStudentDrop(true)}
+                        setStudentModal(true)}
                     }
                     data-tooltip-id="assignstudent"
                     data-tooltip-content="Assign Student"

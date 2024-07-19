@@ -211,9 +211,11 @@ const AsideBAr = ({ data, courseType, navigate }) => {
             <div className="p-6">
                 <h1 className="font-plusjakartasans font-bold">Modules List</h1>
                 <div className="bg-white rounded-lg flex flex-col mt-5 p-5 items-center">
+                   
                     <h1 className="font-plusjakartasans font-bold line-clamp-2">
                         Introduction Basic SAT & DSAT 
                     </h1>
+                    
                     {modules.map((value, index) => (
                         <div
                             key={index}

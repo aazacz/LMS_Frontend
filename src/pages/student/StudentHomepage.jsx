@@ -23,6 +23,7 @@ import UserSidebar from "../../components/User/UserSidebar";
 import Settings from "../../components/User/Settings/Settings";
 import StudentTests from "../../components/User/StudentTests";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import PaymentSuccess from "../../components/User/PaymentSuccess";
 
 const StudentHomepage = () => {
 
@@ -46,7 +47,7 @@ const StudentHomepage = () => {
       <StudentNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
       
       
-        <div className="flex  w-full relative  ">
+        <div className="  flex  w-full   ">
 
    {/* Side Bar component  */}
           <UserSidebar
@@ -64,6 +65,7 @@ const StudentHomepage = () => {
                   path="/diagnosistestresult"
                   element={<DiagnosisTestResult />}
                 />
+                <Route path="/a" element={<PaymentSuccess />} />
                 <Route path="/courses" element={<CourseList />} />
                 <Route path="/tests" element={<StudentTests />} />
                 <Route path="/courses/:coursedetails/:courseType"    element={<Coursedetails />}   />

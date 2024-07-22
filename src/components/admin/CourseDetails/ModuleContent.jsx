@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+
 const ModuleContent = ({ Course }) => {
     const [modules, setModules] = useState([])
     console.log('course')

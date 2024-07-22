@@ -13,6 +13,7 @@ import AboutContent from './AboutContent'
 import ModuleContent from './ModuleContent'
 import ReviewContent from './ReviewContent'
 import AddDeletemodal from './AddDeletemodal'
+import TestsContent from './TestsContent'
 
 const Coursedetails = () => {
     const baseUrl = process.env.REACT_APP_API_URL
@@ -172,9 +173,9 @@ const Coursedetails = () => {
 
 
 
-                    <div className="flex  flex-col lg:flex-row h-screen overflow-y-scroll ">
+                    <div className="flex  flex-col lg:flex-row   ">
 
-                        <div className="lg:w-[70%] w-full   p-4 flex flex-col">
+                        <div className="md:w-[70%] w-full   p-4 flex flex-col">
                             <div className="w-full h-[200px]  md:h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-2xl md:text-3xl">
                                 Introduction to SAT & DSAT
                             </div>
@@ -234,6 +235,7 @@ const Coursedetails = () => {
 }
 
 export default Coursedetails
+
 
 
   

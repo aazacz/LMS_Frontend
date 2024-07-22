@@ -3,20 +3,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FaBell, FaBars } from 'react-icons/fa';
 import { IoIosArrowForward } from 'react-icons/io';
 import { FiBookOpen, FiBook } from 'react-icons/fi';
-import { IoReorderThreeOutline, IoSearch } from 'react-icons/io5';
+import { IoSearch } from 'react-icons/io5';
 import logo from '../../assets/mindsatlogo.webp';
 import { Link } from 'react-router-dom';
 import profile from '../../assets/Student/profile.jpeg';
 import { motion, AnimatePresence } from "framer-motion"
+import { LiaSignOutAltSolid } from "react-icons/lia";
+import { clearStudentDetails } from '../../store/reducers/StudentloginSlice';
+
+
+
 
 const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
+ 
     const [show, setShow] = useState(false);
     const [Showsidebar,setShowsidebar] = useState(false) 
 
     const user = useSelector((state) => state.StudentDetails.token);
-    const userName = useSelector((state) => state.StudentDetails);
-          console.log("userName")
-          console.log(userName)
+    const userName = useSelector((state) => state.StudentDetails.userName);
+       
+    const [NameLetter,SetNameLetter] = useState(userName[0])          
     const list = ['Subjects', 'Courses', 'Library', 'Contact'];
 
     const handleToggle = () => {
@@ -29,6 +35,15 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
 
     }, [Showsidebar])
     
+    const dispatch = useDispatch()
+
+
+
+    const handleLogout = () => {
+        setShowsidebar(false)
+        dispatch(clearStudentDetails());
+        navigate("/");
+      };
 
     return (
         <div className=" Test md:px-4 px-4 justify-between w-full bg-white h-[7vh]
@@ -49,11 +64,22 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
                         initial={{ opacity: 0, y: "20px" }}
                         animate={{ opacity: 1, y: 0 }}
                         exit=   {{ opacity: 0, y: "20px" }}
-                        className=' absolute top-[8vh] right-3 w-[200px] cursor-pointer z-[9] bg-transparent h-[300px]'
+                        className=' absolute top-[8vh] right-3 w-[200px] cursor-pointer z-[9] bg-transparent h-max'
                     >
 
-                    <div className='relative top-[20px] bg-red-600 w-full h-full'>
-
+                    <div className='relative top-[20px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]  bg-white w-full h-full'>
+                    
+                    <Link to={'/student/courses'}>     <div onClick={()=>setShowsidebar(false)} className='w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 font-Roboto text-gray-600'>Courses </div></Link>
+                    <Link to={'/student/assignments'}> <div onClick={()=>setShowsidebar(false)} className='w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 font-Roboto text-gray-600'> Assignment </div></Link>
+                    <Link to={'/student/settings'}>    <div onClick={()=>setShowsidebar(false)} className='w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 font-Roboto text-gray-600'>Settings</div></Link>
+                    
+                    <div
+                     onClick={()=>handleLogout()}
+                     className='w-full h-[50px] bg-gray-100 flex justify-center gap-x-2 text-red-700  items-center px-5 font-Roboto '>
+                        <LiaSignOutAltSolid className='text-xl' />
+                        Signout
+                    </div>
+ 
                     </div>
 
                         </motion.div>
@@ -95,9 +121,9 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
                 user ? (
                    <div className="hidden md:flex md:w-[40%] justify-end items-center h-full">
                      <div onMouseOver={()=>setShowsidebar(true)} onMouseOut={()=>setShowsidebar(false)}
-                          className='rounded-full z-10 cursor-pointer w-12 h-12 flex justify-center items-center bg-gray-600 text-3xl'> 
+                          className=' rounded-full z-10 font-Roboto text-white cursor-pointer w-12 h-12 flex justify-center items-center bg-gray-600 text-3xl'> 
 
-
+                                    {NameLetter}
 
                      </div>
 

@@ -85,7 +85,7 @@ const Asidebar = ({ course, setTutorModal,setStudentModal}) => {
     }
 
     return (
-        <div className="relative bg-slate-200 lg:w-[30%] w-full h-full  flex flex-col">
+        <div className="relative bg-slate-200 lg:w-[30%] w-full   flex flex-col">
 
             {/* adding student and tutor */}
             <div className='w-full  flex justify-evenly h-max p-4 '>
@@ -161,14 +161,24 @@ const Asidebar = ({ course, setTutorModal,setStudentModal}) => {
                 </div>
             </div>
 
-            <div className="absolute bottom-2 w-full mb-4 px-4">
+            <div className="absolute bottom-2 w-full grid grid-flow-row grid-cols-2  gap-x-4 mb-4 px-4">
+
                 <div
-                    className="cursor-pointer w-full h-8 rounded-xl flex justify-center items-center text-base font-semibold font-poppins border-[1px] text-red-700 border-red-600 bg-opacity-30 bg-red-500"
+                    className="cursor-pointer  h-8 rounded-xl flex justify-center items-center text-base font-semibold font-poppins border-[1px] text-blue-700 border-blue-600 bg-opacity-30 bg-blue-500"
+                    onClick={handleDeleteCourse}
+                >
+                    <h1>Edit</h1> 
+                </div>
+
+                <div
+                    className="cursor-pointer  h-8 rounded-xl flex justify-center items-center text-base font-semibold font-poppins border-[1px] text-red-700 border-red-600 bg-opacity-30 bg-red-500"
                     onClick={handleDeleteCourse}
                 >
                     <h1>Delete Course</h1>
                 </div>
+
             </div>
+
         </div>
     )
 }

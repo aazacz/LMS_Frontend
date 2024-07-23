@@ -1,18 +1,11 @@
 import React, { useState } from "react";
-import {
-  Route,
-  Routes,
-  Navigate,
-  BrowserRouter as Router,
-} from "react-router-dom";
+import {  Route,  Routes,  Navigate,  BrowserRouter as Router} from "react-router-dom";
 import { useSelector } from "react-redux";
-// import DiagnosisTest from "./DiagnosisTest";
 import StudentNavbar from "../../components/User/StudentNavbar";
 import ErrorPage from "../ErrorPage";
 import DiagnosisTestResult from "./DiagnosisTestResult";
 import CourseList from "../../components/User/CourseList";
 import Coursedetails from "../../components/User/Coursedetails";
-// import TutorListing from "../../components/User/TutorListing";
 import Assignments from "./Assignments";
 import Library from "../../components/User/Library";
 import ClassesToday from "../../components/User/ClassesToday/ClassesToday";
@@ -20,10 +13,10 @@ import Dashboard from "../../components/User/Dashboard/Dashboard";
 import ShoppingCart from "../../components/User/ShoppingCart";
 import Checkout from "../../components/User/Checkout";
 import UserSidebar from "../../components/User/UserSidebar";
-import Settings from "../../components/User/Settings/Settings";
 import StudentTests from "../../components/User/StudentTests";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PaymentSuccess from "../../components/User/PaymentSuccess";
+import Settings from "../../components/reusable/Settings/Settings";
 
 const StudentHomepage = () => {
 
@@ -44,27 +37,25 @@ const StudentHomepage = () => {
 
 
   {/* Navbar component */}
+  <div className="sticky top-0 z-10 w-full">
       <StudentNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+  </div>
       
       
-        <div className="  flex  w-full   ">
+  <div className=" fixed  flex  w-full h-[90dvh] overflow-hidden ">
 
    {/* Side Bar component  */}
-          <UserSidebar
-            isSidebarOpen={isSidebarOpen}
-            setIsSidebarOpen={setIsSidebarOpen}
-            />
+   <div className="">
+          <UserSidebar  isSidebarOpen={isSidebarOpen}      setIsSidebarOpen={setIsSidebarOpen}   />
+   </div>
 
 
 {/* Body components  */}
-          <div className="flex-1    ">
-            <div className="w-full h-auto">
+      <div className="flex-1   w-full  overflow-auto  ">
+      <div className="w-full   ">
               <Routes>
                 <Route path="/*" element={<Dashboard />} />
-                <Route
-                  path="/diagnosistestresult"
-                  element={<DiagnosisTestResult />}
-                />
+                <Route path="/diagnosistestresult"   element={<DiagnosisTestResult />}  />
                 <Route path="/a" element={<PaymentSuccess />} />
                 <Route path="/courses" element={<CourseList />} />
                 <Route path="/tests" element={<StudentTests />} />

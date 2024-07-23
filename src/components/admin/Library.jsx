@@ -152,10 +152,10 @@ const Library = () => {
     return (
         <div
             onClick={() => setModal(false)}
-            className={`w-full h-[100dvh] bg-red-300 relative flex flex-col font-poppins ${Modal ? ' bg-gray-200' : ' '}`}
+            className={`w-full h-[100dvh]  relative flex flex-col font-poppins items-center ${Modal ? ' bg-gray-200' : ' '}`}
         >
             {Modal && (
-                <div className="w-full z-[99] h-full flex justify-center items-center absolute  left-0 top-0  ">
+                <div className="w-[90%] z-[99] h-full flex justify-center items-center absolute  left-0 top-0  ">
                     
                     <div className='w-full h-full   '>
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { FiPlusCircle } from "react-icons/fi"
 import { toast } from 'react-toastify'
-import { coursestructureform } from "../../utils/adminSide/Formvalidation"
+import { coursestructureform } from "../../../utils/adminSide/Formvalidation"
 import axios from "axios"
 
 const CourseStructure = () => {

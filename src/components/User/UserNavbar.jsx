@@ -67,16 +67,17 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
                         className=' absolute top-[8vh] right-3 w-[200px] cursor-pointer z-[9] bg-transparent h-max'
                     >
 
-                    <div className='relative top-[20px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]  bg-white w-full h-full'>
+                    <div className='relative top-[20px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-  w-full h-full'>
                     
                     <Link to={'/student/courses'}>     <div onClick={()=>setShowsidebar(false)} className='w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 font-Roboto text-gray-600'>Courses </div></Link>
                     <Link to={'/student/assignments'}> <div onClick={()=>setShowsidebar(false)} className='w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 font-Roboto text-gray-600'> Assignment </div></Link>
                     <Link to={'/student/settings'}>    <div onClick={()=>setShowsidebar(false)} className='w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 font-Roboto text-gray-600'>Settings</div></Link>
                     
+
                     <div
                      onClick={()=>handleLogout()}
                      className='w-full h-[50px] bg-gray-100 flex justify-center gap-x-2 text-red-700  items-center px-5 font-Roboto '>
-                        <LiaSignOutAltSolid className='text-xl' />
+                        <LiaSignOutAltSolid className='text-xl' />   
                         Signout
                     </div>
  

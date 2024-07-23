@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { FaCirclePlus } from 'react-icons/fa6'
 import useDebounce from '../../hooks/useDebounce'
 import axios from 'axios'
+import { AdminAxiosInstance } from '../../routes/AdminRoutes'
 import { useQuery } from '@tanstack/react-query'
 
 const apiURL =
@@ -48,22 +49,21 @@ const DiagnosisTest = () => {
     //function to fetch the data
     const fetchDiagnosisData = async () => {
         try {
-            const response = await axios.get(
-                `${apiURL}api/diagnosis/get-diagnosis?page=1&pageSize=&search`
+            const response = await AdminAxiosInstance.get(
+                `api/diagnosis/get-diagnosis?page=1&pageSize=&search`
             )
             console.log(response.data)
             return response.data
         } catch (error) {
             console.log(error)
-            // toast.error(error.response.data.error);
         }
     }
 
-    const { data, isPending, isError, error, refetch } = useQuery({
-        queryKey: ['diagnosisiTestData'],
-        queryFn: fetchDiagnosisData,
-        staleTime: 1000,
-        refetchInterval: 600000,
+    const { data, isPending, refetch } = useQuery({
+                                            queryKey: ['diagnosisiTestData'],
+                                            queryFn: fetchDiagnosisData,
+                                            staleTime: 1000,
+                                            refetchInterval: 600000,
     })
 
     useEffect(() => {

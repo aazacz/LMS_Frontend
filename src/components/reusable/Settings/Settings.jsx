@@ -11,9 +11,7 @@ const Settings = () => {
             <div className="w-full h-64 p-2">
                 <Routes>
                     <Route path="/" element={<EditProfile />} />
-                    <Route
-                        path="/accountsettings"
-                        element={<AccountSettings />}
+                    <Route path="/accountsettings"  element={<AccountSettings />}
                     />
                     {/* <Route path="/notifications" element={<Notifications/>}/> */}
                 </Routes>

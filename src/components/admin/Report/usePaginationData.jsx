@@ -74,6 +74,7 @@ const usePaginationData = ( initialPage = 1, initialPageSize = 10, initialSearch
     handlePageChange,
     handlePageSizeChange,
     handleSearchChange,
+    refetch
   };
 };
 

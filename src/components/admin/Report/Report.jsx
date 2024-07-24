@@ -19,30 +19,42 @@ const Report = () => {
     handlePageChange,
     handlePageSizeChange,
     handleSearchChange,
+    refetch,
     error
      }            = usePaginationData()
 
+     const [payStatus,setpayStatus] = useState("")
      const [studentId,setstudentId] = useState("")
      const [CourseId,setCourseId] = useState("")
-     const [paymentpayload,setpaymentpayload] = useState([{
-                                      payStatus:"",
-                                      paymentMode:"",
-                                      paymentId:"",
-                                      amount:""
-                                    }])
+     const [paymentpayload, setpaymentpayload] = useState({
+                              payStatus: "Completed",
+                              paymentMode: "",
+                              paymentId: "",
+                              amount: ""
+});
 
      const handlePaymentStatus = async(StudentId, CourseId)=>{
           
             console.log("StudentId"+ StudentId )
             console.log("CourseId" + CourseId  )
+         
 
-            // const response = await AdminAxiosInstance.put(`api/payment/payment?courseId=${CourseId}&studentId=${StudentId}`)
-            // return response.data.data
-    }
-    
-    const handleInput = ()=>{
+            const response = await AdminAxiosInstance.put(`api/payment/payment?courseId=${CourseId}&studentId=${StudentId}`,paymentpayload)
+            
+            if(response.data.message === "Payment status updated successfully"){
+            
+              setpaymentpayload({
+                payStatus: "Completed",
+                paymentMode: "",
+                paymentId: "",
+                amount: ""
+                                })
 
+               refetch()
+
+            }
     }
+ 
     
     const props = {
       handlePaymentStatus:handlePaymentStatus,
@@ -50,6 +62,8 @@ const Report = () => {
       isPending:isPending,
       setstudentId:setstudentId,
       setCourseId:setCourseId,
+      setpaymentpayload:setpaymentpayload,
+      paymentpayload:paymentpayload
     }
 
 

@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Loader from '../../reusable/Loader';
-import './StudentListTable.css'
+import './StudentListTable.css';
 
-const StudentListTable = ({ data, isPending, handlePaymentStatus, handleInput }) => {
-    const [inputs, setInputs] = useState({});
+const StudentListTable = ({ data, isPending, handlePaymentStatus, setpaymentpayload, paymentpayload }) => {
+  
+ 
 
-    const handleChange = (e, rowId, field) => {
-        setInputs({
-            ...inputs,
-            [rowId]: {
-                ...inputs[rowId],
-                [field]: e.target.value
-            }
-        });
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setpaymentpayload(paymentpayload=>({
+            ...paymentpayload,
+            [name]:value
+        }));
     };
+
+
 
     const columns = [
         { field: 'Name', headerName: 'Name' },
@@ -44,12 +45,10 @@ const StudentListTable = ({ data, isPending, handlePaymentStatus, handleInput })
     };
 
     const handleMarkPaid = (row) => {
-        const paymentMode = row.paymentMode || inputs[row._id]?.paymentMode;
-        const paymentId = row.paymentId || inputs[row._id]?.paymentId;
-        const amount = row.amount || inputs[row._id]?.amount;
 
-        if (paymentMode && paymentId && amount) {
-            handlePaymentStatus(row.studentId, row.courseId, paymentMode, paymentId, amount);
+        if (paymentpayload.paymentMode && paymentpayload.paymentId && paymentpayload.amount) {
+            handlePaymentStatus(row.studentId, row.courseId);
+  
         } else {
             alert('Please fill in all payment details.');
         }
@@ -58,23 +57,21 @@ const StudentListTable = ({ data, isPending, handlePaymentStatus, handleInput })
     return (
         <div className='w-full'>
             <div className="table-container">
-                <table className="responsive-table">
-                    <thead>
-                        <tr>
-                            {columns.map((column, index) => (
-                                <th key={index}>{column.headerName}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {isPending ? (
+                {isPending ? (
+                    <div className="w-full h-full flex justify-center items-center">
+                        <Loader />
+                    </div>
+                ) : (
+                    <table className="responsive-table">
+                        <thead>
                             <tr>
-                                <td colSpan={columns.length} className="w-full h-full flex justify-center items-center">
-                                    <Loader />
-                                </td>
+                                {columns.map((column, index) => (
+                                    <th key={index}>{column.headerName}</th>
+                                ))}
                             </tr>
-                        ) : (
-                            data?.map((row, indexrow) => (
+                        </thead>
+                        <tbody>
+                            {data?.map((row, indexrow) => (
                                 <tr key={indexrow}>
                                     {columns.map((column, index) => (
                                         <td key={index}>
@@ -122,10 +119,11 @@ const StudentListTable = ({ data, isPending, handlePaymentStatus, handleInput })
                                                 <div className="font-semibold text-center">
                                                     {row.paymentMode || (
                                                         <input
-                                                         className='w-[80px]'
+                                                            className='w-[80px]'
                                                             type="text"
-                                                            value={inputs[row._id]?.paymentMode || ''}
-                                                            onChange={(e) => handleChange(e, row._id, 'paymentMode')}
+                                                            name='paymentMode'
+                                                            value={paymentpayload?.paymentMode || ''}
+                                                            onChange={(e) => handleChange(e, 'paymentMode')}
                                                         />
                                                     )}
                                                 </div>
@@ -135,9 +133,10 @@ const StudentListTable = ({ data, isPending, handlePaymentStatus, handleInput })
                                                 <div className="font-semibold text-center">
                                                     {row.paymentId || (
                                                         <input
-                                                         className='w-[80px]'
+                                                            name="paymentId"
+                                                            className='w-[80px]'
                                                             type="text"
-                                                            value={inputs[row._id]?.paymentId || ''}
+                                                            value={paymentpayload?.paymentId || ''}
                                                             onChange={(e) => handleChange(e, row._id, 'paymentId')}
                                                         />
                                                     )}
@@ -150,9 +149,10 @@ const StudentListTable = ({ data, isPending, handlePaymentStatus, handleInput })
                                                         `${row.amount} ₹`
                                                     ) : (
                                                         <input
-                                                        className='w-[80px] no-arrow'
+                                                            name="amount"
+                                                            className='w-[80px] no-arrow'
                                                             type="number"
-                                                            value={inputs[row._id]?.amount || ''}
+                                                            value={paymentpayload?.amount || ''}
                                                             onChange={(e) => handleChange(e, row._id, 'amount')}
                                                         />
                                                     )}
@@ -199,10 +199,10 @@ const StudentListTable = ({ data, isPending, handlePaymentStatus, handleInput })
                                         </td>
                                     ))}
                                 </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
             </div>
         </div>
     );

@@ -3,7 +3,7 @@ import AdminNavbar from "../../components/admin/AdminNavbar";
 import Sidebar from "../../components/admin/Sidebar";
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from '../ErrorPage';
-import CourseStructure from '../../components/admin/CourseStructure';
+import CourseStructure from '../../components/admin/CourseStructure/CourseStructure';
 import TutorListing from '../../components/admin/TutorListing';
 import TutorForm from '../../components/admin/TutorDetails';
 import AddTutor from '../../components/admin/AddTutor';
@@ -11,14 +11,14 @@ import StudentList from '../../components/admin/StudentList';
 import TutorDetails from '../../components/admin/TutorDetails';
 import DiagnosisTest from '../../components/admin/DiagnosisTest';
 import Addiagnosistest from '../../components/admin/Addiagnosistest';
-import Coursedetails from '../../components/admin/Coursedetails';
-import CourseList from '../../components/admin/CourseList';
+import Coursedetails from '../../components/admin/CourseDetails/Coursedetails';
+import CourseList from '../../components/admin/CourseList/CourseList';
 import Library from '../../components/admin/Library';
 import AddCourse from '../../components/admin/AddCourse';
 import Dashboard from '../../components/admin/Dashboard/Dashboard';
 import StudentDetail from '../../components/admin/StudentDetail/StudentDetail';
-import CourseStructureList from '../../components/admin/CourseStructureList';
-import CourseStructureDetails from '../../components/admin/CourseStructureDetails';
+import CourseStructureList from '../../components/admin/CourseStructure/CourseStructureList';
+import CourseStructureDetails from '../../components/admin/CourseStructure/CourseStructureDetails';
 import Admin_Material from '../../components/admin/UploadMaterial/Admin_Material'
 import AddCourseStructure from '../../components/admin/AddCourseStructure';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -26,6 +26,7 @@ import AdminSidebar from '../../components/admin/AdminSidebar';
 import DiagnosisiTestDetailsPage from "../../components/admin/DiagnosisiTestDetailsPage";
 import Settings from "../../components/admin/Settings/Settings";
 import Package from "../../components/admin/Package";
+import Report from "../../components/admin/Report/Report";
 
 
 
@@ -49,38 +50,39 @@ const Homepage = () => {
           <AdminNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}  />
         </div>
 
-        <div className="flex  w-full h-full ">
+        <div className=" fixed  flex  w-full h-[90dvh] overflow-hidden ">
           {/* <Sidebar isOpen={isSidebarOpen} /> */}
 
-          <div className="h-full ">
+          <div className=" ">
             <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
           </div>
 
-          <div className="flex-1   w-full h-full   ">
+          <div className="flex-1   w-full  overflow-auto  ">
 
-            <div className="w-full h-auto  ">
+            <div className="w-full   ">
               <Routes>
-                <Route path="/*" element={<Dashboard />} />
-                <Route path="/courses/addcourse" element={<AddCourse />} />
-                <Route path="/courses" element={<CourseList name={name}/>} />
-                <Route path="/courses/:courseId" element={<Coursedetails height={Ref} />} />
-                <Route path="/coursestructure" element={<CourseStructureList />} />
+                <Route path="/*"                      element={<Dashboard />} />
+                <Route path="/courses/addcourse"      element={<AddCourse />} />
+                <Route path="/courses"                element={<CourseList />} />
+                <Route path="/courses/:courseId"      element={<Coursedetails  />} />
+                <Route path="/coursestructure"        element={<CourseStructureList />} />
                 <Route path="/courseStructure/addcoursestructure" element={<AddCourseStructure />} />
                 <Route path="/coursestructure/:structureId" element={<CourseStructureDetails />} />
                 <Route path="/coursestructure/editcoursestructure/:structureId" element={<AddCourseStructure />} />
-                <Route path="/package" element={< Package/>} />
-                <Route path="/students/:studentId" element={<StudentDetail />} />
-                <Route path="/students" element={<StudentList />} />
-                <Route path="/tutors/addtutor" element={<AddTutor />} />
+                <Route path="/package"                element={< Package/>} />
+                <Route path="/students/:studentId"    element={<StudentDetail />} />
+                <Route path="/students"               element={<StudentList />} />
+                <Route path="/tutors/addtutor"        element={<AddTutor />} />
                 <Route path="/diagnosistest/addiagnosistest" element={<Addiagnosistest />} />
                 <Route path="/diagnosistest/:diagnosisiTestDetailsPage" element={<DiagnosisiTestDetailsPage />} />
-                <Route path="/diagnosistest" element={<DiagnosisTest />} />
-                <Route path="/tutors/:tutorId" element={<TutorDetails />} />
-                <Route path="/tutors" element={<TutorListing />} />
-                <Route path="/library" element={<Library />} />
+                <Route path="/diagnosistest"          element={<DiagnosisTest />} />
+                <Route path="/report"          element={<Report />} />
+                <Route path="/tutors/:tutorId"        element={<TutorDetails />} />
+                <Route path="/tutors"                 element={<TutorListing />} />
+                <Route path="/library"                element={<Library />} />
                 <Route path="/library/uploadmaterial" element={<Admin_Material />} />
-                <Route path="/settings/*" element={<Settings />} />
-                <Route path="*" element={<ErrorPage />} />
+                <Route path="/settings/*"             element={<Settings />} />
+                <Route path="*"                       element={<ErrorPage />} />
               </Routes>
             </div>
           </div>

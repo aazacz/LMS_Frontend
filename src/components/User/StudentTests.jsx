@@ -74,7 +74,7 @@ const StudentTests = () => {
     })
 
     return (
-        <div className="w-full flex flex-wrap h-screen no-scrollbar font-poppins">
+        <div className="w-full flex flex-wrap  h-screen overflow-y-scroll   no-scrollbar font-poppins">
             <div className="p-2 flex flex-col gap-2 h-max w-full md:w-[70%]">
                 <div className="flex justify-between flex-wrap">
                     <p className="p-2 font-bold text-lg lg:text-xl">Tests</p>
@@ -182,9 +182,14 @@ const StudentTests = () => {
                     </table>
                 </div>
             </div>
-            <div className="w-screen md:w-[30%] ">
+
+
+            <div className="w-screen h-full overflow-y-scroll  md:w-[30%] ">
                 <Aside_Section_Test_Page />
+
             </div>
+
+
         </div>
     )
 }

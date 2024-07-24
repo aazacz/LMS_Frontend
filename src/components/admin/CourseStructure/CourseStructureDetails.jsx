@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import coursephoto from '../../assets/Common/coursephoto.jpeg'
+import coursephoto from '../../../assets/Common/coursephoto.jpeg'
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import Loader from '../reusable/Loader'
+import Loader from '../../reusable/Loader'
 import { FaCirclePlus } from 'react-icons/fa6'
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
@@ -92,7 +92,7 @@ const CourseStructureDetails = ({ height }) => {
                         </div>
 
                         <div className="relative mt-4 overflow-hidden h-64">
-                            <div className={`slide-content ${slideDirection}`}>
+                            <div className={`slide-content `}>
                                 {activeTab === 'about' && <AboutContent />}
                                 {activeTab === 'module' && (
                                     <ModuleContent course={Course} />

@@ -6,7 +6,7 @@ import Dashboard from "../../components/tutor/Dashboard/Dashboard";
 import Content from "../../components/tutor/Content";
 import QuestionBank from "../../components/tutor/QuestionBank/QuestionBank";
 import Insights from "../../components/tutor/Insights";
-import Settings from "../../components/tutor/Settings/Settings";
+import Settings from "../../components/reusable/Settings/Settings";
 import ErrorPage from "../ErrorPage";
 import Coursedetails from "../../components/tutor/Coursedetails";
 import Assignments from "../../components/tutor/Assignment/Assignments";

@@ -44,7 +44,7 @@ AdminAxiosInstance.interceptors.response.use(
   }
 );
 
-const HomeRoutes = () => {
+const AdminRoutes = () => {
   const user = useSelector((state) => state.AdminDetails.token);
   token = useSelector((state) => state.AdminDetails.token);
 
@@ -63,4 +63,4 @@ const HomeRoutes = () => {
   );
 };
 
-export default HomeRoutes;
+export default AdminRoutes;

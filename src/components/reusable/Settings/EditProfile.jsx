@@ -67,11 +67,11 @@ const EditProfile = () => {
         reader.readAsDataURL(file)
     }
     return (
-        <div className="w-full  p-2  overflow-y-scroll flex flex-col justify-center items-start gap-4 font-poppins">
+        <div className="w-full  p-2    flex flex-col justify-center items-start gap-4 font-poppins">
             <p className="font-semibold text-sm md:text-lg ">Edit Profile</p>
             <div className="w-full h-max flex flex-wrap justify-start items-center">
                 <div className="relative">
-                    <div className=" rounded-full  bg-red-400 overflow-hidden w-28 h-28 md:w-32 md:h-32 lg:w-32 lg:h-32  ">
+                    <div className=" rounded-full   overflow-hidden w-28 h-28 md:w-32 md:h-32 lg:w-32 lg:h-32  ">
                         {selectedImage ? (
                             <img
                                 data-tooltip-id="my-tooltip"

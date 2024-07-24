@@ -8,12 +8,10 @@ import { axiosInstanceStudent } from '../../routes/UserRoutes';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 
 
 
 const CourseList = () => {
-    const baseUrl = process.env.REACT_APP_API_URL
     const token = useSelector((state) => state.AdminDetails.token);
 
     const [EnrolledCourse,SetEnrolledCourse]= useState()
@@ -24,6 +22,8 @@ const CourseList = () => {
         SetEnrolledCourse(response.data)
         // return response.data;
     }
+
+
     const getCourseList = async () => {
 
         try {
@@ -43,7 +43,7 @@ const CourseList = () => {
     };
   
     
-        const { data, isLoading, isError, error, refetch } = useQuery({
+        const { data, isLoading,isPending , isError, error, refetch } = useQuery({
             queryKey: ['ActiveCourse'],
             queryFn: getCourseList,
             staleTime: 8000,
@@ -52,6 +52,7 @@ const CourseList = () => {
 
     
     useEffect(()=>{
+        refetch()
         getEnrolledList()
     },[])
 
@@ -107,7 +108,7 @@ const CourseList = () => {
                 </h1>
 
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {isLoading ? (
+                    {isPending  ? (
                         <>
                             {[...Array(4)].map((_, index) => (
                                 <SkeletonCard key={index} />
@@ -137,7 +138,7 @@ const CourseList = () => {
                 </h1>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {isLoading ? (
+                    {isPending  ? (
                         <>
                             {[...Array(4)].map((_, index) => (
                                 <SkeletonCard key={index} />

@@ -10,6 +10,15 @@ import Tooltip from '@mui/material/Tooltip'
 const AccountSettings = () => {
     const [isChecked, setIsChecked] = useState(false)
     const [isEditable, setIsEditable] = useState(false) // New state for edit mode
+    const [password, setPassword] = useState('user-password')
+    const [username, setUsername] = useState('Username')
+    const [email, setEmail] = useState('Email')
+    const [timezone, setTimezone] = useState( '(UTC-6.00)Central Time (US and Canada)' )
+    const [language, setLanguage] = useState('English')
+    const [showPassword, setShowPassword] = useState(false)
+    const [modal, setmodal] = useState(false)
+
+
     const navigate = useNavigate()
 
     const handleCheckboxChange = (event) => {
@@ -46,15 +55,6 @@ const AccountSettings = () => {
         }
     }
 
-    const [password, setPassword] = useState('user-password')
-    const [username, setUsername] = useState('Username')
-    const [email, setEmail] = useState('Email')
-    const [timezone, setTimezone] = useState(
-        '(UTC-6.00)Central Time (US and Canada)'
-    )
-    const [language, setLanguage] = useState('English')
-
-    const [showPassword, setShowPassword] = useState(false)
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)

@@ -26,6 +26,7 @@ import AdminSidebar from '../../components/admin/AdminSidebar';
 import DiagnosisiTestDetailsPage from "../../components/admin/DiagnosisiTestDetailsPage";
 import Settings from "../../components/admin/Settings/Settings";
 import Package from "../../components/admin/Package";
+import Report from "../../components/admin/Report/Report";
 
 
 
@@ -75,6 +76,7 @@ const Homepage = () => {
                 <Route path="/diagnosistest/addiagnosistest" element={<Addiagnosistest />} />
                 <Route path="/diagnosistest/:diagnosisiTestDetailsPage" element={<DiagnosisiTestDetailsPage />} />
                 <Route path="/diagnosistest"          element={<DiagnosisTest />} />
+                <Route path="/report"          element={<Report />} />
                 <Route path="/tutors/:tutorId"        element={<TutorDetails />} />
                 <Route path="/tutors"                 element={<TutorListing />} />
                 <Route path="/library"                element={<Library />} />

@@ -16,6 +16,7 @@ import { RxHamburgerMenu } from 'react-icons/rx'
 import { GiBookmarklet } from 'react-icons/gi'
 import { PiTreeStructureFill } from 'react-icons/pi'
 import { clearAdminDetails } from '../../store/reducers/AdminloginSlice'
+import { HiDocumentReport } from 'react-icons/hi'
 
 const AdminSidebar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
     const [collapsed, setCollapsed] = useState(false)
@@ -101,6 +102,11 @@ const AdminSidebar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
             title: 'Diagnosis Test',
             path: '/admin/home/diagnosistest',
             icon: <PiExamFill className="text-xl text-gray-900" />,
+        },
+        {
+            title: 'Sales Report',
+            path: '/admin/home/report',
+            icon: <HiDocumentReport  className="text-xl text-gray-900" />,
         },
         { title: 'Library', path: '/admin/home/library', icon: <IoLibrary /> },
         // { title: "Access Management", path: "/admin/home/accessmanagement", icon: <PiCirclesFourFill /> },

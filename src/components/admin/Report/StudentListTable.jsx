@@ -6,7 +6,7 @@ import { useQuery }         from '@tanstack/react-query'
 import Loader               from '../../reusable/Loader'
 
 
-const CourseListTable = ({data,isPending}) => {
+const StudentListTable = ({data,isPending}) => {
 
 useEffect(() => {
 console.log("data")
@@ -142,4 +142,4 @@ console.log(data)
     )
 }
 
-export default CourseListTable
+export default StudentListTable

@@ -187,10 +187,10 @@ const PdfCard = ({ material }) => {
     )
 }
 
-PdfCard.propTypes = {
-    material: PropTypes.shape({
-        courseName: PropTypes.string,
-    }).isRequired,
-}
+// PdfCard.propTypes = {
+//     material: PropTypes.shape({
+//         courseName: PropTypes.string,
+//     }).isRequired,
+// }
 
-export { PdfCard }
+// export { PdfCard }

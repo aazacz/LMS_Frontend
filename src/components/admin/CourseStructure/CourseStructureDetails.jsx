@@ -92,7 +92,7 @@ const CourseStructureDetails = ({ height }) => {
                         </div>
 
                         <div className="relative mt-4 overflow-hidden h-64">
-                            <div className={`slide-content ${slideDirection}`}>
+                            <div className={`slide-content `}>
                                 {activeTab === 'about' && <AboutContent />}
                                 {activeTab === 'module' && (
                                     <ModuleContent course={Course} />

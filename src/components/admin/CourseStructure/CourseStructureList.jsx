@@ -43,9 +43,6 @@ const CourseStructureList = () => {
     }, [Search])
 
 
-
-
-
     return (
         <>
                 <div className=" p-4">

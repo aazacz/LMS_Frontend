@@ -18,7 +18,7 @@ const usePaginationData = ( initialPage = 1, initialPageSize = 10, initialSearch
     setLoading(true);
     try {
       const response = await AdminAxiosInstance.get(
-                              `api/course/get-all-course?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`  );
+                              `api/payment/payment?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`  );
       
       console.log("response.data.data in pagination")
       console.log(response.data.data)

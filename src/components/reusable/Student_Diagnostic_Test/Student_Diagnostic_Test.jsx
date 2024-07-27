@@ -4,53 +4,31 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Loader from '../../reusable/Loader'
 import { axiosInstanceStudent } from '../../../routes/UserRoutes'
-const Student_Diagnostic_Test = () => {
+const Student_Diagnostic_Test = ({courseType}) => {
     const baseURL = process.env.REACT_APP_API_URL
     const [testDetails, setTestDetails] = useState(null) // Initialize as null to handle loading state
     const [loading, setLoading] = useState(true)
-    const navigate = useNavigate() 
-
+    const navigate = useNavigate() // Use navigate instead of history
 
     const location = useLocation()
-    const { course, courseType } = location.state || {}
-
-
+    const { course } = location.state || {}
+    
     useEffect(() => {
         const fetchTestDetails = async () => {
-            
             try {
-              
-                if (courseType === 'test') {
-                        console.log("course")
-                        console.log(course)
-                        console.log(courseType)
-                    setTestDetails(course);
-                } else {
-                    console.log("else execeuted")
-                    const response = await axiosInstanceStudent.get(`api/test/diagnosis-test-active` )
-                    console.log("response")
-                    console.log(response)
-                    if(response.data){
-                        
-                        setTestDetails(response.data);
-                    }
-                }
+                const response = await axiosInstanceStudent.get(
+                    `api/diagnosis/get-active-diagnosis`
+                )
+                setTestDetails(response.data)
             } catch (error) {
-                console.error('Error fetching test details:', error);
-                console.error(error);
+                console.error('Error fetching test details:', error)
             } finally {
-                setLoading(false);
+                setLoading(false)
             }
-        };
-    
-        fetchTestDetails();
-    }, [ ]);
+        }
 
-
-    useEffect(()=>{
-    
-    },[testDetails])
-
+        fetchTestDetails()
+    }, [baseURL]) // Include baseURL as a dependency
 
     const handleSubmit = () => {
         // Check if testDetails has loaded and contains necessary data
@@ -58,8 +36,7 @@ const Student_Diagnostic_Test = () => {
             navigate('/diagnosistest/test1', {
                 state: { testId: testDetails._id },
             })
-        } 
-        else {
+        } else {
             console.error('Test details not loaded yet.')
         }
     }
@@ -69,7 +46,7 @@ const Student_Diagnostic_Test = () => {
     }
 
     return (
-        <div className="w-full h-screen relative">
+        <div className="w-screen h-screen relative">
             <div className="student-diagnostic-test-rules-main-container">
                 <div className="student-diagnostic-test-main-title text-base md:text-lg lg:text-xl">
                     Instructions:

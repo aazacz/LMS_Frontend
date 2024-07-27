@@ -108,12 +108,13 @@ const Coursedetails = () => {
                  SetTutorDropDownLoader(false)
 
              }
-                                      }
+                                       }
              
      try {
         if(TutorModal === true)
         {
-           getTutorList()
+      
+                getTutorList()
         }
         
      } catch (error) {

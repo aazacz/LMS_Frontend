@@ -53,7 +53,7 @@ const Homepage = () => {
         <div className=" fixed  flex  w-full h-[90dvh] overflow-hidden ">
           {/* <Sidebar isOpen={isSidebarOpen} /> */}
 
-          <div className=" ">
+          <div className=" h-full ">
             <AdminSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
           </div>
 
@@ -64,7 +64,7 @@ const Homepage = () => {
                 <Route path="/*"                      element={<Dashboard />} />
                 <Route path="/courses/addcourse"      element={<AddCourse />} />
                 <Route path="/courses"                element={<CourseList />} />
-                <Route path="/courses/:courseId"      element={<Coursedetails  />} />
+                <Route path="/courses/:courseId/:courseType/:enrolled/:role"      element={<Coursedetails  />} />
                 <Route path="/coursestructure"        element={<CourseStructureList />} />
                 <Route path="/courseStructure/addcoursestructure" element={<AddCourseStructure />} />
                 <Route path="/coursestructure/:structureId" element={<CourseStructureDetails />} />

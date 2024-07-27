@@ -1,12 +1,8 @@
 import React,{useState, useEffect} from 'react'
-import coursephoto from '../../../assets/Admin/coursephoto.jpeg'
 import { Link } from 'react-router-dom'
 import { FaCirclePlus, FaList } from 'react-icons/fa6'
-import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
 import Loader from '../../reusable/Loader' 
-import { useQuery } from '@tanstack/react-query'
 import { IoSearch } from 'react-icons/io5'
-
 import { BsFillGrid1X2Fill } from 'react-icons/bs'
 import CourseCard from '../CourseCard'
 import CourseListTable from './CourseListTable'
@@ -47,10 +43,7 @@ const CourseList = () => {
          }                  = usePaginationData()
 
 
-         useEffect(()=>{
-                    console.log("courses")
-                    console.log(courses)
-         },[isPending,courses])
+   
 
     return (
         <div className="p-4 w-full h-max">
@@ -114,26 +107,29 @@ const CourseList = () => {
                &&
              <div className="grid grid-cols-2 mt-4 md:grid-cols-3 lg:grid-cols-4 gap-4">
            
-                {courses?.map((course, index) => (
-               <Link key={index} to={`/admin/home/courses/${course._id}`}>
-                   <CourseCard course={course} />
-               </Link>
-                    ))}
-             </div> }
+            {courses?.map((course, index) => (
+            
+            <Link key={index} to={`/admin/home/courses/${course._id}/${course.courseType}/true/a`}>
+                   <CourseCard course={course} />        
+                        </Link>
+                    ))
+                    
+                    }
+             </div>
+            }
 
 
             {ListModal 
                 && 
-            <div className='w-full flex justify-center '><CourseListTable data={courses} isPending={isPending}/>
-            </div>
-            }
+            <div className='w-full flex justify-center '>  <CourseListTable data={courses} isPending={isPending}/>  </div> }
 
                     <ReusablePagination
                         currentPage={currentPage}
                         pageSize={pageSize}
                         totalRows={totalRows}
                         handlePageChange={handlePageChange}
-                        handlePageSizeChange={handlePageSizeChange}  />
+                        handlePageSizeChange={handlePageSizeChange} 
+                    />
 
         </>
 

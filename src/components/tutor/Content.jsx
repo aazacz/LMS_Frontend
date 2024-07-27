@@ -4,6 +4,7 @@ import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { TutorAxiosInstance } from '../../routes/TutorRoutes'
 import { FaCirclePlus } from 'react-icons/fa6'
 import { RotatingLines } from 'react-loader-spinner'
 
@@ -18,21 +19,15 @@ const Content = () => {
         const fetchCourses = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get(
-                    `${baseURL}api/course/get-all-course?page=1&pageSize=&search=`,
-                    {
-                        headers: {
-                            Authorization:
-                                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTAyYWE4YTE0ZTdiNTM1N2UwNjhlYyIsInJvbGUiOiJ0dXRvciIsImlhdCI6MTcxNzEzMDgxOH0.yQ2kisu7irJUvntqfjK-e95yys_VCbMzriFZEcv2Dks',
-                        },
-                    }
-                )
+                const response = await TutorAxiosInstance.get(
+                    `api/course/get-all-course?page=1&pageSize=&search=`,
+                                   )
                 if (!response.status == 200) {
                     throw new Error('Failed to fetch courses')
                 }
                 setLoading(false)
-                const data = response.data
-                setCourses(data.data)
+                setCourses(response.data.data)
+                console.log(response.data.data)
             } catch (error) {
                 setError(error.message)
             }
@@ -103,7 +98,7 @@ const Content = () => {
                             courses.map((val, index) => (
                                 <Link
                                     key={index}
-                                    to={`/tutor/home/courses/${val._id}`}
+                                    to={`/tutor/home/courses/${val._id}/${val.courseType}/true/t`}
                                 >
                                     <CourseCard course={val} index={index} />
                                 </Link>

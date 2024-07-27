@@ -43,7 +43,7 @@ const CourseList = () => {
     };
   
     
-        const { data, isLoading,isPending , isError, error, refetch } = useQuery({
+        const { data, isLoading, isPending, refetch } = useQuery({
             queryKey: ['ActiveCourse'],
             queryFn: getCourseList,
             staleTime: 8000,
@@ -86,11 +86,11 @@ const CourseList = () => {
                             ))}
                         </>
                     ) : (
-
+ 
 
                         EnrolledCourse&&EnrolledCourse?.map((course, index) => (
-                            <Link key={index} to={`/student/courses/${course._id}/${course?.courseType}`}>
-                                <CourseCard course={course} />
+                            <Link key={index} to= {`/student/courses/${course._id}/${course?.courseType}/true/s`}>
+                                <CourseCard  course={course} />
                             </Link>
                         ))
                     )
@@ -120,7 +120,7 @@ const CourseList = () => {
                     (   
                        
                         Course.individual.map((course, index) => (
-                            <Link key={index} to={`/student/courses/${course._id}/individual`}>
+                            <Link key={index} to={`/student/courses/${course._id}/individual/false`}>
                                 <CourseCard course={course} />
                             </Link>
                      ))
@@ -147,7 +147,7 @@ const CourseList = () => {
                     ) : (
                         Course&&Course.group.length>0 ? 
                         (Course.group.map((course, index) => (
-                            <Link key={index} to={`/student/courses/${course._id}/group`}>
+                            <Link key={index} to={`/student/courses/${course._id}/group/false`}>
                                  <CourseCard course={course} />
                             </Link>
                         ))

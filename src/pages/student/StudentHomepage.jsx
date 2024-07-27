@@ -5,7 +5,7 @@ import StudentNavbar from "../../components/User/StudentNavbar";
 import ErrorPage from "../ErrorPage";
 import DiagnosisTestResult from "./DiagnosisTestResult";
 import CourseList from "../../components/User/CourseList";
-import Coursedetails from "../../components/User/Coursedetails";
+import Coursedetails from "../../components/User/CourseDetails/Coursedetails";
 import Assignments from "./Assignments";
 import Library from "../../components/User/Library";
 import ClassesToday from "../../components/User/ClassesToday/ClassesToday";
@@ -17,6 +17,7 @@ import StudentTests from "../../components/User/StudentTests";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PaymentSuccess from "../../components/User/PaymentSuccess";
 import Settings from "../../components/reusable/Settings/Settings";
+import DiagnosisTestRoute from "../../routes/DiagnosisTestRoute";
 
 const StudentHomepage = () => {
 
@@ -59,7 +60,7 @@ const StudentHomepage = () => {
                 <Route path="/a" element={<PaymentSuccess />} />
                 <Route path="/courses" element={<CourseList />} />
                 <Route path="/tests" element={<StudentTests />} />
-                <Route path="/courses/:coursedetails/:courseType"    element={<Coursedetails />}   />
+                <Route path="/courses/:courseId/:courseType/:enrolled/:role"    element={<Coursedetails />}   />
                 <Route path="/assignments" element={<Assignments />} />
                 <Route path="/tutors" element={<ClassesToday />} />
                 <Route path="/library" element={<Library />} />
@@ -67,6 +68,8 @@ const StudentHomepage = () => {
                 <Route path="/settings/*" element={<Settings />} />
                 <Route path="/courses/cart" element={<ShoppingCart />} />
                 <Route path="/courses/checkout" element={<Checkout />} />
+                <Route path="/courses/test/:testId/*" element={<DiagnosisTestRoute />} />
+                {/* <Route path="/courses/test/:testId" element={<DiagnosisTestRoute />} /> */}
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
             </div>

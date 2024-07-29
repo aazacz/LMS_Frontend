@@ -11,19 +11,27 @@ import Tooltip from "@mui/material/Tooltip";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
 
 const DiagnosisTest = () => {
-  const baseURL = process.env.REACT_APP_API_URL;
+
   const [fontSize, setFontSize] = useState(15);
   const [timeLeft, setTimeLeft] = useState(600);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [questionStatuses, setQuestionStatuses] = useState({});
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
-
+  
   const location = useLocation();
-  const testId = location.state.testId
+  const testId = location?.state?.testId || null;
+  
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+
+    console.log(selectedAnswers)
+
+  },[selectedAnswers])
+
 
   useEffect(() => {
   
@@ -87,6 +95,8 @@ const DiagnosisTest = () => {
     }
     fetchQuestions();
   }, []);
+
+
 
   const handleFullscreenChange = () => {
     if (!document.fullscreenElement) {
@@ -183,6 +193,7 @@ const DiagnosisTest = () => {
     });
   };
 
+  
   const handleSubmit = () => {
     Swal.fire({
       title:
@@ -208,7 +219,7 @@ const DiagnosisTest = () => {
               confirmButton: "my-toast-confirm-button",
             },
           });
-          navigate("/diagnosistest/result");
+          navigate("students/diagnosistest/result");
         }, 3000);
       }
     });
@@ -221,6 +232,7 @@ const DiagnosisTest = () => {
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+
     }
   };
 
@@ -230,9 +242,19 @@ const DiagnosisTest = () => {
     }
   };
 
+
+
   const handleAnswerSelect = (optionIndex) => {
-    const updatedAnswers = { ...selectedAnswers };
-    updatedAnswers[currentQuestionIndex] = optionIndex;
+    const updatedAnswers  = { ...selectedAnswers };
+    const currentQuestion = questions[currentQuestionIndex];
+    console.log(currentQuestion)
+    const selectedOption  = currentQuestion.options[optionIndex];
+console.log(selectedOption)
+    updatedAnswers[currentQuestionIndex] = {
+      selectedOptionIndex: optionIndex,
+      isCorrect: selectedOption.isCorrect,
+      whyIsIncorrect: selectedOption.isCorrect ? "" : selectedOption.whyIsIncorrect,
+    };
     setSelectedAnswers(updatedAnswers);
 
     const updatedStatuses = { ...questionStatuses };
@@ -283,9 +305,7 @@ const DiagnosisTest = () => {
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${minutes.toString().padStart(2, "0")}:${secs
-      .toString()
-      .padStart(2, "0")}`;
+    return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
   const scrollToQuestion = (index) => {
@@ -405,47 +425,43 @@ const DiagnosisTest = () => {
           </div>
 
           <div className="w-full mt-3 grid grid-flow-row grid-rows-4 gap-y-4">
-            {currentQuestion &&
-              currentQuestion.options &&
-              currentQuestion.options.map((option, index) => (
-                <div
-                  key={index}
-                  className="h-10 flex items-center border-[1px] w-full px-4 gap-x-5 font-poppins font-semibold text-sm"
-                  onClick={() => handleAnswerSelect(index)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <input
-                    type="radio"
-                    name="answer"
-                    checked={selectedAnswers[currentQuestionIndex] === index}
-                    readOnly
-                  />
-                  <h1>{option}</h1>
-                </div>
-              ))}
+          {currentQuestion &&
+  currentQuestion.options &&
+  currentQuestion.options.map((option, index) => (
+    <div
+      key={index}
+      className="h-10 flex items-center border-[1px] w-full px-4 gap-x-5 font-poppins font-semibold text-sm"
+      onClick={() => handleAnswerSelect(index)}
+      style={{ cursor: "pointer" }}
+    >
+      <input
+        type="radio"
+        name="answer"
+        checked={selectedAnswers[currentQuestionIndex]?.selectedOptionIndex === index}
+        readOnly
+      />
+      <h1>{option}</h1>
+    </div>
+))}
           </div>
 
           <div className="w-full mt-5 flex justify-between items-center">
-            <div className="flex gap-x-5">
-              <button
+            <div className="w-full  flex justify-between items-center mb-4">
+                  <button
                 onClick={handlePreviousQuestion}
-                className={`px-6 font-semibold font-poppins text-sm border-[1px] border-black py-2 rounded-lg ${
-                  currentQuestionIndex === 0
-                    ? "opacity-50 cursor-not-allowed"
-                    : ""
-                }`}
                 disabled={currentQuestionIndex === 0}
+                className={`${
+                  currentQuestionIndex === 0 ? "bg-gray-300" : "bg-blue-500 hover:bg-blue-700"
+                } text-white font-bold py-2 px-4 rounded`}
               >
                 Previous
               </button>
               <button
                 onClick={handleNextQuestion}
-                className={`px-6 font-semibold font-poppins text-sm border-[1px] border-black py-2 rounded-lg ${
-                  currentQuestionIndex === questions.length - 1
-                    ? "opacity-50 cursor-not-allowed"
-                    : ""
-                }`}
                 disabled={currentQuestionIndex === questions.length - 1}
+                className={`${
+                  currentQuestionIndex === questions.length - 1 ? "bg-gray-300" : "bg-blue-500 hover:bg-blue-700"
+                } text-white font-bold py-2 px-4 rounded`}
               >
                 Next
               </button>
@@ -458,22 +474,26 @@ const DiagnosisTest = () => {
 
 
         <div className="absolute bottom-0 w-full h-24 px-8 bg-white shadow-[0px_0px_6px_8px_#00000024] flex justify-between items-center">
-          <div className="flex w-full gap-x-5">
+          <div className="flex w-full gap-x-5 justify-between">
+
+           <div className=" flex gap-x-5">
+
             <button
               onClick={handleMarkForReview}
               className="px-4 font-semibold font-poppins  text-sm border-[1px] border-black py-2 rounded-lg"
-            >
+              >
               Mark for Review & Next
             </button>
             <button
               onClick={handleClearResponse}
               className="px-2 font-semibold font-poppins text-sm border-[1px] border-black py-2 rounded-lg"
-            >
+              >
               Clear Response
             </button>
+              </div>
             <button
               onClick={handleSubmit}
-              className="px-2 font-semibold font-poppins text-sm bg-green-600 hover:bg-green-700 text-white py-1 rounded-lg"
+              className="px-4 font-semibold font-poppins text-sm bg-green-600 hover:bg-green-700 text-white py-1 rounded-lg"
             >
               Submit
             </button>

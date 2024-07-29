@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { BiSpreadsheet } from 'react-icons/bi';
 import { LuTimer } from 'react-icons/lu';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import Skeleton from 'react-loading-skeleton';
+import {  useParams, useNavigate } from 'react-router-dom';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { axiosInstanceStudent } from '../../routes/UserRoutes';
-import Loader from '../reusable/Loader';
+import { axiosInstanceStudent } from '../../../routes/UserRoutes';
 import "./Coursedetails.css";
-import { FaChalkboardTeacher } from 'react-icons/fa';
+import TestsContent from './TestsContent';
 
-const Coursedetails = () => {
+const Coursedetails = ({ role }) => {
     const [activeTab, setActiveTab] = useState('about');
     const [slideDirection, setSlideDirection] = useState('left');
-    const [Course,setCourse] = useState(null)
-    
+    const [Course, setCourse] = useState(null)
+
     const navigate = useNavigate();
-    const { coursedetails, courseType } = useParams();
+    const { courseId, courseType, enrolled } = useParams();
 
     const getCourseDetails = async () => {
         if (courseType === "individual") {
-            const response = await axiosInstanceStudent.get(`api/structure/get/${coursedetails}`);
+            const response = await axiosInstanceStudent.get(`api/structure/get/${courseId}`);
             setCourse(response.data)
             return response.data;
         } else {
-            const response = await axiosInstanceStudent.get(`api/course/get-course/${coursedetails}`);
+            const response = await axiosInstanceStudent.get(`api/course/get-course/${courseId}`);
             setCourse(response.data)
             return response.data;
         }
@@ -37,28 +34,28 @@ const Coursedetails = () => {
     //     refreshInterval: 60000,
     // });
 
-    useEffect(()=>{
+    useEffect(() => {
         // refetch()
         console.log("coursedetails")
-        console.log(coursedetails)
+        console.log(courseId)
 
         const fetchCourseDetails = async () => {
             try {
                 if (courseType === "individual") {
-                    let response = await axiosInstanceStudent.get(`api/structure/get/${coursedetails}`);
+                    let response = await axiosInstanceStudent.get(`api/structure/get/${courseId}`);
                     setCourse(response.data);
                 } else {
-                    let response = await axiosInstanceStudent.get(`api/course/get-course/${coursedetails}`);
+                    let response = await axiosInstanceStudent.get(`api/course/get-course/${courseId}`);
                     setCourse(response.data);
                 }
-             
+
             } catch (error) {
                 console.error("Error fetching course details:", error);
-            } 
+            }
         }
 
         fetchCourseDetails();
-    },[])
+    }, [])
 
     const handleTabClick = (tab) => {
         setSlideDirection(activeTab === 'about' && tab === 'module' ? 'left' : 'right');
@@ -101,15 +98,17 @@ const Coursedetails = () => {
                     </div>
                     <div className="relative mt-4 overflow-hidden h-64">
                         <div className={`slide-content ${slideDirection === 'left' ? 'slide-left-enter' : 'slide-right-enter'}`}>
-                            {activeTab === 'about' && <AboutContent />}
-                            {activeTab === 'module' && <ModuleContent />}
-                            {activeTab === 'tests' && <TestsContent />}
-                            {activeTab === 'review' && <ReviewContent />}
+                           
+                            { activeTab === 'about'  && <AboutContent />  }
+                            { activeTab === 'module' && <ModuleContent /> }
+                            { activeTab === 'tests'  && <TestsContent enrolled={enrolled} />}
+                            { activeTab === 'review' && <ReviewContent /> }
+                        
                         </div>
                     </div>
                 </div>
             </div>
-            <AsideBAr data={Course} courseType={courseType} navigate={navigate} />
+            <AsideBAr data={Course} courseType={courseType} navigate={navigate} enrolled={enrolled} />
         </div>
     );
 };
@@ -143,20 +142,6 @@ const ModuleContent = () => (
     </div>
 );
 
-const TestsContent = () => (
-    <div className="w-full h-full border-t-2 p-4">
-        <h2 className="text-lg font-bold mb-2">Tests and Assessments</h2>
-        <p>
-            This course includes several tests and assessments to evaluate your understanding of the material. These assessments will help you identify areas where you need to focus more. The tests include:
-        </p>
-        <ul className="list-disc ml-5">
-            <li>Weekly quizzes</li>
-            <li>Mid-term examination</li>
-            <li>Final examination</li>
-            <li>Practical assignments and projects</li>
-        </ul>
-    </div>
-);
 
 const ReviewContent = () => (
     <div className="w-full h-full px-4">
@@ -184,9 +169,9 @@ const ReviewContent = () => (
     </div>
 );
 
-const AsideBAr = ({ data, courseType, navigate }) => {
+const AsideBAr = ({ data, courseType, navigate, enrolled }) => {
 
-
+    console.log(enrolled)
     const modules = [
         'Introduction',
         'What is UX Design',
@@ -211,11 +196,11 @@ const AsideBAr = ({ data, courseType, navigate }) => {
             <div className="p-6">
                 <h1 className="font-plusjakartasans font-bold">Modules List</h1>
                 <div className="bg-white rounded-lg flex flex-col mt-5 p-5 items-center">
-                   
+
                     <h1 className="font-plusjakartasans font-bold line-clamp-2">
-                        Introduction Basic SAT & DSAT 
+                        Introduction Basic SAT & DSAT
                     </h1>
-                    
+
                     {modules.map((value, index) => (
                         <div
                             key={index}
@@ -236,11 +221,13 @@ const AsideBAr = ({ data, courseType, navigate }) => {
                             </h1>
                         </div>
                     ))}
-                    <div className="w-[90%] flex justify-center items-center bg-[#FFBB54] text-black rounded-md py-2">
+
+                    {enrolled === "true" ? null : (<div className="w-[90%] flex justify-center items-center bg-[#FFBB54] text-black rounded-md py-2">
                         <button type='button' onClick={handleEnrollCourse}>
                             Enroll Now
                         </button>
-                    </div>
+                    </div>)}
+
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import Loader from '../../reusable/Loader';
 import './StudentListTable.css';
 
-const StudentListTable = ({ data, isPending, handlePaymentStatus, setpaymentpayload, paymentpayload }) => {
+const StudentListTable = ({ data, isPending, handlePaymentStatus, setpaymentpayload, paymentpayload,handleUnPaidStatus ,handlePayment}) => {
   
  
 
@@ -190,9 +190,9 @@ const StudentListTable = ({ data, isPending, handlePaymentStatus, setpaymentpayl
                                             {column.field === 'Action' ? (
                                                 <div>
                                                     {row.payStatus === "Completed" ? (
-                                                        <button className='cursor-default bg-gray-200 text-black w-[70px] h-max'>Paid</button>
+                                                        <button onClick={(e)=>handlePayment(e,row)} className='cursor-pointer bg-gray-300 text-black w-[70px] h-max'>Paid</button>
                                                     ) : (
-                                                        <button onClick={() => handleMarkPaid(row)} className='bg-blue-700 text-white w-[70px] h-max'>Mark Paid</button>
+                                                        <button onClick={(e) => handlePayment(e,row)} className='bg-blue-700 text-white w-[70px] h-max'>Mark Paid</button>
                                                     )}
                                                 </div>
                                             ) : null}

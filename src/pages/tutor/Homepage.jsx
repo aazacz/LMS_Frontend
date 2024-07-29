@@ -8,7 +8,7 @@ import QuestionBank from "../../components/tutor/QuestionBank/QuestionBank";
 import Insights from "../../components/tutor/Insights";
 import Settings from "../../components/reusable/Settings/Settings";
 import ErrorPage from "../ErrorPage";
-import Coursedetails from "../../components/tutor/Coursedetails";
+import Coursedetails from "../../components/tutor/CourseDetails/Coursedetails";
 import Assignments from "../../components/tutor/Assignment/Assignments";
 import NewCourse from "../../components/tutor/NewCourse/NewCourse";
 import Material from "../../components/tutor/Material/Material";
@@ -53,7 +53,7 @@ const Homepage = ( ) => {
                 <Route path="/*"  element={<Dashboard />} />
                 <Route path="/content" element={<Content />} />
                 <Route
-                  path="/courses/:courseId"
+                  path="/courses/:courseId/:courseType/:enrolled/:role"
                   element={<Coursedetails height={Ref} />}
                 />
                 <Route path="/content/newcourse" element={<NewCourse />} />

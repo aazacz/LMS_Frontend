@@ -47,9 +47,7 @@ const Student_Diagnostic_Test = () => {
     }, [ ]);
 
 
-    useEffect(()=>{
-    
-    },[testDetails])
+   
 
 
     const handleSubmit = () => {

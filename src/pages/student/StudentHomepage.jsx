@@ -7,7 +7,7 @@ import DiagnosisTestResult from "./DiagnosisTestResult";
 import CourseList from "../../components/User/CourseList";
 import Coursedetails from "../../components/User/CourseDetails/Coursedetails";
 import Assignments from "./Assignments";
-import Library from "../../components/User/Library";
+import Library from "../../components/User/Library/Library";
 import ClassesToday from "../../components/User/ClassesToday/ClassesToday";
 import Dashboard from "../../components/User/Dashboard/Dashboard";
 import ShoppingCart from "../../components/User/ShoppingCart";

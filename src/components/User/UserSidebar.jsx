@@ -72,7 +72,7 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
         {
             title: 'Assignments',
             path: '/student/assignments',
-            icon: <FaBookReader className="text-xl text-gray-700" />,
+            icon: <FaBookReader className="text-xl text-gray-900" />,
         },
         {
             title: 'Tests',
@@ -87,21 +87,21 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
         {
             title: 'Library',
             path: '/student/library',
-            icon: <IoLibrary className="text-xl text-gray-700" />,
+            icon: <IoLibrary className="text-xl text-gray-900" />,
         },
         {
             title: 'Settings',
-            icon: <IoIosSettings className="text-xl text-gray-700" />,
+            icon: <IoIosSettings className="text-xl text-gray-900" />,
             subLinks: [
                 {
                     title: 'Profile',
                     path: '/student/settings/',
-                    icon: <IoIosPerson className="text-xl text-gray-700" />,
+                    icon: <IoIosPerson className="text-xl text-gray-900" />,
                 },
                 {
                     title: 'Account',
                     path: '/student/settings/accountsettings',
-                    icon: <IoIosKey className="text-xl text-gray-700" />,
+                    icon: <IoIosKey className="text-xl text-gray-900" />,
                 },
                 // {
                 //   title: "Notifications",

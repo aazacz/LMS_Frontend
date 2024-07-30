@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { TfiWrite } from 'react-icons/tfi'
@@ -6,10 +6,12 @@ import './AddCourseStructure.css'
 import { IoIosCloseCircle } from 'react-icons/io'
 import '../../index.css'
 import './Addcourse.css'
+import './AddCourseStructure.css'
 import Swal from 'sweetalert2'
 import { AdminAxiosInstance } from '../../routes/AdminRoutes'
+import { IoChevronBackCircleOutline } from 'react-icons/io5'
 
-const AddCourseStructure = () => {
+const AddCourseStructure = ({view}) => {
     
   const navigate = useNavigate()
     const token = useSelector((state) => state.AdminDetails.token)
@@ -307,15 +309,120 @@ const AddCourseStructure = () => {
         })
     } 
 
+const handlegoback = ()=>{
+    navigate(-1)
+}
+const [imageUrl, setImageUrl] = useState('');
+const [Image, setImage] = useState('');
+const img = useRef()
+
+const handleimageUpload = async(event)=>{
+
+    event.preventDefault()
+    img.value=""
+    
+    const formData = new FormData()
+   
+    if (Image) {
+        formData.append('image', Image)
+    }
+
+
+    try {
+        
+        const response = await AdminAxiosInstance.put(`api/structure/update-structure-image/${structureId}`,formData)
+        console.log(response)
+
+    } catch (error) {
+
+        console.log(error)
+    }
+    
+    
+}
+const [imageBase64, setImageBase64] = useState('');
+
+
+const handleImageChange = async(e) => {
+  
+    setImage("")
+  const file = e.target.files[0];
+  const formData = new FormData()
+  formData.append('image', Image)
+  const response = await AdminAxiosInstance.put(`api/structure/update-structure-image/${structureId}`,formData)
+  console.log(response)
+  setImage(file)
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageUrl(reader.result);
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+
+
+
+
+
     return (
         <div className="w-full pt-4 px-4 md:p-5 md:px-16 bg-slate-200 rounded-lg mt-2">
+           
+           {view   &&   <IoChevronBackCircleOutline className='text-4xl mb-4 cursor-pointer  hover:scale-105' onClick={()=>handlegoback()} />          }
+           
+            {view ?   
+              <h1 className="font-bold font-poppins text-xl md:text-2xl pb-6 flex items-center justify-between md:justify-start gap-x-4">
+              View Course Structure
+                {<TfiWrite className="md:text-2lg text-2xl " />}
+            </h1> 
+            :  
+            
             <h1 className="font-bold font-poppins text-xl md:text-2xl pb-6 flex items-center justify-between md:justify-start gap-x-4">
                {structureId?"Edit Course Structure":"Create New Course Structure"} {' '}
                 {<TfiWrite className="md:text-2lg text-2xl " />}
-            </h1>
+            </h1> }
+         
 
             <form className="space-y-6 ">
+               
+            <div className="flex flex-col relative">
+          <label className="text-sm font-semibold">Course Image</label>
+          
+          {/* Display selected image */}
+
+          <div className='pt-4 flex w-full h-auto gap-x-4'>
+
+            <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+              <img src={imageUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
+            </div>
+        
+          <label htmlFor='chooseimage' className="choose w-[110px]  h-[30px] flex justify-center items-center  bg-blue-600 text-white text-sm font-semibold">Choose Image</label>
+           
+            <button onClick={(event)=>handleimageUpload(event)} className='bg-green-500 w-[110px]  h-[30px] flex justify-center items-center text-white text-sm font-semibold'>
+                Upload
+            </button>
+
+          <input
+          ref={img}
+            id='chooseimage'
+            type="file"
+            onChange={handleImageChange}
+            name="courseImage"
+            accept="image/*"
+            className=" w-[150px] hidden h-[30px] p-2  "
+            disabled={view}
+          />
+
+        </div>
+
+
+          </div>
+               
+               
                 <div className="w-full  grid grid-flow-row md:grid-cols-2 grid-cols-1 gap-y-4 md:gap-y-0  gap-x-4">
+                                    
+                    
                     <div className="  flex gap-x-4">
                         <div className="w-full md:w-full  relative">
                             <label className="text-sm font-semibold">
@@ -328,7 +435,8 @@ const AddCourseStructure = () => {
                                 type="text"
                                 placeholder="Course Name"
                                 className="w-full h-10 bg-white text-sm border-[1px] border-gray-500 rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
-                            />
+                                disabled={view}
+                           />
                            {errors.courseName && (
                                 <p className="absolute -bottom-4 text-red-500 text-[12px]">
                                     {errors.courseName}
@@ -341,10 +449,11 @@ const AddCourseStructure = () => {
                                 Package
                             </label>
                             <select
+                                disabled={view}
                                 onChange={handleInputChange}
                                 name="package"
                                 value={course.package}
-                                className="  w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900 border-[1px] border-gray-500"
+                                className="  w-full  h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900 border-[1px] border-gray-500"
                             >
                                 <option
                                     value="Select a package"
@@ -380,6 +489,7 @@ const AddCourseStructure = () => {
                                 Individual{' '}
                             </label>
                             <input
+                                disabled={view}
                                 name="individualCourse"
                                 className="rounded-xl"
                                 type="checkbox"
@@ -391,6 +501,7 @@ const AddCourseStructure = () => {
                         <div className="w-1/2 h-10 rounded flex items-center px-4 justify-between focus:outline-blue-900 border-[1px] border-gray-500 bg-white">
                             <label htmlFor="groupCourse"> Group</label>
                             <input
+                                disabled={view}
                                 type="checkbox"
                                 name="groupCourse"
                                 onChange={handleInputChange}
@@ -413,6 +524,7 @@ const AddCourseStructure = () => {
 
                             <input
                                 min="0"
+                                disabled={view}
                                 // onInput={validity.valid||(value='')}
                                 onChange={handleInputChange}
                                 name="trainingDuration"
@@ -437,6 +549,7 @@ const AddCourseStructure = () => {
                                 onChange={(e) =>
                                   handleInputChange(e)
                                 }
+                                disabled={view}
                                 name="durationType"
                                 value={durationType}
                                 className="  w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900 border-[1px] border-gray-500"
@@ -490,6 +603,7 @@ const AddCourseStructure = () => {
                             <input
                                 onChange={handleInputChange}
                                 name="hoursPerDay"
+                                disabled={view}
                                 type="number"
                                 value={course?.hoursPerDay}
                                 placeholder="Hours Per Day"
@@ -509,6 +623,7 @@ const AddCourseStructure = () => {
                             <input
                                 onChange={handleInputChange}
                                 name="price"
+                                disabled={view}
                                 type="number"
                                 value={course.price}
                                 placeholder="Enter Price of the module"
@@ -523,9 +638,10 @@ const AddCourseStructure = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col relative">
+                <div className="flex flex-col relative ">
                     <label className="text-sm font-semibold">Description</label>
                     <textarea
+                        disabled={view}
                         onChange={handleInputChange}
                         name="description"
                         placeholder="Description"
@@ -546,13 +662,15 @@ const AddCourseStructure = () => {
                     </h1>
                 </div>
 
+{!view &&
                 <button
+
                     type="button"
                     onClick={(e) => addModule(e)}
                     className="w-full  md:w-[100%] md:max-w-[150px] h-10 bg-blue-900 rounded-lg text-white font-poppins font-semibold flex  justify-center items-center"
                 >
                     Add Module
-                </button>
+                </button>}
 
                 {course?.modules?.map((module, moduleIndex) => {
                     return (
@@ -561,14 +679,14 @@ const AddCourseStructure = () => {
                                 <h1 className=" font-poppins text-xl text-blue-900 font-semibold">
                                     Module {moduleIndex + 1}
                                 </h1>
-                                <div className="  ">
+                           {!view &&     <div className="  ">
                                     <IoIosCloseCircle
                                         className="font-black text-3xl  text-red-900 "
                                         onClick={(e) =>
                                             RemoveModule(moduleIndex, e)
                                         }
                                     />
-                                </div>
+                                </div>}
                             </div>
 
                             <div className="w-full flex flex-col md:flex-row md:gap-x-4 ">
@@ -577,6 +695,7 @@ const AddCourseStructure = () => {
                                         Module Name
                                     </label>
                                     <input
+                                        disabled={view}
                                         name={`moduleName-${moduleIndex}`}
                                         value={
                                             course.modules[moduleIndex]
@@ -600,6 +719,7 @@ const AddCourseStructure = () => {
                                         Module Description
                                     </label>
                                     <input
+                                        disabled={view}
                                         name={`moduleDescription-${moduleIndex}`}
                                         value={
                                             course.modules[moduleIndex]
@@ -626,8 +746,8 @@ const AddCourseStructure = () => {
                                         Module G-Meet Link
                                     </label>
                                     <input
-                                        // name={`sessionLink-${moduleIndex}-${sessionIndex}`}
-                                        // value={course.modules[moduleIndex].sessions[sessionIndex].sessionLink}
+                                        
+                                        disabled={view}
                                         onChange={(e) =>
                                             handleSessionChange(
                                                 e,
@@ -641,7 +761,9 @@ const AddCourseStructure = () => {
                                 </div>
 
                                 <div className="w-full md:w-1/2 pt-4 md:pt-0 flex justify-end items-end  ">
-                                    <button
+                                 
+                                 
+                            { !view &&        <button
                                         type="button"
                                         onClick={(e) =>
                                             addSession(moduleIndex, e)
@@ -649,7 +771,7 @@ const AddCourseStructure = () => {
                                         className="px-5  h-8 bg-blue-900 rounded-md text-sm text-white flex justify-center items-center "
                                     >
                                         Add Session
-                                    </button>
+                                    </button>}
                                 </div>
                             </div>
 
@@ -661,7 +783,7 @@ const AddCourseStructure = () => {
                                                 Session {sessionIndex + 1}
                                             </h1>
 
-                                            <button
+                                       {!view &&     <button
                                                 type="button"
                                                 onClick={(e) =>
                                                     RemoveSession(
@@ -673,7 +795,7 @@ const AddCourseStructure = () => {
                                                 className="px-2 h-8 bg-red-900 leading-3  rounded-md text-sm text-white flex items-center "
                                             >
                                                 Remove Session
-                                            </button>
+                                            </button>}
                                         </div>
 
                                         <div className="w-full flex flex-col md:flex-row md:gap-x-4">
@@ -682,6 +804,7 @@ const AddCourseStructure = () => {
                                                     Session Name
                                                 </label>
                                                 <input
+                                                    disabled={view}
                                                     name={`sessionName-${moduleIndex}-${sessionIndex}`}
                                                     value={
                                                         course.modules[ moduleIndex]
@@ -712,6 +835,7 @@ const AddCourseStructure = () => {
                                                     Session Description
                                                 </label>
                                                 <input
+                                                    disabled={view}
                                                     name={`sessionDescription-${moduleIndex}-${sessionIndex}`}
                                                     value={
                                                         course.modules[
@@ -770,21 +894,25 @@ const AddCourseStructure = () => {
 
                 <div className="flex items-center justify-end ">
                   
-{structureId?        <button
-                        onClick={(e) => submitHandler(e)}
-                        type="submit"
-                        className=" px-8 py-2 bg-blue-700 hover:bg-blue-600 rounded-md text-white"
-                    >
-                        Update
-                    </button>
-                    :
-                     <button
-                        onClick={(e) => submitHandler(e)}
-                        type="submit"
-                        className=" px-8 py-2 bg-green-900 rounded-md text-white"
-                    >
-                        Submit
-                    </button>} 
+                {!view && (
+  structureId ? 
+    <button
+      onClick={(e) => submitHandler(e)}
+      type="submit"
+      className="px-8 py-2 bg-blue-700 hover:bg-blue-600 rounded-md text-white"
+    >
+      Update
+    </button>
+    :
+    <button
+      onClick={(e) => submitHandler(e)}
+      type="submit"
+      className="px-8 py-2 bg-green-900 rounded-md text-white"
+    >
+      Submit
+    </button>
+)}
+
                   
                 </div>
             </form>

@@ -52,14 +52,9 @@ const Homepage = ( ) => {
               <Routes>
                 <Route path="/*"  element={<Dashboard />} />
                 <Route path="/content" element={<Content />} />
-                <Route
-                  path="/courses/:courseId/:courseType/:enrolled/:role"
-                  element={<Coursedetails height={Ref} />}
-                />
+                <Route path="/courses/:courseId/:courseType/:enrolled/:role"  element={<Coursedetails  />}        />
                 <Route path="/content/newcourse" element={<NewCourse />} />
-                <Route
-                  path="/content/:courseId/newassignment"
-                  element={<Assignments />}
+                <Route path="/content/:courseId/newassignment"      element={<Assignments />}
                 />
                 <Route
                   path="/content/:courseId/addtest"

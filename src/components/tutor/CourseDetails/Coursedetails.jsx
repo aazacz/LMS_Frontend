@@ -2,17 +2,14 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
-import { Link, useParams } from 'react-router-dom'
-import { FaCirclePlus, FaPenRuler } from 'react-icons/fa6'
+import { useParams } from 'react-router-dom'
 import { RotatingLines } from 'react-loader-spinner'
-import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
-import { MdAssignmentAdd } from 'react-icons/md'
-import { IoDocuments } from 'react-icons/io5'
 import AsideBar from './AsideBar'
 import AboutContent from './AboutContent'
 import ModuleContent from './ModuleContent'
 import TestsContent from './TestsContent'
+import Assignments from './Assignments'
 
 const Coursedetails = () => {
     const baseURL = process.env.REACT_APP_API_URL
@@ -84,7 +81,7 @@ const Coursedetails = () => {
 
                     <div className="w-full bg-blue-400 mt-4 relative">
                         <div className="flex w-full gap-x-6 px-2">
-                            {['about', 'modules', 'tests', 'review'].map(
+                            {['about', 'modules', 'tests', 'review',"assignments"].map(
                                 (tab, index) => (
                                     <button
                                         key={index}
@@ -115,6 +112,9 @@ const Coursedetails = () => {
                         )}
                         {activeTab === 'review' && (
                             <ReviewContent review={course?.review} />
+                        )}
+                        {activeTab === 'assignments' && (
+                            <Assignments  courseId={courseId} review={course?.review} />
                         )}
                     </div>
                 </div>

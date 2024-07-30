@@ -66,9 +66,10 @@ const Homepage = () => {
                 <Route path="/courses"                element={<CourseList />} />
                 <Route path="/courses/:courseId/:courseType/:enrolled/:role"      element={<Coursedetails  />} />
                 <Route path="/coursestructure"        element={<CourseStructureList />} />
-                <Route path="/courseStructure/addcoursestructure" element={<AddCourseStructure />} />
+                <Route path="/courseStructure/addcoursestructure" element={<AddCourseStructure view={false} />} />
+                <Route path="/courseStructure/viewcoursestructure/:structureId" element={<AddCourseStructure view={true} />} />
                 <Route path="/coursestructure/:structureId" element={<CourseStructureDetails />} />
-                <Route path="/coursestructure/editcoursestructure/:structureId" element={<AddCourseStructure />} />
+                <Route path="/coursestructure/editcoursestructure/:structureId" element={<AddCourseStructure view={false} />} />
                 <Route path="/package"                element={< Package/>} />
                 <Route path="/students/:studentId"    element={<StudentDetail />} />
                 <Route path="/students"               element={<StudentList />} />

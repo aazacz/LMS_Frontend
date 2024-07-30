@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import './Material.css'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-
+import { TutorAxiosInstance } from '../../../routes/TutorRoutes'
 const Material = () => {
     const input = useRef()
     const thumbnail = useRef()
@@ -15,14 +15,23 @@ const Material = () => {
     const [tfileName, settFileName] = useState('')
     const [file, setFile] = useState(null)
     const [tfile, settFile] = useState(null)
-    // const [loading, setLoading] = useState(true);
     const [error, setError] = useState('')
+    
 
     const [materialNameError, setMaterialNameError] = useState('')
     const [coursesNameError, setCoursesError] = useState('')
     const [descriptionError, setDescriptionError] = useState('')
     const [fileError, setFileError] = useState('')
     const [tfileError, settFileError] = useState('')
+
+
+
+    useEffect(()=>{
+console.log(fileName," fileName")
+console.log(file," tfile")
+console.log(description," description")
+console.log(selectedCourse, "selectedCourse")
+    },[fileName,tfile,description,selectedCourse])
 
     // Fetch courses from API
     useEffect(() => {
@@ -50,6 +59,7 @@ const Material = () => {
     }
 
     const handleCourseChange = (e) => {
+        console.log(e.target.value)
         setSelectedCourse(e.target.value)
         setCoursesError('')
     }
@@ -123,17 +133,13 @@ const Material = () => {
             console.log(formData.get('file'))
             console.log(formData.get('tfileName'))
             console.log(formData.get('tfile'))
-            const response = await axios.post(
-                `${baseUrl}api/library/upload-course-material`,
+            const response = await TutorAxiosInstance.post(
+                `api/library/upload-course-material`,
                 formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization:
-                            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTAyYWE4YTE0ZTdiNTM1N2UwNjhlYyIsInJvbGUiOiJ0dXRvciIsImlhdCI6MTcxNzEzMDgxOH0.yQ2kisu7irJUvntqfjK-e95yys_VCbMzriFZEcv2Dks',
-                    },
+                {headers: {'Content-Type': 'multipart/form-data'},
                 }
             )
+            
             if (response.data.message === 'Material Uploaded Successfully') {
                 Swal.fire({
                     icon: 'success',

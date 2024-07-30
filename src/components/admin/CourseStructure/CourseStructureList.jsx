@@ -94,7 +94,7 @@ const CourseStructureList = () => {
                             courses.map((course, index) => (
                                 <Link
                                     key={index}
-                                    to={`/admin/home/coursestructure/${course._id}`}
+                                    to={`/admin/home/coursestructure/viewcoursestructure/${course._id}`}
                                 >
                                     <CourseCard course={course} />
                                 </Link>

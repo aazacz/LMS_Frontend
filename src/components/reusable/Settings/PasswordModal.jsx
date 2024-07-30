@@ -52,7 +52,7 @@ const PasswordModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-lg w-[50%]">
+      <div className="bg-white p-6 rounded-lg w-[90%] md:w-[50%]">
         <h2 className="text-lg font-semibold mb-4">Change Password</h2>
         <div className="mb-4 relative">
           <label className="block text-sm font-medium mb-1">

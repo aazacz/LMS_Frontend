@@ -3,17 +3,21 @@ import { Link } from "react-router-dom";
 import DoughnutChart from "./DoughnutChart";
 import Background from "../../components/reusable/Background";
 import axios from "axios";
-
+import { axiosInstanceStudent } from "../../routes/UserRoutes";
 const DiagnosisTestResult = () => {
+  
   const baseURL = process.env.REACT_APP_API_URL;
   const [testDetails, setTestDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   const topRef = useRef(null);
+
+
+
   useEffect(() => {
     const fetchTestDetails = async () => {
       try {
-        const response = await axios.get(
-          `${baseURL}api/diagnosis/get-active-diagnosis`
+        const response = await axiosInstanceStudent.get(
+          `api/diagnosis/get-active-diagnosis`
         );
         setTestDetails(response.data);
       } catch (error) {
@@ -122,7 +126,7 @@ const DiagnosisTestResult = () => {
             <h1 className="  font-poppins font-semibold text-base md:text-xl">
               Explanation
             </h1>
-            {testDetails.questions.map((question, index) => (
+            {testDetails?.questions?.map((question, index) => (
               <div
                 key={question._id}
                 className="bg-white w-full p-8 rounded-[35px] my-6 border-[#0066DE] border-2 py-3"

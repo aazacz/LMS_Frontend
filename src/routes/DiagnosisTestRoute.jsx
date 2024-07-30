@@ -9,7 +9,7 @@ const DiagnosisTestRoute = () => {
   return (
     <Routes>
       <Route path="/instructions" element={<Student_Diagnostic_Test />} />
-      <Route path="/test1" element={<DiagnosisTest />} />
+      <Route path="/test" element={<DiagnosisTest />} />
       <Route path="/result" element={<DiagnosisTestResult />} />
 
       <Route path="*" element={<ErrorPage />} />

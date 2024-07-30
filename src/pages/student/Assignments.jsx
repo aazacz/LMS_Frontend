@@ -4,6 +4,9 @@ import "react-calendar/dist/Calendar.css";
 import axios from "axios";
 import { PiNotepadBold } from "react-icons/pi";
 import "./Assignment.css";
+import { axiosInstanceStudent } from "../../routes/UserRoutes";
+import { FaEye } from "react-icons/fa";
+import Modal from "./Modal";
 
 const Assignments = () => {
   const assignments1 = [
@@ -19,21 +22,19 @@ const Assignments = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const assignmentsPerPage = 6;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
 
   const fetchAssignments = async (type) => {
     try {
-      let url = `${baseURL}api/studentAssignments/all-assignments`;
+      let url = `api/studentAssignments/all-assignments`;
       if (type === "pending") {
-        url = `${baseURL}api/studentAssignments/pendingAssignments`;
+        url = `api/studentAssignments/pendingAssignments`;
       } else if (type === "completed") {
-        url = `${baseURL}api/studentAssignments/submitted-Assignments`;
+        url = `api/studentAssignments/submitted-Assignments`;
       }
 
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTE2OTE3N2I3MDRiMDQ0NTJlMWYxYSIsImlhdCI6MTcyMDA3NDc3MH0.5KwVd66W33pnPy9G78baYo5LHaXdTvrmxfH2wVkAllw`,
-        },
-      });
+      const response = await axiosInstanceStudent.get(url, {});
 
       // Extract assignments from nested courses
       const courses = response.data;
@@ -63,7 +64,6 @@ const Assignments = () => {
     fetchAssignments(type);
   };
 
-  // Get current assignments based on pagination
   const indexOfLastAssignment = currentPage * assignmentsPerPage;
   const indexOfFirstAssignment = indexOfLastAssignment - assignmentsPerPage;
   const currentAssignments = assignments.slice(
@@ -79,12 +79,29 @@ const Assignments = () => {
     }
   };
 
+  const openModal = (assignment) => {
+    console.log("Opening modal for assignment:", assignment); // Debugging log
+    setSelectedAssignment(assignment._id); // Ensure only the ID is being passed
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedAssignment(null);
+  };
+
+  const handleSubmit = () => {
+    // Refresh the assignments list
+    fetchAssignments(activeTab);
+    closeModal();
+  };
+
   return (
     <>
       <div className="w-full px-1 py-1 rounded-lg flex flex-col md:flex-row ">
-        <div className="w-full lg:w-[70%]  md:p-4">
+        <div className="w-full lg:w-[70%] md:p-4">
           <h1 className="text-2xl font-bold mb-4">Assignments</h1>
-          <div className=" w-full  flex md:flex-row flex-col gap-x-4 items-center  gap-y-4 mb-4">
+          <div className="w-full flex md:flex-row flex-col gap-x-4 items-center gap-y-4 mb-4">
             <button
               className={`px-4 w-full h-10 py-2 rounded ${
                 activeTab === "all"
@@ -119,7 +136,7 @@ const Assignments = () => {
             </button>
           </div>
 
-          <div className=" w-[100%]  rounded-2xl md:px-4 pb-4 bg-[#F5F1F1]">
+          <div className="w-full rounded-2xl md:px-4 pb-4 bg-[#F5F1F1]">
             <h2 className="text-xl p-2 font-semibold py-2">Assignments</h2>
 
             <table className="w-full p-3 border-spacing-y-5 border-separate">
@@ -137,25 +154,36 @@ const Assignments = () => {
                   <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
                     Status
                   </th>
+                  <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {currentAssignments.map((assignment) => (
                   <tr
                     key={assignment._id}
-                    className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]  text:xs md:text-base rounded-xl cursor-pointer"
+                    className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text:xs md:text-base rounded-xl cursor-pointer"
                   >
-                    <td className="border-none  text-left md:px-4 py-4  text:xs md:text-base font-semibold text-black">
+                    <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
                       {assignment.assignmentName}
                     </td>
-                    <td className="border-none text-left md:px-4 py-4  text:xs md:text-base font-semibold text-black">
+                    <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
                       {assignment.courseName}
                     </td>
-                    <td className="border-none text-left md:px-4 py-4  text:xs md:text-base font-semibold text-black">
+                    <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
                       {assignment.dueDate}
                     </td>
-                    <td className="border-none text-left md:px-4 py-4  text:xs md:text-base font-semibold text-[#FE9519]">
+                    <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-[#FE9519]">
                       {assignment.student.status}
+                    </td>
+                    <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
+                      <button
+                        onClick={() => openModal(assignment)}
+                        className="text-blue-500 hover:text-blue-700"
+                      >
+                        View
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -174,7 +202,7 @@ const Assignments = () => {
               >
                 Previous
               </button>
-              <span className="px-3  py-1">{currentPage}</span>
+              <span className="px-3 py-1">{currentPage}</span>
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 className={`px-3 py-1 rounded ${
@@ -195,18 +223,18 @@ const Assignments = () => {
               Assignment Calendar
             </h1>
 
-            <div className="w-full ">
+            <div className="w-full">
               <div className="assignment-calender">
                 <Calendar className="assignment-main-calender text-xs" />
               </div>
             </div>
           </div>
 
-          <div className="assignment-right-section2 ">
-            <h1 className="font-poppins font-semibold text-xl  px-2 py-2">
+          <div className="assignment-right-section2">
+            <h1 className="font-poppins font-semibold text-xl px-2 py-2">
               Assignment Grading
             </h1>
-            <div className=" no-scrollbar flex flex-col gap-4 px-4">
+            <div className="no-scrollbar flex flex-col gap-4 px-4">
               {assignments1.map((assignment1) => (
                 <div
                   key={assignment1.id}
@@ -232,6 +260,13 @@ const Assignments = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        assignmentId={selectedAssignment}
+        onSubmit={handleSubmit}
+      />
     </>
   );
 };

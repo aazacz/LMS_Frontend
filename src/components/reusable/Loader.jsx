@@ -1,6 +1,6 @@
 import React from 'react'
 // import mindsatLoader from '/mindsatLoader.gif'
-import mindsatLoader from '/Single_Loader.gif'
+import mindsatLoader from '../../assets/Admin/Single_Loader.gif'
 
 const Loader = () => {
     return (

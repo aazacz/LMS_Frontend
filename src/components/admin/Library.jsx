@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom'
 import { BsFillFileEarmarkPdfFill } from 'react-icons/bs'
 import { IoIosCloseCircleOutline, IoMdRemoveCircle } from 'react-icons/io'
 import { FaCirclePlus } from 'react-icons/fa6'
+import { AdminAxiosInstance } from '../../routes/AdminRoutes'
+
 
 const baseURL = process.env.REACT_APP_API_URL
 
@@ -27,9 +29,7 @@ const Library = () => {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get(
-                    `${baseURL}api/course/get-all-course?page=1&pageSize=&search`
-                )
+                const response = await AdminAxiosInstance.get(`api/course/get-all-course?page=1&pageSize=&search`)
                 setCourses(response.data.data)
             } catch (error) {
                 console.log('Error fetching courses:', error)
@@ -45,23 +45,12 @@ const Library = () => {
             try {
                 let response
                 if (selectedCourse !== '') {
-                    response = await axios.get(
-                        `${baseURL}api/library/get-course/${selectedCourse}?page=${currentPage}&pageSize=${pageSize}`,
-                        {
-                            headers: {
-                                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
-                            },
-                        }
+                    response = await AdminAxiosInstance.get(`api/library/get-course/${selectedCourse}?page=${currentPage}&pageSize=${pageSize}`,
+                      
                     )
                 } else {
-                    response = await axios.get(
-                        `${baseURL}api/library/get-all-assignment?page=${currentPage}&pageSize=${pageSize}`,
-                        {
-                            headers: {
-                                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
-                            },
-                        }
-                    )
+                    response = await AdminAxiosInstance.get(`api/library/get-all-assignment?page=${currentPage}&pageSize=${pageSize}`,
+                                         )
                 }
                 setMaterials(response.data.data)
                 setTotalRows(response.data.total)
@@ -79,6 +68,7 @@ const Library = () => {
         setCurrentPage(1)
     }
 
+
     // Deleting a Material
     const handleDeleteMaterial = async (materialId) => {
         try {
@@ -93,14 +83,8 @@ const Library = () => {
             })
 
             if (confirmDelete.isConfirmed) {
-                const response = await axios.delete(
-                    `${baseURL}api/library/delete-material/${materialId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
-                        },
-                    }
-                )
+                const response = await AdminAxiosInstance.delete(
+                    `api/library/delete-material/${materialId}`)
                 console.log('File deleted successfully:', response.data)
 
                 // Update materials after deleting
@@ -120,12 +104,11 @@ const Library = () => {
     //Download Material
     const handleDownloadMaterial = async (materialId) => {
         try {
-            await axios
-                .get(`${baseURL}api/library/download-file//${materialId}`, {
+            await AdminAxiosInstance
+                .get(`api/library/download-file//${materialId}`, {
                     responseType: 'blob',
                     headers: {
                         Accept: 'application/pdf',
-                        authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkRldmljZSI6IkR1bW15IERldmljZSAyMDI0LTA1LTI4VDEyOjI5OjQ5Ljg2N1oiLCJpZCI6IjY2NTQwOGM2MmIyYTNlNDk5YWYxZjU0OCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNjg5OTM5MH0.KA2sf-c9BLggwA4YlaA1FC8DzV2XVwWx0f7pJ75iT6A`,
                     },
                 })
                 .then((res) => {
@@ -169,19 +152,23 @@ const Library = () => {
     return (
         <div
             onClick={() => setModal(false)}
-            className={`w-full flex flex-col font-poppins ${Modal ? ' bg-gray-200' : ' '}`}
+            className={`w-full h-[100dvh]  relative flex flex-col font-poppins items-center ${Modal ? ' bg-gray-200' : ' '}`}
         >
             {Modal && (
-                <div className="w-full max-w-[80vw] h-[88vh] flex justify-center items-center absolute left-1/2 -translate-x-1/2">
+                <div className="w-[90%] z-[99] h-full flex justify-center items-center absolute  left-0 top-0  ">
+                    
+                    <div className='w-full h-full   '>
+
                     <object
                         data={Material}
                         type="application/pdf"
                         width="100%"
                         height="100%"
-                    >
+                        >
                         <img src="/broken.png" alt="PDF not found" />
                     </object>
                 </div>
+                        </div>
             )}
 
             <div className="w-full  flex md:flex-row px-6  flex-col justify-between items-start p-2">

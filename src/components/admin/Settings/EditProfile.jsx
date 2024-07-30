@@ -75,7 +75,7 @@ const EditProfile = () => {
                         {selectedImage ? (
                             <img
                                 data-tooltip-id="my-tooltip"
-                                data-tooltip-content="Hello world!"
+                               
                                 src={URL.createObjectURL(selectedImage)}
                                 alt="Uploaded profile picture"
                             />
@@ -121,44 +121,83 @@ const EditProfile = () => {
                         onChange={handleImageUpload}
                     />
                 </div>
+
                 {/*Section for profile picture */}
             </div>
             {/*Details starts here*/}
-            <p className="font-medium text-sm ">Full Name</p>
-            <input
-                className="w-11/12 h-10 border-2 border-gray-300 px-2 rounded-lg text-sm  outline-none"
-                type="text"
-            />
-            <div class="flex flex-col gap-4">
-                <p className="font-medium text-sm ">Location</p>
-                <select
-                    className="w-full py-2 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none"
-                    value={selectedCountry}
-                    onChange={(event) => setSelectedCountry(event.target.value)}
-                >
-                    <option value="">Select Country</option>
-                    {countries.map((country) => (
-                        <option key={country.code} value={country.code}>
-                            {country.name}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <p className="font-medium text-sm ">Birthday</p>
-            <input
-                className="w-11/12 h-10 border-2 border-gray-300 px-2 rounded-lg text-sm  outline-none"
-                type="date"
-            />
-            <p className="font-medium text-sm ">Phone</p>
-            <input
-                className="border-2 h-10 rounded-lg px-2 border-gray-300 w-11/12 outline-none py-2"
-                type="number"
-                value={inputValue}
-                onChange={handleInputChange}
-            />
-            <button className="p-4 bg-blue-500 font-semibold text-sm rounded-md ">
-                Save Changes
-            </button>
+
+           
+            <form action="" className='w-full'>
+
+                <div className="w-full">
+                    <label className="block font-medium text-sm mb-1">Full Name</label>
+                    <input
+                        className="w-full h-10 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none mb-4"
+                        type="text"
+                    />
+                </div>
+
+
+                <div className="w-full grid grid-flow-row grid-cols-2 gap-x-4">
+
+                    <div className=''>
+
+                        <label className="block font-medium text-sm mb-1">Location</label>
+                        <select
+                            className="w-full h-10 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none mb-4"
+                            value={selectedCountry}
+                            onChange={(event) => setSelectedCountry(event.target.value)}  >
+
+                            <option value="">Select Country</option>
+                            {countries.map((country) => (
+                                <option key={country.code} value={country.code}>
+                                    {country.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="w-full">
+
+                        <label className="block font-medium text-sm mb-1">Birthday</label>
+
+                        <input
+                            className="w-full h-10 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none mb-4"
+                            type="date" />
+                    </div>
+
+
+                </div>
+
+                <div className="w-full grid grid-flow-row grid-cols-2 gap-x-4">
+
+                    <div>
+                        <label className="block font-medium text-sm mb-1">Phone</label>
+                        <input
+                            className="w-full h-10 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none mb-4"
+                            type="number"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div>
+                        <label className="block font-medium text-sm mb-1">Phone</label>
+                        <input
+                            className="w-full h-10 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none mb-4"
+                            type="number"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+
+
+                </div>
+                <button className="w-full py-2 bg-blue-500 font-semibold text-sm text-white rounded-md">
+                    Save Changes
+                </button>
+            </form>
+
+        
         </div>
     )
 }

@@ -21,13 +21,15 @@ axiosInstanceStudent.interceptors.request.use(function(config){
     config.baseURL = baseURL
     console.log("Interceptor req Send");
 
-    console.log(`authorization-key ${token}`);
+    // console.log(`authorization-key ${token}`);
    
     if (token) {
         config.headers.authorization = `Bearer ${token}`;
       }
+
     return config;
 },function (error) {
+  cnsole.log("error in the interceptor request")
     return Promise.reject(error)
 }
 )
@@ -36,11 +38,9 @@ axiosInstanceStudent.interceptors.request.use(function(config){
 
 axiosInstanceStudent.interceptors.response.use(function (response) {
       
-    console.log ( "response received"  + response.data.message);
-    
-    if(response.data.message === "TimedOut"){
-
-        }
+    console.log ( "response received  \n" );
+    console.log ( response.data);
+ 
    return response;
 
 },function (error) {

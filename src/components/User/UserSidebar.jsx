@@ -5,23 +5,16 @@ import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { MdDashboard } from 'react-icons/md'
-import { FaBookAtlas } from 'react-icons/fa6'
 import { FaBookReader } from 'react-icons/fa'
-import {
-    PiChalkboardTeacherFill,
-    PiCirclesFourFill,
-    PiExamFill,
-    PiStudentBold,
-} from 'react-icons/pi'
-import { clearStudentDetails } from '../../store/reducers/StudentloginSlice'
+import { PiChalkboardTeacherFill,PiExamFill,   } from 'react-icons/pi'
 import { IoIosKey, IoIosPerson, IoIosSettings } from 'react-icons/io'
-import { IoLibrary, IoLogOut, IoNotifications } from 'react-icons/io5'
-import { Tooltip } from 'react-tooltip'
+import { IoLibrary, IoLogOut } from 'react-icons/io5'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { GiBookmarklet } from 'react-icons/gi'
 import { PiTreeStructureFill } from 'react-icons/pi'
+import { clearStudentDetails } from '../../store/reducers/StudentloginSlice'
 
-const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
+const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
     const [collapsed, setCollapsed] = useState(false)
     const location = useLocation()
     const navigate = useNavigate()
@@ -46,25 +39,24 @@ const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
             }, 1000)
         }
     }
-    const handleLogout = () => {
-        Swal.fire({
-            title: 'Do you want to Logout?',
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: 'No',
-            customClass: {
-                actions: 'my-actions',
-                confirmButton: 'my-confirm-button',
-                denyButton: 'my-deny-button',
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(clearStudentDetails())
-                console.log('logged out')
-                navigate('/')
-            }
-        })
-    }
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Do you want to Logout?",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: "No",
+      customClass: {
+        actions: "my-actions",
+        confirmButton: "my-confirm-button",
+        denyButton: "my-deny-button",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(clearStudentDetails());
+        navigate("/");
+      }
+    });
+  };
 
     const navLinks = [
         {
@@ -80,7 +72,7 @@ const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
         {
             title: 'Assignments',
             path: '/student/assignments',
-            icon: <FaBookReader className="text-xl text-gray-700" />,
+            icon: <FaBookReader className="text-xl text-gray-900" />,
         },
         {
             title: 'Tests',
@@ -95,21 +87,21 @@ const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
         {
             title: 'Library',
             path: '/student/library',
-            icon: <IoLibrary className="text-xl text-gray-700" />,
+            icon: <IoLibrary className="text-xl text-gray-900" />,
         },
         {
             title: 'Settings',
-            icon: <IoIosSettings className="text-xl text-gray-700" />,
+            icon: <IoIosSettings className="text-xl text-gray-900" />,
             subLinks: [
                 {
                     title: 'Profile',
                     path: '/student/settings/',
-                    icon: <IoIosPerson className="text-xl text-gray-700" />,
+                    icon: <IoIosPerson className="text-xl text-gray-900" />,
                 },
                 {
                     title: 'Account',
                     path: '/student/settings/accountsettings',
-                    icon: <IoIosKey className="text-xl text-gray-700" />,
+                    icon: <IoIosKey className="text-xl text-gray-900" />,
                 },
                 // {
                 //   title: "Notifications",
@@ -122,7 +114,7 @@ const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
 
     return (
         <div
-            className={` absolute  md:relative  *
+            className={` absolute  md:sticky top-[12vh]  
                        ${
                            isSidebarOpen
                                ? ''
@@ -158,10 +150,10 @@ const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
                         }
                     ></MenuItem>
 
-                    {navLinks.map((link) =>
+                    {navLinks.map((link, index) =>
                         link.subLinks ? (
                             <SubMenu
-                                key={link.title}
+                                key={index}
                                 label={link.title}
                                 icon={link.icon}
                                 className={`relative side-menu-item  ${
@@ -170,9 +162,9 @@ const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
                                         : 'side-menu-item '
                                 }`}
                             >
-                                {link.subLinks.map((subLink) => (
+                                {link.subLinks.map((subLink,index) => (
                                     <MenuItem
-                                        key={subLink.title}
+                                        key={index}
                                         className={`relative side-menu-item  ${
                                             isActive(subLink.path)
                                                 ? 'bg-blue-500 '
@@ -195,6 +187,7 @@ const UserSideBar = ({ isOpen, isSidebarOpen ,setIsSidebarOpen }) => {
                             </SubMenu>
                         ) : (
                             <MenuItem
+                                 key={index}
                                 className={`relative side-menu-item menu  ${
                                     isActive(link.path)
                                         ? 'bg-blue-500 text-black'

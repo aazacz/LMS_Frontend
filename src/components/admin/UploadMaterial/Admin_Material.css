@@ -10,7 +10,8 @@
     font-family: 'Poppins';
 }
 
-.new-material-instruction {
+.new-material-instruction,
+.new-assignment-instruction {
     font-family: 'Poppins';
     font-size: 12px;
     font-weight: 400;

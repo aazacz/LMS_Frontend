@@ -17,11 +17,11 @@ import { FaClipboardQuestion } from 'react-icons/fa6'
 import { PiStudentFill } from 'react-icons/pi'
 import { RxHamburgerMenu } from 'react-icons/rx'
 
-const TutorSideBar = ({ isOpen, isSidebarOpen }) => {
-    const [collapsed, setCollapsed] = useState(false)
-    const location = useLocation()
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+const TutorSideBar = ({ isOpen, isSidebarOpen,setIsSidebarOpen  }) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
     const toggleCollapse = () => {
         setCollapsed(!collapsed)
@@ -42,25 +42,25 @@ const TutorSideBar = ({ isOpen, isSidebarOpen }) => {
         }
     }
 
-    const handleLogout = () => {
-        Swal.fire({
-            title: 'Do you want to Logout?',
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: 'No',
-            customClass: {
-                actions: 'my-actions',
-                confirmButton: 'my-confirm-button',
-                denyButton: 'my-deny-button',
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(clearTutorDetails())
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Do you want to Logout?",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: "No",
+      customClass: {
+        actions: "my-actions",
+        confirmButton: "my-confirm-button",
+        denyButton: "my-deny-button",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(clearTutorDetails());
 
-                navigate('/')
-            }
-        })
-    }
+        navigate("/tutor");
+      }
+    });
+  };
 
     const navLinks = [
         {

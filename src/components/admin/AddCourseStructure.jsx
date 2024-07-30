@@ -305,12 +305,12 @@ const AddCourseStructure = () => {
                 axiosHandler(e)
             }
         })
-    }
+    } 
 
     return (
         <div className="w-full pt-4 px-4 md:p-5 md:px-16 bg-slate-200 rounded-lg mt-2">
             <h1 className="font-bold font-poppins text-xl md:text-2xl pb-6 flex items-center justify-between md:justify-start gap-x-4">
-                Create New Course Structure{' '}
+               {structureId?"Edit Course Structure":"Create New Course Structure"} {' '}
                 {<TfiWrite className="md:text-2lg text-2xl " />}
             </h1>
 
@@ -766,14 +766,26 @@ const AddCourseStructure = () => {
                     )
                 })}
 
+
+
                 <div className="flex items-center justify-end ">
-                    <button
+                  
+{structureId?        <button
+                        onClick={(e) => submitHandler(e)}
+                        type="submit"
+                        className=" px-8 py-2 bg-blue-700 hover:bg-blue-600 rounded-md text-white"
+                    >
+                        Update
+                    </button>
+                    :
+                     <button
                         onClick={(e) => submitHandler(e)}
                         type="submit"
                         className=" px-8 py-2 bg-green-900 rounded-md text-white"
                     >
                         Submit
-                    </button>
+                    </button>} 
+                  
                 </div>
             </form>
         </div>

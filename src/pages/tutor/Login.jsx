@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import usePasswordToggle from "../../hooks/usePasswordToggle";
-import tutorBg from "/adminBg.jpg";
-import Logo from "/Logoo.png";
+import tutorBg from "../../assets/Tutor/adminBg.jpg";
+import Logo from "../../assets/Tutor/Logoo.png";
 import { setTutorDetails } from "../../store/reducers/TutorloginSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 

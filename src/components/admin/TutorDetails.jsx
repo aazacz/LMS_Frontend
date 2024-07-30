@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import profile from '/profile.jpeg'
+import profile from '../../assets/Admin/profile.jpeg'
 import { LuPhone } from 'react-icons/lu'
 import { CiMail } from 'react-icons/ci'
 import { IoTrashOutline, IoAddCircleOutline } from 'react-icons/io5'

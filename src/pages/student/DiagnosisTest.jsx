@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./DiagnosisTest.css";
 import axios from "axios";
 import Tooltip from "@mui/material/Tooltip";
+import { axiosInstanceStudent } from "../../routes/UserRoutes";
 
 const DiagnosisTest = () => {
   const baseURL = process.env.REACT_APP_API_URL;
@@ -20,19 +21,21 @@ const DiagnosisTest = () => {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [questionStatuses, setQuestionStatuses] = useState({});
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
+
   const location = useLocation();
-  const testId = location.state && location.state.testId;
+  const testId = location.state.testId
 
   useEffect(() => {
+  
+    console.log("use Effect running")
+
+
     async function fetchQuestions() {
+       console.log(testId)
+
       try {
-        if (!testId) {
-          console.error("No testId found in session storage.");
-          return;
-        }
-        const response = await axios.get(
-          `${baseURL}api/diagnosis/diagnosis/${testId}`
-        );
+        if (testId) {
+        const response = await axiosInstanceStudent.get(`api/test/course-tests/${testId}`);
         const data = response.data;
         console.log("Fetched Data:", data);
 
@@ -51,12 +54,39 @@ const DiagnosisTest = () => {
         } else {
           console.error("Unexpected data structure:", data);
         }
+          
+        }
+        else{
+
+          const response = await axiosInstanceStudent.get(`api/test/diagnosis-test-active`);
+          const data = response.data;
+          console.log("Fetched Data:", data);
+  
+          const positiveMark = data.positiveMark;
+          const negativeMark = data.negativeMark;
+  
+          if (data && data.questions && Array.isArray(data.questions)) {
+            const formattedQuestions = data.questions.map((question) => ({
+              positiveMark: positiveMark,
+              negativeMark: negativeMark,
+              text: question.question,
+              options: question.choices.map((choice) => choice.choiceText),
+            }));
+            setQuestions(formattedQuestions);
+            setLoading(false);
+          } else {
+            console.error("Unexpected data structure:", data);
+          }
+            
+
+        }
+        
       } catch (error) {
         console.error("Error fetching data", error);
       }
     }
     fetchQuestions();
-  }, [testId]);
+  }, []);
 
   const handleFullscreenChange = () => {
     if (!document.fullscreenElement) {
@@ -270,9 +300,68 @@ const DiagnosisTest = () => {
 
   return (
     <>
-      {loading && <Loader />}
-      <div className="Test w-screen h-max flex flex-wrap overflow-y-scroll relative">
-        <div className="max-w-[1120px] w-full p-5 h-full">
+      {loading && 
+      
+      <div className="absolute w-full h-screen bg-black bg-opacity-35 z-[99] flex justify-center items-center">
+      <Loader />  
+      </div>
+      }
+
+
+      <div className="w-screen h-screen relative">
+
+      <div className="Test absolute w-full h-full flex flex-wrap flex-row-reverse  overflow-y-scroll ">
+       
+       {/* Right Component */}
+      <div className="flex-1 max-w-[350px] bg-[#EDF8FF] h-screen  mb-40 border-l-2">
+          <div className="flex gap-x-2 items-center h-10 bg-white  relative p-4">
+            <span className="font-semibold">Time Left :</span>
+            <span className="font-semibold">{formatTime(timeLeft)}</span>
+            <div className="flex items-center absolute left-28">
+              <Hourglass
+                visible={true}
+                height="20"
+                ariaLabel="hourglass-loading"
+                wrapperStyle={{ margin: 0 }}
+                colors={["#306cce", "#72a1ed"]}
+              />
+            </div>
+          </div>
+
+          <div className="w-full p-4  flex items-center justify-between">
+            <span className="uppercase font-semibold font-poppins text-black ">
+              Christian Bale
+            </span>
+            {/* <span className="w-10 h-10 bg-[#0047FF] flex rounded-full items-center justify-center text-white">
+              <FaGoogleScholar />{" "}
+            </span> */}
+          </div>
+
+          <div className="w-[full] bg-[#EDF8FF] flex">
+            <div className="p-5 w-full h-max justify-between grid grid-flow-row grid-cols-5 gap-5">
+              {/* Implement marking questions for review */}
+              {Array.from({ length: questions.length }, (_, i) => i + 1).map(
+                (number, index) => (
+                  <div
+                    key={index}
+                    className={`w-8 h-8 rounded-full flex justify-center items-center text-white ${getStatusClass(
+                      questionStatuses[index]
+                    )}`}
+                    onClick={() => scrollToQuestion(index)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {number}
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        </div>
+               
+       
+       
+       {/* Left Component */}
+        <div className=" w-full flex-1   p-5 h-full">
           <div className="w-full">
             <h2 className="font-semibold flex justify-center items-center font-poppins text-sm text-red-800">
               Switching Tabs will lead to automatic exit
@@ -362,72 +451,13 @@ const DiagnosisTest = () => {
               </button>
             </div>
 
-            {/* <div className="flex items-center">
-              <label htmlFor="fontSize" className="font-semibold mr-2">
-                Font Size
-              </label>
-              <input
-                id="fontSize"
-                type="range"
-                min="12"
-                max="20"
-                value={fontSize}
-                step="1"
-                onChange={handleFontSizeChange}
-              />
-              <span className="ml-2">{fontSize}px</span>
-            </div> */}
           </div>
 
-          <div className="w-full "></div>
+        
         </div>
 
-        <div className="flex-1 bg-[#EDF8FF]  mb-40 border-l-2">
-          <div className="flex gap-x-2 items-center h-10 bg-white  relative p-4">
-            <span className="font-semibold">Time Left :</span>
-            <span className="font-semibold">{formatTime(timeLeft)}</span>
-            <div className="flex items-center absolute left-28">
-              <Hourglass
-                visible={true}
-                height="20"
-                ariaLabel="hourglass-loading"
-                wrapperStyle={{ margin: 0 }}
-                colors={["#306cce", "#72a1ed"]}
-              />
-            </div>
-          </div>
 
-          <div className="w-full p-4  flex items-center justify-between">
-            <span className="uppercase font-semibold font-poppins text-black ">
-              Christian Bale
-            </span>
-            {/* <span className="w-10 h-10 bg-[#0047FF] flex rounded-full items-center justify-center text-white">
-              <FaGoogleScholar />{" "}
-            </span> */}
-          </div>
-
-          <div className="w-[full] bg-[#EDF8FF] flex">
-            <div className="p-5 w-full h-max justify-between grid grid-flow-row grid-cols-5 gap-5">
-              {/* Implement marking questions for review */}
-              {Array.from({ length: questions.length }, (_, i) => i + 1).map(
-                (number, index) => (
-                  <div
-                    key={index}
-                    className={`w-8 h-8 rounded-full flex justify-center items-center text-white ${getStatusClass(
-                      questionStatuses[index]
-                    )}`}
-                    onClick={() => scrollToQuestion(index)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {number}
-                  </div>
-                )
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="fixed bottom-0 w-full h-24 px-8 bg-white shadow-[0px_0px_6px_8px_#00000024] flex justify-between items-center">
+        <div className="absolute bottom-0 w-full h-24 px-8 bg-white shadow-[0px_0px_6px_8px_#00000024] flex justify-between items-center">
           <div className="flex w-full gap-x-5">
             <button
               onClick={handleMarkForReview}
@@ -456,6 +486,7 @@ const DiagnosisTest = () => {
         
           </div>
         </div>
+      </div>
       </div>
     </>
   );

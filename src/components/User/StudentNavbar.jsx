@@ -5,7 +5,7 @@ import { FaBars } from 'react-icons/fa6'
 import { IoIosArrowForward } from 'react-icons/io'
 import { FiBookOpen, FiBook } from 'react-icons/fi'
 import '../admin/AdminNavbar.css'
-import logo from '/Logo.png'
+import logo from '../../assets/Student/Logo.png'
 
 const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
     const [show, setShow] = useState(false)

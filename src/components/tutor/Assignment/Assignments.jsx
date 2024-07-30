@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import "./Assignments.css";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
@@ -8,8 +7,8 @@ import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
 
 const Assignments = () => {
   const input = useRef();
-  // const students = ["John", "Rita", "Raj"];
-  const baseUrl = process.env.REACT_APP_API_URL;
+
+
   const { courseId } = useParams();
   console.log(courseId);
   const [assignmentName, setAssignmentName] = useState("");

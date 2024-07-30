@@ -263,12 +263,52 @@ const AddCourse = () => {
         })
     }
 
+
+    const [imageUrl, setImageUrl] = useState('');
+
+const handleImageChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageUrl(reader.result);
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+
+
     return (
         <div className="w-full p-5 md:px-16 bg-slate-200 rounded-lg mt-2">
             <h1 className="font-bold font-poppins text-2xl pb-6 flex items-center gap-x-4">
                 Create a new Course {<TfiWrite className="text-lg " />}
             </h1>
             <form className="space-y-6">
+                
+            <div className='pt-4 flex w-full h-auto gap-x-4'>
+
+    <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+    <img src={imageUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
+    </div>
+
+    <label htmlFor='chooseimage' className="choose w-[110px]  h-[30px] flex justify-center items-center  bg-blue-600 text-white text-sm font-semibold">Choose Image</label>
+
+    <button className='bg-green-500 w-[110px]  h-[30px] flex justify-center items-center text-white text-sm font-semibold'>
+        Upload
+    </button>
+
+    <input
+    id='chooseimage'
+    type="file"
+    onChange={handleImageChange}
+    name="courseImage"
+    accept="image/*"
+    className=" w-[150px] hidden h-[30px] p-2  "
+    
+    />
+
+    </div>
                 <div className="w-full grid grid-flow-row grid-cols-2 gap-x-4">
                     <div className="w-full ">
                         <label className="text-sm font-semibold">

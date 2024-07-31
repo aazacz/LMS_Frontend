@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 
 
-const CourseList = () => {
+const EnrolledCourses = () => {
     const token = useSelector((state) => state.AdminDetails.token);
 
     const [EnrolledCourse,SetEnrolledCourse]= useState()
@@ -70,7 +70,7 @@ const CourseList = () => {
     ];
 
     return (
-        <div className="p-4  h-screen overflow-y-scroll no-scrollbar w-full">
+        <div className="p-4  h-max pb-10  no-scrollbar w-full">
           
           
             <div>
@@ -102,7 +102,7 @@ const CourseList = () => {
 
 
 
-            <div className='mt-3 w-full'>
+            {/* <div className='mt-3 w-full'>
                 <h1 className="font-poppins font-semibold text-lg py-2">
                     Individual Course
                 </h1>
@@ -130,8 +130,8 @@ const CourseList = () => {
                       (<div className='w-full   text-center'> There are no courses no show </div>)
                     )}
                 </div>
-            </div>
-           
+            </div> */}
+{/*            
             <div className='mt-3'>
                 <h1 className="font-poppins font-semibold text-lg py-2">
                     Group Course
@@ -156,9 +156,9 @@ const CourseList = () => {
                     (<p> There are no courses no show </p>)
                     )}
                 </div>
-            </div>
+            </div> */}
 
-            <div className="mt-5">
+            {/* <div className="mt-5">
                 <h1 className="font-poppins font-semibold text-lg py-2">
                     Best In Market
                 </h1>
@@ -169,12 +169,12 @@ const CourseList = () => {
                         </Link>
                     ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
 
-export default CourseList;
+export default EnrolledCourses;
 
 
 

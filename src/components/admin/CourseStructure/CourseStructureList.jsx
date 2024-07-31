@@ -21,6 +21,7 @@ const CourseStructureList = () => {
             setLoading(true)
             const response = await AdminAxiosInstance.get(
                 `api/structure/get-all-structure?page=1&pageSize=10&search=${Search}`)
+            console.log(response.data.data)
             setCourses(response.data.data)
             setLoading(false)
         } catch (err) {

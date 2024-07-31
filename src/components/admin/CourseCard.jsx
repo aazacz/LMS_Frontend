@@ -7,11 +7,24 @@ const CourseCard = ({ course }) => {
     return (
         <div className="bg-gray-200 md:p-4 p-1 rounded-2xl min-h-[12rem] h-auto">
             <div className="w-full rounded-lg">
-                <img
-                    src={coursephoto}
-                    className="rounded-lg w-full object-contain"
+               
+               {course?.imageUrl  ?    
+               
+               <img
+                    src={course?.imageUrl}
+                    className="rounded-lg w-full h-[150px] object-contain"
                     alt="Course"
-                />
+                />  
+                : 
+                <img
+                src={coursephoto}
+                className="rounded-lg w-full object-contain"
+                alt="Course"
+            />
+             }
+               
+               
+            
             </div>
 
             <div className="w-full md:mt-4 mt-2 pb-2 px-2 md:px-0">

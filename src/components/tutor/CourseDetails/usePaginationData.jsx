@@ -23,10 +23,10 @@ const usePaginationData = (courseId, initialPage = 1, initialPageSize = 10, init
       const response = await TutorAxiosInstance.get(`api/assignments/view-assignments/${courseId}`  );
       
       console.log("response.data.data in pagination")
-      console.log(response.data)
+      console.log(response.data.assignments)
       setTotalRows(response.data.totalRows);
       setLoading(false);
-      return response.data
+      return response.data.assignments
 
     } catch (error) {
 

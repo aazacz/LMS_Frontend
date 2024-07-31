@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 
 
-const CourseList = () => {
+const AllCourses = () => {
     const token = useSelector((state) => state.AdminDetails.token);
 
     const [EnrolledCourse,SetEnrolledCourse]= useState()
@@ -70,9 +70,9 @@ const CourseList = () => {
     ];
 
     return (
-        <div className="p-4  h-screen overflow-y-scroll no-scrollbar w-full">
+        <div className="p-4 pb-10  h-max   no-scrollbar w-full">
           
-          
+{/*           
             <div>
                 <h1 className="font-poppins font-semibold text-lg py-2">
                     Enrolled Course
@@ -98,7 +98,7 @@ const CourseList = () => {
                     
                     }
                 </div>
-            </div>
+            </div> */}
 
 
 
@@ -174,7 +174,7 @@ const CourseList = () => {
     );
 };
 
-export default CourseList;
+export default AllCourses;
 
 
 
@@ -186,6 +186,7 @@ const CourseCard = ({ course }) => {
             <div className="w-full rounded-lg">
                 <img
                     src={coursephoto}
+                    loading='lazy'
                     className="rounded-lg w-full object-contain"
                     alt="Course"
                 />

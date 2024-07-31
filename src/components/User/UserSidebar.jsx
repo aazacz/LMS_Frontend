@@ -4,15 +4,16 @@ import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
-import { MdDashboard } from 'react-icons/md'
+import { MdDashboard, MdDensitySmall } from 'react-icons/md'
 import { FaBookReader } from 'react-icons/fa'
-import { PiChalkboardTeacherFill,PiExamFill,   } from 'react-icons/pi'
+import { PiChalkboardTeacherFill, PiExamFill, } from 'react-icons/pi'
 import { IoIosKey, IoIosPerson, IoIosSettings } from 'react-icons/io'
 import { IoLibrary, IoLogOut } from 'react-icons/io5'
 import { RxHamburgerMenu } from 'react-icons/rx'
-import { GiBookmarklet } from 'react-icons/gi'
+import { GiBookmarklet, GiChecklist } from 'react-icons/gi'
 import { PiTreeStructureFill } from 'react-icons/pi'
 import { clearStudentDetails } from '../../store/reducers/StudentloginSlice'
+import { FaListCheck } from 'react-icons/fa6'
 
 const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
     const [collapsed, setCollapsed] = useState(false)
@@ -39,24 +40,24 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
             }, 1000)
         }
     }
-  const handleLogout = () => {
-    Swal.fire({
-      title: "Do you want to Logout?",
-      showDenyButton: true,
-      confirmButtonText: "Yes",
-      denyButtonText: "No",
-      customClass: {
-        actions: "my-actions",
-        confirmButton: "my-confirm-button",
-        denyButton: "my-deny-button",
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(clearStudentDetails());
-        navigate("/");
-      }
-    });
-  };
+    const handleLogout = () => {
+        Swal.fire({
+            title: "Do you want to Logout?",
+            showDenyButton: true,
+            confirmButtonText: "Yes",
+            denyButtonText: "No",
+            customClass: {
+                actions: "my-actions",
+                confirmButton: "my-confirm-button",
+                denyButton: "my-deny-button",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(clearStudentDetails());
+                navigate("/");
+            }
+        });
+    };
 
     const navLinks = [
         {
@@ -68,6 +69,23 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
             title: 'Courses',
             path: '/student/courses',
             icon: <GiBookmarklet className="text-xl text-gray-900" />,
+            subLinks: [
+                {
+                    title: 'All Courses',
+                    path: '/student/courses/allcourses',
+                    icon: <MdDensitySmall  className="text-xl text-gray-900" />,
+                },
+                {
+                    title: 'Enrolled courses',
+                    path: '/student/courses/enrolledcourses',
+                    icon: <FaListCheck   className="text-xl text-gray-900" />,
+                },
+                // {
+                //   title: "Notifications",
+                //   path: "/student/settings/notifications",
+                //   icon: <IoNotifications className="text-xl text-gray-700" />,
+                // },
+            ],
         },
         {
             title: 'Assignments',
@@ -115,11 +133,10 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
     return (
         <div
             className={` absolute  md:sticky top-[12vh]  
-                       ${
-                           isSidebarOpen
-                               ? ''
-                               : ' -translate-x-full md:translate-x-0'
-                       }
+                       ${isSidebarOpen
+                    ? ''
+                    : ' -translate-x-full md:translate-x-0'
+                }
                         h-screen transition-all duration-500  font-poppins text-sm font-medium `}
         >
             <Sidebar
@@ -137,11 +154,10 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
                     {/* Menu Logo */}
                     <MenuItem
                         onClick={toggleCollapse}
-                        className={` side-menu-item   h-12    ${
-                            isActive('/')
+                        className={` side-menu-item   h-12    ${isActive('/')
                                 ? 'bg-blue-500 text-white '
                                 : 'side-menu-item'
-                        }`}
+                            }`}
                         icon={
                             <>
                                 {' '}
@@ -156,20 +172,18 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
                                 key={index}
                                 label={link.title}
                                 icon={link.icon}
-                                className={`relative side-menu-item  ${
-                                    isActive(link.path)
+                                className={`relative side-menu-item  ${isActive(link.path)
                                         ? 'bg-blue-500 text-gray-500'
                                         : 'side-menu-item '
-                                }`}
+                                    }`}
                             >
-                                {link.subLinks.map((subLink,index) => (
+                                {link.subLinks.map((subLink, index) => (
                                     <MenuItem
                                         key={index}
-                                        className={`relative side-menu-item  ${
-                                            isActive(subLink.path)
+                                        className={`relative side-menu-item  ${isActive(subLink.path)
                                                 ? 'bg-blue-500 '
                                                 : 'side-menu-item text-gray-400'
-                                        }`}
+                                            }`}
                                         onClick={() => {
                                             setIsSidebarOpen()
                                             navigate(subLink.path)
@@ -187,12 +201,11 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
                             </SubMenu>
                         ) : (
                             <MenuItem
-                                 key={index}
-                                className={`relative side-menu-item menu  ${
-                                    isActive(link.path)
+                                key={index}
+                                className={`relative side-menu-item menu  ${isActive(link.path)
                                         ? 'bg-blue-500 text-black'
                                         : 'side-menu-item'
-                                }`}
+                                    }`}
                                 icon={link.icon}
                                 onClick={() => navigate(link.path)}
                             >

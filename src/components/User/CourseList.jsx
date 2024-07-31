@@ -120,7 +120,7 @@ const CourseList = () => {
                     (   
                        
                         Course.individual.map((course, index) => (
-                            <Link key={index} to={`/student/courses/${course._id}/individual/false`}>
+                            <Link key={index} to={`/student/courses/${course._id}/individual/false/s`}>
                                 <CourseCard course={course} />
                             </Link>
                      ))
@@ -147,7 +147,7 @@ const CourseList = () => {
                     ) : (
                         Course&&Course.group.length>0 ? 
                         (Course.group.map((course, index) => (
-                            <Link key={index} to={`/student/courses/${course._id}/group/false`}>
+                            <Link key={index} to={`/student/courses/${course._id}/group/false/s`}>
                                  <CourseCard course={course} />
                             </Link>
                         ))

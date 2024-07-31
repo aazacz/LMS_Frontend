@@ -9,6 +9,7 @@ import SignupRoute from "./SignupRoute";
 import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Diagnostic";
 import  axios  from "axios";
 import DiagnosisTestRoute from "./DiagnosisTestRoute";
+import { AnimatePresence, motion } from "framer-motion";
 
 let token
 const baseURL = process.env.REACT_APP_API_URL;
@@ -52,9 +53,13 @@ axiosInstanceStudent.interceptors.response.use(function (response) {
 const UserRoutes = () => {
   const user = useSelector((state) => state.StudentDetails.token);
        token = useSelector((state) => state.StudentDetails.token);
+
+     
+      
        
   return (
-    <Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
       <Route path="/" element={<Homepage />} />
       <Route path="/login"   element={user ? <Navigate to="/student" /> : <Login />}   />
       <Route path="/student/*" element={user?<StudentHomepage User={true} /> : <Navigate to="/login" />} />
@@ -71,6 +76,7 @@ const UserRoutes = () => {
         }
       />
     </Routes>
+    </AnimatePresence>
   );
 };
 

@@ -84,42 +84,43 @@ const Checkout = () => {
             amount: Course.price * 100,
             currency: 'INR',
             name: 'MindSAT',
-            description: 'MindDAT Payment',
+            description: 'MindSAT Payment',
             handler: async function (response) {
-                console.log(response)
+                console.log(response);
+    
+                let responseData = {
+                    "courseStructureId": courseId,
+                    "paymentId": response.razorpay_payment_id,
+                    "amount": Course.price
+                };
+    
+                try {
+                    let apiResponse;
+                    if (courseType === "individual") {
+                        console.log('Enrolling in individual course...');
+                        apiResponse = await axiosInstanceStudent.post("api/student-course/enroll-individual-course", responseData);
+                        console.log('API Response:', apiResponse.data);
+                        console.log('Navigating to /student');
+                        navigate("/student/a");
 
-                if (courseType === "individual") {
-                    const responseData = {
-                        "courseStructureId": courseId,
-                        "paymentId": response.razorpay_payment_id,
-                        "amount": Course.price
+                    } else if (courseType === "group") {
+                        responseData.courseId = courseId; // Ensure this key is set for group courses
+                        console.log('Enrolling in group course...');
+                        apiResponse = await axiosInstanceStudent.post("api/student-course/enroll-group-course", responseData);
+                        console.log('API Response:', apiResponse.data);
+                        console.log('Navigating to /student/a');
+                        navigate("/student/a");
                     }
-
-                    await axiosInstanceStudent.post("api/student-course/enroll-individual-course", responseData)
-                        .then((res) => {
-                            console.log(res.data)
-                            navigate("/student")
-                        })
-
-                } else if (courseType === "group") {
-
-                    const responseData = {
-                        "courseId": courseId,
-                        "paymentId": response.razorpay_payment_id,
-                        "amount": Course.price
-                    }
-                    
-                    await axiosInstanceStudent.post("api/student-course/enroll-group-course", responseData)
-                        .then((res) => {
-                            console.log(res.data)
-                            navigate("/student")
-                        })
+                } catch (error) {
+                    console.error('Payment or enrollment failed:', error);
+                    // Handle error appropriately, maybe show a toast or alert to the user
                 }
-            },
-        }
-        var pay = new window.Razorpay(options)
-        pay.open()
-    }
+            }
+        };
+        var pay = new window.Razorpay(options);
+        pay.open();
+    };
+    
 
     useLayoutEffect(() => {
         if (!courseId && !courseType) {

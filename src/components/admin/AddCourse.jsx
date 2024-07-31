@@ -18,6 +18,7 @@ const AddCourse = () => {
     const [courseStructureDropDown, setCourseStructureDropDown] = useState([])
     const [packages, setpackages] = useState()
     const [CourseStructure, setCourseStructure] = useState([])
+    const [Image, setImage] = useState('');
     const [course, setCourse] = useState({
         courseType: '',
         courseStructure: '',
@@ -206,6 +207,27 @@ const AddCourse = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
+        const formData = new FormData();
+    
+        formData.append('courseType', course.courseType);
+        formData.append('courseStructure', course.courseStructure);
+        formData.append('courseName', course.courseName);
+        formData.append('package', course.package);
+        formData.append('trainingDuration', course.trainingDuration);
+        formData.append('hoursPerDay', course.hoursPerDay);
+        formData.append('price', course.price);
+        formData.append('description', course.description);
+        formData.append('trainingDateTimeDetails', course.trainingDateTimeDetails);
+        formData.append('students', JSON.stringify(course.students));
+        formData.append('modules', JSON.stringify(course.modules));
+        formData.append('tutors', JSON.stringify(course.tutors));
+        formData.append('imageName', "hai");
+
+
+
+
+
+
 
         Swal.fire({
             title: 'You are going to create a new course',
@@ -221,7 +243,7 @@ const AddCourse = () => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                AdminAxiosInstance.post(`api/course/create`, course).then(
+                AdminAxiosInstance.post(`api/course/create`, formData).then(
                     (res) => {
                         console.log(res.data)
                         if (
@@ -266,17 +288,42 @@ const AddCourse = () => {
 
     const [imageUrl, setImageUrl] = useState('');
 
-const handleImageChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImageUrl(reader.result);
-    };
-    reader.readAsDataURL(file);
-  }
-};
+    const handleimageUpload = async (event) => {
+        event.preventDefault();
 
+        const formData = new FormData();
+        if (Image) {
+            formData.append('image', Image);
+
+            console.log("vvalue in the formdata");
+            console.log(formData.get("image"));
+        }
+        try {
+            const response = await AdminAxiosInstance.put(`/api/structure/update-structure-image/${structureId}`, formData, {
+                'Content-Type': 'multipart/form-data',
+            });
+            if (response.data.message === "Image Updated Successfully") {
+                toast.success("Image Updated Successfully");
+            }
+        } catch (error) {
+            toast.error(error.message);
+            console.log(error);
+        }
+    };
+
+    const handleImageChange = async (e) => {
+        setImage("");
+        const file = e.target.files[0];
+
+        setImage(file);
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImageUrl(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
 
     return (

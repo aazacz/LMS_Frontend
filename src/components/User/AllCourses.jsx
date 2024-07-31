@@ -70,7 +70,7 @@ const AllCourses = () => {
     ];
 
     return (
-        <div className="p-4  h-screen  no-scrollbar w-full">
+        <div className="p-4 pb-10  h-max   no-scrollbar w-full">
           
 {/*           
             <div>
@@ -186,6 +186,7 @@ const CourseCard = ({ course }) => {
             <div className="w-full rounded-lg">
                 <img
                     src={coursephoto}
+                    loading='lazy'
                     className="rounded-lg w-full object-contain"
                     alt="Course"
                 />

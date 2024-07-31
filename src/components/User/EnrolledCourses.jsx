@@ -70,7 +70,7 @@ const EnrolledCourses = () => {
     ];
 
     return (
-        <div className="p-4  h-screen border-2 border-black no-scrollbar w-full">
+        <div className="p-4  h-max pb-10  no-scrollbar w-full">
           
           
             <div>

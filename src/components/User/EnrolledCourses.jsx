@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 
 
-const AllCourses = () => {
+const EnrolledCourses = () => {
     const token = useSelector((state) => state.AdminDetails.token);
 
     const [EnrolledCourse,SetEnrolledCourse]= useState()
@@ -70,9 +70,9 @@ const AllCourses = () => {
     ];
 
     return (
-        <div className="p-4  h-screen  no-scrollbar w-full">
+        <div className="p-4  h-screen border-2 border-black no-scrollbar w-full">
           
-{/*           
+          
             <div>
                 <h1 className="font-poppins font-semibold text-lg py-2">
                     Enrolled Course
@@ -98,11 +98,11 @@ const AllCourses = () => {
                     
                     }
                 </div>
-            </div> */}
+            </div>
 
 
 
-            <div className='mt-3 w-full'>
+            {/* <div className='mt-3 w-full'>
                 <h1 className="font-poppins font-semibold text-lg py-2">
                     Individual Course
                 </h1>
@@ -130,8 +130,8 @@ const AllCourses = () => {
                       (<div className='w-full   text-center'> There are no courses no show </div>)
                     )}
                 </div>
-            </div>
-           
+            </div> */}
+{/*            
             <div className='mt-3'>
                 <h1 className="font-poppins font-semibold text-lg py-2">
                     Group Course
@@ -156,9 +156,9 @@ const AllCourses = () => {
                     (<p> There are no courses no show </p>)
                     )}
                 </div>
-            </div>
+            </div> */}
 
-            <div className="mt-5">
+            {/* <div className="mt-5">
                 <h1 className="font-poppins font-semibold text-lg py-2">
                     Best In Market
                 </h1>
@@ -169,12 +169,12 @@ const AllCourses = () => {
                         </Link>
                     ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
 
-export default AllCourses;
+export default EnrolledCourses;
 
 
 

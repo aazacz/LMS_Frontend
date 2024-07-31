@@ -2,20 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { BiSpreadsheet } from 'react-icons/bi'
 import { LuTimer } from 'react-icons/lu'
 import { useParams, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axios             from 'axios'
 import 'react-tooltip/dist/react-tooltip.css'
-import { useSelector } from 'react-redux'
-import Loader from '../../reusable/Loader'
-import { IoIosCloseCircle } from 'react-icons/io'
+import { useSelector }  from 'react-redux'
+import Loader           from '../../reusable/Loader'
 import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
-import Asidebar from './AsideBar'
-import AboutContent from './AboutContent'
-import ModuleContent from './ModuleContent'
-import ReviewContent from './ReviewContent'
-import AddDeletemodal from './AddDeletemodal'
-import TestsContent from './TestsContent'
+import Asidebar         from './AsideBar'
+import AboutContent     from './AboutContent'
+import ModuleContent    from './ModuleContent'
+import ReviewContent    from './ReviewContent'
+import AddDeletemodal   from './AddDeletemodal'
+import TestsContent     from './TestsContent'
 
-const Coursedetails = () => {
+const Coursedetails = ({edit}) => {
     const baseUrl = process.env.REACT_APP_API_URL
     const token = useSelector((state) => state.AdminDetails.token)
     const [Course, SetCourse] = useState()

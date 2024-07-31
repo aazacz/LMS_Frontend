@@ -19,6 +19,8 @@ import PaymentSuccess from "../../components/User/PaymentSuccess";
 import Settings from "../../components/reusable/Settings/Settings";
 import DiagnosisTestRoute from "../../routes/DiagnosisTestRoute";
 import { AnimatePresence, motion } from "framer-motion";
+import AllCourses from "../../components/User/AllCourses";
+import EnrolledCourses from "../../components/User/EnrolledCourses";
 
 const StudentHomepage = () => {
 
@@ -85,7 +87,9 @@ const StudentHomepage = () => {
                 <Route path="/diagnosistestresult"   element={<DiagnosisTestResult />}  />
                 <Route path="/a" element={<PaymentSuccess />} />
                 <Route path="/courses" element={<CourseList />} />
-                <Route path="/courses/allcourses" element={<CourseList />} />
+                <Route path="/courses/allcourses" element={<AllCourses />} />
+                <Route path="/courses/enrolledcourses" element={<EnrolledCourses />} />
+
                 <Route path="/tests" element={ <motion.div
                   initial="initial"
                   animate="in"
@@ -93,6 +97,7 @@ const StudentHomepage = () => {
                   variants={pageVariants}
                   transition={pageTransition}
                 >  <StudentTests /> </motion.div>} />
+
                 <Route path="/courses/:courseId/:courseType/:enrolled/:role"    element={  <motion.div
                   initial="initial"
                   animate="in"
@@ -100,6 +105,7 @@ const StudentHomepage = () => {
                   variants={pageVariants}
                   transition={pageTransition}
                 > <Coursedetails /> </motion.div>}   />
+
                 <Route path="/assignments" element={<motion.div
                   initial="initial"
                   animate="in"

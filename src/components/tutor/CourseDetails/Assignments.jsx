@@ -15,12 +15,10 @@ const Assignments =({courseId})=>{
 
     const columns = [
 
-        { field: 'title', headerName: 'Title' },
-        { field: 'tutor', headerName: 'Tutor' },
-        { field: 'positiveMark', headerName: 'Positive Mark' },
-        { field: 'negativeMark', headerName: 'Negative Mark' },
-        { field: 'questionsLength', headerName: 'No of Questions' },
-        { field: 'timeSlot', headerName: 'Duration' },
+        { field: 'slno', headerName: 'Sl No' },
+        { field: 'assignmentName', headerName: 'Title' },
+        { field: 'assignmentDescription', headerName: 'Description' },
+        { field: 'timeSlot', headerName: 'Created At' },
         { field: 'Action', headerName: 'Action' }
 
     ]
@@ -81,44 +79,32 @@ const Assignments =({courseId})=>{
                                    {console.log(row)}
                                    {columns.map((column, index) => (
                                        <td key={index}>
-                                           {column.field === 'title' ? (
+                                           {column.field === 'slno' ? (
                                                <div className="font-semibold text-left">
-                                                   {row.title}
+                                                   {indexrow+1}
                                                </div>
                                            ) : null}
 
-                                           {column.field === 'positiveMark' ? (
+                                           {column.field === 'assignmentName' ? (
                                                <div className="font-semibold text-center">
-                                                   {row.positiveMark}
+                                                   {row.assignmentName}
                                                </div>
                                            ) : null}
                                         
-                                           {column.field === 'negativeMark' ? (
-                                               <div className="font-semibold text-center">
-                                                   {row.negativeMark}
+                                           {column.field === 'assignmentDescription' ? (
+                                               <div className="w-[150px] font-semibold text-center text-wrap line-clamp-1">
+                                                   {row.assignmentDescription}
                                                </div>
                                            ) : null}
 
-                                           {column.field === 'tutor' ? (
+                                           {column.field === 'timeSlot' ? (
                                                    <span className="action-container text-sm font-semibold">
-                                                       {indexrow + 1}
+                                                       {formatDate(row.timestamp)}
                                                    </span>
                                             
                                            ) : null}
                                           
-                                           {column.field === 'timeSlot' ? (
-                                                   <span className="action-container text-sm font-semibold">
-                                                       {row.timeSlot}
-                                                   </span>
-                                            
-                                           ) : null}
-
-                                           {column.field === 'questionsLength' ? (
-                                               <span className="action-container text-center text-sm font-semibold">
-                                                   {row.questionsLength}
-                                               </span>
-                                           ) : null}
-                                       
+                                          
                                            {column.field === 'Action' ? (
                                                <span className="action-container text-sm font-semibold">
                                                    <button onClick={(e)=>{handleTestStart(e,row)}} className="w-[90%] h-[23px] bg-green-700 
@@ -127,10 +113,6 @@ const Assignments =({courseId})=>{
                                                    </button>
                                                </span>
                                            ) : null}
-
-
-
-
 
 
 

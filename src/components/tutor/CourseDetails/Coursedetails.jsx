@@ -10,6 +10,7 @@ import AboutContent from './AboutContent'
 import ModuleContent from './ModuleContent'
 import TestsContent from './TestsContent'
 import Assignments from './Assignments'
+import Loader from '../../reusable/Loader'
 
 const Coursedetails = () => {
     const baseURL = process.env.REACT_APP_API_URL
@@ -44,18 +45,11 @@ const Coursedetails = () => {
     return (
         <div className="px-2 font-poppins flex">
             {loading ? (
-                <RotatingLines
-                    visible={true}
-                    height="96"
-                    width="96"
-                    strokeColor="#01729c"
-                    strokeWidth="2"
-                    animationDuration="0.75"
-                    ariaLabel="rotating-lines-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                />
+                <div className='w-full h-full absolute top-0 left-0 flex justify-center items-center'> 
+                        <Loader/>   
+                </div>
             ) : (
+                <>
                 <div className="w-[70%] scroll overflow-y-scrol h-max p-4 flex flex-col">
                     <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold text-3xl">
                         {course?.courseName}
@@ -118,8 +112,9 @@ const Coursedetails = () => {
                         )}
                     </div>
                 </div>
-            )}
             <AsideBar courseId={courseId} course={course?.modules} />
+            </>
+            )}
         </div>
     )
 }

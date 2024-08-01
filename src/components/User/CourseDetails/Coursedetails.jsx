@@ -182,6 +182,12 @@ const AsideBAr = ({ data, courseType, navigate, enrolled }) => {
 
     const handleEnrollCourse = (event) => {
         event.preventDefault();
+
+
+        console.log("data?._id")
+        console.log(data?._id)
+        console.log("courseType")
+        console.log(courseType)
         navigate(`/student/courses/checkout/`, {
             state: {
                 courseId: data?._id,

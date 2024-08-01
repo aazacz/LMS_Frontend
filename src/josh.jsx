@@ -394,3 +394,99 @@ for (i=0;i<=s.length;s++){
 // 2 <= s.length <= 1000
 // s[i] is either 'L' or 'R'.
 // s is a balanced string.
+
+
+
+
+
+
+
+
+
+
+
+
+
+const submit = async () => {
+  if (!productImage || basePrice === "") {
+    toast.warning("please fill all the basic details of the product");
+    return;
+  }
+
+  if (
+    categoryType === "" ||
+    brandName === "" ||
+    seriesName === "" ||
+    model === "" ||
+    variant === ""
+  ) {
+    toast.warning(
+      "Please select the category , brand,series,model and variant"
+    );
+    return;
+  }
+
+  const selectedFile = productImage;
+
+  // Validate image type and size
+  const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+  const maxSize = 300 * 1024;
+
+  if (!selectedFile || !allowedTypes.includes(selectedFile.type)) {
+    toast.warning("Please select a valid JPG, JPEG, or PNG image.");
+    return;
+  }
+
+  if (selectedFile.size > maxSize) {
+    toast.warning("Image size exceeds the maximum allowed size (300 KB).");
+    return;
+  }
+
+  const hasEmptyOption = options.some(
+    (item) => item.optionValue.trim() === ""
+  );
+  if (hasEmptyOption) {
+    toast.warning("Please fill in all the option values");
+    return;
+  }
+
+  // If all checks pass, you can proceed with submitting the form
+  try {
+    setAddLoading(true);
+    const formData = new FormData();
+    formData.append("productImage", productImage);
+    formData.append("basePrice", basePrice);
+    formData.append("variant", variant);
+    formData.append("brandName", brandName);
+    formData.append("seriesName", seriesName);
+    formData.append("model", model);
+    formData.append("categoryType", categoryType);
+    formData.append("bestSelling", bestSelling);
+
+    // Append dynamicFields as JSON string (adjust based on your server expectations)
+    formData.append("dynamicFields", JSON.stringify(options));
+    await axios
+      .post("https://api.selligo.in/product/create-products", formData, {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        fileInputRef.current.value = null;
+        setAddLoading(false);
+        toast.success("Product Created Successfully");
+        setProductImage(null);
+        setBasePrice("");
+        setVariant("");
+        setBrandName("");
+        setSeriesName("");
+        setModel("");
+        setCategoryType("");
+        setOptions([]);
+        setBestSelling("false");
+      });
+  } catch (err) {
+    setAddLoading(false);
+    console.log(err);
+  }
+};

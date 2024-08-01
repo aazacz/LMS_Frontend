@@ -1,33 +1,34 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { TfiWrite } from 'react-icons/tfi'
-import './AddCourseStructure.css'
-import { IoIosCloseCircle } from 'react-icons/io'
-import '../../index.css'
-import './Addcourse.css'
-import './AddCourseStructure.css'
-import Swal from 'sweetalert2'
-import { AdminAxiosInstance } from '../../routes/AdminRoutes'
-import { IoChevronBackCircleOutline } from 'react-icons/io5'
-import { toast } from 'react-toastify'
-import { MdDelete } from 'react-icons/md'
-import { FaEdit } from 'react-icons/fa'
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { TfiWrite } from 'react-icons/tfi';
+import './AddCourseStructure.css';
+import { IoIosCloseCircle } from 'react-icons/io';
+import '../../index.css';
+import './Addcourse.css';
+import './AddCourseStructure.css';
+import Swal from 'sweetalert2';
+import { AdminAxiosInstance } from '../../routes/AdminRoutes';
+import { IoChevronBackCircleOutline } from 'react-icons/io5';
+import { toast } from 'react-toastify';
+import { MdDelete } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
+import Defaultcourseimage from "../../assets/Admin/Defaultcourseimage.png"
 
 const AddCourseStructure = ({ view }) => {
+    const navigate = useNavigate();
+    const token = useSelector((state) => state.AdminDetails.token);
+    const baseURL = process.env.REACT_APP_API_URL;
+    const { structureId } = useParams();
+    const [errors, setErrors] = useState({});
+    const [packages, setPackages] = useState();
+    const [durationType, setDurationType] = useState('');
+    const [View, SetView] = useState(view);
 
-    const navigate = useNavigate()
-    const token = useSelector((state) => state.AdminDetails.token)
-    const baseURL = process.env.REACT_APP_API_URL
-
-    const { structureId } = useParams()
-
-    const [errors, setErrors] = useState({})
-    const [packages, setpackages] = useState()
-    const [durationType, setDurationType] = useState('')
-    const [View ,SetView] = useState(view)
-
-
+    const [imageUrl, setImageUrl] = useState('');
+    const [Imagestate, setImage] = useState('');
+    const img = useRef();
+    
     const [course, setCourse] = useState({
         courseName: '',
         package: '',
@@ -51,48 +52,61 @@ const AddCourseStructure = ({ view }) => {
         ],
         individualCourse: true,
         groupCourse: true,
-    })
+    });
 
+    const convertCourseToFormData = (course) => {
+        const formData = new FormData();
+    
+        formData.append('courseName', course.courseName);
+        formData.append('package', course.package);
+        formData.append('trainingDuration', course.trainingDuration);
+        formData.append('hoursPerDay', course.hoursPerDay);
+        formData.append('price', course.price);
+        formData.append('description', course.description);
+        formData.append('individualCourse', course.individualCourse);
+        formData.append('groupCourse', course.groupCourse);
+        formData.append('modules', JSON.stringify(course.modules));
+       
+        if (Imagestate) {
+            formData.append('image', Imagestate);
 
+            console.log("vvalue in the formdata");
+            console.log(formData.get("image"));
+        }
 
+          
+        return formData;
+    };
+    
 
-
-    // This checks whether there is course Structure Id is present
     useEffect(() => {
         const fetchStructure = async () => {
             try {
                 if (structureId) {
-                    const response = await AdminAxiosInstance.get(
-                        `api/structure/get/${structureId}`
-                    )
-                    // const response = await AdminAxiosInstance.get(`api/structure/get/66516cde0f76885562eb6bbf`);
-                    console.log('res.data structureId', response.data)
+                    const response = await AdminAxiosInstance.get(`/api/structure/get/${structureId}`);
+                    console.log('res.data structureId', response.data);
                     if (response.data) {
-                        setCourse(response.data)
+                        setCourse(response.data);
                     }
                 }
             } catch (error) {
-                console.log(error.message)
+                console.log(error.message);
             }
-        }
+        };
 
-        fetchStructure()
-    }, [structureId]) // Include only structureId as a dependency
+        fetchStructure();
+    }, [structureId]);
 
-    //getting the package information from database
     useEffect(() => {
-        AdminAxiosInstance.get(
-            `api/package/get-all-package?page=1&pageSize=10&search=`
-        )
+        AdminAxiosInstance.get('/api/package/get-all-package?page=1&pageSize=10&search=')
             .then((res) => {
-                setpackages(res.data.data)
+                setPackages(res.data.data);
             })
             .catch((err) => {
-                console.error(err.message)
-            })
-    }, [baseURL, token])
+                console.error(err.message);
+            });
+    }, [baseURL, token]);
 
-    // function to add a new module
     const addModule = () => {
         setCourse((prevState) => ({
             ...prevState,
@@ -111,9 +125,8 @@ const AddCourseStructure = ({ view }) => {
                 },
                 ...prevState.modules,
             ],
-        }))
-    }
-
+        }));
+    };
 
     const validate = (course) => {
         let validationErrors = {};
@@ -155,223 +168,240 @@ const AddCourseStructure = ({ view }) => {
                 if (!session.sessionDescription || !session.sessionDescription.trim()) {
                     validationErrors[`modules[${moduleIndex}].sessions[${sessionIndex}].sessionDescription`] = "Session Description is required";
                 }
-                // if (!session.sessionDateTime) {
-                //     validationErrors[`modules[${moduleIndex}].sessions[${sessionIndex}].sessionDateTime`] = "Session DateTime is required";
-                // }
-                // if (!session.sessionLink || !session.sessionLink.trim()) {
-                //     validationErrors[`modules[${moduleIndex}].sessions[${sessionIndex}].sessionLink`] = "Session Link is required";
-                // }
             });
         });
 
         setErrors(validationErrors);
         return Object.keys(validationErrors).length === 0;
-    }
-
+    };
 
     const handleModuleChange = (e, moduleIndex) => {
-        const { name, value } = e.target
-        const updatedModules = [...course.modules]
-        updatedModules[moduleIndex][name.split('-')[0]] = value
+        const { name, value } = e.target;
+        const updatedModules = [...course.modules];
+        updatedModules[moduleIndex][name.split('-')[0]] = value;
         setCourse((prevState) => ({
             ...prevState,
             modules: updatedModules,
-        }))
-    }
+        }));
+    };
 
     const handleSessionChange = (e, moduleIndex, sessionIndex) => {
-        const { name, value } = e.target
-        const updatedModules = [...course.modules]
-        updatedModules[moduleIndex].sessions[sessionIndex][name.split('-')[0]] =
-            value
+        const { name, value } = e.target;
+        const updatedModules = [...course.modules];
+        updatedModules[moduleIndex].sessions[sessionIndex][name.split('-')[0]] = value;
         setCourse((prevState) => ({
             ...prevState,
             modules: updatedModules,
-        }))
-    }
+        }));
+    };
 
-    // Function to Remove a Module
     const RemoveModule = (moduleIndex, e) => {
-        console.log(moduleIndex)
+        console.log(moduleIndex);
 
         setCourse((prevData) => {
-            const updatedModules = prevData.modules.filter(
-                (_, index) => index !== moduleIndex
-            )
+            const updatedModules = prevData.modules.filter((_, index) => index !== moduleIndex);
             return {
                 ...prevData,
                 modules: updatedModules,
-            }
-        })
-    }
+            };
+        });
+    };
 
-    // function to add a new Session
     const addSession = (moduleIndex) => {
-        const updatedModules = [...course.modules]
+        const updatedModules = [...course.modules];
 
         updatedModules[moduleIndex].sessions.push({
             sessionName: '',
             sessionDescription: '',
             sessionDateTime: '',
             sessionLink: '',
-        })
-        setCourse({ ...course, modules: updatedModules })
-    }
+        });
+        setCourse({ ...course, modules: updatedModules });
+    };
 
-    // Function to Remove a Module
     const RemoveSession = (moduleIndex, sessionIndex, e) => {
-        console.log('moduleIndex, sessionIndex, e', moduleIndex, sessionIndex)
+        console.log('moduleIndex, sessionIndex, e', moduleIndex, sessionIndex);
 
         setCourse((prevData) => {
-            // Create a deep copy of the previous state to avoid direct mutation
-            const updatedModules = [...prevData.modules]
-
-            // Filter out the session to be removed
-            updatedModules[moduleIndex].sessions = updatedModules[
-                moduleIndex
-            ].sessions.filter((_, index) => index !== sessionIndex)
+            const updatedModules = [...prevData.modules];
+            updatedModules[moduleIndex].sessions = updatedModules[moduleIndex].sessions.filter((_, index) => index !== sessionIndex);
             return {
                 ...prevData,
                 modules: updatedModules,
-            }
-        })
-    }
+            };
+        });
+    };
 
-    // Function to change the input element value
     const handleInputChange = (event) => {
-        const { name, type, checked, value } = event.target
+        const { name, type, checked, value } = event.target;
         setCourse((prevCourse) => ({
             ...prevCourse,
             [name]: type === 'checkbox' ? checked : value,
-        }))
-        console.log(name)
+        }));
+        console.log(name);
 
         if (name === 'trainingDuration' || name === 'durationType') {
             setCourse((prevCourse) => ({
                 ...prevCourse,
-                trainingDuration:
-                    name === 'trainingDuration'
-                        ? `${value} ${durationType}`
-                        : `${prevCourse.trainingDuration.split(' ')[0]} ${value}`,
-            }))
+                trainingDuration: name === 'trainingDuration' ? `${value} ${durationType}` : `${prevCourse.trainingDuration.split(' ')[0]} ${value}`,
+            }));
         }
-    }
+    };
 
     useEffect(() => {
-        console.log(course)
-        console.log("errors")
+        console.log(course);
+        console.log("errors");
         console.log(errors["modules[0].moduleName"]);
-    }, [course, errors])
+    }, [course, errors]);
 
     const axiosHandler = async (e) => {
-        e.preventDefault()
-        console.log('validate')
-        console.log(validate(course))
+        e.preventDefault();
+        console.log('validate');
+        console.log(validate(course));
 
         if (validate(course)) {
             try {
+                const formData = convertCourseToFormData(course);
+            
+                const logFormData = (formData) => {
+                    for (let pair of formData.entries()) {
+                        console.log(`${pair[0]}: ${pair[1]}`);
+                    }
+                };
 
-                AdminAxiosInstance.post(`api/structure/create`, course).then((res) => {
-                    console.log(res)
+                 logFormData(formData)
+                AdminAxiosInstance.post('/api/structure/create', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }).then((res) => {
+                    console.log(res);
 
                     Swal.fire({
                         timer: 1000,
                         timerProgressBar: true,
                         title: 'Success',
-                        text: 'Course Structure Created Succcessfully.',
+                        text: 'Course Structure Created Successfully.',
                         icon: 'success',
-                    })
+                    });
 
-                    navigate('/admin/home/courseStructure')
-                })
+                    navigate('/admin/home/courseStructure');
+                });
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
-
+        } else {
+            toast.error("Please fix validation errors before submitting.");
         }
-        else[
-            toast.error("Please fix validation errors before submitting.")
-        ]
-    }
+    };
 
-    // Submitting the Form
     const submitHandler = (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         Swal.fire({
-            title: `Do You want to create a new Structure`,
+            title: 'Do You want to create a new Structure',
             text: 'Please check that the course structure details are correct',
             icon: 'question',
-
             showCancelButton: true,
             confirmButtonColor: '#238D23',
             cancelButtonColor: '#878ca7',
             confirmButtonText: 'Create Course Structure!',
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosHandler(e)
+                axiosHandler(e);
             }
-        })
-    }
+        });
+    };
 
     const handlegoback = () => {
-        navigate(-1)
-    }
+        navigate(-1);
+    };
 
-    const [imageUrl, setImageUrl] = useState('');
-    const [Image, setImage] = useState('');
-    const img = useRef()
+
 
     const handleimageUpload = async (event) => {
-        event.preventDefault()
+        event.preventDefault();
 
-        const formData = new FormData()
+        const formData = new FormData();
         if (Image) {
-            formData.append('image', Image)
+            formData.append('image', Image);
 
-            console.log("vvalue in the formdata")
-            console.log(formData.get("image"))
+            console.log("vvalue in the formdata");
+            console.log(formData.get("image"));
         }
         try {
-
-            const response = await AdminAxiosInstance.put(`api/structure/update-structure-image/${structureId}`, formData, {
+            const response = await AdminAxiosInstance.put(`/api/structure/update-structure-image/${structureId}`, formData, {
                 'Content-Type': 'multipart/form-data',
-            })
+            });
             if (response.data.message === "Image Updated Successfully") {
-                toast.success("Image Updated Successfully")
+                toast.success("Image Updated Successfully");
             }
-
         } catch (error) {
-            toast.error(error.message)
-
-            console.log(error)
-        }
-
-
-    }
-
-
-    const handleImageChange = async (e) => {
-
-        setImage("")
-        const file = e.target.files[0];
-
-        setImage(file)
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImageUrl(reader.result);
-            };
-            reader.readAsDataURL(file);
+            toast.error(error.message);
+            console.log(error);
         }
     };
+
+    // const handleImageChange = async (e) => {
+    //     setImage("");
+    //     const file = e.target.files[0];
+
+    //     setImage(file);
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onloadend = () => {
+    //             setImageUrl(reader.result);
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
+
+// function to check whether the image is correct size or not
+const handleImageChange = async (e) => {
+    e.preventDefault()
+    setImage("");
+    const file = e.target.files[0];
+    const fileType = file.type;
+
+    const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+      if (!allowedTypes.includes(fileType)) {
+        img.current.value = null;
+        toast.warning("File type should be .png, .jpg, or .jpeg.");
+        return;
+      }
+
+
+    if (file) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+            const image = new Image()
+            image.onload = () => {
+                const width = image.width;
+                const height = image.height;
+
+                if (width === 300 && height === 200) {
+                    setImage(file);
+                    setImageUrl(reader.result);
+                } else {
+                    console.error("Image dimensions should be 300x200 pixels.");
+                    // Display an error message to the user
+                    toast.error("Image dimensions should be 300x200 pixels.");
+                }
+            };
+            image.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+    }
+};
+
+
 
 
 
     const deleteHandler = () => {
         axios
-            .delete(`${baseUrl}api/structure/delete/${id}`, {
-                headers: { authorization: `Bearer ${Token}` },
+            .delete(`${baseURL}/api/structure/delete/${structureId}`, {
+                headers: { authorization: `Bearer ${token}` },
             })
             .then((res) => {
                 if (res.data.message === 'Structure deleted successfully') {
@@ -381,20 +411,20 @@ const AddCourseStructure = ({ view }) => {
                         title: 'Deleted!',
                         text: 'Your file has been deleted.',
                         icon: 'success',
-                    })
-                    navigate('/admin/home/coursestructure')
+                    });
+                    navigate('/admin/home/courseStructure');
                 }
             })
             .catch((error) => {
-                console.warn(error)
-                console.warn(error.message)
-                throw new Error(error.messsage)
-            })
-    }
+                console.warn(error);
+                console.warn(error.message);
+                throw new Error(error.message);
+            });
+    };
 
     const handleDeleteCourse = (id) => {
         Swal.fire({
-            title: `Are you sure, you want to delete ?`,
+            title: 'Are you sure, you want to delete ?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
@@ -415,32 +445,27 @@ const AddCourseStructure = ({ view }) => {
                     confirmButtonText: 'Yes, delete it!',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        deleteHandler()
+                        deleteHandler();
                     }
-                })
+                });
             }
-        })
-    }
+        });
+    };
 
-const handleEdit = ()=>{
-    Swal.fire({
-        title: "Do you want to edit?",
-        
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          
-            SetView(false)
-
-
-        }
-      });
-}
-
+    const handleEdit = () => {
+        Swal.fire({
+            title: "Do you want to edit?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                SetView(false);
+            }
+        });
+    };
 
 
     return (
@@ -479,15 +504,23 @@ const handleEdit = ()=>{
 
                     <div className='pt-4 flex w-full h-auto gap-x-4'>
 
-                        <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
-                            <img src={imageUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
-                        </div>
+
+{imageUrl ?
+ <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+ <img src={imageUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
+</div>
+: 
+<div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+<img src={Defaultcourseimage} alt="Select an image " className="w-full h-full object-cover border-[1px] rounded-xl shadow-lg" />
+</div>
+}
+                       
 
                         <label htmlFor='chooseimage' className="choose w-[110px]  h-[30px] flex justify-center items-center  bg-blue-600 text-white text-sm font-semibold">Choose Image</label>
-
+{/* 
                         <button onClick={(event) => handleimageUpload(event)} className='bg-green-500 w-[110px]  h-[30px] flex justify-center items-center text-white text-sm font-semibold'>
                             Upload
-                        </button>
+                        </button> */}
 
                         <input
                             ref={img}
@@ -496,6 +529,7 @@ const handleEdit = ()=>{
                             onChange={handleImageChange}
                             name="courseImage"
                             accept="image/*"
+                            placeholder='choose Image'
                             className=" w-[150px] hidden h-[30px] p-2  "
                             disabled={View}
                         />

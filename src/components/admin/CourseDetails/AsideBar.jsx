@@ -53,7 +53,7 @@ const Asidebar = ({ course, setTutorModal,setStudentModal}) => {
                 })
             })
     }
-
+ 
     const handleDeleteCourse = () => {
         Swal.fire({
             title: `Are you sure you want to delete this course?`,

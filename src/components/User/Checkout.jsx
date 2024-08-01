@@ -6,31 +6,45 @@ import { axiosInstanceStudent } from '../../routes/UserRoutes'
 
 const Checkout = () => {
     const [Course, setCourse] = useState()
-
-    const location = useLocation()
-    const { courseId, courseType } = location.state || {}
-
     const navigate = useNavigate()
+    const location = useLocation();
+
+
+
+
+    const [Courseid, setCourseId] = useState("")
+    const [coursetype, setcoursetype] = useState("")
+
+    useEffect(()=>{
+        console.log('location.state:', location.state);
+
+        const { courseId, courseType } = location.state || {};
+        setCourseId(courseId)
+        setcoursetype(courseType)
+    },[])
+
+    
+
 
     useEffect(() => {
-        console.log("courseType " + courseType)
-        console.log("courseId " + courseId)
-
         const getCourseDetails = async () => {
-            if (courseType === "individual") {
-                const response = await axiosInstanceStudent.get(`api/structure/get/${courseId}`)
-                console.log('individual response.data')
-                console.log(response.data)
-                setCourse(response.data)
-            } else {
-                const response = await axiosInstanceStudent.get(`api/course/get-course/${courseId}`)
-                console.log('group response.data')
-                console.log(response.data)
-                setCourse(response.data)
+            if (Courseid && coursetype) {
+                if (coursetype === "individual") {
+                    const response = await axiosInstanceStudent.get(`api/structure/get/${Courseid}`)
+                    console.log('individual response.data')
+                    console.log(response.data)
+                    setCourse(response.data)
+                } else {
+                    const response = await axiosInstanceStudent.get(`api/course/get-course/${Courseid}`)
+                    console.log('group response.data')
+                    console.log(response.data)
+                    setCourse(response.data)
+                }
             }
         }
         getCourseDetails()
-    }, [courseId, courseType])
+    }, [Courseid, coursetype])
+
 
     const key = process.env.REACT_APP_KEY
     const key_secret = process.env.REACT_APP_KEY_SECRET
@@ -84,52 +98,48 @@ const Checkout = () => {
             amount: Course.price * 100,
             currency: 'INR',
             name: 'MindSAT',
-            description: 'MindDAT Payment',
+            description: 'MindSAT Payment',
             handler: async function (response) {
-                console.log(response)
+                console.log(response);
+    
+                let responseData = {
+                    "courseStructureId": courseId,
+                    "paymentId": response.razorpay_payment_id,
+                    "amount": Course.price
+                };
+    
+                try {
+                    let apiResponse;
+                    if (courseType === "individual") {
+                        console.log('Enrolling in individual course...');
+                        apiResponse = await axiosInstanceStudent.post("api/student-course/enroll-individual-course", responseData);
+                        console.log('API Response:', apiResponse.data);
+                        console.log('Navigating to /student');
+                        navigate("/student/a");
 
-                if (courseType === "individual") {
-                    const responseData = {
-                        "courseStructureId": courseId,
-                        "paymentId": response.razorpay_payment_id,
-                        "amount": Course.price
+                    } else if (courseType === "group") {
+                        responseData.courseId = courseId; // Ensure this key is set for group courses
+                        console.log('Enrolling in group course...');
+                        apiResponse = await axiosInstanceStudent.post("api/student-course/enroll-group-course", responseData);
+                        console.log('API Response:', apiResponse.data);
+                        console.log('Navigating to /student/a');
+                        navigate("/student/a");
                     }
-
-                    await axiosInstanceStudent.post("api/student-course/enroll-individual-course", responseData)
-                        .then((res) => {
-                            console.log(res.data)
-                            navigate("/student")
-                        })
-
-                } else if (courseType === "group") {
-
-                    const responseData = {
-                        "courseId": courseId,
-                        "paymentId": response.razorpay_payment_id,
-                        "amount": Course.price
-                    }
-                    
-                    await axiosInstanceStudent.post("api/student-course/enroll-group-course", responseData)
-                        .then((res) => {
-                            console.log(res.data)
-                            navigate("/student")
-                        })
+                } catch (error) {
+                    console.error('Payment or enrollment failed:', error);
+                    // Handle error appropriately, maybe show a toast or alert to the user
                 }
-            },
-        }
-        var pay = new window.Razorpay(options)
-        pay.open()
-    }
+            }
+        };
+        var pay = new window.Razorpay(options);
+        pay.open();
+    };
+    
 
-    useLayoutEffect(() => {
-        if (!courseId && !courseType) {
-            navigate("/error")
-        }
-    }, [courseId, courseType, navigate])
 
     return (
         <>
-            {courseId && courseType ? (
+            {Courseid && coursetype ? (
                 <div className="h-screen w-full flex flex-col md:flex-row justify-between mx-auto p-6 bg-white rounded gap-x-2 shadow-md">
                     <div className="w-full md:w-3/4">
                         <h2 className="text-2xl font-bold mb-6">Checkout</h2>

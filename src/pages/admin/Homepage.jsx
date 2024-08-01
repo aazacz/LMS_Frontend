@@ -63,7 +63,8 @@ const Homepage = () => {
                 <Route path="/*"                                                element={<Dashboard />} />
                 <Route path="/courses/addcourse"                                element={<AddCourse />} />
                 <Route path="/courses"                                          element={<CourseList />} />
-                <Route path="/courses/:courseId/:courseType/:enrolled/:role"    element={<Coursedetails  />} />
+                <Route path="/courses/:courseId/:courseType/:enrolled/:role"    element={<Coursedetails edit={"false"}  />} />
+                <Route path="/courses/:courseId/:courseType/:enrolled/:role"    element={<Coursedetails edit={"true"} />} />
                 
                 <Route path="/coursestructure"                                  element={<CourseStructureList />} />
                 <Route path="/courseStructure/addcoursestructure"               element={<AddCourseStructure view={false} />} />

@@ -24,10 +24,9 @@ const EditProfile = () => {
 
         // Validate file type (PNG, JPEG, JPG)
         const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg']
+       
         if (!validImageTypes.includes(file.type)) {
-            alert(
-                'Invalid image format. Please upload PNG, JPEG, or JPG files only.'
-            )
+            alert( 'Invalid image format. Please upload PNG, JPEG, or JPG files only.' )
             return
         }
 

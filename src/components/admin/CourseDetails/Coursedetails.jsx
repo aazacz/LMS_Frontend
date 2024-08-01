@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { BiSpreadsheet } from 'react-icons/bi'
-import { LuTimer } from 'react-icons/lu'
-import { useParams, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import { LuTimer }      from 'react-icons/lu'
+import { useParams}     from 'react-router-dom'
+import axios            from 'axios'
 import 'react-tooltip/dist/react-tooltip.css'
-import { useSelector } from 'react-redux'
-import Loader from '../../reusable/Loader'
-import { IoIosCloseCircle } from 'react-icons/io'
+import { useSelector }  from 'react-redux'
+import Loader           from '../../reusable/Loader'
 import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
-import Asidebar from './AsideBar'
-import AboutContent from './AboutContent'
-import ModuleContent from './ModuleContent'
-import ReviewContent from './ReviewContent'
-import AddDeletemodal from './AddDeletemodal'
-import TestsContent from './TestsContent'
+import Asidebar         from './AsideBar'
+import AboutContent     from './AboutContent'
+import ModuleContent    from './ModuleContent'
+import ReviewContent    from './ReviewContent'
+import TestsContent     from './TestsContent'
+import ListModal from './ListModal'
 
-const Coursedetails = () => {
+const Coursedetails = ({edit}) => {
     const baseUrl = process.env.REACT_APP_API_URL
     const token = useSelector((state) => state.AdminDetails.token)
     const [Course, SetCourse] = useState()
@@ -23,11 +22,7 @@ const Coursedetails = () => {
     const [activeTab, setActiveTab] = useState('about')
     const [slideDirection, setSlideDirection] = useState('left')
     
-
-   
     const [TutorDropDownLoader, SetTutorDropDownLoader] = useState(false)
-    const [StudentDropDownLoader, SetStudentDropDownLoader] = useState(false)
-    const [loader,setLoader]  = useState(false)
 
     const [TutorDropDownList, SetTutorDropDownList] = useState()
     const [StudentDropDownList, SetStudentDropDownList] = useState()
@@ -67,10 +62,10 @@ const Coursedetails = () => {
            
              const response         = await AdminAxiosInstance.get(`api/course/student-not-added/${courseId}`);
              const EnrolledStudents = await AdminAxiosInstance.get(`api/course/student-enrolled/${courseId}`);
-             console.log("Student list")
+        
 
-             console.log( response.data)
-             console.log( EnrolledStudents.data)
+           
+             
              if(response.data && EnrolledStudents.data){
                 SetEnrolledStudentDropDownList(EnrolledStudents.data)
                 SetStudentDropDownList(response.data)
@@ -149,7 +144,7 @@ const Coursedetails = () => {
             ) : (
 
                 <>
-                    {StudentModal ? ( <AddDeletemodal 
+                    {StudentModal ? ( <ListModal 
                                         List={StudentDropDownList} 
                                         Role="Student" 
                                         HandleModalClose={HandleModalClose}
@@ -160,7 +155,7 @@ const Coursedetails = () => {
                                         /> ) 
                                  : null}
 
-                    {TutorModal ? ( <AddDeletemodal
+                    {TutorModal ? ( <ListModal
                                         List={TutorDropDownList} 
                                         Role="Tutor"      
                                         HandleModalClose={HandleModalClose} 

@@ -174,8 +174,15 @@ const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, L
                                 </div>
 
                             </div>
-                        ) : <h1>haiii</h1>}
-                        {/* <AdminListTable/>              */}
+                        ) : 
+                        
+                        <div>
+
+                            <AdminListTable courseId={courseId}/>
+                        </div>
+                        
+                         }
+                                    
                     </>
 
 

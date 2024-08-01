@@ -1,24 +1,34 @@
 import React,{useEffect}                from 'react'
-import usePaginationData from './usePaginationData'
+import usePaginationDataAdmin from './usePaginationDataAdmin'
 import ReusablePagination   from '../../reusable/ReusablePagination'
 import { Link }             from 'react-router-dom'
 import { useQuery }         from '@tanstack/react-query'
 import Loader               from '../../reusable/Loader'
 
 
-const AdminListTable = ({data,isPending}) => {
+const AdminListTable = ({courseId}) => {
 
-
+    const {
+        courses,
+        isPending,
+        isError,
+        currentPage,
+        pageSize,
+        totalRows,
+        searchQuery,
+        handlePageChange,
+        handlePageSizeChange,
+        handleSearchChange,
+        error,
+        refetch
+         }         = usePaginationDataAdmin(courseId)
 
         
     const columns = [
       
-        { field: 'Description', headerName: 'Description' },
-        { field: 'createdAt', headerName: 'Created At' },
-        { field: 'No of Modules', headerName: 'No of Modules' },
-        { field: 'sessions', headerName: 'Sessions' },
-        { field: 'Duration', headerName: 'Duration' },
-        { field: 'Package', headerName: 'Package' }
+        { field: 'name', headerName: 'Name' },
+        { field: 'email', headerName: 'Email' },
+        { field: 'Action', headerName: 'Action' }
     
     ]
 
@@ -54,70 +64,38 @@ const AdminListTable = ({data,isPending}) => {
                         <Loader />
                     </div>
                 ) : (
-                    data?.map((row, indexrow) => (
+                    courses?.map((row, indexrow) => (
                         
                         <tr key={indexrow}>
                             {console.log(row)}
                             {columns.map((column, index) => (
                                 <td key={index}>
-                                    {column.field === 'Description' ? (
-                                        <div className="font-semibold text-left">
-                                            {row.courseName}
-                                        </div>
-                                    ) : null}
+                                  
 
-                                    {column.field === 'marks' ? (
-                                        <div className="font-semibold text-center">
-                                            {row.questions.length *
-                                                row.positiveMark}
-                                        </div>
-                                    ) : null}
-
-                                    {column.field === 'packageName' ? (
-                                        <Link
-                                            to={`/admin/home/diagnosistest/${row._id}`}
-                                        >
+                                    {column.field === 'name' ? (
+                                       
                                             <span className="action-container text-sm font-semibold">
-                                                Diagnose Test {indexrow + 1}
+                                               {row.name}
                                             </span>
-                                        </Link>
+                                      
+                                    ) : null}
+                                 
+                                    {column.field === 'email' ? (
+                                       
+                                            <span className="action-container text-sm font-semibold">
+                                               {row.email}
+                                            </span>
+                                      
                                     ) : null}
 
-                                    {column.field === 'createdAt' ? (
-                                        <span className="action-container text-sm font-semibold">
-                                            {formatDate(row[column.field])}
-                                        </span>
-                                    ) : null}
+                                                                   
 
-                                    {column.field === 'No of Modules' ? (
-                                        <div className="action-container">
-                                            <div className="font-poppins text-sm  cursor-pointer hover:bg-slate-200 flex justify-center items-center">
-                                                {row.modules.length}
-                                            </div>
-                                        </div>
-                                    ) : null}
-
-                                    {column.field === 'sessions' ? (
-                                        <div className="action-container">
-                                            <div className="font-poppins text-sm  cursor-pointer hover:bg-slate-200 flex justify-center items-center">
-                                                {row.modules[indexrow]?.sessions?.length}
-                                            </div>
-                                        </div>
-                                    ) : null}
+                                
                          
-                                    {column.field === 'Duration' ? (
+                                    {column.field === 'Action' ? (
                                         <div className="action-container">
                                             <div className="font-poppins text-sm  cursor-pointer hover:bg-slate-200 flex justify-center items-center">
-                                                {row.trainingDuration
-                                                }
-                                            </div>
-                                        </div>
-                                    ) : null}
-                               
-                                    {column.field === 'Package' ? (
-                                        <div className="action-container">
-                                            <div className="font-poppins text-sm  cursor-pointer hover:bg-slate-200 flex justify-center items-center">
-                                                {row.package}
+                                          <button className='text-white  bg-red-500 px-2'>Remove </button>
                                             </div>
                                         </div>
                                     ) : null}

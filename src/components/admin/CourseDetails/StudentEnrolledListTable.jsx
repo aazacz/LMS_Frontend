@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 
 const StudentEnrolledListTable = ({courseId}) => {
 
-
+ 
     const handleDelete = async (studentId, event) => {
         event.preventDefault();
     

@@ -9,6 +9,11 @@ import '../../index.css'
 import './Addcourse.css'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
+import Defaultcourseimage from "../../assets/Admin/Defaultcourseimage.png"
+
+
+
+
 const AddCourse = () => {
     const navigate = useNavigate()
     const token = useSelector((state) => state.AdminDetails.token)
@@ -335,15 +340,21 @@ const AddCourse = () => {
                 
             <div className='pt-4 flex w-full h-auto gap-x-4'>
 
-    <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
-    <img src={imageUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
-    </div>
-
+   
+{imageUrl ?
+ <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+ <img src={imageUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
+</div>
+: 
+<div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+<img src={Defaultcourseimage} alt="Select an image " className="w-full h-full object-cover border-[1px] rounded-xl shadow-lg" />
+</div>
+}
     <label htmlFor='chooseimage' className="choose w-[110px]  h-[30px] flex justify-center items-center  bg-blue-600 text-white text-sm font-semibold">Choose Image</label>
 
-    <button className='bg-green-500 w-[110px]  h-[30px] flex justify-center items-center text-white text-sm font-semibold'>
+    {/* <button className='bg-green-500 w-[110px]  h-[30px] flex justify-center items-center text-white text-sm font-semibold'>
         Upload
-    </button>
+    </button> */}
 
     <input
     id='chooseimage'

@@ -6,7 +6,7 @@ import { useQuery }         from '@tanstack/react-query'
 import Loader               from '../../reusable/Loader'
 
 
-const CourseListTable = ({data,isPending}) => {
+const StudentListTable = ({data}) => {
 
 useEffect(() => {
 console.log("data")
@@ -22,8 +22,7 @@ console.log(data)
         { field: 'No of Modules', headerName: 'No of Modules' },
         { field: 'sessions', headerName: 'Sessions' },
         { field: 'Duration', headerName: 'Duration' },
-        { field: 'Package', headerName: 'Package' },
-        { field: 'Action', headerName: 'Action' }
+        { field: 'Package', headerName: 'Package' }
     
     ]
 
@@ -41,15 +40,32 @@ console.log(data)
         const formattedDate = new Date(date).toLocaleString('en-IN', options)
         return formattedDate
     }
+  const apiUrl = ""
+
+
+    const {
+        courses,
+        isPending,
+        isError,
+        currentPage,
+        pageSize,
+        totalRows,
+        searchQuery,
+        handlePageChange,
+        handlePageSizeChange,
+        handleSearchChange,
+        error
+         }         = usePaginationData(apiUrl)
 
 
 
-    
-  
+
+
+
     return (
         <div className='w-full'>
         <div className="table-container">
-        <table className="responsive-table">
+          <table className="responsive-table">
             <thead>
                 <tr>
                     {columns.map((column, index) => (
@@ -147,4 +163,4 @@ console.log(data)
     )
 }
 
-export default CourseListTable
+export default StudentListTable

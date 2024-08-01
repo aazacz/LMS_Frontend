@@ -13,6 +13,7 @@ import { IoChevronBackCircleOutline } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 import { MdDelete } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
+import Defaultcourseimage from "../../assets/Admin/Defaultcourseimage.png"
 
 const AddCourseStructure = ({ view }) => {
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ const AddCourseStructure = ({ view }) => {
     const [View, SetView] = useState(view);
 
     const [imageUrl, setImageUrl] = useState('');
-    const [Image, setImage] = useState('');
+    const [Imagestate, setImage] = useState('');
     const img = useRef();
     
     const [course, setCourse] = useState({
@@ -66,8 +67,8 @@ const AddCourseStructure = ({ view }) => {
         formData.append('groupCourse', course.groupCourse);
         formData.append('modules', JSON.stringify(course.modules));
        
-        if (Image) {
-            formData.append('image', Image);
+        if (Imagestate) {
+            formData.append('image', Imagestate);
 
             console.log("vvalue in the formdata");
             console.log(formData.get("image"));
@@ -341,19 +342,61 @@ const AddCourseStructure = ({ view }) => {
         }
     };
 
-    const handleImageChange = async (e) => {
-        setImage("");
-        const file = e.target.files[0];
+    // const handleImageChange = async (e) => {
+    //     setImage("");
+    //     const file = e.target.files[0];
 
-        setImage(file);
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImageUrl(reader.result);
+    //     setImage(file);
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onloadend = () => {
+    //             setImageUrl(reader.result);
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
+
+// function to check whether the image is correct size or not
+const handleImageChange = async (e) => {
+    e.preventDefault()
+    setImage("");
+    const file = e.target.files[0];
+    const fileType = file.type;
+
+    const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+      if (!allowedTypes.includes(fileType)) {
+        img.current.value = null;
+        toast.warning("File type should be .png, .jpg, or .jpeg.");
+        return;
+      }
+
+
+    if (file) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+            const image = new Image()
+            image.onload = () => {
+                const width = image.width;
+                const height = image.height;
+
+                if (width === 300 && height === 200) {
+                    setImage(file);
+                    setImageUrl(reader.result);
+                } else {
+                    console.error("Image dimensions should be 300x200 pixels.");
+                    // Display an error message to the user
+                    toast.error("Image dimensions should be 300x200 pixels.");
+                }
             };
-            reader.readAsDataURL(file);
-        }
-    };
+            image.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+    }
+};
+
+
+
+
 
     const deleteHandler = () => {
         axios
@@ -461,15 +504,23 @@ const AddCourseStructure = ({ view }) => {
 
                     <div className='pt-4 flex w-full h-auto gap-x-4'>
 
-                        <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
-                            <img src={imageUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
-                        </div>
+
+{imageUrl ?
+ <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+ <img src={imageUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
+</div>
+: 
+<div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+<img src={Defaultcourseimage} alt="Select an image " className="w-full h-full object-cover border-[1px] rounded-xl shadow-lg" />
+</div>
+}
+                       
 
                         <label htmlFor='chooseimage' className="choose w-[110px]  h-[30px] flex justify-center items-center  bg-blue-600 text-white text-sm font-semibold">Choose Image</label>
-
+{/* 
                         <button onClick={(event) => handleimageUpload(event)} className='bg-green-500 w-[110px]  h-[30px] flex justify-center items-center text-white text-sm font-semibold'>
                             Upload
-                        </button>
+                        </button> */}
 
                         <input
                             ref={img}
@@ -478,6 +529,7 @@ const AddCourseStructure = ({ view }) => {
                             onChange={handleImageChange}
                             name="courseImage"
                             accept="image/*"
+                            placeholder='choose Image'
                             className=" w-[150px] hidden h-[30px] p-2  "
                             disabled={View}
                         />

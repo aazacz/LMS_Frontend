@@ -6,12 +6,8 @@ import { useQuery }         from '@tanstack/react-query'
 import Loader               from '../../reusable/Loader'
 
 
-const CourseListTable = ({data,isPending}) => {
+const AdminListTable = ({data,isPending}) => {
 
-useEffect(() => {
-console.log("data")
-console.log(data)
-}, [data])
 
 
         
@@ -22,8 +18,7 @@ console.log(data)
         { field: 'No of Modules', headerName: 'No of Modules' },
         { field: 'sessions', headerName: 'Sessions' },
         { field: 'Duration', headerName: 'Duration' },
-        { field: 'Package', headerName: 'Package' },
-        { field: 'Action', headerName: 'Action' }
+        { field: 'Package', headerName: 'Package' }
     
     ]
 
@@ -41,10 +36,6 @@ console.log(data)
         const formattedDate = new Date(date).toLocaleString('en-IN', options)
         return formattedDate
     }
-
-
-
-    
   
     return (
         <div className='w-full'>
@@ -147,4 +138,4 @@ console.log(data)
     )
 }
 
-export default CourseListTable
+export default AdminListTable

@@ -89,8 +89,8 @@ const Dashboard = () => {
           <FaCalendarAlt className=" text-[#0066DE]" />{" "}
         </div>
         <div className=" content-container ">
-          <div className="  left-content  flex-wrap">
-            <div className="left-sub-content1 w-full  lg:w-[45%] p-4 m-2">
+          <div className="  left-content  flex-wrap ">
+            <div className="left-sub-content1 w-full  lg:w-[40%] p-4 m-2">
               <div className="p-2 flex-wrap gap-2 flex justify-between text-sm md:text-base">
                 <p className=" w-max">
                   Introduction to basic <br /> DSAT & MAT
@@ -101,7 +101,7 @@ const Dashboard = () => {
                 </h1>
               </div>
 
-              <div className="left-sub-content-box1 flex-col md:flex-row p-2 justify-around  text-xs md:text-sm">
+              <div className="left-sub-content-box1 flex-col p-2 justify-around  text-xs md:text-sm">
                 <p className="p-2 text-sm ">1st Module</p>
                 <p className="flex p-2 items-center ">
                   {" "}
@@ -217,7 +217,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="p-2 right-content hidden md:flex">
+          <div className="p-2 pb-5 right-content  md:flex">
             <div className="rounded-lg right-stats">
               <p>Stats</p>
               <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 gap-4 justify-center items-center">

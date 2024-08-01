@@ -1,0 +1,89 @@
+.notification-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.notification-settings {
+    width: 70%;
+    border-radius: 5px;
+    margin-left: 2%;
+}
+
+.notification-settings h2,
+.notification-settings h3 {
+    font-size: 18px;
+    font-family: 'Poppins';
+    font-weight: 600;
+    padding-bottom: 10px;
+}
+
+.mobile-push-notification {
+    margin-bottom: 20px;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: 'Poppins';
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+.email-notifications,
+.email-news-updates {
+    margin-bottom: 20px;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: 'Poppins';
+}
+
+.email-notifications p,
+.email-news-updates p {
+    color: #9c9ca4;
+    line-height: 28px;
+    font-size: 14px;
+    font-weight: 400;
+    padding-bottom: 10px;
+}
+
+.notification-settings h4 {
+    font-size: 15px;
+    font-family: 'Poppins';
+    font-weight: 500;
+}
+
+.mobile-push-notification-option {
+    border: 2px solid #f5f5f7;
+    margin-left: 5%;
+    border-radius: 10px;
+    width: max-content;
+    font-size: 14px;
+}
+
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-group label,
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #9c9ca4;
+    font-weight: 400;
+}
+
+.radio-group input[type='radio'],
+.checkbox-group input[type='checkbox'] {
+    margin-right: 10px;
+}
+
+.notification-footer {
+    color: #9c9ca4;
+    line-height: 28px;
+    font-size: 14px;
+    font-weight: 400;
+    padding-top: 30px;
+}

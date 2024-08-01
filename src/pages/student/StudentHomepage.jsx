@@ -16,7 +16,9 @@ import UserSidebar from "../../components/User/UserSidebar";
 import StudentTests from "../../components/User/StudentTests";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PaymentSuccess from "../../components/User/PaymentSuccess";
-import Settings from "../../components/reusable/Settings/Settings";
+// import Settings from "../../components/reusable/Settings/Settings";
+import Settings from "../../components/User/Settings/Settings"
+// LMS_Frontend\src\components\User\Settings
 import DiagnosisTestRoute from "../../routes/DiagnosisTestRoute";
 import { AnimatePresence, motion } from "framer-motion";
 import AllCourses from "../../components/User/AllCourses";

@@ -9,6 +9,11 @@ import '../../index.css'
 import './Addcourse.css'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
+import Defaultcourseimage from "../../assets/Admin/Defaultcourseimage.png"
+
+
+
+
 const AddCourse = () => {
     const navigate = useNavigate()
     const token = useSelector((state) => state.AdminDetails.token)
@@ -18,6 +23,7 @@ const AddCourse = () => {
     const [courseStructureDropDown, setCourseStructureDropDown] = useState([])
     const [packages, setpackages] = useState()
     const [CourseStructure, setCourseStructure] = useState([])
+    const [Image, setImage] = useState('');
     const [course, setCourse] = useState({
         courseType: '',
         courseStructure: '',
@@ -206,6 +212,27 @@ const AddCourse = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
+        const formData = new FormData();
+    
+        formData.append('courseType', course.courseType);
+        formData.append('courseStructure', course.courseStructure);
+        formData.append('courseName', course.courseName);
+        formData.append('package', course.package);
+        formData.append('trainingDuration', course.trainingDuration);
+        formData.append('hoursPerDay', course.hoursPerDay);
+        formData.append('price', course.price);
+        formData.append('description', course.description);
+        formData.append('trainingDateTimeDetails', course.trainingDateTimeDetails);
+        formData.append('students', JSON.stringify(course.students));
+        formData.append('modules', JSON.stringify(course.modules));
+        formData.append('tutors', JSON.stringify(course.tutors));
+        formData.append('imageName', "hai");
+
+
+
+
+
+
 
         Swal.fire({
             title: 'You are going to create a new course',
@@ -221,7 +248,7 @@ const AddCourse = () => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                AdminAxiosInstance.post(`api/course/create`, course).then(
+                AdminAxiosInstance.post(`api/course/create`, formData).then(
                     (res) => {
                         console.log(res.data)
                         if (
@@ -266,17 +293,42 @@ const AddCourse = () => {
 
     const [imageUrl, setImageUrl] = useState('');
 
-const handleImageChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImageUrl(reader.result);
-    };
-    reader.readAsDataURL(file);
-  }
-};
+    const handleimageUpload = async (event) => {
+        event.preventDefault();
 
+        const formData = new FormData();
+        if (Image) {
+            formData.append('image', Image);
+
+            console.log("vvalue in the formdata");
+            console.log(formData.get("image"));
+        }
+        try {
+            const response = await AdminAxiosInstance.put(`/api/structure/update-structure-image/${structureId}`, formData, {
+                'Content-Type': 'multipart/form-data',
+            });
+            if (response.data.message === "Image Updated Successfully") {
+                toast.success("Image Updated Successfully");
+            }
+        } catch (error) {
+            toast.error(error.message);
+            console.log(error);
+        }
+    };
+
+    const handleImageChange = async (e) => {
+        setImage("");
+        const file = e.target.files[0];
+
+        setImage(file);
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImageUrl(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
 
     return (
@@ -288,15 +340,21 @@ const handleImageChange = (e) => {
                 
             <div className='pt-4 flex w-full h-auto gap-x-4'>
 
-    <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
-    <img src={imageUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
-    </div>
-
+   
+{imageUrl ?
+ <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+ <img src={imageUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
+</div>
+: 
+<div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+<img src={Defaultcourseimage} alt="Select an image " className="w-full h-full object-cover border-[1px] rounded-xl shadow-lg" />
+</div>
+}
     <label htmlFor='chooseimage' className="choose w-[110px]  h-[30px] flex justify-center items-center  bg-blue-600 text-white text-sm font-semibold">Choose Image</label>
 
-    <button className='bg-green-500 w-[110px]  h-[30px] flex justify-center items-center text-white text-sm font-semibold'>
+    {/* <button className='bg-green-500 w-[110px]  h-[30px] flex justify-center items-center text-white text-sm font-semibold'>
         Upload
-    </button>
+    </button> */}
 
     <input
     id='chooseimage'

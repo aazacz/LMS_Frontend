@@ -6,31 +6,45 @@ import { axiosInstanceStudent } from '../../routes/UserRoutes'
 
 const Checkout = () => {
     const [Course, setCourse] = useState()
-
-    const location = useLocation()
-    const { courseId, courseType } = location.state || {}
-
     const navigate = useNavigate()
+    const location = useLocation();
+
+
+
+
+    const [Courseid, setCourseId] = useState("")
+    const [coursetype, setcoursetype] = useState("")
+
+    useEffect(()=>{
+        console.log('location.state:', location.state);
+
+        const { courseId, courseType } = location.state || {};
+        setCourseId(courseId)
+        setcoursetype(courseType)
+    },[])
+
+    
+
 
     useEffect(() => {
-        console.log("courseType " + courseType)
-        console.log("courseId " + courseId)
-
         const getCourseDetails = async () => {
-            if (courseType === "individual") {
-                const response = await axiosInstanceStudent.get(`api/structure/get/${courseId}`)
-                console.log('individual response.data')
-                console.log(response.data)
-                setCourse(response.data)
-            } else {
-                const response = await axiosInstanceStudent.get(`api/course/get-course/${courseId}`)
-                console.log('group response.data')
-                console.log(response.data)
-                setCourse(response.data)
+            if (Courseid && coursetype) {
+                if (coursetype === "individual") {
+                    const response = await axiosInstanceStudent.get(`api/structure/get/${Courseid}`)
+                    console.log('individual response.data')
+                    console.log(response.data)
+                    setCourse(response.data)
+                } else {
+                    const response = await axiosInstanceStudent.get(`api/course/get-course/${Courseid}`)
+                    console.log('group response.data')
+                    console.log(response.data)
+                    setCourse(response.data)
+                }
             }
         }
         getCourseDetails()
-    }, [courseId, courseType])
+    }, [Courseid, coursetype])
+
 
     const key = process.env.REACT_APP_KEY
     const key_secret = process.env.REACT_APP_KEY_SECRET
@@ -122,15 +136,10 @@ const Checkout = () => {
     };
     
 
-    useLayoutEffect(() => {
-        if (!courseId && !courseType) {
-            navigate("/error")
-        }
-    }, [courseId, courseType, navigate])
 
     return (
         <>
-            {courseId && courseType ? (
+            {Courseid && coursetype ? (
                 <div className="h-screen w-full flex flex-col md:flex-row justify-between mx-auto p-6 bg-white rounded gap-x-2 shadow-md">
                     <div className="w-full md:w-3/4">
                         <h2 className="text-2xl font-bold mb-6">Checkout</h2>

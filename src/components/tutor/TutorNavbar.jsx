@@ -18,7 +18,7 @@ const TutorNavbar = ({ toggleSidebar, isSidebarOpen }) => {
         <>
             {/* ___________________NAVBAR STARTS HERE________________________  */}
 
-            <div className="navbar-container md:px-4  px-2 flex-1 w-full h-[10vh] z-30  border-b-[1px] flex items-center  md:py-8 py-5   bg-white     ">
+            <div className="navbar-container md:px-4  px-2 flex-1 w-full h-[10vh] z-30  border-b-[1px] flex items-center  md:py-8 py-5   bg-white  fixed   ">
                 {/*_________________ left side____________________ */}
                 <div className="w-[60%]  font-poppins relative">
                     <p className=" md:pl-0 text-sm z-10"> Welcome Back!</p>

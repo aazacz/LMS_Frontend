@@ -16,7 +16,7 @@ const Dashboard_Training_Stats = () => {
                             <HiOutlineBookOpen className="text-black text-2xl" />
                         </div>
                         <div className="flex flex-col justify-center items-start font-poppins">
-                            <p className="text-xs lg:text-sm font-semibold">
+                            <p className="text-xs lg:text-[14px] font-semibold">
                                 Total Trainings
                             </p>
                             <p className="text-sm md:text-md">20</p>
@@ -27,7 +27,7 @@ const Dashboard_Training_Stats = () => {
                             <IoMdPeople className="text-black text-2xl" />
                         </div>
                         <div className="flex flex-col justify-center items-start font-poppins">
-                            <p className="text-xs lg:text-sm font-semibold">
+                            <p className="text-xs lg:text-[14px] font-semibold">
                                 Total Students
                             </p>
                             <p className="text-sm md:text-md">20</p>
@@ -38,7 +38,7 @@ const Dashboard_Training_Stats = () => {
                             <FaRegClock className="text-black text-2xl" />
                         </div>
                         <div className="flex flex-col justify-center items-start font-poppins">
-                            <p className="text-xs lg:text-sm font-semibold">
+                            <p className="text-xs lg:text-[14px] font-semibold">
                                 Total Sessions
                             </p>
                             <p className="text-sm md:text-md">20</p>

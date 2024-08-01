@@ -123,13 +123,12 @@ const TutorSideBar = ({ isOpen, isSidebarOpen,setIsSidebarOpen  }) => {
 
     return (
         <div
-            className={`absolute md:relative * ${
+            className={`h-full bg-white overflow-y-scroll absolute md:sticky z-50 * ${
                 isSidebarOpen ? '' : '-translate-x-full md:translate-x-0'
             }
-       h-screen transition-all duration-500  font-poppins text-sm font-medium `}
+       h-screen  transition-all duration-500  font-poppins text-sm font-medium `}
         >
             <Sidebar
-                className="h-screen"
                 collapsed={collapsed}
                 backgroundColor="#fff"
                 width="210px"

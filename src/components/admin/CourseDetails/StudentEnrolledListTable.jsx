@@ -4,17 +4,17 @@ import { Link }             from 'react-router-dom'
 import Loader               from '../../reusable/Loader'
 import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
 import { toast } from 'react-toastify'
+import Swal from 'sweetalert2'
 
 
 const StudentEnrolledListTable = ({courseId}) => {
 
  
-    const handleDelete = async (studentId, event) => {
-        event.preventDefault();
-    
+    const handleDelete = async (studentId) => {
         try {
           console.log("studentId");
           console.log(studentId);
+    
           const response = await AdminAxiosInstance.delete(`api/course/remove-student/${courseId}/${studentId}`);
     
           if (response.data.message === "Student removed successfully") {
@@ -29,7 +29,24 @@ const StudentEnrolledListTable = ({courseId}) => {
           console.log(error);
         }
       };
-
+    
+      const confirmDelete = (studentId, event) => {
+        event.preventDefault();
+    
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            handleDelete(studentId);
+          }
+        });
+      };
 
         
     const columns = [
@@ -128,7 +145,7 @@ const StudentEnrolledListTable = ({courseId}) => {
                                         <div className="action-container">
                                             <div className="font-poppins text-sm  cursor-pointer hover:bg-slate-200 flex justify-center items-center">
                                                 <button
-                                                  onClick={(event) => handleDelete(row._id, event)}
+                                                  onClick={(event) => confirmDelete(row._id, event)}
                                                 
                                                 className='w-[80px] h-max bg-red-500 text-white'>  Remove</button>
                                             </div>

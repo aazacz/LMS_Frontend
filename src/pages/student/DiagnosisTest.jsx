@@ -20,7 +20,6 @@ const DiagnosisTest = () => {
   const [questionStatuses, setQuestionStatuses] = useState({});
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
 
-
   const location = useLocation();
 
   const navigate = useNavigate();
@@ -154,7 +153,6 @@ const DiagnosisTest = () => {
     });
   };
 
-
   const handleSubmit = () => {
     Swal.fire({
       title:
@@ -204,10 +202,8 @@ const DiagnosisTest = () => {
 
   const handleAnswerSelect = (optionIndex) => {
     const updatedAnswers = { ...selectedAnswers };
-    const updatedAnswers = { ...selectedAnswers };
     const currentQuestion = questions[currentQuestionIndex];
     console.log(currentQuestion);
-    const selectedOption = currentQuestion.options[optionIndex];
     console.log(selectedOption);
     console.log(currentQuestion);
     const selectedOption = currentQuestion.options[optionIndex];
@@ -510,9 +506,6 @@ const DiagnosisTest = () => {
               {/* <button className="px-6 font-semibold font-poppins text-sm bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
               Save & Exit
             </button> */}
-            </div>
-          </div>
-        </div>
             </div>
           </div>
         </div>

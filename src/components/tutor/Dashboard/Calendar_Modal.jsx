@@ -13,7 +13,7 @@ const CalendarModal = ({ isOpen, onClose }) => {
         <button className="modal-close" onClick={onClose}>
           &times;
         </button>
-        <div className="calendar-container">
+        <div className="calendar-container justify-center items-center flex">
           <Calendar className="calendar p-2 shadow-md rounded-lg overflow-hidden font-poppins border-none bg-[#E5F0FC]" />
         </div>
       </div>

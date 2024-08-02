@@ -20,6 +20,7 @@ const DiagnosisTest = () => {
   const [questionStatuses, setQuestionStatuses] = useState({});
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
 
+
   const location = useLocation();
 
   const navigate = useNavigate();
@@ -153,6 +154,7 @@ const DiagnosisTest = () => {
     });
   };
 
+
   const handleSubmit = () => {
     Swal.fire({
       title:
@@ -202,13 +204,20 @@ const DiagnosisTest = () => {
 
   const handleAnswerSelect = (optionIndex) => {
     const updatedAnswers = { ...selectedAnswers };
+    const updatedAnswers = { ...selectedAnswers };
     const currentQuestion = questions[currentQuestionIndex];
+    console.log(currentQuestion);
+    const selectedOption = currentQuestion.options[optionIndex];
+    console.log(selectedOption);
     console.log(currentQuestion);
     const selectedOption = currentQuestion.options[optionIndex];
     console.log(selectedOption);
     updatedAnswers[currentQuestionIndex] = {
       selectedOptionIndex: optionIndex,
       isCorrect: selectedOption.isCorrect,
+      whyIsIncorrect: selectedOption.isCorrect
+        ? ""
+        : selectedOption.whyIsIncorrect,
       whyIsIncorrect: selectedOption.isCorrect
         ? ""
         : selectedOption.whyIsIncorrect,
@@ -266,6 +275,9 @@ const DiagnosisTest = () => {
     return `${minutes.toString().padStart(2, "0")}:${secs
       .toString()
       .padStart(2, "0")}`;
+    return `${minutes.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   const scrollToQuestion = (index) => {
@@ -280,6 +292,11 @@ const DiagnosisTest = () => {
 
   return (
     <>
+      {loading && (
+        <div className="absolute w-full h-screen bg-black bg-opacity-35 z-[99] flex justify-center items-center">
+          <Loader />
+        </div>
+      )}
       {loading && (
         <div className="absolute w-full h-screen bg-black bg-opacity-35 z-[99] flex justify-center items-center">
           <Loader />
@@ -377,7 +394,40 @@ const DiagnosisTest = () => {
                 </h1>
               </div>
             </div>
+            <div className="w-full mt-4">
+              <div className="min-h-12 overflow-y-auto">
+                <h1
+                  className="font-semibold"
+                  style={{ fontSize: `${fontSize}px` }}
+                >
+                  {currentQuestion && currentQuestion.text}
+                </h1>
+              </div>
+            </div>
 
+            <div className="w-full mt-3 grid grid-flow-row grid-rows-4 gap-y-4">
+              {currentQuestion &&
+                currentQuestion.options &&
+                currentQuestion.options.map((option, index) => (
+                  <div
+                    key={index}
+                    className="h-10 flex items-center border-[1px] w-full px-4 gap-x-5 font-poppins font-semibold text-sm"
+                    onClick={() => handleAnswerSelect(index)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <input
+                      type="radio"
+                      name="answer"
+                      checked={
+                        selectedAnswers[currentQuestionIndex]
+                          ?.selectedOptionIndex === index
+                      }
+                      readOnly
+                    />
+                    <h1>{option}</h1>
+                  </div>
+                ))}
+            </div>
             <div className="w-full mt-3 grid grid-flow-row grid-rows-4 gap-y-4">
               {currentQuestion &&
                 currentQuestion.options &&
@@ -456,8 +506,13 @@ const DiagnosisTest = () => {
 
             <div className="flex gap-x-5">
               {/* <button className="px-6 font-semibold font-poppins text-sm bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
+            <div className="flex gap-x-5">
+              {/* <button className="px-6 font-semibold font-poppins text-sm bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
               Save & Exit
             </button> */}
+            </div>
+          </div>
+        </div>
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { FaRegClock } from 'react-icons/fa6'
 
 const Dashboard_Training_Stats = () => {
     return (
-        <div className="w-full h-max p-4">
+        <div className="z-50 w-full h-max p-4">
             <div>
                 <p className=" p-2 font-poppins text-sm sm:text-md font-semibold">
                     Training Stats

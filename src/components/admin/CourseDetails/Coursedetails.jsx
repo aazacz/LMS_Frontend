@@ -34,7 +34,9 @@ const Coursedetails = ({edit}) => {
     const [count, setcount] = useState(0)
     
     const { courseId } = useParams()    
+    const [CourseId,setCourseId] = useState(courseId)
 
+    
 
     const handleTabClick = (tab) => {
         setSlideDirection(
@@ -57,22 +59,39 @@ const Coursedetails = ({edit}) => {
 
 
     useEffect(()=>{
-       
-        const getStudentList = async()=>{
-           
-             const response         = await AdminAxiosInstance.get(`api/course/student-not-added/${courseId}`);
-             const EnrolledStudents = await AdminAxiosInstance.get(`api/course/student-enrolled/${courseId}`);
+    console.log(courseId)
+
+        const getStudentList = async () => {
+            try {
+                const response = await AdminAxiosInstance.get(`api/course/student-not-added/${courseId}`);
+                console.log("response.data student not addeddddddddd");
+                console.log(response.data);
+                if (response.data) {
+                    SetStudentDropDownList(response.data);
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    console.log("Student not added list returned 404");
+                } else {
+                    console.log(error);
+                }
+            }
         
-
-           
-             
-             if(response.data && EnrolledStudents.data){
-                SetEnrolledStudentDropDownList(EnrolledStudents.data)
-                SetStudentDropDownList(response.data)
-                
-             }
-
-                                              }
+            try {
+                const EnrolledStudents = await AdminAxiosInstance.get(`api/course/student-enrolled/${courseId}`);
+                console.log("EnrolledStudents.data student not addeddddddddd");
+                console.log(EnrolledStudents.data);
+                if (EnrolledStudents.data) {
+                    SetEnrolledStudentDropDownList(EnrolledStudents.data);
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    console.log("Enrolled student list returned 404");
+                } else {
+                    console.log(error);
+                }
+            }
+        };
      try {
         if(StudentModal === true)
         {
@@ -93,8 +112,8 @@ const Coursedetails = ({edit}) => {
             console.log("courseId",courseId)
             SetTutorDropDownLoader(true)
 
-            const response = await AdminAxiosInstance.get(`api/course/tutor-not-added/${courseId}`);
-             const EnrolledTutors = await AdminAxiosInstance.get(`api/course/tutor-enrolled/${courseId}`);
+            const response = await AdminAxiosInstance.get(`api/course/tutor-not-added/${CourseId}`);
+             const EnrolledTutors = await AdminAxiosInstance.get(`api/course/tutor-enrolled/${CourseId}`);
              console.log("tutor list")
              console.log(EnrolledTutors.data)
              if(response.data && EnrolledTutors.data){

@@ -40,7 +40,7 @@ console.log(data)
         const formattedDate = new Date(date).toLocaleString('en-IN', options)
         return formattedDate
     }
-  const apiUrl = ""
+
 
 
     const {

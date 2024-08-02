@@ -79,204 +79,215 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="  font-poppins h-screen overflow-y-scroll no-scrollbar classes-container">
-      <div className=" testt">
-        <h1 className="p-2 font-semibold text-base md:text-base lg:text-lg ">
-          Dashboard
-        </h1>
-        <div className=" classes-heading h-max text-sm md:text-base  p-2 flex gap-2 items-center">
-          Classes Today
-          <FaCalendarAlt className=" text-[#0066DE]" />{" "}
-        </div>
-        <div className=" content-container ">
-          <div className="  left-content  flex-wrap ">
-            <div className="left-sub-content1 w-full  lg:w-[40%] p-4 m-2">
-              <div className="p-2 flex-wrap gap-2 flex justify-between text-sm md:text-base">
-                <p className=" w-max">
-                  Introduction to basic <br /> DSAT & MAT
-                </p>
-                <h1 className="w-max ">
-                  David
-                  <br /> Beckham
-                </h1>
-              </div>
-
-              <div className="left-sub-content-box1 flex-col p-2 justify-around  text-xs md:text-sm">
-                <p className="p-2 text-sm ">1st Module</p>
-                <p className="flex p-2 items-center ">
-                  {" "}
-                  <FaClock className="text-lg" />
-                  1Hr 30Min
-                </p>
-                <p className="flex p-2 items-center text-semibold">
-                  View course
-                  <FaArrowRightLong className="text-black" />{" "}
-                </p>
-              </div>
-              <div className="training-dates text-sm md:text-base">
-                <p>
-                  Training Dates <span className="text-red-900">*</span>
-                </p>
-                <input
-                  type="date"
-                  className="training-date-box text-sm"
-                  placeholder="Select Training Dates"
-                />
-              </div>
+    <div className="w-full pl-[8px] font-poppins">
+      <h1 className="p-2 font-bold text-base md:text-base lg:text-lg ">
+        Dashboard
+      </h1>
+      <div className="font-poppins font-semibold h-max text-sm md:text-base p-2 flex gap-2 items-center">
+        Classes Today
+        <span className="border border-black p-2 rounded-lg">
+          <FaCalendarAlt className="text-[#0066DE]" />
+        </span>
+      </div>
+      <div className="content-container flex">
+        <div className="w-full  pt-3 pr-2 pl-2 gap-5 flex flex-wrap h-max justify-evenly">
+          <div className="left-sub-content1 mr-1 bg-[#f4f5fb] w-full lg:w-[40%] p-2  ">
+            <div className="font-poppins font-bold p-2 flex-wrap gap-2 flex justify-between text-sm md:text-base">
+              <p className="">
+                Introduction to basic <br /> DSAT & MAT
+              </p>
+              <p className="">
+                David
+                <br /> Beckham
+              </p>
             </div>
-            <div className="left-sub-content2 p-2 m-2 w-full  lg:w-[50%]">
-              <img src={classroomimage} alt="classroom" />
-              <div className="left-sub-content-box2">
-                <p>Module 2</p>
-                <p className="flex justify-center items-center">
-                  <FaClock />
-                  1Hr 30Min
-                </p>
-                <p className="flex justify-center items-center">
-                  View course <FaArrowRightLong />
-                </p>
-              </div>
-              <div className="left-sub-content2-heading">
-                <h1>David Beckham</h1>
-                <p>
-                  The community's need for applications that can facilitate
-                  dailty activities is increasing as technology
-                  advaces.Currently,The community's need for applications that
-                  can facilitate daily activities is increasing as technology
-                  advances,Currently.
-                </p>
-              </div>
-              <div className="left-sub-content2-buttons">
-                <button type="button" className="join-now-button common-button">
-                  Join Now
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleReschedule}
-                  className="reschedule-button common-button"
-                >
-                  Reschedule
-                </button>
-                <button type="button" className="cancel-button common-button">
-                  Cancel
-                </button>
-              </div>
+            <div className="w-full gap-[20px] flex flex-col p-2 justify-around  text-xs md:text-sm">
+              <p className="p-2 font-poppins font-semibold text-sm bg-white  ">
+                1st Module
+              </p>
+              <p className="flex gap-2 font-poppins font-semibold p-2 items-center bg-white">
+                {" "}
+                <FaClock className="text-lg" />
+                1Hr 30Min
+              </p>
+              <p className="flex gap-2 p-2 font-poppins font-semibold items-center bg-white text-semibold">
+                View course
+                <FaArrowRightLong className="text-black" />{" "}
+              </p>
             </div>
-
-            <div className=" p-2  continue-tests">
-              <h1 className=" text-sm md:text-[16px] w-full flex justify-start">
-                Continue Tests
-              </h1>
-              <div className="test-item">
-                <div className="test-image">
-                  <img src={continuetests} alt="Test image" />
-                </div>
-                <div className="test-details">
-                  <h2>SAT practice test</h2>
-                  <p>English & Writing Skills Test</p>
-                  <div className="progress-bar">
-                    <div className="progress" style={{ width: "60%" }}></div>
-                    <span className="progress-value">60%</span>
-                  </div>
-                </div>
-                <button className="continue-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-                  </svg>
-                </button>
-              </div>
-              <div className="test-item ">
-                <div className="test-image">
-                  <img src={continuetests} alt="Test image" />
-                </div>
-                <div className="test-details ">
-                  <h2 className="text-sm md:text-[16px]">SAT practice test</h2>
-                  <p className="text-sm">English & Writing Skills Test</p>
-
-                  <div className="progress-bar">
-                    <div className="progress" style={{ width: "60%" }}></div>
-                    <span className="progress-value">60%</span>
-                  </div>
-                </div>
-                <button className="continue-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-                  </svg>
-                </button>
-              </div>
+            <div className="pt-3 font-poppins font-light text-sm md:text-base mb-2">
+              <p>
+                Training Dates <span className="text-red-900">*</span>
+              </p>
+              <input
+                type="date"
+                className="training-date-box w-full p-2 mt-2 border border-gray-500 text-sm"
+                placeholder="Select Training Dates"
+              />
             </div>
           </div>
-          <div className="p-2 pb-5 right-content  md:flex">
-            <div className="rounded-lg right-stats">
-              <p>Stats</p>
-              <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 gap-4 justify-center items-center">
-                {Stats.map((member, index) => (
-                  <ConstData
-                    className="flex flex-col justify-center items-center "
-                    key={index}
-                    {...member}
-                  />
-                ))}
+          <div className="left-sub-content2 mr-1 pt-2 flex flex-col bg-[#f4f5fb] rounded-xl p-2  w-full  lg:w-[55%]">
+            <img
+              src={classroomimage}
+              alt="classroom"
+              className="w-full h-[40%] rounded-xl p-1"
+            />
+            <div className="left-sub-content-box2 justify-evenly flex flex-wrap gap-[10px] p-2 ">
+              <p className="flex gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white ">
+                Module 2
+              </p>
+              <p className="flex justify-center items-center gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white">
+                <FaClock />
+                1Hr 30Min
+              </p>
+              <p className="flex justify-center items-center gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white">
+                View course <FaArrowRightLong />
+              </p>
+            </div>
+            <div>
+              <h1 className="font-poppins p-2 text-left font-bold">
+                David Beckham
+              </h1>
+              <p className="font-poppins text-xs leading-6 text-left pl-2 ">
+                The community's need for applications that can facilitate dailty
+                activities is increasing as technology advaces.Currently,The
+                community's need for applications that can facilitate daily
+                activities is increasing as technology advances,Currently.
+              </p>
+            </div>
+            <div className="flex font-poppins text-sm p-3 rounded-lg ">
+              <button
+                type="button"
+                className="bg-[#13bf78] text-white font-medium rounded-lg p-1 w-[45%] border border-black"
+              >
+                Join Now
+              </button>
+              {/* <button
+                type="button"
+                onClick={handleReschedule}
+                className="reschedule-button common-button"
+              >
+                Reschedule
+              </button> */}
+              {/* <button type="button" className="cancel-button common-button">
+                Cancel
+              </button> */}
+            </div>
+          </div>
+          {/* <div className=" p-2  continue-tests">
+            <h1 className=" text-sm md:text-[16px] w-full flex justify-start">
+              Continue Tests
+            </h1>
+            <div className="test-item">
+              <div className="test-image">
+                <img src={continuetests} alt="Test image" />
+              </div>
+              <div className="test-details">
+                <h2>SAT practice test</h2>
+                <p>English & Writing Skills Test</p>
+                <div className="progress-bar">
+                  <div className="progress" style={{ width: "60%" }}></div>
+                  <span className="progress-value">60%</span>
+                </div>
+              </div>
+              <button className="continue-button">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                </svg>
+              </button>
+            </div>
+            <div className="test-item ">
+              <div className="test-image">
+                <img src={continuetests} alt="Test image" />
+              </div>
+              <div className="test-details ">
+                <h2 className="text-sm md:text-[16px]">SAT practice test</h2>
+                <p className="text-sm">English & Writing Skills Test</p>
+
+                <div className="progress-bar">
+                  <div className="progress" style={{ width: "60%" }}></div>
+                  <span className="progress-value">60%</span>
+                </div>
+              </div>
+              <button className="continue-button">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                </svg>
+              </button>
+            </div>
+          </div> */}
+        </div>
+        <div className="pr-5 pl-5 pb-5 pt-3 flex flex-col right-content md:flex">
+          <div className="rounded-lg bg-white p-5 right-stats">
+            <p className="font-poppins font-bold text-2xl pb-2">Stats</p>
+            <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 gap-4 justify-center items-center">
+              {Stats.map((member, index) => (
+                <ConstData
+                  className="flex flex-col justify-center items-center "
+                  key={index}
+                  {...member}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="pt-3 flex flex-col gap-4">
+            <p className="font-poppins text-2xl font-bold flex justify-center items-center">
+              Importants
+            </p>
+            <div className="flex flex-col gap-2 bg-gray-100">
+              <div className="p-4 flex flex-col gap-4">
+                {" "}
+                <img src={importantimage} alt="important" />
+                <div className="flex gap-4 ">
+                  <p className="text-lg font-bold font-poppins">Course </p>
+                  <p className="text-sm mt-1 font-semibold font-poppins">
+                    Module 1{" "}
+                  </p>
+                </div>
+                <p className="font-poppins text-sm text-left font-medium">
+                  Complete The Test 1 before proceeding for the next module.
+                </p>
+                <button className="font-poppins text-sm text-bold py-2 px-4 rounded-lg bg-[#f99406] w-fit">
+                  Complete Test Now
+                </button>
               </div>
             </div>
-            <div className="flex flex-col gap-4">
-              <p className="text-lg lg:text-2xl font-bold flex justify-center items-center">
-                Importants
-              </p>
-              <div className="flex flex-col gap-2 bg-gray-100">
-                <div className="p-4 flex flex-col gap-4">
-                  {" "}
-                  <img src={importantimage} alt="important" />
-                  <p className="text-base">
-                    <span className="text-lg font-semibold">Course</span> <br />{" "}
-                    Module 1
-                  </p>
-                  <p className="text-sm">
-                    Complete The Test 1 before proceeding for the next module.
-                  </p>
-                  <button className="text-bold  py-2 px-4 rounded-lg bg-[#f99406]">
-                    Complete Test Now
-                  </button>
-                </div>
-              </div>
-              <div>
-                <h1 className="font-poppins font-semibold text-xl py-2 pt-8">
-                  Assignment Grading
-                </h1>
-                <div className="overflow-y-scroll no-scrollbar flex flex-col gap-4">
-                  {assignments1.map((assignment1) => (
-                    <div
-                      key={assignment1.id}
-                      className="bg-white justify-between h-max shadow-md rounded-lg p-2 flex"
-                    >
-                      <div className="flex">
-                        <PiNotepadBold className="w-8 h-10" />
-                        <div className="p-1 flex flex-col">
-                          <h2 className="text-blue-gray-600 text-xs font-bold">
-                            {assignment1.name}
-                          </h2>
-                          <p className="text-gray-700 text-xs underline">
-                            <a href={assignment1.feedbackLink}>View Feedback</a>
-                          </p>
-                        </div>
+            <div className="mb-2">
+              <h1 className="font-poppins font-semibold text-xl pt-3 pb-3">
+                Assignment Grading
+              </h1>
+              <div className="overflow-y-scroll no-scrollbar flex flex-col gap-4">
+                {assignments1.map((assignment1) => (
+                  <div
+                    key={assignment1.id}
+                    className="bg-white justify-between h-max shadow-md rounded-lg p-2 flex mb-1  "
+                  >
+                    <div className="flex ">
+                      <PiNotepadBold className="w-8 h-10" />
+                      <div className="p-1 flex flex-col">
+                        <h2 className="text-blue-gray-600 text-xs font-bold">
+                          {assignment1.name}
+                        </h2>
+                        <p className="text-gray-700 text-xs underline">
+                          <a href={assignment1.feedbackLink}>View Feedback</a>
+                        </p>
                       </div>
-                      <button className="ml-5 bg-[#6C51D9] text-white p-1 rounded-lg text-xs">
-                        {assignment1.score}
-                      </button>
                     </div>
-                  ))}
-                </div>
+                    <button className="ml-5 bg-[#6C51D9] text-white p-1 rounded-lg text-xs">
+                      {assignment1.score}
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

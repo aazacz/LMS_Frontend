@@ -21,7 +21,6 @@ const TutorSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -30,6 +29,8 @@ const TutorSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
   const isActive = (path) => {
     return location.pathname === path;
   };
+
+  const dispatch = useDispatch();
 
   const handlecollapse = () => {
     if (collapsed === true) {
@@ -56,7 +57,6 @@ const TutorSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(clearTutorDetails());
-
         navigate("/tutor");
       }
     });

@@ -133,35 +133,25 @@ const StudentHomepage = () => {
                     }
                   />
 
-                  <Route
-                    path="/assignments"
-                    element={
-                      <motion.div
-                        initial="initial"
-                        animate="in"
-                        exit="out"
-                        variants={pageVariants}
-                        transition={pageTransition}
-                      >
-                        {" "}
-                        <Assignments />
-                      </motion.div>
-                    }
-                  />
-
-                  <Route path="/tutors" element={<ClassesToday />} />
-                  <Route path="/library" element={<Library />} />
-                  <Route path="/classestoday" element={<ClassesToday />} />
-                  <Route path="/settings/*" element={<Settings />} />
-                  {/* <Route path="/courses/cart" element={<ShoppingCart />} /> */}
-                  <Route path="/courses/checkout" element={<Checkout />} />
-                  <Route
-                    path="/courses/test/:testId/*"
-                    element={<DiagnosisTestRoute />}
-                  />
-                  {/* <Route path="/courses/test/:testId" element={<DiagnosisTestRoute />} /> */}
-                  <Route path="*" element={<ErrorPage />} />
-                </Routes>
+                <Route path="/assignments" element={<motion.div
+                  initial="initial"
+                  animate="in"
+                  exit="out"
+                  variants={pageVariants}
+                  transition={pageTransition}
+                > <Assignments /></motion.div>} />
+                
+                <Route path="/tutors" element={ <ClassesToday />} />
+                <Route path="/library" element={<Library />} />
+                <Route path="/classestoday" element={<ClassesToday />} />
+                <Route path="/settings/*" element={<Settings />} />
+                {/* <Route path="/courses/cart" element={<ShoppingCart />} /> */}
+                {/* <Route path="/courses/checkout" element={<Checkout />} /> */}
+                <Route path="/courses/checkout/:courseType/:courseId" element={<Checkout />} />
+                <Route path="/courses/test/:testId/*" element={<DiagnosisTestRoute />} />
+                {/* <Route path="/courses/test/:testId" element={<DiagnosisTestRoute />} /> */}
+                <Route path="*" element={<ErrorPage />} />
+              </Routes>
               </AnimatePresence>
             </div>
           </div>

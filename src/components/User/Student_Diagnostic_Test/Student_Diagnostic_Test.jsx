@@ -6,7 +6,7 @@ import Loader from '../../reusable/Loader'
 import { axiosInstanceStudent } from '../../../routes/UserRoutes'
 const Student_Diagnostic_Test = () => {
     const baseURL = process.env.REACT_APP_API_URL
-    const [testDetails, setTestDetails] = useState(null) // Initialize as null to handle loading state
+    const [testDetails, setTestDetails] = useState(null)
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate() 
 

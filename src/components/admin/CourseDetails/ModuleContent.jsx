@@ -1,23 +1,17 @@
 import { useEffect, useState } from "react"
 
-const ModuleContent = ({ Course }) => {
-    const [modules, setModules] = useState([])
-    console.log('course')
-
-    useEffect(() => {
-        if (Course && Course.modules) {
-            setModules(Course.modules)
-        }
-    }, [Course])
-
+const ModuleContent = ({ modules }) => {
     return (
-        <div className="bg-green-300 w-full h-full border-2">
-            <h1>Modules</h1>
-            {modules.map((module, index) => (
-                <div key={index}>{module.moduleName}</div>
+        <div>
+            {modules?.map((module, index) => (
+                <div key={index} className="font-poppins">
+                    <p className="font-semibold">{module.moduleName}</p>
+                    <h6 className="ml-[2%]">{module.moduleDescription}</h6>
+                </div>
             ))}
         </div>
     )
 }
+
 
 export default ModuleContent

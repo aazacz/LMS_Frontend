@@ -121,7 +121,8 @@ const StudentHomepage = () => {
                 <Route path="/classestoday" element={<ClassesToday />} />
                 <Route path="/settings/*" element={<Settings />} />
                 {/* <Route path="/courses/cart" element={<ShoppingCart />} /> */}
-                <Route path="/courses/checkout" element={<Checkout />} />
+                {/* <Route path="/courses/checkout" element={<Checkout />} /> */}
+                <Route path="/courses/checkout/:courseType/:courseId" element={<Checkout />} />
                 <Route path="/courses/test/:testId/*" element={<DiagnosisTestRoute />} />
                 {/* <Route path="/courses/test/:testId" element={<DiagnosisTestRoute />} /> */}
                 <Route path="*" element={<ErrorPage />} />

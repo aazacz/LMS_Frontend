@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
-import "./Modal.css"
+import "./Modal.css";
 
 const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
   const [file, setFile] = useState(null);

@@ -205,11 +205,11 @@ const AsideBAr = ({ data, courseType, navigate, enrolled }) => {
 
   const handleEnrollCourse = (event) => {
     event.preventDefault();
-    navigate(`/student/courses/checkout/`, {
-      state: {
-        courseId: data?._id,
-        courseType: courseType,
-      },
+    navigate(`/student/courses/checkout/${courseType}/${data?._id}`, {
+      // state: {
+      //   courseId: data?._id,
+      //   courseType: courseType,
+      // },
     });
   };
 

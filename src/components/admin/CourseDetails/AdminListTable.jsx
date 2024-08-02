@@ -4,6 +4,8 @@ import ReusablePagination   from '../../reusable/ReusablePagination'
 import { Link }             from 'react-router-dom'
 import { useQuery }         from '@tanstack/react-query'
 import Loader               from '../../reusable/Loader'
+import { toast } from 'react-toastify'
+import Swal from 'sweetalert2'
 
 
 const AdminListTable = ({courseId}) => {
@@ -32,6 +34,45 @@ const AdminListTable = ({courseId}) => {
     
     ]
 
+
+
+
+    const handleDelete = async (studentId) => {
+        try {
+        
+            const response = await AdminAxiosInstance.delete(`api/course/remove-teacher/${courseId}/${studentId}`);
+    
+          if (response.data.message === "Tutor removed successfully") {
+            toast.success("Tutor removed successfully");
+            refetch();
+          } else if (response.data.message === "Student not found in the course") {
+            toast.error("Tutor not found in the course");
+          } else {
+            return;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    
+      const confirmDelete = (studentId, event) => {
+        event.preventDefault();
+    
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            handleDelete(studentId);
+          }
+        });
+      };
+
     const formatDate = (date) => {
         const options = {
             timeZone: 'Asia/Kolkata',
@@ -46,6 +87,14 @@ const AdminListTable = ({courseId}) => {
         const formattedDate = new Date(date).toLocaleString('en-IN', options)
         return formattedDate
     }
+
+
+
+
+
+
+
+
   
     return (
         <div className='w-full'>
@@ -95,7 +144,9 @@ const AdminListTable = ({courseId}) => {
                                     {column.field === 'Action' ? (
                                         <div className="action-container">
                                             <div className="font-poppins text-sm  cursor-pointer hover:bg-slate-200 flex justify-center items-center">
-                                          <button className='text-white  bg-red-500 px-2'>Remove </button>
+                                          <button
+                                           onClick={(event) => confirmDelete(row._id, event)}
+                                          className='text-white  bg-red-500 px-2'>Remove </button>
                                             </div>
                                         </div>
                                     ) : null}

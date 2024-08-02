@@ -36,14 +36,14 @@
 
 
   /* training list */
-  /* .responsive-table {
+  .responsive-tablee {
     width: 100%;
     height: 400px;
     overflow-y: scroll;
     font-family: 'Poppins', sans-serif;
   }
   
-  .table-row {
+  .table-roww {
     border: 1px solid #e2e8f0;
     margin-bottom: 1rem;
     background-color: #fff;
@@ -51,7 +51,7 @@
     flex-wrap: wrap;
   }
   
-  .table-cell {
+  .table-celll {
     padding: 1rem;
     flex: 1 1 100%;
     display: flex;
@@ -59,16 +59,16 @@
     align-items: center;
   }
   
-  .cell-header {
+  .cell-headerr {
     font-weight: bold;
     margin-right: 0.5rem;
   }
   
-  .cell-data {
+  .cell-dataa {
     text-align: right;
   }
   
-  .status-button {
+  .status-buttonn {
     padding: 0.25rem 0.5rem;
     border-radius: 9999px;
     font-size: 0.75rem;
@@ -85,39 +85,39 @@
     color: #000;
   }
   
-  .action-icon {
+  .action-iconn {
     cursor: pointer;
     font-size: 1.25rem;
   }
   
   @media screen and (min-width: 768px) {
-    .table-row {
+    .table-roww {
       flex-wrap: nowrap;
     }
   
-    .table-cell {
+    .table-celll {
       flex: 1;
       border-right: 1px solid #e2e8f0;
     }
   
-    .table-cell:last-child {
+    .table-celll:last-child {
       border-right: none;
     }
   
-    .cell-header {
+    .cell-headerr {
       display: none;
     }
   
-    .cell-data {
+    .cell-dataa {
       text-align: left;
     }
   
-    .table-row:first-child {
+    .table-roww:first-child {
       background-color: #f8fafc;
       font-weight: bold;
     }
   
-    .table-row:first-child .table-cell {
+    .table-roww:first-child .table-celll {
       justify-content: center;
     }
-  } */
+  }

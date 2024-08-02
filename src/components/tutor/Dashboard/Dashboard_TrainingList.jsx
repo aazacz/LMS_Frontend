@@ -55,26 +55,26 @@ const Dashboard_TrainingList = () => {
         <p className="font-poppins text-semibold p-4">Training List</p>
       </div>
 
-      <div className="responsive-table">
+      <div className="responsive-tablee">
   {data.map((item, index) => (
-    <div key={index} className="table-row text-sm">
-      <div className="table-cell">
-        <span className="cell-header">ID:</span>
-        <span className="cell-data">{item.id}</span>
+    <div key={index} className="table-roww text-sm">
+      <div className="table-celll">
+        <span className="cell-headerr">ID:</span>
+        <span className="cell-dataa">{item.id}</span>
       </div>
-      <div className="table-cell">
-        <span className="cell-header">Course Name:</span>
-        <span className="cell-data">{item.courseName}</span>
+      <div className="table-celll">
+        <span className="cell-headerr">Course Name:</span>
+        <span className="cell-dataa">{item.courseName}</span>
       </div>
-      <div className="table-cell">
-        <span className="cell-header">Training Details:</span>
-        <span className="cell-data">{item.trainingDetails}</span>
+      <div className="table-celll">
+        <span className="cell-headerr">Training Details:</span>
+        <span className="cell-dataa">{item.trainingDetails}</span>
       </div>
-      <div className="table-cell">
-        <span className="cell-header">Status:</span>
-        <span className="cell-data">
+      <div className="table-celll">
+        <span className="cell-headerr">Status:</span>
+        <span className="cell-dataa">
           <button
-            className={`status-button ${
+            className={`status-buttonn ${
               item.status === 'Today' ? 'status-today' : 'status-other'
             }`}
           >
@@ -82,14 +82,14 @@ const Dashboard_TrainingList = () => {
           </button>
         </span>
       </div>
-      <div className="table-cell">
-        <span className="cell-header">Students:</span>
-        <span className="cell-data">{item.students}</span>
+      <div className="table-celll">
+        <span className="cell-headerr">Students:</span>
+        <span className="cell-dataa">{item.students}</span>
       </div>
-      <div className="table-cell">
-        <span className="cell-header">Actions:</span>
-        <span className="cell-data">
-          <HiDotsVertical className="action-icon" />
+      <div className="table-celll">
+        <span className="cell-headerr">Actions:</span>
+        <span className="cell-dataa">
+          <HiDotsVertical className="action-iconn" />
         </span>
       </div>
     </div>

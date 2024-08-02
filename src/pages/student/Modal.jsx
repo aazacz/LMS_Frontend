@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
+import "./Modal.css"
 
 const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
   const [file, setFile] = useState(null);
@@ -7,7 +8,6 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
   const [assignmentDetails, setAssignmentDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
 
   useEffect(() => {
     const fetchAssignmentDetails = async () => {
@@ -66,14 +66,8 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
   if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50"
-      onClick={onClose}
-    > 
-      <div
-        className="bg-white p-6 rounded-lg shadow-lg relative max-w-lg w-full text-left"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button
           className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold hover:bg-red-700 transition"
           onClick={onClose}
@@ -117,7 +111,7 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
                   type="file"
                   onChange={handleFileChange}
                   className="mb-4"
-                  disabled={isSubmitted} 
+                  disabled={isSubmitted}
                 />
                 <button
                   className={`bg-blue-500 text-white rounded px-4 py-2 cursor-pointer ${
@@ -126,7 +120,7 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
                       : "hover:bg-blue-700"
                   } transition`}
                   onClick={handleSubmit}
-                  disabled={isSubmitted} 
+                  disabled={isSubmitted}
                 >
                   {isSubmitted
                     ? "Assignment Already Submitted"

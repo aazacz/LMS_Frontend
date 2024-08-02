@@ -2,6 +2,7 @@
   width: 100%;
   border-radius: 15px;
   padding: 10px;
+   /* background-color: blue; */
 }
 
 .assignment-main-calender {
@@ -14,29 +15,38 @@
   width: 100%;
 }
 
-@media (max-width: 767px) {
-  .assignment-calender {
-    width: 100%;
-  }
-  .assignment-main-class {
-    /* background-color: blue; */
-    width: 50%;
-  }
-  .assignment-right-section {
-    display: flex;
-    width: 100%;
-  }
-  .assignment-right-section2 {
-    /* background-color: red; */
-    width: 50%;
-    padding-right: 8px;
-  }
+@media (max-width: 1006px) {
+.assignment-main-container{
+  display: flex;
+  flex-direction: column;
+}
+.assignment-calender {
+  width: 100%;
+}
+.assignment-main-class {
+  /* background-color: blue; */
+  width: 50%;
+}
+.assignment-right-section {
+  display: flex;
+  width: 100%;
+}
+.assignment-right-section2 {
+  /* background-color: red; */
+  width: 50%;
+  padding-right: 8px;
+}
 }
 
 @media (max-width: 500px) {
+  .assignment-calender {
+    width: 100%;
+     /* background-color: blue; */
+  }
   .assignment-right-section {
     display: flex;
     flex-direction: column;
+     /* background-color: blue; */
   }
   .assignment-main-class {
     /* background-color: blue; */

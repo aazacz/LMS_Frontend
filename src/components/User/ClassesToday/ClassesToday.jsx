@@ -30,7 +30,7 @@ const ClassesToday = () => {
 
     return (
         <div
-            className={`w-full -z-10 flex-wrap h-screen overflow-y-scroll no-scrollbar flex relative`}
+            className={`w-full -z-10 flex-wrap  overflow-y-scroll no-scrollbar flex relative`}
         >
             <>
                 <div className="w-full md:w-[70%] h-max p-5 overflow-y-scroll no-scrollbar ">
@@ -86,7 +86,7 @@ const ClassesToday = () => {
                         <PendingAssignments progress={100} />
                     </div>
                 </div>
-                <div className="w-full md:w-[30%] h-max border-none md:border-l-2 p-2 overflow-y-scroll no-scrollbar">
+                <div className="w-full pb-5 pl-8 pr-5 md:w-[30%] h-max border-none md:border-l-2 overflow-y-scroll no-scrollbar">
                     <h1 className="font-poppins font-semibold  text-base md:text-lg  py-2">
                         Classes Sheduled
                     </h1>

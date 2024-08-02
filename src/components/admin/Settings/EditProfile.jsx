@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Settings1 from '../../../assets/Settings1.jpg'
+import Settings1 from "../../../assets/SettingsPage/Settings1.jpg"
 import { GrCloudUpload } from 'react-icons/gr'
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'

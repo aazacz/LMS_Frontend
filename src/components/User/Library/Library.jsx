@@ -6,7 +6,7 @@ import { axiosInstanceStudent } from "../../../routes/UserRoutes";
 import Book1 from "../../../assets/1_book_human.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import './Library.css'; // Import the CSS file
+import "./Library.css"; // Import the CSS file
 
 const Library = () => {
   const [books, setBooks] = useState([]);
@@ -88,7 +88,10 @@ const Library = () => {
         link.remove();
         toast.success("Download successful");
       } else {
-        console.error("Failed to download the book, status code:", response.status);
+        console.error(
+          "Failed to download the book, status code:",
+          response.status
+        );
         toast.error("Download failed");
       }
     } catch (error) {
@@ -111,7 +114,7 @@ const Library = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ top: '70px' }} // Adjust this value as needed
+        style={{ top: "70px" }} // Adjust this value as needed
       />
       <div className="text-xl m-4 h-8 font-semibold text-black">Library</div>
 
@@ -144,14 +147,14 @@ const Library = () => {
                 <label key={course.courseName} className="flex items-center">
                   <input
                     type="radio"
-                  name="course"
-                  value={course.courseName}
-                  checked={selectedCourse === course.courseName}
-                  onChange={() => handleSelect(course.courseName)}
-                  className="mr-2"
-                />
-                {course.courseName}
-              </label>
+                    name="course"
+                    value={course.courseName}
+                    checked={selectedCourse === course.courseName}
+                    onChange={() => handleSelect(course.courseName)}
+                    className="mr-2"
+                  />
+                  {course.courseName}
+                </label>
               ))}
             </div>
           </form>
@@ -161,7 +164,7 @@ const Library = () => {
               No materials found.
             </div>
           ) : (
-            <div className="w-full px-6 flex flex-wrap gap-6 justify-start items-start">
+            <div className="pb-5 pt-2 w-full px-6 flex flex-wrap gap-6 justify-center items-start md:justify-start">
               {books.map((book) => (
                 <div
                   key={book._id}

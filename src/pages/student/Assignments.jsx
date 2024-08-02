@@ -98,7 +98,7 @@ const Assignments = () => {
 
   return (
     <>
-      <div className="w-full px-1 py-1 rounded-lg flex flex-col md:flex-row ">
+      <div className="assignment-main-container px-1 py-1 rounded-lg flex md:flex-row ">
         <div className="w-full lg:w-[70%] md:p-4">
           <h1 className="text-2xl font-bold mb-4">Assignments</h1>
           <div className="w-full flex md:flex-row flex-col gap-x-4 items-center gap-y-4 mb-4">
@@ -138,57 +138,58 @@ const Assignments = () => {
 
           <div className="w-full rounded-2xl md:px-4 pb-4 bg-[#F5F1F1]">
             <h2 className="text-xl p-2 font-semibold py-2">Assignments</h2>
-
-            <table className="w-full p-3 border-spacing-y-5 border-separate">
-              <thead>
-                <tr>
-                  <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
-                    Assignment
-                  </th>
-                  <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
-                    Course
-                  </th>
-                  <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
-                    Due date
-                  </th>
-                  <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
-                    Status
-                  </th>
-                  <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentAssignments.map((assignment) => (
-                  <tr
-                    key={assignment._id}
-                    className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text:xs md:text-base rounded-xl cursor-pointer"
-                  >
-                    <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
-                      {assignment.assignmentName}
-                    </td>
-                    <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
-                      {assignment.courseName}
-                    </td>
-                    <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
-                      {assignment.dueDate}
-                    </td>
-                    <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-[#FE9519]">
-                      {assignment.student.status}
-                    </td>
-                    <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
-                      <button
-                        onClick={() => openModal(assignment)}
-                        className="text-blue-500 hover:text-blue-700"
-                      >
-                        View
-                      </button>
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="w-full p-3 border-spacing-y-5 border-separate">
+                <thead>
+                  <tr>
+                    <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
+                      Assignment
+                    </th>
+                    <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
+                      Course
+                    </th>
+                    <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
+                      Due date
+                    </th>
+                    <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
+                      Status
+                    </th>
+                    <th className="text-xs md:text-base border-none md:px-4 text-left pb-5">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {currentAssignments.map((assignment) => (
+                    <tr
+                      key={assignment._id}
+                      className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text:xs md:text-base rounded-xl cursor-pointer"
+                    >
+                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
+                        {assignment.assignmentName}
+                      </td>
+                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
+                        {assignment.courseName}
+                      </td>
+                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
+                        {assignment.dueDate}
+                      </td>
+                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-[#FE9519]">
+                        {assignment.student.status}
+                      </td>
+                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
+                        <button
+                          onClick={() => openModal(assignment)}
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             <div className="flex justify-end items-center mt-4 pr-3">
               <button
@@ -223,9 +224,9 @@ const Assignments = () => {
               Assignment Calendar
             </h1>
 
-            <div className="w-full">
+            <div className="w-full ">
               <div className="assignment-calender">
-                <Calendar className="assignment-main-calender text-xs" />
+                <Calendar className="assignment-main-calender text-xs " />
               </div>
             </div>
           </div>
@@ -234,7 +235,7 @@ const Assignments = () => {
             <h1 className="font-poppins font-semibold text-xl px-2 py-2">
               Assignment Grading
             </h1>
-            <div className="no-scrollbar flex flex-col gap-4 px-4">
+            <div className="no-scrollbar flex flex-col gap-4 px-4 pb-2">
               {assignments1.map((assignment1) => (
                 <div
                   key={assignment1.id}

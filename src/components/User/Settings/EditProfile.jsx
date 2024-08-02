@@ -4,7 +4,7 @@ import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { axiosInstanceStudent } from "../../../routes/UserRoutes";
 // import Settings1 from "../../../assets/Settings1.jpg";
-import Settings1 from "../../../assets/SettingsPage/Settings1.jpg"
+import Settings1 from "../../../assets/SettingsPage/Settings1.jpg";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -122,7 +122,7 @@ const EditProfile = () => {
       <p className="font-semibold text-base md:text-lg">Edit Profile</p>
       <div className="w-full h-max flex flex-wrap justify-start items-center">
         <div className="relative">
-          <div className="rounded-full overflow-hidden w-28 h-28 md:w-32 md:h-32 lg:w-32 lg:h-32">
+          <div className="rounded-full overflow-hidden object-cover w-28 h-28 md:w-32 md:h-32 lg:w-32 lg:h-32">
             {selectedImage ? (
               <img
                 data-tooltip-id="my-tooltip"

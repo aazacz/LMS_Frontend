@@ -271,17 +271,7 @@ const StudentList = () => {
                                             <td key={index}>
                                                 {column.field === 'actions' ? (
                                                     <div className="action-container flex items-center justify-center gap-x-2">
-                                                        {/* {
-                              row.status === "active" ?
-                                (<MdBlock className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() =>{ 
-                                  const id = row._id
-                                  handleBlock(id)}}
-                                />)
-                                :
-                                (<Check className="hover:text-gray-600 text-xl duration-300 transition-all cursor-pointer" onClick={() =>{ 
-                                  const id = row._id;
-                                   handleUnBlock(id)}} />)
-                            } */}
+                                                        
                                                         <AiTwotoneDelete
                                                             onClick={() =>
                                                                 handleSoftDelete(

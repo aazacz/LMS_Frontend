@@ -193,7 +193,7 @@ const Coursedetails = () => {
                             </div>
                         </div>
 
-                        <div className="w-full bg-blue-400 mt-4 relative">
+                        <div className="w-full mt-4 relative">
                             <div className="flex w-full gap-x-6 px-2">
                                 {['about', 'modules', 'tests', 'review', 'assignments'].map(
                                     (tab, index) => (

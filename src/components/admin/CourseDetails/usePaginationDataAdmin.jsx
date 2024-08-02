@@ -17,6 +17,7 @@ const usePaginationDataAdmin = (courseId, initialPage = 1, initialPageSize = 10,
     setLoading(true);
     try {
       const response = await AdminAxiosInstance.get(`api/course/tutor-enrolled/${courseId}`);
+      console.log("response.data")
       console.log(response.data)
       setTotalRows(response.data.totalRows);
       setLoading(false);
@@ -31,7 +32,7 @@ const usePaginationDataAdmin = (courseId, initialPage = 1, initialPageSize = 10,
   })
 
   const {data,isPending,isError,refetch} = useQuery({
-                                            queryKey:["EnrolledcourseList"],
+                                            queryKey:["AdminEnrolledcourseList"],
                                             queryFn:fetchData,
                                             staleTime: 1000,
                                             refetchInterval: 600000,

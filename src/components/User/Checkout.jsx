@@ -229,9 +229,208 @@ const Checkout = () => {
                         </div>
                     </div>
                 </div>
-            ) : null}
+            ) : <div>Loading....</div>}
         </>
     )
 }
 
 export default Checkout
+
+
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+// import sat from '../../assets/Admin/sat.jpg';
+// import { useLocation, useNavigate } from 'react-router-dom';
+// import { axiosInstanceStudent } from '../../routes/UserRoutes';
+
+// const Checkout = () => {
+//     const [Course, setCourse] = useState(null);
+//     const [Courseid, setCourseId] = useState("");
+//     const [coursetype, setcoursetype] = useState("");
+//     const navigate = useNavigate();
+//     const location = useLocation();
+
+//     useEffect(() => {
+//         console.log('location.state:', location.state);
+
+//         const { courseId, courseType } = location.state || {};
+//         setCourseId(courseId);
+//         setcoursetype(courseType);
+//     }, [location.state]);
+
+//     useEffect(() => {
+//         const getCourseDetails = async () => {
+//             if (Courseid && coursetype) {
+//                 try {
+//                     let response;
+//                     if (coursetype === "individual") {
+//                         response = await axiosInstanceStudent.get(`api/structure/get/${Courseid}`);
+//                         console.log('individual response.data', response.data);
+//                     } else {
+//                         response = await axiosInstanceStudent.get(`api/course/get-course/${Courseid}`);
+//                         console.log('group response.data', response.data);
+//                     }
+//                     setCourse(response.data);
+//                 } catch (error) {
+//                     console.error('Error fetching course details:', error);
+//                 }
+//             }
+//         };
+//         getCourseDetails();
+//     }, [Courseid, coursetype]);
+
+//     const key = process.env.REACT_APP_KEY;
+//     const key_secret = process.env.REACT_APP_KEY_SECRET;
+
+//     const loadScript = (src) => {
+//         return new Promise((resolve) => {
+//             const script = document.createElement('script');
+//             script.src = src;
+//             script.onload = () => resolve(true);
+//             script.onerror = () => resolve(false);
+//             document.body.appendChild(script);
+//         });
+//     };
+
+//     useEffect(() => {
+//         loadScript('https://checkout.razorpay.com/v1/checkout.js')
+//             .then(success => {
+//                 if (!success) {
+//                     console.error('Failed to load Razorpay script');
+//                 }
+//             });
+//         return () => {
+//             const script = document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]');
+//             if (script) script.remove();
+//         };
+//     }, []);
+
+//     const handlePayment = () => {
+//         if (!Course) {
+//             console.error('Course data is missing');
+//             return;
+//         }
+//         const options = {
+//             key: key,
+//             key_secret: key_secret,
+//             amount: Course.price * 100,
+//             currency: 'INR',
+//             name: 'MindSAT',
+//             description: 'MindSAT Payment',
+//             handler: async function (response) {
+//                 console.log('Payment response:', response);
+
+//                 let responseData = {
+//                     courseStructureId: Courseid,
+//                     paymentId: response.razorpay_payment_id,
+//                     amount: Course.price
+//                 };
+
+//                 try {
+//                     let apiResponse;
+//                     if (coursetype === "individual") {
+//                         console.log('Enrolling in individual course...');
+//                         apiResponse = await axiosInstanceStudent.post("api/student-course/enroll-individual-course", responseData);
+//                         console.log('API Response:', apiResponse.data);
+//                         navigate("/student/a");
+//                     } else if (coursetype === "group") {
+//                         responseData.courseId = Courseid;
+//                         console.log('Enrolling in group course...');
+//                         apiResponse = await axiosInstanceStudent.post("api/student-course/enroll-group-course", responseData);
+//                         console.log('API Response:', apiResponse.data);
+//                         navigate("/student/a");
+//                     }
+//                 } catch (error) {
+//                     console.error('Payment or enrollment failed:', error);
+//                 }
+//             }
+//         };
+//         var pay = new window.Razorpay(options);
+//         pay.open();
+//     };
+
+//     return (
+//         <>
+//             {Courseid && coursetype ? (
+//                 <div className="h-screen w-full flex flex-col md:flex-row justify-between mx-auto p-6 bg-white rounded gap-x-2 shadow-md">
+//                     <div className="w-full md:w-3/4">
+//                         <h2 className="text-2xl font-bold mb-6">Checkout</h2>
+//                         <div className="w-full bg-gray-200 rounded-lg">
+//                             <div className="flex items-center p-4 shadow-md">
+//                                 <img
+//                                     src={sat}
+//                                     alt="Course"
+//                                     className="w-24 h-28 object-fill rounded-md mr-4"
+//                                 />
+//                                 <div className="flex-grow">
+//                                     <h2 className="text-xl font-bold line-clamp-1">
+//                                         {Course.courseName}
+//                                     </h2>
+//                                     <p className="text-sm text-gray-600 line-clamp-1">
+//                                         By Dr. Angela Yu, Developer and Lead Instructor and 1 other
+//                                     </p>
+//                                     <div className="flex md:flex-row flex-col md:items-center mt-2">
+//                                         <span>
+//                                             <span className="bg-yellow-400 text-white text-xs font-bold px-2 py-1 rounded">
+//                                                 Bestseller
+//                                             </span>
+//                                             <span className="ml-2 text-yellow-600 font-bold">
+//                                                 4.7
+//                                             </span>
+//                                         </span>
+//                                         <span className=" text-gray-600">
+//                                             (300,947 ratings)
+//                                         </span>
+//                                     </div>
+//                                     <div className="text-sm text-gray-600 mt-1">
+//                                         <span>{Course.trainingDuration}</span>
+//                                         <span className="ml-2">{Course.modules.length} Modules</span>
+//                                         <span className="ml-2">• All Levels</span>
+//                                     </div>
+//                                 </div>
+//                                 <div className="text-right">
+//                                     <span className="text-xl font-bold">₹{Course.price}</span>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     </div>
+
+//                     <div className="w-full md:w-[30%] max-w-[400px] bg-gray-100 p-4 rounded-lg shadow-md mt-6 md:mt-0">
+//                         <h3 className="text-xl font-bold mb-2">Summary</h3>
+//                         <div className="flex justify-between">
+//                             <p className="mb-2">Original Price:</p>
+//                             <span className="font-semibold">₹3,099</span>
+//                         </div>
+//                         <div className="flex justify-between border-b-2 pb-2 mb-2">
+//                             <p className="mb-2">Discounts:</p>
+//                             <span className="font-semibold">-₹{3099 - Course.price}</span>
+//                         </div>
+//                         <div className="flex justify-between border-b-2 pb-2 mb-2">
+//                             <p className="mb-2 text-xl font-bold">Total: </p>
+//                             <span className="text-indigo-600 mb-2 text-xl font-bold">
+//                                 ₹{Course.price}
+//                             </span>
+//                         </div>
+//                         <div className="flex flex-col items-center justify-center">
+//                             <button
+//                                 className="mt-4 w-full bg-indigo-600 text-white py-2 px-4 rounded-lg"
+//                                 onClick={handlePayment}
+//                             >
+//                                 Complete Checkout
+//                             </button>
+//                             <p className="mt-2 text-xs text-gray-500">
+//                                 30-Day Money-Back Guarantee
+//                             </p>
+//                         </div>
+//                     </div>
+//                 </div>
+//             ) : (
+//                 <div className="h-screen w-full flex justify-center items-center">
+//                     <p>Loading...</p>
+//                 </div>
+//             )}
+//         </>
+//     );
+// };
+
+// export default Checkout;

@@ -12,7 +12,7 @@ const Student_Diagnostic = () => {
             </div>
             <div className="h-max flex-wrap-reverse student-diagnostic-main-container">
                 <div className="gap-5 justify-center items-start flex flex-col p-4 w-full  md:w-[50%]">
-                    <div className="student-diagnostic-sub-title flex items-start text-2xl md:text-4xl lg:text-6xl   ">
+                    <div className="student-diagnostic-sub-title flex items-start text-2xl md:text-4xl lg:text-5xl leading-normal lg:leading-3 ">
                         &#x275D; Get Your Diagnostic Test Report With Detailed
                         Analysis.You Will Get A Customized Study Plan Based On
                         Your Assessment &#x275E;

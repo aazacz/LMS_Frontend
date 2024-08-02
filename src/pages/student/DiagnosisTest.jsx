@@ -214,9 +214,6 @@ const DiagnosisTest = () => {
       whyIsIncorrect: selectedOption.isCorrect
         ? ""
         : selectedOption.whyIsIncorrect,
-      whyIsIncorrect: selectedOption.isCorrect
-        ? ""
-        : selectedOption.whyIsIncorrect,
     };
     setSelectedAnswers(updatedAnswers);
 

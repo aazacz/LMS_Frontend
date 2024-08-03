@@ -1,11 +1,10 @@
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import ErrorPage from '../ErrorPage';
-import UserNavbar from '../../components/User/UserNavbar';
-import AnimationScreen from '../../components/User/AnimationScreen';
-import { QueryClientProvider } from 'react-query';
-
+import ErrorPage from "../ErrorPage";
+import UserNavbar from "../../components/User/UserNavbar";
+import AnimationScreen from "../../components/User/AnimationScreen";
+import { QueryClientProvider } from "react-query";
+import ViewAllCourses from "../../components/User/ViewAllCourses";
 
 const Homepage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -17,7 +16,10 @@ const Homepage = () => {
   return (
     <div>
       <div className="sticky top-0 z-10 w-full">
-        <UserNavbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+        <UserNavbar
+          toggleSidebar={toggleSidebar}
+          isSidebarOpen={isSidebarOpen}
+        />
       </div>
 
       <div className="maincontainer h-screen w-full flex flex-col justify-center items-center animationapart overflow-x-hidden">
@@ -32,8 +34,7 @@ const Homepage = () => {
         </div>
       </div>
     </div>
-  )
+  );
+};
 
-}
-
-export default Homepage
+export default Homepage;

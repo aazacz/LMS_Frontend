@@ -51,6 +51,29 @@ const AllCourses = () => {
     getEnrolledList();
   }, []);
 
+        try {
+            console.log("useQuery funciton hitted")
+            const response = await axiosInstanceStudent.get(`api/student-course/1`            
+              );
+              console.log("response.data")
+              console.log(response.data)
+              SetCourse(response.data)
+          return response.data;
+       
+        } catch (error) {
+            console.log("error")
+            console.log(error)
+        }
+      
+    };
+  
+    
+        const { data, isLoading, isPending, refetch } = useQuery({
+            queryKey: ['ActiveCourse'],
+            queryFn: getCourseList,
+            staleTime: 8000,
+            refetchInterval: 60000,
+        });
   useEffect(() => {
     console.log("EnrolledCourse");
     console.log(EnrolledCourse);

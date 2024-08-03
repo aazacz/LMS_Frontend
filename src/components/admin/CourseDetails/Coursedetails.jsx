@@ -24,11 +24,15 @@ const Coursedetails = ({ edit }) => {
 
   const [TutorDropDownLoader, SetTutorDropDownLoader] = useState(false);
 
+<<<<<<< HEAD
+
+=======
   const [TutorDropDownList, SetTutorDropDownList] = useState();
   const [StudentDropDownList, SetStudentDropDownList] = useState();
   const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] =
     useState();
   const [EnrolledTutorDropDownList, SetEnrolledTutorDropDownList] = useState();
+>>>>>>> 7d38baeed2298b98561c724f6ffe63f84048ebff
 
   const [StudentModal, setStudentModal] = useState(false);
   const [TutorModal, setTutorModal] = useState(false);
@@ -97,6 +101,90 @@ const Coursedetails = ({ edit }) => {
       }
     };
 
+
+    useEffect(()=>{
+    console.log(courseId)
+
+        const getStudentList = async () => {
+            try {
+                const response = await AdminAxiosInstance.get(`api/course/paid-students/${courseId}`);
+                console.log("response.data student not addeddddddddd");
+                console.log(response.data);
+                if (response.data) {
+                    SetStudentDropDownList(response.data);
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    console.log("Student not added list returned 404");
+                } else {
+                    console.log(error);
+                }
+            }
+        
+            try {
+                const EnrolledStudents = await AdminAxiosInstance.get(`api/course/student-enrolled/${courseId}`);
+                console.log("EnrolledStudents.data student not addeddddddddd");
+                console.log(EnrolledStudents.data);
+                if (EnrolledStudents.data) {
+                    SetEnrolledStudentDropDownList(EnrolledStudents.data);
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    console.log("Enrolled student list returned 404");
+                } else {
+                    console.log(error);
+                }
+            }
+        };
+     try {
+        if(StudentModal === true)
+        {
+            getStudentList()
+        }
+        
+         } catch (error) {
+        console.log(error)
+        }
+             
+    },[StudentModal,count])
+
+
+
+    useEffect(()=>{
+       
+        const getTutorList = async ()=>{
+            console.log("courseId",courseId)
+            SetTutorDropDownLoader(true)
+
+            const response = await AdminAxiosInstance.get(`api/course/tutor-not-added/${CourseId}`);
+             const EnrolledTutors = await AdminAxiosInstance.get(`api/course/tutor-enrolled/${CourseId}`);
+             console.log("tutor list")
+             console.log(EnrolledTutors.data)
+             if(response.data && EnrolledTutors.data){
+                 SetTutorDropDownList(response.data)
+                 SetEnrolledTutorDropDownList(EnrolledTutors.data)
+                 SetTutorDropDownLoader(false)
+
+             }
+                                      }
+             
+     try {
+        if(TutorModal === true)
+        {
+           getTutorList()
+        }
+        
+     } catch (error) {
+        console.log(error)
+     }
+             
+    },[TutorModal,count])
+
+ 
+ //function to close the modal
+    const HandleModalClose=()=>{
+            setTutorModal(false)  
+            setStudentModal(false)
     try {
       if (TutorModal === true) {
         getTutorList();

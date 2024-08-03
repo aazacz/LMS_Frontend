@@ -174,11 +174,19 @@ const CourseCard = ({ course, index }) => {
   return (
     <div className="bg-[#F4F5FB] p-4 rounded-2xl min-h-[16rem] h-auto">
       <div className="w-full rounded-lg">
-        <img
-          src={coursephoto}
-          className="rounded-lg w-full object-contain"
-          alt="Course"
-        />
+        {course?.imageUrl ? (
+          <img
+            src={course?.imageUrl}
+            className="rounded-lg w-full h-[140px] object-fill"
+            alt="Course"
+          />
+        ) : (
+          <img
+            src={coursephoto}
+            className="rounded-lg w-full object-contain"
+            alt="Course"
+          />
+        )}
       </div>
       <div className="w-full mt-4">
         <div className="min-h-[3rem]">

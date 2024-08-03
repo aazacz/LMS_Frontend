@@ -115,7 +115,7 @@ const StudentTests = () => {
             className="text-sm text-black w-full p-2 outline-none"
           />
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto ">
           <table className="text-[12px] w-full border-collapse min-w-full">
             <thead className=" text-[12px] md:text-[14px] bg-[#E3EDF9]">
               <tr>

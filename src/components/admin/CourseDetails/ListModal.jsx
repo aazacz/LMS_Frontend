@@ -148,10 +148,10 @@ useEffect(()=>{
     return (
 
 
-        <div className='w-full  fixed flex justify-center items-center  h-full bg-black bg-opacity-60  top-0 left-0 z-[99] '>
+        <div className='w-full font-poppins fixed flex justify-center items-center   h-full bg-black bg-opacity-60  top-0 left-0 z-[99] '>
 
 
-            <div className='w-2/4 max-h-[500px] overflow-y-auto p-8 bg-white relative rounded-xl'>
+            <div className='w-[90%] md:w-2/4 max-h-[500px] overflow-y-auto p-8 bg-white relative rounded-xl'>
 
                 <IoIosCloseCircle
                     onClick={HandleModalClose}
@@ -188,7 +188,7 @@ useEffect(()=>{
 
 
                                 <div>
-                                    <h1 className='mt-3 font-Roboto text-xl'>Student Enrolled</h1>
+                                    <h1 className='mt-3  text-xl'>Student Enrolled</h1>
                                     <StudentEnrolledListTable courseId={courseId} />
                                 </div>
 
@@ -221,7 +221,7 @@ useEffect(()=>{
 
 
                         <div>
-                            <h1 className='mt-3 font-Roboto text-xl'>Admin Enrolled</h1>
+                            <h1 className='mt-3 text-xl'>Admin Enrolled</h1>
                             <AdminListTable courseId={courseId}/>
                         </div>
 

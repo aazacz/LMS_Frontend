@@ -14,62 +14,10 @@ const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, L
     const [StudentModal, setStudentModal] = useState(false)
     const [StudentDropDownList, SetStudentDropDownList] = useState()
     const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] = useState()
-    // const [CourseId,setCourseId] = useState(courseId)
-
-    console.log("List in the listmodal")
-    console.log(List)
-
-useEffect(()=>{
-    console.log("List in the listmodal")
-console.log(List)
-},[])
 
 
 
-// useEffect(()=>{
-//     const getStudentList = async () => {
-//         try {
-//             const response = await AdminAxiosInstance.get(`api/course/student-not-added/${courseId}`);
-//             console.log("response.data student not addeddddddddd");
-//             console.log(response.data);
-//             if (response.data) {
-//                 SetStudentDropDownList(response.data);
-//             }
-//         } catch (error) {
-//             if (error.response && error.response.status === 404) {
-//                 console.log("Student not added list returned 404");
-//             } else {
-//                 console.log(error);
-//             }
-//         }
-    
-//         try {
-//             const EnrolledStudents = await AdminAxiosInstance.get(`api/course/student-enrolled/${courseId}`);
-//             console.log("EnrolledStudents.data student not addeddddddddd");
-//             console.log(EnrolledStudents.data);
-//             if (EnrolledStudents.data) {
-//                 SetEnrolledStudentDropDownList(EnrolledStudents.data);
-//             }
-//         } catch (error) {
-//             if (error.response && error.response.status === 404) {
-//                 console.log("Enrolled student list returned 404");
-//             } else {
-//                 console.log(error);
-//             }
-//         }
-//     };
-    
-//  try {
-   
- 
-//         getStudentList()
 
-    
-//      } catch (error) {
-//     console.log(error)
-//     }
-         
-// },[])
 
 
 
@@ -96,6 +44,9 @@ console.log(List)
                 const data = {
                     "studentId": AddList
                 }
+
+                console.log("AddList")
+                console.log(AddList)
                 const response = await AdminAxiosInstance.post(`api/course/add-student/${courseId}`, data)
              
                 if (response.data.message === "Student added successfully") {
@@ -221,7 +172,7 @@ console.log(List)
 
 
                         <div>
-                            <h1 className='mt-3 font-Roboto text-xl'>Admin Enrolled</h1>
+                            <h1 className='mt-3 font-Roboto text-xl'>Tutor Enrolled</h1>
                             <AdminListTable courseId={courseId}/>
                         </div>
 

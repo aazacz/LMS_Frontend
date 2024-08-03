@@ -9,9 +9,12 @@ const Checkout = () => {
   const [Course, setCourse] = useState(null);
   const navigate = useNavigate();
 
+  const key = process.env.REACT_APP_KEY;
+  const key_secret = process.env.REACT_APP_KEY_SECRET;
+
   useEffect(() => {
     const getCourseDetails = async () => {
-        if (courseId && courseType) {
+      if (courseId && courseType) {
         if (courseType === "individual") {
           const response = await axiosInstanceStudent.get(
             `api/structure/get/${courseId}`
@@ -28,79 +31,10 @@ const Checkout = () => {
           setCourse(response.data);
         }
       }
-    }
+    };
     getCourseDetails();
   }, [courseId, courseType]);
 
-  const key = process.env.REACT_APP_KEY;
-  const key_secret = process.env.REACT_APP_KEY_SECRET;
-
-    // Get the states in India
-    useEffect(() => {
-        const config = {
-            method: 'get',
-            url: `https://api.countrystatecity.in/v1/countries/IN/states`,
-            headers: {
-                'X-CSCAPI-KEY': 'YnlUQ2Z5U3RqUHBnT3dwc2YwY2F4dGJRRW14aGF5d3NuM2xrejBNQw==',
-            },
-                      }
-
-        axios(config)
-            .then(function (response) {
-                // console.log(response.data);
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-    }, [])
-
-
-
-    const handlePayment = () => {
-
-        var options = {
-            key: key,
-            key_secret: key_secret,
-            amount: Course.price * 100,
-            currency: 'INR',
-            name: 'MindSAT',
-            description: 'MindSAT Payment',
-            handler: async function (response) {
-                console.log(response);
-    
-                let responseData = {
-                    "courseStructureId": courseId,
-                    "paymentId": response.razorpay_payment_id,
-                    "amount": Course.price
-                };
-    
-             try {
-                    let apiResponse;
-                    if (courseType === "individual") {
-                        console.log('Enrolling in individual course...');
-                        apiResponse = await axiosInstanceStudent.post("api/student-course/enroll-individual-course", responseData);
-                        console.log('API Response:', apiResponse.data);
-                        console.log('Navigating to /student');
-                        navigate("/student/a");
-
-                    } else if (courseType === "group") {
-                        responseData.courseId = courseId; // Ensure this key is set for group courses
-                        console.log('Enrolling in group course...');
-                        apiResponse = await axiosInstanceStudent.post("api/student-course/enroll-group-course", responseData);
-                        console.log('API Response:', apiResponse.data);
-                        console.log('Navigating to /student/a');
-                        navigate("/student/a");
-                    }
-                } catch (error) {
-                    console.error('Payment or enrollment failed:', error);
-                    // Handle error appropriately, maybe show a toast or alert to the user
-                }
-            }
-        }
-
-        
-        var pay = new window.Razorpay(options);
-        pay.open();
   const loadScript = (src) => {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -116,17 +50,25 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    loadScript("https://checkout.razorpay.com/v1/checkout.js");
+    const loadRazorpayScript = async () => {
+      const result = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+      if (!result) {
+        console.error("Failed to load Razorpay script");
+      }
+    };
+
+    loadRazorpayScript();
+
     return () => {
-      const script = document.querySelector(
-        `script[src="https://checkout.razorpay.com/v1/checkout.js"]`
-      );
-      if (script) script.remove();
+      const script = document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]');
+      if (script) {
+        script.remove();
+      }
     };
   }, []);
 
   const handlePayment = () => {
-    var options = {
+    const options = {
       key: key,
       key_secret: key_secret,
       amount: Course.price * 100,
@@ -161,7 +103,7 @@ const Checkout = () => {
         }
       },
     };
-    var pay = new window.Razorpay(options);
+    const pay = new window.Razorpay(options);
     pay.open();
   };
 

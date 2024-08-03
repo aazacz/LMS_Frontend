@@ -8,6 +8,7 @@ import { setTutorDetails } from "../../store/reducers/TutorloginSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { TutorAxiosInstance } from "../../routes/TutorRoutes";
 
 const TutorLogin = () => {
   const {
@@ -29,7 +30,7 @@ const TutorLogin = () => {
     try {
       setIsSubmitting(true);
 
-      const res = await axios.post(`${baseURL}api/tutor/login-tutor`, data, {
+      const res = await TutorAxiosInstance.post(`api/tutor/login-tutor`, data, {
         "user-agent": navigator.userAgent,
       });
       console.log(res.data);

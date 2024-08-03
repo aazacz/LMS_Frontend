@@ -11,6 +11,7 @@ import studentLoginimage from "../../assets/SignupPersonalDetails/personal.svg";
 import UserNavbar from "../../components/User/UserNavbar";
 import Loader from "../../components/reusable/Loader";
 import "./Login.css";
+import { TutorAxiosInstance } from "../../routes/TutorRoutes";
 
 const StudentLogin = () => {
   const baseUrl = process.env.REACT_APP_API_URL;
@@ -29,8 +30,8 @@ const StudentLogin = () => {
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      const res = await axios.post(
-        `${baseUrl}api/students/login-student`,
+      const res = await TutorAxiosInstance.post(
+        `api/students/login-student`,
         data,
         {
           "user-agent": navigator.userAgent,

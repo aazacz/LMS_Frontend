@@ -85,7 +85,7 @@ const getCourse = async()=>{
             description:      response.data.description,
             modules:          response.data.modules,
             trainingDateTimeDetails: "This Course will start from June 1st",
-            imgUrl:           response.data.imgUrl
+            imgUrl:           response.data.imageUrl
         });
     }
 }
@@ -114,11 +114,7 @@ try {
     toast.error(error.message)
 }
 
-
 }
-
-
-
 
 
 
@@ -435,6 +431,7 @@ try {
                 
             <div className='pt-4 flex w-full h-auto gap-x-4'>
 
+        {console.log(course.imgUrl )}
 
     {course.imgUrl 
 
@@ -450,7 +447,14 @@ try {
     <img src={Defaultcourseimage} alt="Select an image " className="w-full h-full object-cover border-[1px] rounded-xl shadow-lg" />
     </div>
     }
+{edit? 
+        <label htmlFor='chooseimage' className="choose w-[110px]  h-[30px] flex justify-center items-center  bg-green-600 text-white text-sm font-semibold">Update Image</label>
+:
+
         <label htmlFor='chooseimage' className="choose w-[110px]  h-[30px] flex justify-center items-center  bg-blue-600 text-white text-sm font-semibold">Choose Image</label>
+
+}
+
 
     {/* <button className='bg-green-500 w-[110px]  h-[30px] flex justify-center items-center text-white text-sm font-semibold'>
         Upload
@@ -469,9 +473,11 @@ try {
     </div>
                 <div className="w-full grid grid-flow-row grid-cols-2 gap-x-4">
                     <div className="w-full ">
+                       
                         <label className="text-sm font-semibold">
                             Course Type
                         </label>
+
                         <select
                             name="courseType"
                             onChange={handleInputChange}

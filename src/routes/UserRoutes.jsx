@@ -52,7 +52,9 @@ axiosInstanceStudent.interceptors.response.use(function (response) {
 
 const UserRoutes = () => {
   const user = useSelector((state) => state.StudentDetails.token);
+
        token = useSelector((state) => state.StudentDetails.token);
+
 
      
       
@@ -62,7 +64,7 @@ const UserRoutes = () => {
       <Routes location={location} key={location.pathname}>
       <Route path="/" element={<Homepage />} />
       <Route path="/login"   element={user ? <Navigate to="/student" /> : <Login />}   />
-      <Route path="/student/*" element={user?<StudentHomepage User={true} /> : <Navigate to="/login" />} />
+      <Route path="/student/*" element={user ? <StudentHomepage User={true} /> : <Navigate to="/login" />} />
       <Route path="/signup/*" element={<SignupRoute />} />
       <Route path="/diagnosistest" element={<Student_Diagnostic />} />
       <Route path="/diagnosistest/*" element={<DiagnosisTestRoute/>} />

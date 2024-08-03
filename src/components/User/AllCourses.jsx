@@ -28,7 +28,7 @@ const AllCourses = () => {
 
         try {
             console.log("useQuery funciton hitted")
-            const response = await axiosInstanceStudent.get(`api/student-course/all-active-courses`            
+            const response = await axiosInstanceStudent.get(`api/student-course/1`            
               );
               console.log("response.data")
               console.log(response.data)

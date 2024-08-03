@@ -10,13 +10,17 @@ import './Addcourse.css'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import Defaultcourseimage from "../../assets/Admin/Defaultcourseimage.png"
+import { useParams } from 'react-router-dom'
 
 
 
-
-const AddCourse = () => {
+const AddCourse = ({edit}) => {
     const navigate = useNavigate()
     const token = useSelector((state) => state.AdminDetails.token)
+    const {courseId} =useParams()
+
+
+
     const baseURL = process.env.REACT_APP_API_URL
 
     const [errors, setErrors] = useState({})
@@ -24,6 +28,8 @@ const AddCourse = () => {
     const [packages, setpackages] = useState()
     const [CourseStructure, setCourseStructure] = useState([])
     const [Image, setImage] = useState('');
+    
+    const [imageUrl, setImageUrl] = useState('');
     const [course, setCourse] = useState({
         courseType: '',
         courseStructure: '',
@@ -50,7 +56,72 @@ const AddCourse = () => {
         ],
         students: [],
         tutors: [],
+        imgUrl:""
     })
+
+    const extractNumber = (str) => {
+        const match = str.match(/\d+/);
+        return match ? match[0] : '';
+      }
+
+
+useEffect(()=>{
+
+const getCourse = async()=>{
+    const response = await AdminAxiosInstance.get(`/api/course/get-course/${courseId}`)
+
+    if(response.data){
+        console.log("response.data get course")
+        console.log(response.data)
+
+
+        setCourse({
+            courseType:       response.data.courseType,
+            courseName:       response.data.courseName,
+            package:          response.data.package,
+            trainingDuration: extractNumber(response.data.trainingDuration),
+            hoursPerDay:      extractNumber(response.data.hoursPerDay),
+            price:            response.data.price,
+            description:      response.data.description,
+            modules:          response.data.modules,
+            trainingDateTimeDetails: "This Course will start from June 1st",
+            imgUrl:           response.data.imgUrl
+        });
+    }
+}
+
+if(edit){
+    
+    getCourse()
+
+}
+
+},[])
+
+//function to update the course
+
+const updatecourse = (e)=>{
+    e.preventDefault()
+
+try {
+    console.log(course)
+    const response = AdminAxiosInstance.put(`api/course/edit/${courseId}`,course)
+    console.log(response)
+    toast.success("Course Updated")
+
+} catch (error) {
+    console.log(error.message)
+    toast.error(error.message)
+}
+
+
+}
+
+
+
+
+
+
 
     //Getting course structure data from database
     useEffect(() => {
@@ -231,9 +302,6 @@ const AddCourse = () => {
 
 
 
-
-
-
         Swal.fire({
             title: 'You are going to create a new course',
             text: 'Please check every field before submitting ',
@@ -291,7 +359,6 @@ const AddCourse = () => {
     }
 
 
-    const [imageUrl, setImageUrl] = useState('');
 
     const handleimageUpload = async (event) => {
         event.preventDefault();
@@ -317,40 +384,73 @@ const AddCourse = () => {
     };
 
     const handleImageChange = async (e) => {
-        setImage("");
         const file = e.target.files[0];
-
         setImage(file);
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImageUrl(reader.result);
-            };
-            reader.readAsDataURL(file);
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setImageUrl(reader.result);
+          };
+          reader.readAsDataURL(file);
+    
+          try {
+            const formData = new FormData();
+            formData.append('image', file);
+    
+            const response = await AdminAxiosInstance.put(`api/course/update-image/${courseId}`, formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+    
+            if (response.status === 200) {
+              toast.success('Image updated successfully');
+            } else {
+              toast.error('Failed to update image');
+            }
+          } catch (error) {
+            console.error('Error updating image:', error);
+            toast.error('Error updating image');
+          }
         }
-    };
+      };
 
+  
 
     return (
         <div className="w-full p-5 md:px-16 bg-slate-200 rounded-lg mt-2">
+          
+       {edit ?
+             <h1 className="font-bold font-poppins text-2xl pb-6 flex items-center gap-x-4">
+             Edit Course {<TfiWrite className="text-lg " />}
+             </h1>
+        :
             <h1 className="font-bold font-poppins text-2xl pb-6 flex items-center gap-x-4">
-                Create a new Course {<TfiWrite className="text-lg " />}
-            </h1>
+             Create a new Course {<TfiWrite className="text-lg " />}
+             </h1>  
+        
+        }
+          
             <form className="space-y-6">
                 
             <div className='pt-4 flex w-full h-auto gap-x-4'>
 
-   
-{imageUrl ?
- <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
- <img src={imageUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
-</div>
-: 
-<div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
-<img src={Defaultcourseimage} alt="Select an image " className="w-full h-full object-cover border-[1px] rounded-xl shadow-lg" />
-</div>
-}
-    <label htmlFor='chooseimage' className="choose w-[110px]  h-[30px] flex justify-center items-center  bg-blue-600 text-white text-sm font-semibold">Choose Image</label>
+
+    {course.imgUrl 
+
+    ?
+
+    <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+    <img src={course.imgUrl} alt="Select an image " className="w-full h-full object-contain rounded shadow-lg" />
+    </div>
+
+    : 
+
+    <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
+    <img src={Defaultcourseimage} alt="Select an image " className="w-full h-full object-cover border-[1px] rounded-xl shadow-lg" />
+    </div>
+    }
+        <label htmlFor='chooseimage' className="choose w-[110px]  h-[30px] flex justify-center items-center  bg-blue-600 text-white text-sm font-semibold">Choose Image</label>
 
     {/* <button className='bg-green-500 w-[110px]  h-[30px] flex justify-center items-center text-white text-sm font-semibold'>
         Upload
@@ -760,13 +860,28 @@ const AddCourse = () => {
                 })}
 
                 <div className="flex items-center justify-end ">
+                  
+                  { edit ?   
+                  
+                  <button
+                        onClick={(e) => updatecourse(e)}
+                      
+                        className=" px-8 py-2 bg-green-900 rounded-md text-white"
+                    >
+                        Update
+                    </button>
+
+                    : 
+
                     <button
                         onClick={(e) => submitHandler(e)}
-                        type="submit"
+                      
                         className=" px-8 py-2 bg-green-900 rounded-md text-white"
                     >
                         Submit
                     </button>
+                }
+                                            
                 </div>
             </form>
         </div>

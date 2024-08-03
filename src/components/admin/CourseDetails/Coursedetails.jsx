@@ -36,7 +36,7 @@ const Coursedetails = ({edit}) => {
     const { courseId } = useParams()    
     const [CourseId,setCourseId] = useState(courseId)
 
-    
+
 
     const handleTabClick = (tab) => {
         setSlideDirection(
@@ -63,7 +63,7 @@ const Coursedetails = ({edit}) => {
 
         const getStudentList = async () => {
             try {
-                const response = await AdminAxiosInstance.get(`api/course/student-not-added/${courseId}`);
+                const response = await AdminAxiosInstance.get(`api/course/paid-students/${courseId}`);
                 console.log("response.data student not addeddddddddd");
                 console.log(response.data);
                 if (response.data) {

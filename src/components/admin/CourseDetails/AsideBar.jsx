@@ -84,6 +84,25 @@ const Asidebar = ({ course, setTutorModal,setStudentModal}) => {
         })
     }
 
+    
+
+    const handleEditCourse = () => {
+        Swal.fire({
+            title: `Are you sure you want to edit this course?`,
+            text: "You won't be able to revert this!",
+             showCancelButton: true,
+            confirmButtonColor: '#eb5048',
+            cancelButtonColor: '#878ca7',
+            confirmButtonText: 'Edit Course!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+       
+                navigate(`/admin/home/courses/editcourse/${courseId}`)
+                
+            }
+        })
+    }
+
     return (
         <div className="relative bg-slate-200 lg:w-[30%] w-full   flex flex-col">
 
@@ -91,9 +110,8 @@ const Asidebar = ({ course, setTutorModal,setStudentModal}) => {
             <div className='w-full  flex justify-evenly h-max p-4 '>
 
                 <div
-                    onClick={() => {
-                            setTutorModal(true)}
-                                }
+                    onClick={() => {           setTutorModal(true)}
+                               }
                     data-tooltip-id="assigntutor"
                     data-tooltip-content="Assign Tutor"
                     className='rounded-full border-[3px] text-gray-700 hover:text-gray-900  border-gray-700 hover:border-gray-900 transition-all duration-200 bg-white  w-14 h-14 flex justify-center items-center  ' >
@@ -165,7 +183,7 @@ const Asidebar = ({ course, setTutorModal,setStudentModal}) => {
 
                 <div
                     className="cursor-pointer  h-8 rounded-xl flex justify-center items-center text-base font-semibold font-poppins border-[1px] text-blue-700 border-blue-600 bg-opacity-30 bg-blue-500"
-                    onClick={handleDeleteCourse}
+                    onClick={()=>handleEditCourse()}
                 >
                     <h1>Edit</h1> 
                 </div>

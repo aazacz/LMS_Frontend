@@ -61,10 +61,11 @@ const Homepage = () => {
             <div className="w-full   ">
               <Routes>
                 <Route path="/*"                                                element={<Dashboard />} />
-                <Route path="/courses/addcourse"                                element={<AddCourse />} />
+                <Route path="/courses/addcourse"                                element={<AddCourse edit={false} />} />
+                <Route path="/courses/editcourse/:courseId"                     element={<AddCourse edit={true} />} />
                 <Route path="/courses"                                          element={<CourseList />} />
-                <Route path="/courses/:courseId/:courseType/:enrolled/:role"    element={<Coursedetails edit={"false"}  />} />
-                <Route path="/courses/:courseId/:courseType/:enrolled/:role"    element={<Coursedetails edit={"true"} />} />
+                <Route path="/courses/:courseId/:courseType/:enrolled/:role"    element={<Coursedetails edit={false}  />} />
+                <Route path="/courses/:courseId/:courseType/:enrolled/:role"    element={<Coursedetails edit={true} />} />
                 
                 <Route path="/coursestructure"                                  element={<CourseStructureList />} />
                 <Route path="/courseStructure/addcoursestructure"               element={<AddCourseStructure view={false} />} />

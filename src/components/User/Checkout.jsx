@@ -80,7 +80,7 @@ const Checkout = () => {
             headers: {
                 'X-CSCAPI-KEY': 'YnlUQ2Z5U3RqUHBnT3dwc2YwY2F4dGJRRW14aGF5d3NuM2xrejBNQw==',
             },
-        }
+                      }
 
         axios(config)
             .then(function (response) {
@@ -91,7 +91,10 @@ const Checkout = () => {
             })
     }, [])
 
+
+
     const handlePayment = () => {
+
         var options = {
             key: key,
             key_secret: key_secret,
@@ -108,7 +111,7 @@ const Checkout = () => {
                     "amount": Course.price
                 };
     
-                try {
+             try {
                     let apiResponse;
                     if (courseType === "individual") {
                         console.log('Enrolling in individual course...');
@@ -130,7 +133,9 @@ const Checkout = () => {
                     // Handle error appropriately, maybe show a toast or alert to the user
                 }
             }
-        };
+        }
+
+        
         var pay = new window.Razorpay(options);
         pay.open();
     };

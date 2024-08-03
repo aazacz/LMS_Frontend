@@ -10,6 +10,7 @@ import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Di
 import  axios  from "axios";
 import DiagnosisTestRoute from "./DiagnosisTestRoute";
 import { AnimatePresence, motion } from "framer-motion";
+import ViewAllCourses from "../components/User/ViewAllCourses";
 
 let token
 const baseURL = process.env.REACT_APP_API_URL;
@@ -66,15 +67,16 @@ const UserRoutes = () => {
       <Route path="/signup/*" element={<SignupRoute />} />
       <Route path="/diagnosistest" element={<Student_Diagnostic />} />
       <Route path="/diagnosistest/*" element={<DiagnosisTestRoute/>} />
+
      
-      <Route path="*"
+      {/* <Route path="*"
         element={
           <div className="w-screen h-screen">
             {" "}
             <ErrorPage />{" "}
           </div>
         }
-      />
+      /> */}
     </Routes>
     </AnimatePresence>
   );

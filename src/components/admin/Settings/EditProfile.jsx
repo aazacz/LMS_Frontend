@@ -21,10 +21,14 @@ const EditProfile = () => {
         console.log(error);
       });
   }, []);
-  return currDetails ? <Page currDetails={currDetails} /> : <Loader />;
+  return currDetails ? (
+    <Page currDetails={currDetails} setCurrDetails={setCurrDetails} />
+  ) : (
+    <Loader />
+  );
 };
 
-const Page = ({ currDetails }) => {
+const Page = ({ currDetails, setCurrDetails }) => {
   const [inputValue, setInputValue] = useState("");
   const {
     register,
@@ -49,7 +53,7 @@ const Page = ({ currDetails }) => {
     { code: "IN", name: "India" },
     // ... add more countries here
   ];
-  const [selectedImage, setSelectedImage] = useState(null); // State to store the uploaded image file
+  // const [selectedImage, setSelectedImage] = useState(null); // State to store the uploaded image file
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -112,6 +116,14 @@ const Page = ({ currDetails }) => {
       });
       console.log(res.data);
       toast.success("Profile successfully updated");
+      setCurrDetails((prev) => {
+        return {
+          ...prev,
+          fullName: values.fullName,
+          country: values.country,
+          email: values.email,
+        };
+      });
     } catch (error) {
       console.log(error);
     }
@@ -120,9 +132,9 @@ const Page = ({ currDetails }) => {
     <div className="w-full  p-2  overflow-y-scroll flex flex-col justify-center items-start gap-4 font-poppins">
       <p className="font-semibold text-sm md:text-lg ">Edit Profile</p>
       <div className="w-full h-max flex flex-wrap justify-start items-center">
-        <div className="relative">
-          <div className=" rounded-full  bg-red-400 overflow-hidden w-28 h-28 md:w-32 md:h-32 lg:w-32 lg:h-32  ">
-            {selectedImage ? (
+        <div className=" bg-slate-400 border rounded-full flex items-center justify-center  w-28 h-28 md:size-32 mx-auto  ">
+          <p className="text-[5rem] text-white">{currDetails.fullName[0]}</p>
+          {/* {selectedImage ? (
               <img
                 data-tooltip-id="my-tooltip"
                 src={URL.createObjectURL(selectedImage)}
@@ -130,9 +142,9 @@ const Page = ({ currDetails }) => {
               />
             ) : (
               <img src={Settings1} alt="Placeholder profile picture" />
-            )}
+            )} */}
 
-            <Tooltip id="my-tooltip">
+          {/* <Tooltip id="my-tooltip">
               <div
                 style={{
                   display: "flex",
@@ -144,27 +156,26 @@ const Page = ({ currDetails }) => {
                   300x300 and max 2 MB
                 </span>
               </div>
-            </Tooltip>
+            </Tooltip> */}
 
-            {/* uploading the image */}
-            <div className=" absolute rounded-full border-[1px] border-gray-500 flex items-center justify-center shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] w-8 h-8 bg-white bottom-0 translate-y-1/2  left-1/2 -translate-x-1/2 text-xl text-black cursor-pointer">
+          {/* uploading the image */}
+          {/* <div className=" absolute rounded-full border-[1px] border-gray-500 flex items-center justify-center shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] w-8 h-8 bg-white bottom-0 translate-y-1/2  left-1/2 -translate-x-1/2 text-xl text-black cursor-pointer">
               <label htmlFor="profile-picture-upload">
                 <GrCloudUpload
                   data-tooltip-id="my-tooltip"
                   className="cursor-pointer"
                 />
               </label>
-            </div>
-          </div>
+            </div> */}
+        </div>
 
-          <input
+        {/* <input
             id="profile-picture-upload"
             type="file"
             accept="image/png, image/jpeg, image/jpg"
             style={{ display: "none" }}
             onChange={handleImageUpload}
-          />
-        </div>
+          /> */}
 
         {/*Section for profile picture */}
       </div>
@@ -263,7 +274,7 @@ const Page = ({ currDetails }) => {
         </div> */}
         <button
           type="submit"
-          className="w-full py-2 bg-blue-500 font-semibold text-sm text-white rounded-md"
+          className="w-fit px-6 self-center py-2 bg-blue-500 font-semibold text-sm text-white rounded-md"
         >
           Save Changes
         </button>

@@ -24,15 +24,11 @@ const Coursedetails = ({ edit }) => {
 
   const [TutorDropDownLoader, SetTutorDropDownLoader] = useState(false);
 
-<<<<<<< HEAD
 
-=======
   const [TutorDropDownList, SetTutorDropDownList] = useState();
   const [StudentDropDownList, SetStudentDropDownList] = useState();
-  const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] =
-    useState();
+  const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] = useState();
   const [EnrolledTutorDropDownList, SetEnrolledTutorDropDownList] = useState();
->>>>>>> 7d38baeed2298b98561c724f6ffe63f84048ebff
 
   const [StudentModal, setStudentModal] = useState(false);
   const [TutorModal, setTutorModal] = useState(false);

@@ -5,9 +5,9 @@ import { FiPlusCircle } from "react-icons/fi";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const Addiagnosistest = () => {
+const EditDiagnosistest = () => {
   const baseUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   // Schema for the test state
@@ -35,8 +35,30 @@ const Addiagnosistest = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
+    setValue,
   } = useForm();
   const [test, setTest] = useState(initialTestState);
+  const { testId } = useParams();
+  useEffect(() => {
+    fetchDiagnosistest();
+  }, []);
+  const fetchDiagnosistest = async () => {
+    try {
+      const res = await AdminAxiosInstance.get(
+        "api/diagnosis/diagnosis-tests/" + testId
+      );
+      // if (!res.status !== 200) return navigate("/admin/home/diagnosistest");
+      setTest(res.data);
+      setValue("title", res.data.title);
+      setValue("positiveMark", res.data.positiveMark);
+      setValue("negativeMark", res.data.negativeMark);
+      setValue("paymentNeeded", res.data.paymentNeeded);
+      setValue("paymentAmount", res.data.paymentAmount);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const cancelForm = () => {
     Swal.fire({
@@ -139,12 +161,11 @@ const Addiagnosistest = () => {
 
   //handler funciton to submit the array
   const submitHandler = () => {
-    console.log(test);
-    AdminAxiosInstance.post(`api/diagnosis/diagnosis-tests`, test)
+    AdminAxiosInstance.put(`api/diagnosis/diagnosis-tests/${testId}`, test)
       .then((res) => {
         console.log({ res });
-        if (res.status === 201) {
-          toast.success("Diagnosis test created successfully");
+        if (res.status === 200) {
+          toast.success("Diagnosis test edited successfully");
           setTest(initialTestState);
           navigate("/admin/home/diagnosistest");
         }
@@ -243,6 +264,7 @@ const Addiagnosistest = () => {
             <input
               className="size-6"
               type="checkbox"
+              checked={test.paymentNeeded}
               name="paymentNeeded"
               onChange={(e) => {
                 setTest({
@@ -373,4 +395,4 @@ const Addiagnosistest = () => {
   );
 };
 
-export default Addiagnosistest;
+export default EditDiagnosistest;

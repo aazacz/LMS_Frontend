@@ -19,6 +19,7 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -27,8 +28,6 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
   const isActive = (path) => {
     return location.pathname === path;
   };
-
-  const dispatch = useDispatch();
 
   const handlecollapse = () => {
     if (collapsed === true) {

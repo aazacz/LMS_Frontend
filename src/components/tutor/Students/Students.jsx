@@ -196,8 +196,8 @@ const Students = () => {
             <div></div>
           </div>
         </div>
-        <div className="table-responsive">
-          <table className="responsive-table">
+        <div className="table-responsivee">
+          <table className="responsive-tablee">
             <thead>
               <tr>
                 {columns.map((column) => (

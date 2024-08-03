@@ -104,33 +104,51 @@ const Content = () => {
             ))}
         </div>
         <div className="mt-6 overflow-x-auto">
-  <table className="min-w-full bg-white border border-gray-300">
-    <thead className="bg-gray-100">
-      <tr>
-        <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600">SL No</th>
-        <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600">Assignment Name</th>
-        <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600">Status</th>
-        <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600">Course</th>
-        <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600 hidden sm:table-cell">Students</th>
-        <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600 hidden md:table-cell">Submission</th>
-        <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600">Reports</th>
-      </tr>
-    </thead>
-    <tbody className="text-sm font-medium text-gray-700">
-      {assignments.map((assignment, index) => (
-        <tr key={assignment.id} className="hover:bg-gray-100">
-          <td className="px-4 py-2 border-b">{index + 1}</td>
-          <td className="px-4 py-2 border-b">{assignment.name}</td>
-          <td className="px-4 py-2 border-b">{assignment.status}</td>
-          <td className="px-4 py-2 border-b">{assignment.course}</td>
-          <td className="px-4 py-2 border-b hidden sm:table-cell">{assignment.students}</td>
-          <td className="px-4 py-2 border-b hidden md:table-cell">{assignment.submission}</td>
-          <td className="px-4 py-2 border-b">{assignment.reports}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+          <table className="min-w-full bg-white border border-gray-300">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600">
+                  SL No
+                </th>
+                <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600">
+                  Assignment Name
+                </th>
+                <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600">
+                  Status
+                </th>
+                <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600">
+                  Course
+                </th>
+                <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600 hidden sm:table-cell">
+                  Students
+                </th>
+                <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600 hidden md:table-cell">
+                  Submission
+                </th>
+                <th className="px-4 py-2 border-b text-left text-xs font-semibold text-gray-600">
+                  Reports
+                </th>
+              </tr>
+            </thead>
+            <tbody className="text-sm font-medium text-gray-700">
+              {assignments.map((assignment, index) => (
+                <tr key={assignment.id} className="hover:bg-gray-100">
+                  <td className="px-4 py-2 border-b">{index + 1}</td>
+                  <td className="px-4 py-2 border-b">{assignment.name}</td>
+                  <td className="px-4 py-2 border-b">{assignment.status}</td>
+                  <td className="px-4 py-2 border-b">{assignment.course}</td>
+                  <td className="px-4 py-2 border-b hidden sm:table-cell">
+                    {assignment.students}
+                  </td>
+                  <td className="px-4 py-2 border-b hidden md:table-cell">
+                    {assignment.submission}
+                  </td>
+                  <td className="px-4 py-2 border-b">{assignment.reports}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -156,11 +174,19 @@ const CourseCard = ({ course, index }) => {
   return (
     <div className="bg-[#F4F5FB] p-4 rounded-2xl min-h-[16rem] h-auto">
       <div className="w-full rounded-lg">
-        <img
-          src={coursephoto}
-          className="rounded-lg w-full object-contain"
-          alt="Course"
-        />
+        {course?.imageUrl ? (
+          <img
+            src={course?.imageUrl}
+            className="rounded-lg w-full h-[140px] object-fill"
+            alt="Course"
+          />
+        ) : (
+          <img
+            src={coursephoto}
+            className="rounded-lg w-full object-contain"
+            alt="Course"
+          />
+        )}
       </div>
       <div className="w-full mt-4">
         <div className="min-h-[3rem]">

@@ -82,15 +82,15 @@ const QuestionBank = () => {
 
   return (
     <div className="font-poppins  h-max flex flex-col justify-left items-left ">
-      <p className="text-sm md:text-base lg:text-lg font-semibold p-2">Tests</p>
+      <p className="text-base lg:text-lg font-semibold p-2">Tests</p>
 
       <div className="w-full h-max flex ">
         <div className="w-full lg:w-[65%] h-full flex flex-col p-2">
-          <div className="w-full h-max bg-white  flex justify-between items-center text-xs md:text-[14px] rounded-lg p-2">
+          <div className="w-full h-max bg-white  flex justify-between items-center text-xs md:text-[14px] rounded-lg py-2 ">
             <input
               type="text"
               placeholder="Search For Student"
-              className="w-full p-2 outline-none"
+              className="w-full p-2 border-2 outline-none mr-2 "
               value={searchTerm}
               onChange={handleSearch}
             />

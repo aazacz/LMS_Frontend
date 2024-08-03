@@ -1,5 +1,10 @@
 import React from "react";
-import {  Route,  Routes,  Navigate,  BrowserRouter as Router,} from "react-router-dom";
+import {
+  Route,
+  Routes,
+  Navigate,
+  BrowserRouter as Router,
+} from "react-router-dom";
 import { useSelector } from "react-redux";
 import Login from "../pages/student/Login";
 import Homepage from "../pages/student/HomePage";
@@ -7,48 +12,41 @@ import StudentHomepage from "../pages/student/StudentHomepage";
 import ErrorPage from "../pages/ErrorPage";
 import SignupRoute from "./SignupRoute";
 import Student_Diagnostic from "../components/User/Student_Diagnostic/Student_Diagnostic";
-import  axios  from "axios";
+import axios from "axios";
 import DiagnosisTestRoute from "./DiagnosisTestRoute";
 import { AnimatePresence, motion } from "framer-motion";
 
-let token
+let token;
 const baseURL = process.env.REACT_APP_API_URL;
 
+export const axiosInstanceStudent = axios.create();
 
-export const axiosInstanceStudent = axios.create()
-
-axiosInstanceStudent.interceptors.request.use(function(config){
-
-    config.baseURL = baseURL
-    console.log("Interceptor req Send");
+axiosInstanceStudent.interceptors.request.use(
+  function (config) {
+    config.baseURL = baseURL;
 
     // console.log(`authorization-key ${token}`);
-   
+
     if (token) {
-        config.headers.authorization = `Bearer ${token}`;
-      }
+      config.headers.authorization = `Bearer ${token}`;
+    }
 
     return config;
-},function (error) {
-  cnsole.log("error in the interceptor request")
-    return Promise.reject(error)
-}
-)
-
-
-
-axiosInstanceStudent.interceptors.response.use(function (response) {
-      
-    console.log ( "response received  \n" );
-    console.log ( response.data);
- 
-   return response;
-
-},function (error) {
+  },
+  function (error) {
+    console.log("error in the interceptor request");
     return Promise.reject(error);
-  })
+  }
+);
 
-
+axiosInstanceStudent.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
 
 const UserRoutes = () => {
   const user = useSelector((state) => state.StudentDetails.token);

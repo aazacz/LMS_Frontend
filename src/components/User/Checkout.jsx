@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import sat from "../../assets/Admin/sat.jpg";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
+import axios from "axios";
 
 const Checkout = () => {
   const { courseType, courseId } = useParams();
@@ -194,5 +195,6 @@ const Checkout = () => {
     </>
   );
 };
+}
 
 export default Checkout;

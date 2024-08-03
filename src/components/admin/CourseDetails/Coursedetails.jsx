@@ -21,23 +21,14 @@ const Coursedetails = ({ edit }) => {
   const [Loading, SetLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("about");
   const [slideDirection, setSlideDirection] = useState("left");
-
   const [TutorDropDownLoader, SetTutorDropDownLoader] = useState(false);
-
-<<<<<<< HEAD
-
-=======
   const [TutorDropDownList, SetTutorDropDownList] = useState();
   const [StudentDropDownList, SetStudentDropDownList] = useState();
-  const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] =
-    useState();
+  const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] = useState();
   const [EnrolledTutorDropDownList, SetEnrolledTutorDropDownList] = useState();
->>>>>>> 7d38baeed2298b98561c724f6ffe63f84048ebff
-
   const [StudentModal, setStudentModal] = useState(false);
   const [TutorModal, setTutorModal] = useState(false);
   const [count, setcount] = useState(0);
-
   const { courseId } = useParams();
 
   const handleTabClick = (tab) => {
@@ -48,6 +39,7 @@ const Coursedetails = ({ edit }) => {
   };
 
   useEffect(() => {
+    SetLoading(true);
     axios
       .get(`${baseUrl}api/course/get-course/${courseId}`, {
         headers: { authorization: `Bearer ${token}` },
@@ -55,146 +47,66 @@ const Coursedetails = ({ edit }) => {
       .then((response) => {
         console.log(response.data);
         SetCourse(response.data);
+        SetLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch course details:", error);
+        SetLoading(false);
       });
   }, [baseUrl, courseId, token]);
 
   useEffect(() => {
     const getStudentList = async () => {
-      const response = await AdminAxiosInstance.get(
-        `api/course/student-not-added/${courseId}`
-      );
-      const EnrolledStudents = await AdminAxiosInstance.get(
-        `api/course/student-enrolled/${courseId}`
-      );
+      try {
+        const response = await AdminAxiosInstance.get(
+          `api/course/student-not-added/${courseId}`
+        );
+        const EnrolledStudents = await AdminAxiosInstance.get(
+          `api/course/student-enrolled/${courseId}`
+        );
 
-      if (response.data && EnrolledStudents.data) {
-        SetEnrolledStudentDropDownList(EnrolledStudents.data);
-        SetStudentDropDownList(response.data);
+        if (response.data && EnrolledStudents.data) {
+          SetStudentDropDownList(response.data);
+          SetEnrolledStudentDropDownList(EnrolledStudents.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch student lists:", error);
       }
     };
-    try {
-      if (StudentModal === true) {
-        getStudentList();
-      }
-    } catch (error) {
-      console.log(error);
+
+    if (StudentModal) {
+      getStudentList();
     }
-  }, [StudentModal, count]);
+  }, [StudentModal, courseId, count]);
 
   useEffect(() => {
     const getTutorList = async () => {
-      console.log("courseId", courseId);
-      SetTutorDropDownLoader(true);
+      try {
+        SetTutorDropDownLoader(true);
 
-      const response = await AdminAxiosInstance.get(
-        `api/course/tutor-not-added/${courseId}`
-      );
-      const EnrolledTutors = await AdminAxiosInstance.get(
-        `api/course/tutor-enrolled/${courseId}`
-      );
-      console.log("tutor list");
-      console.log(EnrolledTutors.data);
-      if (response.data && EnrolledTutors.data) {
-        SetTutorDropDownList(response.data);
-        SetEnrolledTutorDropDownList(EnrolledTutors.data);
+        const response = await AdminAxiosInstance.get(
+          `api/course/tutor-not-added/${courseId}`
+        );
+        const EnrolledTutors = await AdminAxiosInstance.get(
+          `api/course/tutor-enrolled/${courseId}`
+        );
+
+        if (response.data && EnrolledTutors.data) {
+          SetTutorDropDownList(response.data);
+          SetEnrolledTutorDropDownList(EnrolledTutors.data);
+          SetTutorDropDownLoader(false);
+        }
+      } catch (error) {
+        console.error("Failed to fetch tutor lists:", error);
         SetTutorDropDownLoader(false);
       }
     };
 
-
-    useEffect(()=>{
-    console.log(courseId)
-
-        const getStudentList = async () => {
-            try {
-                const response = await AdminAxiosInstance.get(`api/course/paid-students/${courseId}`);
-                console.log("response.data student not addeddddddddd");
-                console.log(response.data);
-                if (response.data) {
-                    SetStudentDropDownList(response.data);
-                }
-            } catch (error) {
-                if (error.response && error.response.status === 404) {
-                    console.log("Student not added list returned 404");
-                } else {
-                    console.log(error);
-                }
-            }
-        
-            try {
-                const EnrolledStudents = await AdminAxiosInstance.get(`api/course/student-enrolled/${courseId}`);
-                console.log("EnrolledStudents.data student not addeddddddddd");
-                console.log(EnrolledStudents.data);
-                if (EnrolledStudents.data) {
-                    SetEnrolledStudentDropDownList(EnrolledStudents.data);
-                }
-            } catch (error) {
-                if (error.response && error.response.status === 404) {
-                    console.log("Enrolled student list returned 404");
-                } else {
-                    console.log(error);
-                }
-            }
-        };
-     try {
-        if(StudentModal === true)
-        {
-            getStudentList()
-        }
-        
-         } catch (error) {
-        console.log(error)
-        }
-             
-    },[StudentModal,count])
-
-
-
-    useEffect(()=>{
-       
-        const getTutorList = async ()=>{
-            console.log("courseId",courseId)
-            SetTutorDropDownLoader(true)
-
-            const response = await AdminAxiosInstance.get(`api/course/tutor-not-added/${CourseId}`);
-             const EnrolledTutors = await AdminAxiosInstance.get(`api/course/tutor-enrolled/${CourseId}`);
-             console.log("tutor list")
-             console.log(EnrolledTutors.data)
-             if(response.data && EnrolledTutors.data){
-                 SetTutorDropDownList(response.data)
-                 SetEnrolledTutorDropDownList(EnrolledTutors.data)
-                 SetTutorDropDownLoader(false)
-
-             }
-                                      }
-             
-     try {
-        if(TutorModal === true)
-        {
-           getTutorList()
-        }
-        
-     } catch (error) {
-        console.log(error)
-     }
-             
-    },[TutorModal,count])
-
- 
- //function to close the modal
-    const HandleModalClose=()=>{
-            setTutorModal(false)  
-            setStudentModal(false)
-    try {
-      if (TutorModal === true) {
-        getTutorList();
-      }
-    } catch (error) {
-      console.log(error);
+    if (TutorModal) {
+      getTutorList();
     }
-  }, [TutorModal, count]);
+  }, [TutorModal, courseId, count]);
 
-  //function to close the modal
   const HandleModalClose = () => {
     setTutorModal(false);
     setStudentModal(false);
@@ -261,40 +173,36 @@ const Coursedetails = ({ edit }) => {
               </div>
 
               <div className="w-full mt-4 relative">
-                            <div className="flex w-full gap-x-6 px-2">
-                                {['about', 'modules', 'tests', 'review'].map(
-                                    (tab, index) => (
-                                        <button
-                                            key={index}
-                                            className={`relative py-2 ${
-                                                activeTab === tab
-                                                    ? 'border-b-4 border-amber-500'
-                                                    : ''
-                                            }`}
-                                            onClick={() => handleTabClick(tab)}
-                                        >
-                                            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                                        </button>
-                                    )
-                                )}
-                            </div>
-                        </div>
+                <div className="flex w-full gap-x-6 px-2">
+                  {['about', 'modules', 'tests', 'review'].map((tab, index) => (
+                    <button
+                      key={index}
+                      className={`relative py-2 ${
+                        activeTab === tab
+                          ? 'border-b-4 border-amber-500'
+                          : ''
+                      }`}
+                      onClick={() => handleTabClick(tab)}
+                    >
+                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-              <div className="text-sm  md:text-base relative mt-4 overflow-hidden h-max">
-                
-                  {activeTab === "about" && (
-                    <AboutContent about={Course?.description} />
-                  )}
-                  {activeTab === "modules" && (
-                    <ModuleContent modules={Course?.modules} />
-                  )}
-                  {activeTab === "tests" && (
-                    <TestsContent tests={Course?.tests} />
-                  )}
-                  {activeTab === "review" && (
-                    <ReviewContent review={Course?.review} />
-                  )}
-                
+              <div className="text-sm md:text-base relative mt-4 overflow-hidden h-max">
+                {activeTab === "about" && (
+                  <AboutContent about={Course?.description} />
+                )}
+                {activeTab === "modules" && (
+                  <ModuleContent modules={Course?.modules} />
+                )}
+                {activeTab === "tests" && (
+                  <TestsContent tests={Course?.tests} />
+                )}
+                {activeTab === "review" && (
+                  <ReviewContent review={Course?.review} />
+                )}
               </div>
             </div>
             <Asidebar {...asidebarProps} />

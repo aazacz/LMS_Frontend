@@ -27,17 +27,15 @@ const CourseList = () => {
     const getCourseList = async () => {
 
         try {
-            console.log("useQuery funciton hitted")
             const response = await axiosInstanceStudent.get(`api/student-course/all-active-courses`            
               );
-              console.log("response.data")
+              console.log("response.data api/student-course/all-active-courses")
               console.log(response.data)
               SetCourse(response.data)
           return response.data;
        
         } catch (error) {
-            console.log("error")
-            console.log(error)
+            console.log("error", error)
         }
       
     };
@@ -234,3 +232,7 @@ const SkeletonCard = () => {
         </div>
     );
 };
+
+
+
+

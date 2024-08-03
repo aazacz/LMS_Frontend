@@ -30,6 +30,7 @@ const StudentEnrolledListTable = ({courseId}) => {
         }
       };
     
+      
       const confirmDelete = (studentId, event) => {
         event.preventDefault();
     

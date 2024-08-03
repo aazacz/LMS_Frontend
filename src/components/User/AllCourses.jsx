@@ -10,58 +10,60 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useSelector } from "react-redux";
 
 const AllCourses = () => {
-  const token = useSelector((state) => state.AdminDetails.token);
+    const token = useSelector((state) => state.AdminDetails.token);
 
-  const [EnrolledCourse, SetEnrolledCourse] = useState();
-  const [Course, SetCourse] = useState();
+    const [EnrolledCourse,SetEnrolledCourse]= useState()
+    const [Course,SetCourse]= useState()
 
-  const getEnrolledList = async () => {
-    const response = await axiosInstanceStudent.get(
-      "api/student-course/enrolled-courses"
-    );
-    SetEnrolledCourse(response.data);
-    // return response.data;
-  };
-
-  const getCourseList = async () => {
-    try {
-      console.log("useQuery funciton hitted");
-      const response = await axiosInstanceStudent.get(
-        `api/student-course/all-active-courses`
-      );
-      console.log("response.data");
-      console.log(response.data);
-      SetCourse(response.data);
-      return response.data;
-    } catch (error) {
-      console.log("error");
-      console.log(error);
+    const getEnrolledList= async ()=>{
+        const response = await axiosInstanceStudent.get("api/student-course/enrolled-courses");
+        SetEnrolledCourse(response.data)
+        // return response.data;
     }
-  };
+    const getCourseList = async () => {
 
-  const { data, isLoading, isPending, refetch } = useQuery({
-    queryKey: ["ActiveCourse"],
-    queryFn: getCourseList,
-    staleTime: 8000,
-    refetchInterval: 60000,
-  });
+        try {
+            console.log("useQuery funciton hitted")
+            const response = await axiosInstanceStudent.get(`api/student-course/all-active-courses`            
+              );
+              console.log("response.data")
+              console.log(response.data)
+              SetCourse(response.data)
+          return response.data;
 
-  useEffect(() => {
-    refetch();
-    getEnrolledList();
-  }, []);
+        } catch (error) {
+            console.log("error")
+            console.log(error)
+        }
 
-  useEffect(() => {
-    console.log("EnrolledCourse");
-    console.log(EnrolledCourse);
-  }, [EnrolledCourse]);
+    };
 
-  const bestinmarket = [
-    { title: "Introduction Basic SAT & DSAT" },
-    { title: "Introduction Basic SAT & DSAT" },
-    { title: "Introduction Basic SAT & DSAT" },
-    { title: "Introduction Basic SAT & DSAT" },
-  ];
+
+        const { data, isLoading, isPending, refetch } = useQuery({
+            queryKey: ['ActiveCourse'],
+            queryFn: getCourseList,
+            staleTime: 8000,
+            refetchInterval: 60000,
+        });
+
+
+    useEffect(()=>{
+        refetch()
+        getEnrolledList()
+    },[])
+
+    useEffect(()=>{
+        console.log("EnrolledCourse")
+        console.log(EnrolledCourse)
+    },[EnrolledCourse])
+
+
+    const bestinmarket = [
+        { title: 'Introduction Basic SAT & DSAT' },
+        { title: 'Introduction Basic SAT & DSAT' },
+        { title: 'Introduction Basic SAT & DSAT' },
+        { title: 'Introduction Basic SAT & DSAT' },
+    ];
 
   return (
     <div className="p-4 pb-10  h-max   no-scrollbar w-full">
@@ -165,7 +167,7 @@ const AllCourses = () => {
     </div>
   );
 };
-
+ 
 export default AllCourses;
 
 // Course Card Component

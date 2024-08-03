@@ -2,18 +2,42 @@ import React, { useState, useEffect } from "react";
 import { FaCirclePlus } from "react-icons/fa6";
 import axios from "axios";
 import Swal from "sweetalert2";
-import PackageModal from "./Modal/PackageModal"; 
+import PackageModal from "./Modal/PackageModal";
+import { AdminAxiosInstance } from "../../routes/AdminRoutes";
+import { toast } from "react-toastify";
+import EditPackageModal from "./Modal/EditModal";
 
 const Package = () => {
-  const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000/';
+  const baseURL = process.env.REACT_APP_API_URL || "http://localhost:4000/";
   const [packages, setPackages] = useState([]);
   const [editingPackageId, setEditingPackageId] = useState(null);
   const [editPackageValue, setEditPackageValue] = useState("");
   const [deleteSuccess, setDeleteSuccess] = useState(false);
-  const [addSuccess, setAddSuccess] = useState(false); 
+  const [addSuccess, setAddSuccess] = useState(false);
   const [error, setError] = useState();
   const [showModal, setShowModal] = useState(false);
   const [newPackageName, setNewPackageName] = useState("");
+
+  ///////////////////////////////
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingPackage, setEditingPackage] = useState(null);
+
+  const openEditModal = (packageData) => {
+    setEditingPackage(packageData);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setEditingPackageId(null);
+    setIsEditModalOpen(false);
+    setEditingPackage(null);
+  };
+
+  const closeModal = () => {
+    // setEditingPackageId(null);
+    setShowModal(false);
+    setNewPackageName("");
+  };
 
   useEffect(() => {
     const fetchPackages = async () => {
@@ -27,36 +51,80 @@ const Package = () => {
       }
     };
     fetchPackages();
-  }, [baseURL ,deleteSuccess]);
+  }, [baseURL, deleteSuccess]);
 
   const handleEdit = (id, initialPackageName) => {
     setEditingPackageId(id);
     setEditPackageValue(initialPackageName);
   };
 
-  const handleSave = async (id) => {
+  // const handleSave = async (id) => {
+  //   try {
+  //     const packageId = id;
+  //     const updatedPackageData = {
+  //       packageName: editPackageValue,
+  //     };
+
+  //     const response = await axios.put(
+  //       `${baseURL}api/package/update-package/${packageId}`,
+  //       updatedPackageData
+  //     );
+
+  //     const updatedPackages = packages.map((pkg) =>
+  //       pkg._id === packageId ? { ...pkg, packageName: editPackageValue } : pkg
+  //     );
+  //     setPackages(updatedPackages);
+
+  //     setEditingPackageId(null);
+  //     setEditPackageValue("");
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
+
+  const handleSave = async (e, packageName, features, price, currency) => {
+    e.preventDefault();
     try {
-      const packageId = id;
-      const updatedPackageData = {
-        packageName: editPackageValue,
-      };
+        console.log("dfghjk");
+        console.log(features);
 
-      const response = await axios.put(
-        `${baseURL}api/package/update-package/${packageId}`,
-        updatedPackageData
-      );
+        // Ensure features is an array and format it if needed
+        const formattedFeatures = features.map((feature) => ({
+            description: feature.description.trim(),
+            isActive: feature.isActive,
+        }));
+        console.log(formattedFeatures);
+        console.log(packageName);
 
-      const updatedPackages = packages.map((pkg) =>
-        pkg._id === packageId ? { ...pkg, packageName: editPackageValue } : pkg
-      );
-      setPackages(updatedPackages);
+        // Validate price and currency
+        if (typeof price !== "number" || price <= 0) {
+            throw new Error("Price must be a positive number");
+        }
+        if (typeof currency !== "string" || !currency.trim()) {
+            throw new Error("Currency must be a non-empty string");
+        }
 
-      setEditingPackageId(null);
-      setEditPackageValue("");
+        // Make an API call to save the data
+        const response = await AdminAxiosInstance.post(`api/package/create`, {
+            packageName: packageName.trim(),
+            features: formattedFeatures,
+            price: price,  // Add price to the request
+            currency: currency.trim()  // Add currency to the request
+        });
+
+        if (response.data.message === "Package Created Successfully") {
+            toast.success("Package Created Successfully");
+        }
+
+        // Handle the response, e.g., update state or show a success message
+        console.log("Package saved successfully", response.data);
     } catch (error) {
-      setError(error.message);
+        // Handle errors
+        console.error("Error saving package:", error.message);
+        toast.error(error.message);  // Show an error message if validation fails
     }
-  };
+};
+
 
   const handleCancelEdit = () => {
     setEditingPackageId(null);
@@ -91,13 +159,22 @@ const Package = () => {
     }
   };
 
-  const openModal = () => {
-    setShowModal(true);
+  const handleView = async (id) => {
+    console.log("Hello This is View");
+
+    try {
+      const packageId = id;
+      const response = await axios.get(
+        `${baseURL}api/package/get-package-by-id/${packageId}`
+      );
+      console.log(response.data);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-    setNewPackageName(""); 
+  const openModal = () => {
+    setShowModal(true);
   };
 
   const handleModalSave = async () => {
@@ -106,14 +183,14 @@ const Package = () => {
         packageName: newPackageName,
       });
 
-      setPackages([...packages, response.data]); 
-      setAddSuccess(true); 
+      setPackages([...packages, response.data]);
+      setAddSuccess(true);
 
       setTimeout(() => {
-        setAddSuccess(false); 
+        setAddSuccess(false);
       }, 3000);
 
-      closeModal(); 
+      closeModal();
     } catch (error) {
       setError(error.message);
     }
@@ -197,7 +274,9 @@ const Package = () => {
                 ) : (
                   <button
                     className="px-4 py-2 bg-green-500 text-white font-medium rounded-md"
-                    onClick={() => handleEdit(data._id, data.packageName)}
+                    onClick={() =>
+                      handleEdit(data._id, data.packageName, data.features)
+                    }
                   >
                     Edit
                   </button>
@@ -208,6 +287,14 @@ const Package = () => {
                 >
                   Delete
                 </button>
+                <button
+                  onClick={() =>
+                    handleView(data._id, data.packageName, data.features)
+                  }
+                  className="px-4 py-2 bg-gray-400 text-white font-medium rounded-md"
+                >
+                  View
+                </button>
               </td>
             </tr>
           ))}
@@ -215,11 +302,20 @@ const Package = () => {
       </table>
 
       <PackageModal
+        handleSave={handleSave}
         isOpen={showModal}
-        onClose={closeModal}
+        closeModal={closeModal}
         onSave={handleModalSave}
         value={newPackageName}
         onChange={handleModalInputChange}
+      />
+
+      <EditPackageModal
+        // handleSave={}
+        isOpen={!!editingPackageId}
+        onClose={closeEditModal}
+        value={newPackageName}
+        packageData={packages.find((pkg) => pkg._id === editingPackageId)}
       />
     </div>
   );

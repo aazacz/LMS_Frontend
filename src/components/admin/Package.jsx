@@ -34,7 +34,6 @@ const Package = () => {
   };
 
   const closeModal = () => {
-    console.log("Hell Yeah");
     // setEditingPackageId(null);
     setShowModal(false);
     setNewPackageName("");
@@ -83,34 +82,49 @@ const Package = () => {
   //   }
   // };
 
-  const handleSave = async (e, packageName, features) => {
+  const handleSave = async (e, packageName, features, price, currency) => {
     e.preventDefault();
     try {
-      console.log("dfghjk");
-      console.log(features);
-      // Ensure features is an array and format it if needed
-      const formattedFeatures = features.map((feature) => ({
-        description: feature.description.trim(),
-        isActive: feature.isActive,
-      }));
-      console.log(formattedFeatures);
-      console.log(packageName);
-      // Make an API call to save the data
-      const response = await AdminAxiosInstance.post(`api/package/create`, {
-        packageName: packageName.trim(),
-        features: formattedFeatures,
-      });
-      if (response.data.message === "Package Created Successfully") {
-        toast.success("Package Created Successfully");
-      }
+        console.log("dfghjk");
+        console.log(features);
 
-      // Handle the response, e.g., update state or show a success message
-      console.log("Package saved successfully", response.data);
+        // Ensure features is an array and format it if needed
+        const formattedFeatures = features.map((feature) => ({
+            description: feature.description.trim(),
+            isActive: feature.isActive,
+        }));
+        console.log(formattedFeatures);
+        console.log(packageName);
+
+        // Validate price and currency
+        if (typeof price !== "number" || price <= 0) {
+            throw new Error("Price must be a positive number");
+        }
+        if (typeof currency !== "string" || !currency.trim()) {
+            throw new Error("Currency must be a non-empty string");
+        }
+
+        // Make an API call to save the data
+        const response = await AdminAxiosInstance.post(`api/package/create`, {
+            packageName: packageName.trim(),
+            features: formattedFeatures,
+            price: price,  // Add price to the request
+            currency: currency.trim()  // Add currency to the request
+        });
+
+        if (response.data.message === "Package Created Successfully") {
+            toast.success("Package Created Successfully");
+        }
+
+        // Handle the response, e.g., update state or show a success message
+        console.log("Package saved successfully", response.data);
     } catch (error) {
-      // Handle errors
-      console.error("Error saving package:", error);
+        // Handle errors
+        console.error("Error saving package:", error.message);
+        toast.error(error.message);  // Show an error message if validation fails
     }
-  };
+};
+
 
   const handleCancelEdit = () => {
     setEditingPackageId(null);
@@ -140,6 +154,20 @@ const Package = () => {
           setDeleteSuccess(false);
         }, 3000);
       }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleView = async (id) => {
+    console.log("Hello This is View");
+
+    try {
+      const packageId = id;
+      const response = await axios.get(
+        `${baseURL}api/package/get-package-by-id/${packageId}`
+      );
+      console.log(response.data);
     } catch (error) {
       setError(error.message);
     }
@@ -200,7 +228,6 @@ const Package = () => {
         <div
           className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
           role="alert"
-          
         >
           Package added successfully!
         </div>
@@ -259,6 +286,14 @@ const Package = () => {
                   onClick={() => handleDelete(data._id)}
                 >
                   Delete
+                </button>
+                <button
+                  onClick={() =>
+                    handleView(data._id, data.packageName, data.features)
+                  }
+                  className="px-4 py-2 bg-gray-400 text-white font-medium rounded-md"
+                >
+                  View
                 </button>
               </td>
             </tr>

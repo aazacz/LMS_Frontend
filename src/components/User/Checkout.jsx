@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import sat from "../../assets/Admin/sat.jpg";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
+import axios from "axios";
 
 const Checkout = () => {
   const { courseType, courseId } = useParams();
   const [Course, setCourse] = useState(null);
   const navigate = useNavigate();
 
+  const key = process.env.REACT_APP_KEY;
+  const key_secret = process.env.REACT_APP_KEY_SECRET;
+
   useEffect(() => {
     const getCourseDetails = async () => {
-        if (courseId && courseType) {
+      if (courseId && courseType) {
         if (courseType === "individual") {
           const response = await axiosInstanceStudent.get(
             `api/structure/get/${courseId}`
@@ -27,12 +31,9 @@ const Checkout = () => {
           setCourse(response.data);
         }
       }
-    }
+    };
     getCourseDetails();
   }, [courseId, courseType]);
-
-  const key = process.env.REACT_APP_KEY;
-  const key_secret = process.env.REACT_APP_KEY_SECRET;
 
   const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -49,17 +50,25 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    loadScript("https://checkout.razorpay.com/v1/checkout.js");
+    const loadRazorpayScript = async () => {
+      const result = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+      if (!result) {
+        console.error("Failed to load Razorpay script");
+      }
+    };
+
+    loadRazorpayScript();
+
     return () => {
-      const script = document.querySelector(
-        `script[src="https://checkout.razorpay.com/v1/checkout.js"]`
-      );
-      if (script) script.remove();
+      const script = document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]');
+      if (script) {
+        script.remove();
+      }
     };
   }, []);
 
   const handlePayment = () => {
-    var options = {
+    const options = {
       key: key,
       key_secret: key_secret,
       amount: Course.price * 100,
@@ -94,7 +103,7 @@ const Checkout = () => {
         }
       },
     };
-    var pay = new window.Razorpay(options);
+    const pay = new window.Razorpay(options);
     pay.open();
   };
 
@@ -186,5 +195,6 @@ const Checkout = () => {
     </>
   );
 };
+
 
 export default Checkout;

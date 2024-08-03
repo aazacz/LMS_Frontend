@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const currencies = ["USD", "INR"];
+
 const EditPackageModal = ({
   isOpen,
   closeModal,
@@ -9,12 +11,12 @@ const EditPackageModal = ({
   handleSave,
   packageData,
 }) => {
-  const baseURL = process.env.REACT_APP_API_URL || "http://localhost:4000/";
+  const baseURL = process.env.REACT_APP_API_URL ;
   const [packageName, setPackageName] = useState("");
   const [features, setFeatures] = useState([]);
+  const [price, setPrice] = useState("");
+  const [currency, setCurrency] = useState("");
   const [error, setError] = useState("");
-
-  console.log({ isOpen });
 
   useEffect(() => {
     if (packageData) {
@@ -22,6 +24,8 @@ const EditPackageModal = ({
       setFeatures(
         packageData.features || [{ description: "", isActive: true }]
       );
+      setPrice(packageData.price || "");
+      setCurrency(packageData.currency || "");
     }
   }, [packageData]);
 
@@ -29,6 +33,14 @@ const EditPackageModal = ({
     e.preventDefault();
     if (!packageName.trim()) {
       setError("Package name cannot be empty.");
+      return;
+    }
+    if (!price.trim() || isNaN(price) || Number(price) < 0) {
+      setError("Price must be a non-negative number.");
+      return;
+    }
+    if (!currency.trim()) {
+      setError("Currency cannot be empty.");
       return;
     }
     const emptyFeature = features.some(
@@ -41,7 +53,13 @@ const EditPackageModal = ({
     setError(""); // Clear error message if validation passes
 
     // Prepare data to send
-    const updatedPackage = { ...packageData, packageName, features };
+    const updatedPackage = {
+      ...packageData,
+      packageName,
+      features,
+      price,
+      currency,
+    };
 
     try {
       const response = await axios.put(
@@ -55,29 +73,21 @@ const EditPackageModal = ({
       );
 
       if (response.status === 200) {
-        // Show success message
         toast.success("Package updated successfully!");
-        onClose();
-
-        // Call the handleSave function passed from parent component
-        // handleSave(updatedPackage);
-
-        // Close the modal
+        
+        onClose(); // Close the modal
+        // handleSave(updatedPackage); // Call the handleSave function
       } else {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (error) {
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
         toast.error(
           `Error: ${error.response.data.message || "Failed to update package"}`
         );
       } else if (error.request) {
-        // The request was made but no response was received
         toast.error("No response received from server");
       } else {
-        // Something happened in setting up the request that triggered an Error
         toast.error(`Error: ${error.message}`);
       }
     }
@@ -85,6 +95,14 @@ const EditPackageModal = ({
 
   const handlePackageNameChange = (e) => {
     setPackageName(e.target.value);
+  };
+
+  const handlePriceChange = (e) => {
+    setPrice(e.target.value);
+  };
+
+  const handleCurrencyChange = (e) => {
+    setCurrency(e.target.value);
   };
 
   const handleFeatureDescriptionChange = (index, e) => {
@@ -163,6 +181,47 @@ const EditPackageModal = ({
                         />
                       </div>
                       <div className="mb-4">
+                        <label
+                          htmlFor="price"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Price
+                        </label>
+                        <input
+                          type="number"
+                          name="price"
+                          id="price"
+                          value={price}
+                          onChange={handlePriceChange}
+                          min="0" // Prevent input below 0
+                          className="mt-1 border-2 border-black h-8 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm px-2 rounded-md"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          htmlFor="currency"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Currency
+                        </label>
+                        <select
+                          name="currency"
+                          id="currency"
+                          value={currency}
+                          onChange={handleCurrencyChange}
+                          className="mt-1 border-2 border-black h-8 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm px-2 rounded-md"
+                        >
+                          <option value="" disabled>
+                            Select currency
+                          </option>
+                          {currencies.map((curr, index) => (
+                            <option key={index} value={curr}>
+                              {curr}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="mb-4">
                         <h4 className="text-sm font-medium text-gray-700">
                           Features
                         </h4>
@@ -201,16 +260,15 @@ const EditPackageModal = ({
                   </div>
                   <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button
-                      onClick={handleSave}
-                      className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      type="submit"
+                      className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:w-auto sm:text-sm"
                     >
                       Update
                     </button>
                     <button
-                      onClick={onClose}
-                      //   onClick={() => console.log("hh")}
                       type="button"
-                      className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                      onClick={onClose}
+                      className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto sm:text-sm"
                     >
                       Cancel
                     </button>

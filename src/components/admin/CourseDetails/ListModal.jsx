@@ -26,50 +26,50 @@ console.log(List)
 
 
 
-useEffect(()=>{
-    const getStudentList = async () => {
-        try {
-            const response = await AdminAxiosInstance.get(`api/course/student-not-added/${courseId}`);
-            console.log("response.data student not addeddddddddd");
-            console.log(response.data);
-            if (response.data) {
-                SetStudentDropDownList(response.data);
-            }
-        } catch (error) {
-            if (error.response && error.response.status === 404) {
-                console.log("Student not added list returned 404");
-            } else {
-                console.log(error);
-            }
-        }
+// useEffect(()=>{
+//     const getStudentList = async () => {
+//         try {
+//             const response = await AdminAxiosInstance.get(`api/course/student-not-added/${courseId}`);
+//             console.log("response.data student not addeddddddddd");
+//             console.log(response.data);
+//             if (response.data) {
+//                 SetStudentDropDownList(response.data);
+//             }
+//         } catch (error) {
+//             if (error.response && error.response.status === 404) {
+//                 console.log("Student not added list returned 404");
+//             } else {
+//                 console.log(error);
+//             }
+//         }
     
-        try {
-            const EnrolledStudents = await AdminAxiosInstance.get(`api/course/student-enrolled/${courseId}`);
-            console.log("EnrolledStudents.data student not addeddddddddd");
-            console.log(EnrolledStudents.data);
-            if (EnrolledStudents.data) {
-                SetEnrolledStudentDropDownList(EnrolledStudents.data);
-            }
-        } catch (error) {
-            if (error.response && error.response.status === 404) {
-                console.log("Enrolled student list returned 404");
-            } else {
-                console.log(error);
-            }
-        }
-    };
+//         try {
+//             const EnrolledStudents = await AdminAxiosInstance.get(`api/course/student-enrolled/${courseId}`);
+//             console.log("EnrolledStudents.data student not addeddddddddd");
+//             console.log(EnrolledStudents.data);
+//             if (EnrolledStudents.data) {
+//                 SetEnrolledStudentDropDownList(EnrolledStudents.data);
+//             }
+//         } catch (error) {
+//             if (error.response && error.response.status === 404) {
+//                 console.log("Enrolled student list returned 404");
+//             } else {
+//                 console.log(error);
+//             }
+//         }
+//     };
     
- try {
+//  try {
    
  
-        getStudentList()
+//         getStudentList()
 
     
-     } catch (error) {
-    console.log(error)
-    }
+//      } catch (error) {
+//     console.log(error)
+//     }
          
-},[])
+// },[])
 
 
 

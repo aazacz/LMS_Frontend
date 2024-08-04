@@ -127,7 +127,7 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
 
   return (
     <div
-      className={` h-full bg-white overflow-y-auto absolute  md:sticky  z-50
+      className={` h-full bg-white overflow-y-auto  no-scrollbar absolute  md:sticky  z-50
                        ${
                          isSidebarOpen
                            ? ""

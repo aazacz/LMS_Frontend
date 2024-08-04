@@ -10,8 +10,11 @@ import profile from "../../assets/Student/profile.jpeg";
 import { motion, AnimatePresence } from "framer-motion";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { clearStudentDetails } from "../../store/reducers/StudentloginSlice";
+import { clearStudentDetails } from "../../store/reducers/StudentloginSlice";
 
 const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
+  const [show, setShow] = useState(false);
+  const [Showsidebar, setShowsidebar] = useState(false);
   const [show, setShow] = useState(false);
   const [Showsidebar, setShowsidebar] = useState(false);
 
@@ -24,13 +27,26 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
   const handleToggle = () => {
     setShow(!show);
   };
+  const handleToggle = () => {
+    setShow(!show);
+  };
 
   useEffect(() => {
     console.log(Showsidebar);
   }, [Showsidebar]);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(Showsidebar);
+  }, [Showsidebar]);
 
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    setShowsidebar(false);
+    dispatch(clearStudentDetails());
+    navigate("/");
+  };
   const handleLogout = () => {
     setShowsidebar(false);
     dispatch(clearStudentDetails());

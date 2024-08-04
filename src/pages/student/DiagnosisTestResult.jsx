@@ -1,25 +1,28 @@
-import { React, useState, useEffect , useRef } from "react";
-import { Link } from "react-router-dom";
+import { React, useState, useEffect, useRef } from "react";
+import { Link, useParams } from "react-router-dom";
 import DoughnutChart from "./DoughnutChart";
 import Background from "../../components/reusable/Background";
 import axios from "axios";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
+import { get } from "react-hook-form";
+import Loader from "../../components/reusable/Loader";
 const DiagnosisTestResult = () => {
-  
   const baseURL = process.env.REACT_APP_API_URL;
-  const [testDetails, setTestDetails] = useState([]);
+  const [testResult, setTestResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const topRef = useRef(null);
-
-
+  const { resultId } = useParams();
 
   useEffect(() => {
     const fetchTestDetails = async () => {
       try {
         const response = await axiosInstanceStudent.get(
-          `api/diagnosis/get-active-diagnosis`
+          `api/diagnosis/result/${resultId}`
         );
-        setTestDetails(response.data);
+        console.log({
+          response: response.data,
+        });
+        setTestResult(response.data);
       } catch (error) {
         console.error("Error fetching test details:", error);
       } finally {
@@ -34,7 +37,7 @@ const DiagnosisTestResult = () => {
     return <div>Loading...</div>;
   }
 
-  if (!testDetails) {
+  if (!testResult) {
     return <div>Error loading test details.</div>;
   }
   const handleScrollToTop = () => {
@@ -42,8 +45,32 @@ const DiagnosisTestResult = () => {
       topRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const getCorrectCount = () => {
+    if (!testResult) return <></>;
+    let count = 0;
+    testResult.questions.forEach((question) => {
+      if (question.selectedOption === question.correctOption) count++;
+    });
+    return count;
+  };
+  const getWrongCount = () => {
+    if (!testResult) return <></>;
+    let count = 0;
+    testResult.questions.forEach((question) => {
+      if (question.selectedOption !== question.correctOption) count++;
+    });
+    return count;
+  };
+  const getLeftCount = () => {
+    if (!testResult) return <></>;
+    let count = 0;
+    testResult.questions.forEach((question) => {
+      if (question.selectedOption === "") count++;
+    });
+    return count;
+  };
 
-  return (
+  return testResult ? (
     <div className="Test  w-screen h-screen overflow-y-scroll p-2 relative">
       <div className="fixed top-0 left-0 -z-10">
         <Background />
@@ -59,7 +86,7 @@ const DiagnosisTestResult = () => {
           </h1>
 
           <h1 className="font-bold md:text-2xl font-poppins text-lg ">
-            Your Score : 35/40
+            Your Score : {testResult.score}/{testResult.totalMarks}
           </h1>
           {/*  Button  */}
           <div className="w-full flex justify-center items-center px-2 flex-wrap  gap-x-8">
@@ -91,30 +118,30 @@ const DiagnosisTestResult = () => {
               </div>
 
               <h1 className="font-poppins font-bold text-xs border  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
-                10 Questions
+                {testResult?.questions?.length} Questions
               </h1>
             </div>
 
             <span className="flex items-center gap-x-2">
               {" "}
               <span className="w-6 h-6 rounded-full bg-[#444444]"></span>
-              <h2> 10 Questions</h2>
+              <h2> {testResult?.questions?.length} Questions</h2>
             </span>
 
             <span className="flex items-center gap-x-2">
               {" "}
               <span className="w-6 h-6 rounded-full bg-[#67FE4E]"></span>
-              <h2> 10 Questions</h2>
+              <h2> {getCorrectCount()} Questions</h2>
             </span>
             <span className="flex items-center gap-x-2">
               {" "}
               <span className="w-6 h-6 rounded-full bg-[#FE4E4E]"></span>
-              <h2> 10 Questions</h2>
+              <h2> {getWrongCount()} Questions</h2>
             </span>
             <span className="flex items-center gap-x-2">
               {" "}
               <span className="w-6 h-6 rounded-full bg-[#FB4EFE]"></span>
-              <h2> 10 Questions</h2>
+              <h2> {getLeftCount()} Questions</h2>
             </span>
           </div>
         </div>
@@ -126,7 +153,7 @@ const DiagnosisTestResult = () => {
             <h1 className="  font-poppins font-semibold text-base md:text-xl">
               Explanation
             </h1>
-            {testDetails?.questions?.map((question, index) => (
+            {testResult?.questions?.map((question, index) => (
               <div
                 key={question._id}
                 className="bg-white w-full p-8 rounded-[35px] my-6 border-[#0066DE] border-2 py-3"
@@ -141,15 +168,19 @@ const DiagnosisTestResult = () => {
                     </h1>
                   </div>
                 </div>
-                <div className="text-sm md:text-base w-full">
-                  {question.choices.map((choice, idx) => (
-                    <div key={idx}>
-                      <span className="flex gap-x-2 items-center">
-                        <div className="w-1 h-1 rounded-full bg-black"></div>{" "}
-                        {choice.choiceText}
-                      </span>
-                    </div>
-                  ))}
+                <div className="flex flex-col gap-1 ml-8">
+                  <div className="flex gap-2">
+                    <p className="font-semibold">Selected option : </p>
+                    <p className="">{question.selectedOption}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <p className="font-semibold">Correct option : </p>
+                    <p className="">{question.correctOption}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <p className="font-semibold">Explanation : </p>
+                    <p className="">{question.explanation}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -157,6 +188,8 @@ const DiagnosisTestResult = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <Loader />
   );
 };
 

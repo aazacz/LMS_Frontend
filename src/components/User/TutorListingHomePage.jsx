@@ -10,10 +10,10 @@ const TutorCard = ({ tutor }) => (
       <img src={profile} className="object-cover" alt="tutor" />
     </div>
     <div className="ml-2 w-full">
-      <h3 className="font-bold text-sm line-clamp-1 w-full font-plusjakartasans">
+      <h3 className="font-bold text-sm line-clamp-1 w-full font-poppins">
         {tutor?.name}
       </h3>
-      <p className="text-gray-600 text-xs font-plusjakartasans">
+      <p className="text-gray-600 text-xs font-poppins">
         {2} Sessions attended
       </p>
       <div className="flex items-center mt-1">
@@ -55,7 +55,9 @@ const TutorListingHomePage = () => {
       ) : (
         <div className="w-full flex flex-col ">
           <div>
-            <p className="font-poppins font-bold text-left mt-3">Tutors Best In Market</p>
+            <p className="font-poppins font-bold text-left mt-3">
+              Tutors Best In Market
+            </p>
           </div>
           {TutorList.map((tutor, index) => (
             <TutorCard key={index} tutor={tutor} />

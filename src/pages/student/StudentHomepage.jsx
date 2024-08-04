@@ -93,7 +93,7 @@ const StudentHomepage = () => {
                     path="/diagnosistestresult"
                     element={<DiagnosisTestResult />}
                   />
-                  <Route path="/a" element={<PaymentSuccess />} />
+                  <Route path="/success" element={<PaymentSuccess />} />
                   <Route path="/courses" element={<CourseList />} />
                   <Route path="/courses/allcourses" element={<AllCourses />} />
                   <Route

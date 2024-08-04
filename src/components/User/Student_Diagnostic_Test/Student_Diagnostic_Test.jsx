@@ -16,10 +16,6 @@ const Student_Diagnostic_Test = () => {
         const response = await axiosInstanceStudent.get(
           `api/test/diagnosis-test-active`
         );
-        console.log({
-          status: response.status,
-          notPaid: response.data?.notPaid,
-        });
         console.log("response");
         console.log(response);
         if (response.data) {
@@ -28,6 +24,12 @@ const Student_Diagnostic_Test = () => {
       } catch (error) {
         if (error.response?.status === 403 && error.response?.data?.notPaid) {
           return navigate("/diagnosistest/payment");
+        }
+        if (
+          error.response?.status === 400 &&
+          error.response?.data?.alreadyTaken
+        ) {
+          return navigate("/student");
         }
         console.error("Error fetching test details:", error);
         console.error(error);
@@ -42,9 +44,7 @@ const Student_Diagnostic_Test = () => {
   const handleSubmit = () => {
     // Check if testDetails has loaded and contains necessary data
     if (testDetails) {
-      navigate("/diagnosistest/test1", {
-        state: { testId: testDetails._id },
-      });
+      navigate("/diagnosistest/test");
     } else {
       console.error("Test details not loaded yet.");
     }
@@ -114,7 +114,7 @@ const Student_Diagnostic_Test = () => {
           className="student-diagnostic-test-submit-button px-4 py-2 w-full md:w-[30%] lg:w-[15%]"
           onClick={handleSubmit}
         >
-          <Link to={"/diagnosistest/test1"}>Continue</Link>
+          <Link to={"/diagnosistest/test"}>Continue</Link>
         </div>
       </div>
     </div>

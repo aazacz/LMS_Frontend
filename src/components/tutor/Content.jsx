@@ -170,41 +170,44 @@ const FullscreenLoader = () => (
   </div>
 );
 
-const CourseCard = ({ course, index }) => {
+const CourseCard = ({ course }) => {
   return (
-    <div className="bg-[#F4F5FB] p-4 rounded-2xl min-h-[16rem] h-auto">
-      <div className="w-full rounded-lg">
+    <div className="bg-gray-200 md:p-4 h-[230px] md:h-[300px] rounded-2xl flex flex-col items-center overflow-hidden p-3">
+      <div className=" w-full flex justify-center object-cover items-center rounded-xl overflow-hidden">
         {course?.imageUrl ? (
           <img
             src={course?.imageUrl}
-            className="rounded-lg w-full h-[140px] object-fill"
+            className="w-full h-[300px] "
             alt="Course"
           />
         ) : (
           <img
             src={coursephoto}
-            className="rounded-lg w-full object-contain"
+            className="w-full h-[300px] "
             alt="Course"
           />
         )}
       </div>
-      <div className="w-full mt-4">
-        <div className="min-h-[3rem]">
-          <h1 className="font-plusjakartasans font-semibold text-base line-clamp-2">
+
+      <div className="w-full m-2">
+        <div className=" md:min-h-[3rem]">
+          <h1 className="font-poppins font-semibold text-base line-clamp-1 md:line-clamp-2">
             {course.courseName}
           </h1>
         </div>
-        <div className="flex items-center gap-x-6 mt-2">
-          <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
+
+        <div className="flex flex-col md:flex-row md:items-center gap-x-2 ">
+          <span className="flex items-center gap-x-1 text-sm">
             <BiSpreadsheet className="text-gray-400" /> {course.modules.length}{" "}
             Modules
           </span>
-          <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
-            <LuTimer className="text-gray-400" />
-            {course.trainingDuration}
+          <span className="flex items-center gap-x-1 text-sm">
+            <LuTimer className="text-gray-400" /> {course.trainingDuration}hrs
           </span>
         </div>
       </div>
     </div>
   );
 };
+
+

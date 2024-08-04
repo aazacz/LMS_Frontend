@@ -221,7 +221,7 @@ const StudentList = () => {
   ];
 
   return (
-    <div className="px-9 ">
+    <div className="px-9 font-poppins ">
       <div className="main-container">
         <div>
           <div className="heading-column-toggle-container py-2">
@@ -229,28 +229,29 @@ const StudentList = () => {
               Students List
             </h1>
           </div>
-          <div className="header-container flex flex-wrap justify-between gap-x-4 ">
-            <div className=" w-full md:w-[60%] search-container border-2 border-[#03729b] p-1 flex rounded-md">
-              <SearchIcon className="text-[#03729b]" />
+          <div className="header-container flex flex-wrap gap-x-4 ">
+            <div className=" w-full md:w-[57%] h-max  search-container border-2 border-[#4348DB] rounded-md p-1 flex ">
               <input
                 type="text"
                 placeholder="Search"
                 value={searchQuery}
                 onChange={handleSearchInputChange}
-                className="w-full outline-none px-2"
+                className="w-full outline-none px-2 h-12 bg-gray-100"
               />
-            </div>
-            <div className="">
-              <DropdownMenu label="Course" />
-              <DropdownMenu label="Newest" />
-              <DropdownMenu label="Highest" />
+              <button className="text-sm w-[150px] h-12 bg-[#4348DB] text-white">
+                {" "}
+                <SearchIcon className="text-white" />
+                Show Results
+              </button>
             </div>
 
-            <div></div>
+            <DropdownMenu className="text-black border-2 " label="Course" />
+            <DropdownMenu className="text-black border-2 " label="Newest" />
+            <DropdownMenu className="text-black border-2 " label="Highest" />
           </div>
         </div>
 
-        <div className="table-container font-poppins ">
+        <div className="table-container font-poppins mt-2">
           <table className="responsive-table">
             <thead>
               <tr>
@@ -344,7 +345,7 @@ const StudentList = () => {
                                 onClick={() =>
                                   handleStudentBlocking("active", row._id)
                                 }
-                                className="font-poppins text-sm  border-[1px] border-blue-700 bg-blue-700 text-white cursor-pointer flex justify-center items-center"
+                                className="font-poppins text-sm  border-[1px] px-2 text-[10px] border-blue-700 bg-blue-700 text-white cursor-pointer flex justify-center items-center"
                               >
                                 {" "}
                                 Active
@@ -447,31 +448,53 @@ const StudentList = () => {
 export default StudentList;
 
 const DropdownMenu = ({ label }) => {
-    const [isOpen, setIsOpen] = useState(false);
-  
-    const toggleDropdown = () => setIsOpen(!isOpen);
-  
-    return (
-      <div className="relative inline-block text-left w-full md:w-auto">
-        <button
-          onClick={toggleDropdown}
-          className="inline-flex justify-center items-center w-full md:w-auto px-4 py-2 bg-white text-sm font-medium text-gray-700"
-        >
-          {label}
-          <span className="ml-2 p-1 bg-gray-300 rounded-full">
-            <FaChevronDown />
-          </span>
-        </button>
-        {isOpen && (
-          <div className="origin-top-right absolute right-0 mt-2 w-full md:w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
-            <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-              <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Option 1</a>
-              <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Option 2</a>
-              <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Option 3</a>
-            </div>
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => setIsOpen(!isOpen);
+
+  return (
+    <div className="relative mt-2 md:mt-0 inline-block w-auto border-2 rounded-md mx-4">
+      <button
+        onClick={toggleDropdown}
+        className="inline-flex mt-2 justify-center items-center w-full md:w-auto px-4 py-2 bg-white text-sm font-medium text-gray-700"
+      >
+        {label}
+        <span className="ml-2 p-1 bg-gray-300 ">
+          <FaChevronDown />
+        </span>
+      </button>
+      {isOpen && (
+        <div className="origin-top-right absolute right-0 mt-2 w-full md:w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+          <div
+            className="py-1"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="options-menu"
+          >
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
+              role="menuitem"
+            >
+              Option 1
+            </a>
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
+              role="menuitem"
+            >
+              Option 2
+            </a>
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-black hover:bg-gray-100"
+              role="menuitem"
+            >
+              Option 3
+            </a>
           </div>
-        )}
-      </div>
-    );
-  };
-  
+        </div>
+      )}
+    </div>
+  );
+};

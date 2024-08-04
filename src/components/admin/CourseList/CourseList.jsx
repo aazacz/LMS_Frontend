@@ -105,7 +105,7 @@ const CourseList = () => {
           <>
             {GridModal
                &&
-             <div className="grid grid-cols-2 mt-4 md:grid-cols-3 lg:grid-cols-4 gap-4">
+             <div className="grid grid-cols-1 mt-4 md:grid-cols-3 lg:grid-cols-4 gap-4">
            
             {courses?.map((course, index) => (
             

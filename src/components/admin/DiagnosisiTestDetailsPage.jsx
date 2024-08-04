@@ -8,7 +8,7 @@ const DiagnosisiTestDetailsPage = () => {
   const [data, setdata] = useState([]);
   const { diagnosisTestDetailsPage } = useParams();
   const navigate = useNavigate();
-
+  console.log({ diagnosisTestDetailsPage });
   useEffect(() => {
     axios
       .get(
@@ -27,7 +27,7 @@ const DiagnosisiTestDetailsPage = () => {
         className="p-2 bg-slate-400 rounded-md text-white"
         onClick={() => {
           navigate(
-            `/admin/home/diagnosistest/edit-diagnosistest/${diagnosisTestDetailsPage}`
+            `/admin/home/diagnosistest/edit/${diagnosisTestDetailsPage}`
           );
         }}
       >

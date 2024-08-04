@@ -1,8 +1,30 @@
 import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import "./QuestionBank.css";
+import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
+import { useQuery } from "@tanstack/react-query";
+
 
 const QuestionBank = () => {
+
+const fetchQuestions = async()=>{
+
+
+  const response = await AdminAxiosInstance.get("api/test/course-tests?page=1&pageSize=&search=")
+  console.log(response.data.data)
+  return response.data.data
+
+}
+
+
+
+const { data, isPending, refetch } = useQuery({
+                            queryKey: ["fetchAllTests"],
+                            queryFn: fetchQuestions,
+                            staleTime: 1000,
+                            refetchInterval: 60000,
+                          });
+
   const best = [
     { name: "John Doe", email: "john.doe@example.com" },
     { name: "Jane Smith", email: "jane.smith@example.com" },
@@ -23,57 +45,7 @@ const QuestionBank = () => {
     { name: "Jane Smith", email: "jane.smith@example.com" },
     // ... more items
   ];
-  const data = [
-    {
-      slno: 1,
-      name: "John Doe",
-      attempts: 28,
-      questions: "john@example.com",
-      negativemarks: "20",
-      marks: "20",
-    },
-    {
-      slno: 2,
-      name: "John Doe",
-      attempts: 28,
-      questions: "john@example.com",
-      negativemarks: "20",
-      marks: "20",
-    },
-    {
-      slno: 3,
-      name: "John Doe",
-      attempts: 28,
-      questions: "john@example.com",
-      negativemarks: "20",
-      marks: "20",
-    },
-    {
-      slno: 4,
-      name: "John Doe",
-      attempts: 28,
-      questions: "john@example.com",
-      negativemarks: "20",
-      marks: "20",
-    },
-    {
-      slno: 5,
-      name: "John Doe",
-      attempts: 28,
-      questions: "john@example.com",
-      negativemarks: "20",
-      marks: "20",
-    },
-    {
-      slno: 6,
-      name: "John Doe",
-      attempts: 28,
-      questions: "john@example.com",
-      negativemarks: "20",
-      marks: "20",
-    },
-  ];
-
+ 
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (event) => {
@@ -102,59 +74,55 @@ const QuestionBank = () => {
           {/*Table Starts Here*/}
 
           <div className="w-full overflow-x-auto bg-yellow-400">
-            <table className=" border-collapse">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Sl No
-                  </th>
-                  <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Name
-                  </th>
-                  <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden sm:table-cell">
-                    Attempts
-                  </th>
-                  <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden md:table-cell">
-                    Questions
-                  </th>
-                  <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden lg:table-cell">
-                    Negative Marks
-                  </th>
-                  <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Marks
-                  </th>
-                  <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {data.map((item) => (
-                  <tr key={item.slno}>
-                    <td className="p-2 whitespace-nowrap">{item.slno}</td>
-                    <td className="p-2 whitespace-nowrap">{item.name}</td>
-                    <td className="p-2 whitespace-nowrap hidden sm:table-cell">
-                      {item.attempts}
-                    </td>
-                    <td className="p-2 whitespace-nowrap hidden md:table-cell">
-                      {item.questions}
-                    </td>
-                    <td className="p-2 whitespace-nowrap hidden lg:table-cell">
-                      {item.negativemarks}
-                    </td>
-                    <td className="p-2 whitespace-nowrap">{item.marks}</td>
-                    <td className="p-2 flex gap-2 flex-wrap">
-                      <button className="px-2 py-1 text-xs border border-black rounded-md mr-2">
-                        Review
-                      </button>
-                      <button className="px-2 py-1 text-xs bg-blue-600 text-white rounded-md">
-                        Start
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <table className="border-collapse w-full">
+      <thead>
+        <tr className="bg-gray-50">
+          <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            Sl No
+          </th>
+          <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            Title
+          </th>
+          <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden sm:table-cell">
+            Positive Mark
+          </th>
+          <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden md:table-cell">
+            Negative Mark
+          </th>
+          <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden lg:table-cell">
+            No. of Questions
+          </th>
+          <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody className="bg-white divide-y divide-gray-200">
+        {!isPending && data?.map((item, index) => (
+          <tr key={item._id}>
+            <td className="p-2 whitespace-nowrap">{index + 1}</td>
+            <td className="p-2 whitespace-nowrap">{item.title}</td>
+            <td className="p-2 whitespace-nowrap hidden sm:table-cell">
+              {item.positiveMark}
+            </td>
+            <td className="p-2 whitespace-nowrap hidden md:table-cell">
+              {item.negativeMark}
+            </td>
+            <td className="p-2 whitespace-nowrap hidden lg:table-cell">
+              {item.questions.length}
+            </td>
+            <td className="p-2 flex gap-2 flex-wrap">
+              <button className="px-2 py-1 text-xs border border-black rounded-md mr-2">
+                Review
+              </button>
+              <button className="px-2 py-1 text-xs border border-black rounded-md mr-2">
+                view
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
           </div>
         </div>
 

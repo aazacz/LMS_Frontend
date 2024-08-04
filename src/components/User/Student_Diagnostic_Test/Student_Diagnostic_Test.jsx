@@ -16,10 +16,6 @@ const Student_Diagnostic_Test = () => {
         const response = await axiosInstanceStudent.get(
           `api/test/diagnosis-test-active`
         );
-        console.log({
-          status: response.status,
-          notPaid: response.data?.notPaid,
-        });
         console.log("response");
         console.log(response);
         if (response.data) {
@@ -28,6 +24,12 @@ const Student_Diagnostic_Test = () => {
       } catch (error) {
         if (error.response?.status === 403 && error.response?.data?.notPaid) {
           return navigate("/diagnosistest/payment");
+        }
+        if (
+          error.response?.status === 400 &&
+          error.response?.data?.alreadyTaken
+        ) {
+          return navigate("/student");
         }
         console.error("Error fetching test details:", error);
         console.error(error);

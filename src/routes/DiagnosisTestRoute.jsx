@@ -16,7 +16,7 @@ const DiagnosisTestRoute = () => {
     <Routes>
       <Route path="/instructions" element={<Student_Diagnostic_Test />} />
       <Route path="/test" element={<DiagnosisTest />} />
-      <Route path="/result" element={<DiagnosisTestResult />} />
+      <Route path="/result/:resultId" element={<DiagnosisTestResult />} />
       <Route path="/payment" element={<PaymentForTest />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>

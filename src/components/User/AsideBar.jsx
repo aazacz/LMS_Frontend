@@ -31,7 +31,7 @@ const Asidebar = ({ course, setTutorModal, setStudentModal }) => {
         <div className="px-6 ">
           <h1 className="font-poppins font-semibold text-lg">Modules List</h1>
           <div className="bg-white rounded-lg flex flex-col mt-5 p-5 items-center">
-            <h1 className="font-plusjakartasans font-bold line-clamp-2">
+            <h1 className="font-poppins font-bold line-clamp-2">
               {course ? course.courseName : ""}
             </h1>
             {modules.map((value, index) => (

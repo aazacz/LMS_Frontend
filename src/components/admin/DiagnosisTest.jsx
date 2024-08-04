@@ -9,9 +9,7 @@ import useDebounce from "../../hooks/useDebounce";
 import { AdminAxiosInstance } from "../../routes/AdminRoutes";
 import { useQuery } from "@tanstack/react-query";
 
-const apiURL =
-  process.env.REACT_APP_API_URL +
-  "api/diagnosis/get-diagnosis?page=1&pageSize=5&search";
+const apiURL = process.env.REACT_APP_API_URL + "api/diagnosis/get-diagnosis?page=1&pageSize=5&search";
 
 const DiagnosisTest = () => {
   const {
@@ -93,7 +91,7 @@ const DiagnosisTest = () => {
         >
           <button
             className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]
-                         p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm"
+                         p-1 rounded-lg border-slate-600 px-2  font-poppins text-sm"
           >
             <FaCirclePlus className="text-slate-600 " /> Add Question
           </button>

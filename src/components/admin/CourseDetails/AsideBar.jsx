@@ -93,9 +93,9 @@ const Asidebar = ({ course, setTutorModal, setStudentModal }) => {
   };
 
   return (
-    <div className="relative bg-slate-200 lg:w-[30%] w-full flex flex-col">
+    <div className="relative bg-slate-200 lg:w-[30%] w-full h-screen flex flex-col">
       {/* Adding student and tutor */}
-      <div className="w-full flex justify-evenly h-max p-4">
+      <div className="w-full relative flex justify-evenly h-max p-4">
         <div
           onClick={() => setTutorModal(true)}
           data-tooltip-id="assigntutor"
@@ -143,8 +143,10 @@ const Asidebar = ({ course, setTutorModal, setStudentModal }) => {
               </h1>
             </div>
           ))}
+        </div>
+      </div>
 
-          <div className="w-full grid grid-flow-row grid-cols-2 gap-x-4 mb-4 px-4">
+          <div className="w-full absolute bottom-0 grid grid-flow-row grid-cols-2 gap-x-4 mb-4 px-4">
             <div
               className="cursor-pointer h-max rounded-xl flex justify-center items-center text-base font-semibold font-poppins border-[1px] text-blue-700 border-blue-600 bg-opacity-30 bg-blue-500"
               onClick={handleEditCourse}
@@ -159,8 +161,6 @@ const Asidebar = ({ course, setTutorModal, setStudentModal }) => {
               <h1 className="text-sm md:text-base">Delete</h1>
             </div>
           </div>
-        </div>
-      </div>
     </div>
   );
 };

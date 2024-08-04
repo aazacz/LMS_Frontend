@@ -44,6 +44,8 @@ const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, L
                 const data = {
                     "studentId": AddList
                 }
+                console.log("data")
+                console.log(data)
 
                 console.log("AddList")
                 console.log(AddList)

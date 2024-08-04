@@ -20,12 +20,11 @@ const AddTest = () => {
             {
                 question: '',
                 choices: [
-                    { choiceText: '', isCorrect: false },
-                    { choiceText: '', isCorrect: false },
-                    { choiceText: '', isCorrect: false },
-                    { choiceText: '', isCorrect: false },
+                    { choiceText: '', isCorrect: false, whyIsIncorrect: '' },
+                    { choiceText: '', isCorrect: false, whyIsIncorrect: '' },
+                    { choiceText: '', isCorrect: false, whyIsIncorrect: '' },
+                    { choiceText: '', isCorrect: false, whyIsIncorrect: '' },
                 ],
-                whyIsIncorrect: '',
             },
         ],
         timeSlot: '',
@@ -86,12 +85,11 @@ const AddTest = () => {
                 {
                     question: '',
                     choices: [
-                        { choiceText: '', isCorrect: false },
-                        { choiceText: '', isCorrect: false },
-                        { choiceText: '', isCorrect: false },
-                        { choiceText: '', isCorrect: false },
+                        { choiceText: '', isCorrect: false, whyIsIncorrect: '' },
+                        { choiceText: '', isCorrect: false, whyIsIncorrect: '' },
+                        { choiceText: '', isCorrect: false, whyIsIncorrect: '' },
+                        { choiceText: '', isCorrect: false, whyIsIncorrect: '' },
                     ],
-                    whyIsIncorrect: '',
                 },
             ],
         }));
@@ -108,6 +106,7 @@ const AddTest = () => {
             if (question.choices.length !== 4) return false;
             for (let choice of question.choices) {
                 if (!choice.choiceText || !choice.choiceText.trim()) return false;
+                if (!choice.isCorrect && (!choice.whyIsIncorrect || !choice.whyIsIncorrect.trim())) return false;
             }
         }
 
@@ -121,12 +120,15 @@ const AddTest = () => {
             return;
         }
         console.log('Validated data:', test);
+        
         try {
             const response = await TutorAxiosInstance.post(`api/test/course-tests`, test);
+           
             if (response.data.success) {
                 setTest(initialTestState);
                 Swal.fire('Test created successfully', '', 'success');
             }
+            
         } catch (error) {
             if (error.response) {
                 console.error('Error response:', error.response.data);
@@ -207,7 +209,7 @@ const AddTest = () => {
                         className="w-full h-10 bg-white border-[2px] text-sm rounded shadow-lg px-3 mt-2  focus:outline-blue-900"
                     >
                         <option defaultChecked disabled value="">
-                                Select a course type
+                                Select Test Duration   
                             </option>
                        
                         <option className="h-max" value="15">
@@ -246,33 +248,34 @@ const AddTest = () => {
                             />
                         </div>
                         {question.choices.map((choice, cIndex) => (
-                            <div key={cIndex} className={`flex items-center gap-x-2 px-2 rounded-md`}>
-                                <input
-                                    name="choiceText"
-                                    value={choice.choiceText}
-                                    onChange={(e) => handleChoiceInputChange(e, qIndex, cIndex)}
-                                    type="text"
-                                    placeholder={`Choice ${cIndex + 1}`}
-                                    className="w-full h-9 bg-white text-sm rounded border-[1px] border-gray-600 shadow-lg px-3 focus:outline-blue-900"
-                                />
-                                <div
-                                    onClick={() => handleIsCorrectChange(qIndex, cIndex)}
-                                    className={`flex w-20 h-9 items-center cursor-pointer justify-center text-center shadow-[0_3px_10px_rgb(0,0,0,0.2)] ${getBackgroundColor(choice.isCorrect)} px-2 rounded-sm`}
-                                >
-                                    {choice.isCorrect ? 'True' : 'False'}
+                            <div key={cIndex} className={`flex  flex-col ${!choice?.isCorrect? "border-[1px] rounded-lg  border-black py-2 px-2 " : "border-0 pr-2 " }`}>
+                                <div className={`flex items-center gap-x-2  rounded-md`}>
+                                    <input
+                                        name="choiceText"
+                                        value={choice.choiceText}
+                                        onChange={(e) => handleChoiceInputChange(e, qIndex, cIndex)}
+                                        type="text"
+                                        placeholder={`Choice ${cIndex + 1}`}
+                                        className="w-full h-9 bg-white text-sm rounded border-[1px] border-gray-600 shadow-lg px-3 focus:outline-blue-900"
+                                    />
+                                    <div
+                                        onClick={() => handleIsCorrectChange(qIndex, cIndex)}
+                                        className={` flex w-20 h-9 items-center cursor-pointer justify-center text-center shadow-[0_3px_10px_rgb(0,0,0,0.2)] ${getBackgroundColor(choice.isCorrect)} px-2 rounded-sm`}
+                                    >
+                                        {choice.isCorrect ? 'True' : 'False'}
+                                    </div>
                                 </div>
+                                {!choice.isCorrect && (
+                                    <textarea
+                                        name="whyIsIncorrect"
+                                        value={choice.whyIsIncorrect}
+                                        onChange={(e) => handleChoiceInputChange(e, qIndex, cIndex)}
+                                        placeholder="Why is incorrect"
+                                        className="w-full h-16 bg-red-100 border-[1px] border-gray-700 placeholder:text-green-800 text-sm rounded mt-2 shadow-lg p-2"
+                                    />
+                                )}
                             </div>
                         ))}
-                        <div className="w-full">
-                            <label className="text-sm font-semibold">Why is Incorrect</label>
-                            <textarea
-                                name="whyIsIncorrect"
-                                value={question.whyIsIncorrect}
-                                onChange={(e) => handleQuestionInputChange(e, qIndex)}
-                                placeholder="Explanation"
-                                className="w-full md:h-20 rounded mt-2 shadow-lg p-2"
-                            />
-                        </div>
                     </div>
                 ))}
                 <div className="flex justify-end">

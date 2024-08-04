@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAdminDetails } from '../../store/reducers/AdminloginSlice';
 import adminBg from "../../assets/Admin/adminBg.jpg"
 import Logo from "../../assets/Admin/Logoo.png"
+import { AdminAxiosInstance } from '../../routes/AdminRoutes';
 
 
 const AdminLogin = () => {
@@ -32,7 +33,7 @@ const AdminLogin = () => {
         try {
             setIsSubmitting(true);
 
-            const res = await axios.post(`${baseURL}api/admin/login`, data,
+            const res = await AdminAxiosInstance.post(`api/admin/login`, data,
                 {
                     "user-agent": navigator.userAgent,
                 },

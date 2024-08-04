@@ -54,8 +54,8 @@ const Dashboard_TrainingList = () => {
       </div>
 
       {/* Table for large screens */}
-      <div className=" text-sm hidden lg:block max-h-72 overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
+      <div className=" w-full max-h-72 overflow-x-auto p-2 mb-4">
+        <table className="text-[12px] md:text-sm min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
@@ -92,7 +92,7 @@ const Dashboard_TrainingList = () => {
       </div>
 
       {/* Card layout for medium and small screens */}
-      <div className="max-h-72 overflow-x-auto text-sm lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+      {/* <div className="max-h-72 overflow-x-auto text-sm lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
         {data.map((item) => (
           <div key={item.id} className="bg-white p-4 rounded-md shadow-md flex flex-col space-y-2">
             <div className="flex flex-col">
@@ -129,7 +129,7 @@ const Dashboard_TrainingList = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

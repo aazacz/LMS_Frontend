@@ -1,10 +1,10 @@
-import React,{useEffect, useState} from 'react'
-import usePaginationData from './usePaginationData'
-import { Link }             from 'react-router-dom'
-import Loader               from '../../reusable/Loader'
-import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
-import { toast } from 'react-toastify'
-import Swal from 'sweetalert2'
+// import React,{useEffect, useState} from 'react'
+// import usePaginationData from './usePaginationData'
+// import { Link }             from 'react-router-dom'
+// import Loader               from '../../reusable/Loader'
+// import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
+// import { toast } from 'react-toastify'
+// import Swal from 'sweetalert2'
 
 
 const StudentEnrolledListTable = ({courseId}) => {
@@ -58,115 +58,71 @@ const StudentEnrolledListTable = ({courseId}) => {
     
     ]
 
-    const formatDate = (date) => {
-        const options = {
-            timeZone: 'Asia/Kolkata',
-            hour12: true,
-            hour: 'numeric',
-            minute: '2-digit',
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-        }
+  const formatDate = (date) => {
+    const options = {
+      timeZone: "Asia/Kolkata",
+      hour12: true,
+      hour: "numeric",
+      minute: "2-digit",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    };
+    return new Date(date).toLocaleString("en-IN", options);
+  };
 
-        const formattedDate = new Date(date).toLocaleString('en-IN', options)
-        return formattedDate
-    }
-
-
-
-    const {
-        courses,
-        isPending,
-        isError,
-        currentPage,
-        pageSize,
-        totalRows,
-        searchQuery,
-        handlePageChange,
-        handlePageSizeChange,
-        handleSearchChange,
-        error,
-        refetch
-         }         = usePaginationData(courseId)
-
-
-
-
-
-    return (
-        <div className='w-full'>
-        <div className="table-container">
-          <table className="responsive-table">
-            <thead>
-                <tr>
-                    {columns.map((column, index) => (
-                        <th key={index}>{column.headerName}</th>
-                    ))}
-                </tr>
-            </thead>
-            <tbody>
-                {isPending ? (
-                    <div className="w-full h-full flex justify-center items-center">
-                        <Loader />
-                    </div>
-                ) : (
-                    courses?.map((row, indexrow) => (
-                        
-                        <tr key={indexrow}>
-                            {console.log(row)}
-                            {columns.map((column, index) => (
-                                <td key={index}>
-                                    {column.field === 'name' ? (
-                                        <div className="font-semibold text-left">
-                                            {row.name}
-                                        </div>
-                                    ) : null}
-
-                                  
-
-                               
-
-                                
-
-                           
-                         
-                                    {column.field === 'email' ? (
-                                        <div className="action-container text-left">
-                                            <div className="font-poppins text-left text-sm  cursor-pointer hover:bg-slate-200 flex justify-center items-center">
-                                                {row.email}
-                                            </div>
-                                        </div>
-                                    ) : null}
-                               
-                                 
-                                    
-                                    
-                                    {column.field === 'Action' ? (
-                                        <div className="action-container">
-                                            <div className="font-poppins text-sm  cursor-pointer hover:bg-slate-200 flex justify-center items-center">
-                                                <button
-                                                  onClick={(event) => confirmDelete(row._id, event)}
-                                                
-                                                className='w-[80px] h-max bg-red-500 text-white'>  Remove</button>
-                                            </div>
-                                        </div>
-                                    ) : null}
-
-                                   
-                                </td>
-                            ))}
-                        </tr>
-                    ))
-                )}
-            </tbody>
+  return (
+    <div className="w-full relative">
+      {isPending && (
+        <div className="absolute inset-0 flex justify-center items-center bg-white bg-opacity-75 z-50">
+          <Loader />
+        </div>
+      )}
+      <div className="table-container">
+        <table className="responsive-table">
+          <thead>
+            <tr>
+              {columns.map((column, index) => (
+                <th key={index}>{column.headerName}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {courses?.map((row, indexrow) => (
+              <tr key={indexrow}>
+                {columns.map((column, index) => (
+                  <td key={index}>
+                    {column.field === "name" && (
+                      <span className="action-container text-sm font-semibold">
+                        {row.name}
+                      </span>
+                    )}
+                    {column.field === "email" && (
+                      <span className="action-container text-sm font-semibold">
+                        {row.email}
+                      </span>
+                    )}
+                    {column.field === "Action" && (
+                      <div className="action-container">
+                        <div className="font-poppins text-sm cursor-pointer hover:bg-slate-200 flex justify-center items-center">
+                          <button
+                            onClick={(event) => confirmDelete(row._id, event)}
+                            className="text-white bg-red-500 px-2"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
         </table>
-
+      </div>
     </div>
+  );
+};
 
-
-                    </div>
-    )
-}
-
-export default StudentEnrolledListTable
+export default StudentEnrolledListTable;

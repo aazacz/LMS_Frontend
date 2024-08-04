@@ -8,7 +8,7 @@ import Dashboard_TopStudents from './Dashboard_TopStudents'
 
 const Dashboard = () => {
     return (
-        <div className="w-screen lg:w-full justify-center items-center h-screen overflow-y-scroll no-scrollbar pt-4 p-2  ">
+        <div className="w-full lg:w-full justify-center items-center h-screen overflow-y-scroll no-scrollbar pt-4 p-2  ">
             <div className="w-full  justify-start items-start  flex md:h-[250px] flex-wrap md:flex-nowrap gap-2 ">
                 <div className="w-full md:h-full h-max p-2">
                     <Dashboard_Overview />

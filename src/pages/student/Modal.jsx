@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { axiosInstanceStudent } from "../../routes/UserRoutes";
+import React, {useState, useEffect} from "react";
+import {axiosInstanceStudent} from "../../routes/UserRoutes";
 import "./Modal.css";
 
-const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
+const Modal = ({isOpen, onClose, assignmentId, onSubmit}) => {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState("");
   const [assignmentDetails, setAssignmentDetails] = useState(null);
@@ -12,12 +12,14 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
   useEffect(() => {
     const fetchAssignmentDetails = async () => {
       try {
-        const response = await axiosInstanceStudent.get(
-          `api/studentAssignments/one-assignment/${assignmentId}`
+        const {data} = await axiosInstanceStudent.get(
+          `api/assignments/assignment/${assignmentId}`
         );
-        setAssignmentDetails(response.data);
+        setAssignmentDetails(data?.data?.assignment);
         setLoading(false);
-        setIsSubmitted(response.data.student.status === "Submitted");
+        setIsSubmitted(
+          data?.data?.assignment?.submissions?.status === "Submitted"
+        );
       } catch (error) {
         console.error("Error fetching assignment details:", error);
         setStatus("Error fetching assignment details.");

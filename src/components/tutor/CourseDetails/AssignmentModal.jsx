@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { FaTimes } from "react-icons/fa"; // Import a close icon
-import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
+import {useEffect, useState} from "react";
+import {FaTimes} from "react-icons/fa"; // Import a close icon
+import {TutorAxiosInstance} from "../../../routes/TutorRoutes";
 
-const AssignmentModal = ({ isOpen, onClose, assignmentId }) => {
+const AssignmentModal = ({isOpen, onClose, assignmentId}) => {
   const [assignment, setAssignment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,11 +11,13 @@ const AssignmentModal = ({ isOpen, onClose, assignmentId }) => {
     if (isOpen && assignmentId) {
       const fetchAssignment = async () => {
         try {
-          const response = await TutorAxiosInstance.get(
-            `api/studentTutorRoutes/assignment-details/${assignmentId}`
+          const {data} = await TutorAxiosInstance.get(
+            `api/assignments/assignment/${assignmentId}`
           );
-          if (response.data.success) {
-            setAssignment(response.data.assignment);
+          console.log(data.data.assignment);
+          console.log(data);
+          if (data?.success) {
+            setAssignment(data.data.assignment);
           } else {
             setAssignment(null); // No assignment found
           }
@@ -80,7 +82,7 @@ const AssignmentModal = ({ isOpen, onClose, assignmentId }) => {
             )}
             <h3 className="text-xl font-semibold mt-4">Submissions</h3>
             <div className="gap-10">
-              {assignment.students.length > 0 ? (
+              {assignment?.students?.length > 0 ? (
                 <ul>
                   {assignment.students.map((student, index) => (
                     <li key={index} className="p-2 flex justify-between h-max">

@@ -65,7 +65,7 @@ const CourseList = () => {
 
         
         <div className='w-full h-8 flex items-center bg-white rounded-lg  gap-x-3 border-[1px] border-black'>
-                            <IoSearch className='text-2xl' />
+                            <IoSearch className=' ml-1 text-2xl' />
 
                             <input type="search" name="" onChange={(e) => handleSearchChange(e.target.value)} className='outline-none w-[90%] h-full' id="" />
                          </div>
@@ -105,7 +105,7 @@ const CourseList = () => {
           <>
             {GridModal
                &&
-             <div className="grid grid-cols-2 mt-4 md:grid-cols-3 lg:grid-cols-4 gap-4">
+             <div className="grid grid-cols-1 mt-4 md:grid-cols-3 lg:grid-cols-4 gap-4">
            
             {courses?.map((course, index) => (
             

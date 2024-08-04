@@ -42,11 +42,11 @@ const values = [
 
 const Dashboard_Calculations = () => {
     return (
-        <div className="w-full  h-max flex-wrap flex justify-between items-center  p-2 gap-4">
+        <div className="w-full  h-max flex flex-wrap gap-4 p-2  justify-center ">
             {values.map((item, index) => (
                 <div
                     key={index}
-                    className="w-[47%] md:w-[48%]  h-max bg-[#E0EDFB] flex flex-col p-4 md:p-3   rounded-md shadow-md "
+                    className="w-[120px] lg:w-[200px]  h-max bg-[#E0EDFB] flex flex-col p-4 md:p-3   rounded-md shadow-md "
                 >
                     <div className="flex justify-between items-center">
                         <p className="font-poppins text-sm font-semibold flex gap-2">
@@ -54,7 +54,7 @@ const Dashboard_Calculations = () => {
                         </p>
                         <div>{item.icon}</div>
                     </div>
-                    <h6 className="text-xs font-poppins">{item.label}</h6>
+                    <h6 className="text-xs font-poppins line-clamp-1">{item.label}</h6>
                 </div>
             ))}
         </div>

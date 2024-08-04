@@ -10,61 +10,57 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useSelector } from "react-redux";
 
 const AllCourses = () => {
-    const token = useSelector((state) => state.AdminDetails.token);
+  const token = useSelector((state) => state.AdminDetails.token);
 
+  const [EnrolledCourse, SetEnrolledCourse] = useState();
+  const [Course, SetCourse] = useState();
 
-    const [EnrolledCourse,SetEnrolledCourse]= useState()
-    const [Course,SetCourse]= useState()
-
-    const getEnrolledList= async ()=>{
-        const response = await axiosInstanceStudent.get("api/student-course/enrolled-courses");
-        SetEnrolledCourse(response.data)
-        // return response.data;
+  const getEnrolledList = async () => {
+    const response = await axiosInstanceStudent.get(
+      "api/student-course/enrolled-courses"
+    );
+    SetEnrolledCourse(response.data);
+    // return response.data;
+  };
+  const getCourseList = async () => {
+    try {
+      console.log("useQuery funciton hitted");
+      const response = await axiosInstanceStudent.get(
+        `api/student-course/all-active-courses`
+      );
+      console.log("response.data");
+      console.log(response.data);
+      SetCourse(response.data);
+      return response.data;
+    } catch (error) {
+      console.log("error");
+      console.log(error);
     }
-    const getCourseList = async () => {
+  };
 
-        try {
-            console.log("useQuery funciton hitted")
-            const response = await axiosInstanceStudent.get(`api/student-course/all-active-courses`            
-              );
-              console.log("response.data")
-              console.log(response.data)
-              SetCourse(response.data) 
-          return response.data;
+  const { data, isLoading, isPending, refetch } = useQuery({
+    queryKey: ["ActiveCourse"],
+    queryFn: getCourseList,
+    staleTime: 8000,
+    refetchInterval: 60000,
+  });
 
-        } catch (error) {
-            console.log("error")
-            console.log(error)
-        }
+  useEffect(() => {
+    refetch();
+    getEnrolledList();
+  }, []);
 
-    };
+  useEffect(() => {
+    console.log("EnrolledCourse");
+    console.log(EnrolledCourse);
+  }, [EnrolledCourse]);
 
-
-        const { data, isLoading, isPending, refetch } = useQuery({
-            queryKey: ['ActiveCourse'],
-            queryFn: getCourseList,
-            staleTime: 8000,
-            refetchInterval: 60000,
-        });
-
-
-    useEffect(()=>{
-        refetch()
-        getEnrolledList()
-    },[])
-
-    useEffect(()=>{
-        console.log("EnrolledCourse")
-        console.log(EnrolledCourse)
-    },[EnrolledCourse])
-
-
-    const bestinmarket = [
-        { title: 'Introduction Basic SAT & DSAT' },
-        { title: 'Introduction Basic SAT & DSAT' },
-        { title: 'Introduction Basic SAT & DSAT' },
-        { title: 'Introduction Basic SAT & DSAT' },
-    ];
+  const bestinmarket = [
+    { title: "Introduction Basic SAT & DSAT" },
+    { title: "Introduction Basic SAT & DSAT" },
+    { title: "Introduction Basic SAT & DSAT" },
+    { title: "Introduction Basic SAT & DSAT" },
+  ];
 
   return (
     <div className="p-4 pb-10  h-max   no-scrollbar w-full">
@@ -167,8 +163,8 @@ const AllCourses = () => {
       </div>
     </div>
   );
-}
- 
+};
+
 export default AllCourses;
 
 // Course Card Component
@@ -183,24 +179,20 @@ const CourseCard = ({ course }) => {
             alt="Course"
           />
         ) : (
-          <img
-            src={coursephoto}
-            className="w-full h-[300px]"
-            alt="Course"
-          />
+          <img src={coursephoto} className="w-full h-[300px]" alt="Course" />
         )}
       </div>
       <div className="w-full mt-4">
         <div className="min-h-[3rem]">
-          <h1 className="font-plusjakartasans font-semibold text-base line-clamp-2">
+          <h1 className="font-poppins font-semibold text-base line-clamp-2">
             {course.courseName}
           </h1>
         </div>
         <div className="flex items-center gap-x-6 mt-2">
-          <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
+          <span className="flex items-center gap-x-1 text-sm font-poppins">
             <BiSpreadsheet className="text-gray-400" /> 5 Modules
           </span>
-          <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
+          <span className="flex items-center gap-x-1 text-sm font-poppins">
             <LuTimer className="text-gray-400" /> 60Hrs
           </span>
         </div>
@@ -221,10 +213,10 @@ const SkeletonCard = () => {
           <Skeleton height={24} width={`80%`} />
         </div>
         <div className="flex items-center gap-x-6 mt-2">
-          <span className="flex items-center gap-x-1 text-sm font-plusjakartasans bg-gray-300 rounded w-20 h-6">
+          <span className="flex items-center gap-x-1 text-sm font-poppins bg-gray-300 rounded w-20 h-6">
             <Skeleton width={80} />
           </span>
-          <span className="flex items-center gap-x-1 text-sm font-plusjakartasans bg-gray-300 rounded w-20 h-6">
+          <span className="flex items-center gap-x-1 text-sm font-poppins bg-gray-300 rounded w-20 h-6">
             <Skeleton width={80} />
           </span>
         </div>

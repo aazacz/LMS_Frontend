@@ -85,46 +85,45 @@ const Package = () => {
   const handleSave = async (e, packageName, features, price, currency) => {
     e.preventDefault();
     try {
-        console.log("dfghjk");
-        console.log(features);
+      console.log("dfghjk");
+      console.log(features);
 
-        // Ensure features is an array and format it if needed
-        const formattedFeatures = features.map((feature) => ({
-            description: feature.description.trim(),
-            isActive: feature.isActive,
-        }));
-        console.log(formattedFeatures);
-        console.log(packageName);
+      // Ensure features is an array and format it if needed
+      const formattedFeatures = features.map((feature) => ({
+        description: feature.description.trim(),
+        isActive: feature.isActive,
+      }));
+      console.log(formattedFeatures);
+      console.log(packageName);
 
-        // Validate price and currency
-        if (typeof price !== "number" || price <= 0) {
-            throw new Error("Price must be a positive number");
-        }
-        if (typeof currency !== "string" || !currency.trim()) {
-            throw new Error("Currency must be a non-empty string");
-        }
+      // Validate price and currency
+      if (typeof price !== "number" || price <= 0) {
+        throw new Error("Price must be a positive number");
+      }
+      if (typeof currency !== "string" || !currency.trim()) {
+        throw new Error("Currency must be a non-empty string");
+      }
 
-        // Make an API call to save the data
-        const response = await AdminAxiosInstance.post(`api/package/create`, {
-            packageName: packageName.trim(),
-            features: formattedFeatures,
-            price: price,  // Add price to the request
-            currency: currency.trim()  // Add currency to the request
-        });
+      // Make an API call to save the data
+      const response = await AdminAxiosInstance.post(`api/package/create`, {
+        packageName: packageName.trim(),
+        features: formattedFeatures,
+        price: price, // Add price to the request
+        currency: currency.trim(), // Add currency to the request
+      });
 
-        if (response.data.message === "Package Created Successfully") {
-            toast.success("Package Created Successfully");
-        }
+      if (response.data.message === "Package Created Successfully") {
+        toast.success("Package Created Successfully");
+      }
 
-        // Handle the response, e.g., update state or show a success message
-        console.log("Package saved successfully", response.data);
+      // Handle the response, e.g., update state or show a success message
+      console.log("Package saved successfully", response.data);
     } catch (error) {
-        // Handle errors
-        console.error("Error saving package:", error.message);
-        toast.error(error.message);  // Show an error message if validation fails
+      // Handle errors
+      console.error("Error saving package:", error.message);
+      toast.error(error.message); // Show an error message if validation fails
     }
-};
-
+  };
 
   const handleCancelEdit = () => {
     setEditingPackageId(null);
@@ -206,7 +205,7 @@ const Package = () => {
         <h1 className="text-2xl font-semibold">Package</h1>
         <button
           onClick={openModal}
-          className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2  font-plusjakartasans text-sm"
+          className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2  font-poppins text-sm"
         >
           <FaCirclePlus className="text-slate-600 " />
           Add package
@@ -236,14 +235,21 @@ const Package = () => {
       <table className="w-full">
         <thead>
           <tr>
-            <th className="text-left text-base w-[65%]">Package Name</th>
-            <th className="text-left text-base">Action</th>
+            <th className="text-left text-base w-[65%] bg-[#E0EDFB] border-none">
+              Package Name
+            </th>
+            <th className="text-left text-base bg-[#E0EDFB] border-none">
+              Action
+            </th>
           </tr>
         </thead>
         <tbody>
           {packages.map((data, index) => (
-            <tr key={index}>
-              <td className="text-left">
+            <tr
+              key={index}
+              className={index % 2 === 0 ? "bg-white" : "bg-[#E0EDFB]"}
+            >
+              <td className="text-left border-none">
                 {editingPackageId === data._id ? (
                   <input
                     type="text"
@@ -255,7 +261,7 @@ const Package = () => {
                   data.packageName
                 )}
               </td>
-              <td className="text-left flex gap-6 flex-wrap">
+              <td className="text-left border-none flex gap-6 flex-wrap">
                 {editingPackageId === data._id ? (
                   <>
                     <button

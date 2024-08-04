@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BiSpreadsheet } from "react-icons/bi";
 import { LuTimer } from "react-icons/lu";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "react-tooltip/dist/react-tooltip.css";
 import { useSelector } from "react-redux";
@@ -13,6 +14,7 @@ import ModuleContent from "./ModuleContent";
 import ReviewContent from "./ReviewContent";
 import TestsContent from "./TestsContent";
 import ListModal from "./ListModal";
+import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 const Coursedetails = ({ edit }) => {
   const baseUrl = process.env.REACT_APP_API_URL;
@@ -24,10 +26,10 @@ const Coursedetails = ({ edit }) => {
 
   const [TutorDropDownLoader, SetTutorDropDownLoader] = useState(false);
 
-
   const [TutorDropDownList, SetTutorDropDownList] = useState();
   const [StudentDropDownList, SetStudentDropDownList] = useState();
-  const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] =  useState();
+  const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] =
+    useState();
   const [EnrolledTutorDropDownList, SetEnrolledTutorDropDownList] = useState();
 
   const [StudentModal, setStudentModal] = useState(false);
@@ -35,6 +37,7 @@ const Coursedetails = ({ edit }) => {
   const [count, setcount] = useState(0);
 
   const { courseId } = useParams();
+  const navigate = useNavigate();
 
   const handleTabClick = (tab) => {
     setSlideDirection(
@@ -73,87 +76,81 @@ const Coursedetails = ({ edit }) => {
   //   }
   // }, [StudentModal, count]);
 
- 
+  useEffect(() => {
+    console.log(courseId);
 
-    useEffect(()=>{
-    console.log(courseId)
-
-        const getStudentList = async () => {
-            try {
-                const response = await AdminAxiosInstance.get(`api/course/paid-students/${courseId}`);
-                console.log("response.data student not addeddddddddd");
-                console.log(response.data);
-                if (response.data) {
-                    SetStudentDropDownList(response.data);
-                }
-            } catch (error) {
-                if (error.response && error.response.status === 404) {
-                    console.log("Student not added list returned 404");
-                } else {
-                    console.log(error);
-                }
-            }
-        
-            try {
-                const EnrolledStudents = await AdminAxiosInstance.get(`api/course/student-enrolled/${courseId}`);
-                console.log(EnrolledStudents.data);
-                if (EnrolledStudents.data) {
-                    SetEnrolledStudentDropDownList(EnrolledStudents.data);
-                }
-            } catch (error) {
-                if (error.response && error.response.status === 404) {
-                    console.log("Enrolled student list returned 404");
-                } else {
-                    console.log(error);
-                }
-            }
-        };
-     try {
-        if(StudentModal === true)
-        {
-            getStudentList()
+    const getStudentList = async () => {
+      try {
+        const response = await AdminAxiosInstance.get(
+          `api/course/paid-students/${courseId}`
+        );
+        console.log("response.data student not addeddddddddd");
+        console.log(response.data);
+        if (response.data) {
+          SetStudentDropDownList(response.data);
         }
-        
-         } catch (error) {
-        console.log(error)
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.log("Student not added list returned 404");
+        } else {
+          console.log(error);
         }
-             
-    },[StudentModal,count])
+      }
 
-
-
-    useEffect(()=>{
-       
-        const getTutorList = async ()=>{
-            console.log("courseId",courseId)
-            SetTutorDropDownLoader(true)
-
-            const response = await AdminAxiosInstance.get(`api/course/tutor-not-added/${courseId}`);
-             const EnrolledTutors = await AdminAxiosInstance.get(`api/course/tutor-enrolled/${courseId}`);
-             console.log("tutor list")
-             console.log(EnrolledTutors.data)
-             if(response.data && EnrolledTutors.data){
-                 SetTutorDropDownList(response.data)
-                 SetEnrolledTutorDropDownList(EnrolledTutors.data)
-                 SetTutorDropDownLoader(false)
-
-             }
-                                      }
-             
-     try {
-        if(TutorModal === true)
-        {
-           getTutorList()
+      try {
+        const EnrolledStudents = await AdminAxiosInstance.get(
+          `api/course/student-enrolled/${courseId}`
+        );
+        console.log(EnrolledStudents.data);
+        if (EnrolledStudents.data) {
+          SetEnrolledStudentDropDownList(EnrolledStudents.data);
         }
-        
-     } catch (error) {
-        console.log(error)
-     }
-             
-    },[TutorModal,count])
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.log("Enrolled student list returned 404");
+        } else {
+          console.log(error);
+        }
+      }
+    };
+    try {
+      if (StudentModal === true) {
+        getStudentList();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [StudentModal, count]);
 
- 
-   
+  useEffect(() => {
+    const getTutorList = async () => {
+      console.log("courseId", courseId);
+      SetTutorDropDownLoader(true);
+
+      const response = await AdminAxiosInstance.get(
+        `api/course/tutor-not-added/${courseId}`
+      );
+      const EnrolledTutors = await AdminAxiosInstance.get(
+        `api/course/tutor-enrolled/${courseId}`
+      );
+      console.log("tutor list");
+      console.log(EnrolledTutors.data);
+      if (response.data && EnrolledTutors.data) {
+        SetTutorDropDownList(response.data);
+        SetEnrolledTutorDropDownList(EnrolledTutors.data);
+        SetTutorDropDownLoader(false);
+      }
+    };
+
+    try {
+      if (TutorModal === true) {
+        getTutorList();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [TutorModal, count]);
+
   //function to close the modal
   const HandleModalClose = () => {
     setTutorModal(false);
@@ -169,7 +166,7 @@ const Coursedetails = ({ edit }) => {
   return (
     <>
       {Loading ? (
-        <div className="w-full bg-gray-300 h-max flex justify-center items-center">
+        <div className="w-full bg-gray-300 h-screen flex justify-center items-center">
           <Loader />
         </div>
       ) : (
@@ -198,22 +195,28 @@ const Coursedetails = ({ edit }) => {
             />
           ) : null}
 
-          <div className="flex  flex-col lg:flex-row   ">
-            <div className="md:w-[70%] w-full   p-4 flex flex-col">
-              <div className="w-full h-[200px]  md:h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-2xl md:text-3xl">
+          <div className="flex flex-col lg:flex-row   ">
+            <div className=" w-full   p-4 flex flex-col">
+              <button
+                className="w-[50%]"
+                onClick={() => navigate(-1)}
+              >
+                <IoChevronBackCircleOutline className="text-4xl mb-2 " />
+              </button>
+              <div className="w-full h-[200px]  md:h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-poppins text-2xl md:text-3xl">
                 {Course ? Course.courseName : ""}
               </div>
 
               <div className="w-full  mt-4">
-                <h1 className="font-bold text-lg md:text-xl font-plusjakartasans">
+                <h1 className="font-bold text-lg md:text-xl font-poppins">
                   {Course ? Course.courseName : ""}
                 </h1>
                 <div className="flex items-center gap-x-6 mt-2">
-                  <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
+                  <span className="flex items-center gap-x-1 text-sm font-poppins">
                     <BiSpreadsheet className="text-gray-400" />
                     {Course ? Course.modules.length : 0} Modules
                   </span>
-                  <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
+                  <span className="flex items-center gap-x-1 text-sm font-poppins">
                     <LuTimer className="text-gray-400" />
                     {Course && Course.trainingDuration}Hrs
                   </span>
@@ -221,43 +224,37 @@ const Coursedetails = ({ edit }) => {
               </div>
 
               <div className="w-full mt-4 relative">
-                            <div className="flex w-full gap-x-6 px-2">
-                                {['about', 'modules', 'tests', 'review'].map(
-                                    (tab, index) => (
-                                        <button
-                                            key={index}
-                                            className={`relative py-2 ${
-                                                activeTab === tab
-                                                    ? 'border-b-4 border-amber-500'
-                                                    : ''
-                                            }`}
-                                            onClick={() => handleTabClick(tab)}
-                                        >
-                                            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                                        </button>
-                                    )
-                                )}
-                            </div>
-                        </div>
+                <div className="flex w-full gap-x-6 px-2">
+                  {["about", "modules", "tests", "review"].map((tab, index) => (
+                    <button
+                      key={index}
+                      className={`relative py-2 ${
+                        activeTab === tab ? "border-b-4 border-amber-500" : ""
+                      }`}
+                      onClick={() => handleTabClick(tab)}
+                    >
+                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               <div className="text-sm  md:text-base relative mt-4 overflow-hidden h-max">
-                
-                  {activeTab === "about" && (
-                    <AboutContent about={Course?.description} />
-                  )}
-                  {activeTab === "modules" && (
-                    <ModuleContent modules={Course?.modules} />
-                  )}
-                  {activeTab === "tests" && (
-                    <TestsContent tests={Course?.tests} />
-                  )}
-                  {activeTab === "review" && (
-                    <ReviewContent review={Course?.review} />
-                  )}
-                
+                {activeTab === "about" && (
+                  <AboutContent about={Course?.description} />
+                )}
+                {activeTab === "modules" && (
+                  <ModuleContent modules={Course?.modules} />
+                )}
+                {activeTab === "tests" && (
+                  <TestsContent tests={Course?.tests} />
+                )}
+                {activeTab === "review" && (
+                  <ReviewContent review={Course?.review} />
+                )}
               </div>
             </div>
-            <Asidebar {...asidebarProps} />
+            <Asidebar className="hidden lg:block" {...asidebarProps} />
           </div>
         </>
       )}

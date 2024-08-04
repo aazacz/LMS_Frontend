@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
 import { toast } from 'react-toastify'
 import { IoIosCloseCircle } from 'react-icons/io'
-import Loader from '../../reusable/Loader'
+import Loader from "../reusable/Loader"
 import StudentListTable from './StudentListTable'
 import AdminListTable from './AdminListTable'
 import StudentEnrolledListTable from './StudentEnrolledListTable'
 import "./list.css"
+import { axiosInstanceStudent } from '../../routes/UserRoutes'
 const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, List2 }) => {
 
     const [AddList, setAddList] = useState(null)
@@ -14,10 +14,62 @@ const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, L
     const [StudentModal, setStudentModal] = useState(false)
     const [StudentDropDownList, SetStudentDropDownList] = useState()
     const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] = useState()
+    // const [CourseId,setCourseId] = useState(courseId)
+
+    console.log("List in the listmodal")
+    console.log(List)
+
+useEffect(()=>{
+    console.log("List in the listmodal")
+console.log(List)
+},[])
 
 
 
+useEffect(()=>{
+    const getStudentList = async () => {
+        try {
+            const response = await axiosInstanceStudent.get(`api/course/student-not-added/${courseId}`);
+            console.log("response.data student not addeddddddddd");
+            console.log(response.data);
+            if (response.data) {
+                SetStudentDropDownList(response.data);
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                console.log("Student not added list returned 404");
+            } else {
+                console.log(error);
+            }
+        }
+    
+        try {
+            const EnrolledStudents = await axiosInstanceStudent.get(`api/course/student-enrolled/${courseId}`);
+            console.log("EnrolledStudents.data student not addeddddddddd");
+            console.log(EnrolledStudents.data);
+            if (EnrolledStudents.data) {
+                SetEnrolledStudentDropDownList(EnrolledStudents.data);
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                console.log("Enrolled student list returned 404");
+            } else {
+                console.log(error);
+            }
+        }
+    };
+    
+ try {
+   
+ 
+        getStudentList()
 
+    
+     } catch (error) {
+    console.log(error)
+    }
+         
+},[])
 
 
 
@@ -44,12 +96,7 @@ const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, L
                 const data = {
                     "studentId": AddList
                 }
-                console.log("data")
-                console.log(data)
-
-                console.log("AddList")
-                console.log(AddList)
-                const response = await AdminAxiosInstance.post(`api/course/add-student/${courseId}`, data)
+                const response = await axiosInstanceStudent.post(`api/course/add-student/${courseId}`, data)
              
                 if (response.data.message === "Student added successfully") {
                     toast.success("Student added successfully")
@@ -72,7 +119,7 @@ const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, L
                 const data = {
                     "teacherId": AddList
                 }
-                const response = await AdminAxiosInstance.post(`api/course/add-teacher/${courseId}`, data)
+                const response = await axiosInstanceStudent.post(`api/course/add-teacher/${courseId}`, data)
                
                 if (response.data.message === "Teacher added successfully") {
                     toast.success("Teacher added successfully")
@@ -140,10 +187,10 @@ const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, L
 
 
 
-                                <div>
+                                {/* <div>
                                     <h1 className='mt-3 font-Roboto text-xl'>Student Enrolled</h1>
                                     <StudentEnrolledListTable courseId={courseId} />
-                                </div>
+                                </div> */}
 
                             </div>
                         ) : 
@@ -173,10 +220,10 @@ const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, L
 
 
 
-                        <div>
-                            <h1 className='mt-3 font-Roboto text-xl'>Tutor Enrolled</h1>
+                        {/* <div>
+                            <h1 className='mt-3 font-Roboto text-xl'>Admin Enrolled</h1>
                             <AdminListTable courseId={courseId}/>
-                        </div>
+                        </div> */}
 
                     </div>
 

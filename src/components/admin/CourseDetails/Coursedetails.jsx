@@ -169,7 +169,7 @@ const Coursedetails = ({ edit }) => {
   return (
     <>
       {Loading ? (
-        <div className="w-full bg-gray-300 h-max flex justify-center items-center">
+        <div className="w-full bg-gray-300 h-screen flex justify-center items-center">
           <Loader />
         </div>
       ) : (
@@ -198,7 +198,7 @@ const Coursedetails = ({ edit }) => {
             />
           ) : null}
 
-          <div className="flex  flex-col lg:flex-row   ">
+          <div className="  flex  flex-col lg:flex-row   ">
             <div className="md:w-[70%] w-full   p-4 flex flex-col">
               <div className="w-full h-[200px]  md:h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-2xl md:text-3xl">
                 {Course ? Course.courseName : ""}

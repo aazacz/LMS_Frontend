@@ -61,22 +61,32 @@
 
 import React, { useState, useEffect } from "react";
 
-const PackageModal = ({ isOpen, onClose, handleSave, closeModal }) => {
-  const [packages, setPackages] = useState("");
+const PackageModal = ({ isOpen, onClose, closeModal, handleSave }) => {
+  const [packageName, setPackageName] = useState("");
   const [features, setFeatures] = useState([
     { description: "", isActive: true },
   ]);
+  const [price, setPrice] = useState("");
+  const [currency, setCurrency] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    console.log(packages);
-  }, [packages]);
+    console.log(packageName, features, price, currency);
+  }, [packageName, features, price, currency]);
 
   // Function to validate inputs
   const validateAndSave = (e) => {
     e.preventDefault();
-    if (!packages.trim()) {
+    if (!packageName.trim()) {
       setError("Package name cannot be empty.");
+      return;
+    }
+    if (!price || isNaN(price) || price <= 0) {
+      setError("Price must be a positive number.");
+      return;
+    }
+    if (!currency.trim()) {
+      setError("Currency cannot be empty.");
       return;
     }
     const emptyFeature = features.some(
@@ -87,7 +97,7 @@ const PackageModal = ({ isOpen, onClose, handleSave, closeModal }) => {
       return;
     }
     setError(""); // Clear error message if validation passes
-    handleSave(e, packages, features);
+    handleSave(e, packageName, features, parseFloat(price), currency);
   };
 
   // Function to handle changes in feature inputs
@@ -144,12 +154,52 @@ const PackageModal = ({ isOpen, onClose, handleSave, closeModal }) => {
                           type="text"
                           name="packageName"
                           id="packageName"
-                          value={packages}
+                          value={packageName}
                           required
-                          onChange={(e) => setPackages(e.target.value)}
+                          onChange={(e) => setPackageName(e.target.value)}
                           className="mt-1 border-2 border-black h-8 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm px-2 rounded-md"
                         />
                       </div>
+                      <div className="mb-4">
+                        <label
+                          htmlFor="price"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Price
+                        </label>
+                        <input
+                          type="number"
+                          name="price"
+                          id="price"
+                          value={price}
+                          required
+                          onChange={(e) => setPrice(e.target.value)}
+                          className="mt-1 border-2 border-black h-8 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm px-2 rounded-md"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          htmlFor="currency"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Currency
+                        </label>
+                        <select
+                          name="currency"
+                          id="currency"
+                          value={currency}
+                          onChange={(e) => setCurrency(e.target.value)}
+                          required
+                          className="mt-1 border-2 border-black h-8 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm px-2 rounded-md"
+                        >
+                          <option value="" disabled>
+                            Select Currency
+                          </option>
+                          <option value="INR">INR</option>
+                          <option value="USD">USD</option>
+                        </select>
+                      </div>
+
                       <div className="mb-4">
                         <h4 className="text-sm font-medium text-gray-700">
                           Features

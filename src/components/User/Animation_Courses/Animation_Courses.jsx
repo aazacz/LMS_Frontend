@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import React from 'react'
-import './Animation_Courses.css'
-import PopularCourses from '../../../assets/Student/PopularCourses.png'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Animation_Courses.css";
+import PopularCourses from "../../../assets/Student/PopularCourses.png";
 
 const MathsSAT = () => (
     <div className="animation-courses-maths">
@@ -16,10 +16,10 @@ const MathsSAT = () => (
             </div>
             <div className="maths-sat-review">
                 {' '}
-                &#x275D; The course was bueatifully conceptualized and well
-                presented .The videos were lucid,clear,articulate and
+                &#x275D; The course was beautifully conceptualized and well
+                presented. The videos were lucid, clear, articulate, and
                 informative.&#x275E;
-                <div className="maths-sat-review-user">Charles,UK</div>
+                <div className="maths-sat-review-user">Charles, UK</div>
             </div>
             <button className="maths-sat-button">Explore Course</button>
         </div>
@@ -29,7 +29,7 @@ const MathsSAT = () => (
                     <img src={PopularCourses} alt="Course Image" />
                 </div>
                 <div className="maths-sat-programme1-type">
-                    Self Assessnment Test
+                    Self Assessment Test
                 </div>
                 <div className="maths-sat-programme1-title">MATHS SAT</div>
                 <div className="maths-sat-programme1-desc">
@@ -43,7 +43,7 @@ const MathsSAT = () => (
                     <img src={PopularCourses} alt="Course Image" />
                 </div>
                 <div className="maths-sat-programme1-type">
-                    Self Assessnment Test
+                    Self Assessment Test
                 </div>
                 <div className="maths-sat-programme1-title">MATHS SAT</div>
                 <div className="maths-sat-programme1-desc">
@@ -54,7 +54,8 @@ const MathsSAT = () => (
             </div>
         </div>
     </div>
-)
+);
+
 const EnglishSAT = () => (
     <div className="animation-courses-maths">
         <div className="animation-courses-maths-sub1">
@@ -68,10 +69,10 @@ const EnglishSAT = () => (
             </div>
             <div className="maths-sat-review">
                 {' '}
-                &#x275D; The course was bueatifully conceptualized and well
-                presented .The videos were lucid,clear,articulate and
+                &#x275D; The course was beautifully conceptualized and well
+                presented. The videos were lucid, clear, articulate, and
                 informative.&#x275E;
-                <div className="maths-sat-review-user">Linda,USA</div>
+                <div className="maths-sat-review-user">Linda, USA</div>
             </div>
             <button className="maths-sat-button">Explore Course</button>
         </div>
@@ -81,7 +82,7 @@ const EnglishSAT = () => (
                     <img src={PopularCourses} alt="Course Image" />
                 </div>
                 <div className="maths-sat-programme1-type">
-                    Self Assessnment Test
+                    Self Assessment Test
                 </div>
                 <div className="maths-sat-programme1-title">ENGLISH SAT</div>
                 <div className="maths-sat-programme1-desc">
@@ -95,7 +96,7 @@ const EnglishSAT = () => (
                     <img src={PopularCourses} alt="Course Image" />
                 </div>
                 <div className="maths-sat-programme1-type">
-                    Self Assessnment Test
+                    Self Assessment Test
                 </div>
                 <div className="maths-sat-programme1-title">ENGLISH SAT</div>
                 <div className="maths-sat-programme1-desc">
@@ -106,40 +107,46 @@ const EnglishSAT = () => (
             </div>
         </div>
     </div>
-)
-const TestsOnly = () => <div>Tests Only Content</div>
+);
+
+const TestsOnly = () => <div>Tests Only Content</div>;
 const ExploreAfterDiagnoseTest = () => (
     <div>Explore After Diagnose Test Content</div>
-)
+);
 
 const Animation_Courses = () => {
+    const navigate = useNavigate();
     const categories = [
         'Maths SAT',
         'English SAT',
         'Tests Only',
         'Explore After Diagnose Test',
-    ]
+    ];
 
-    const [selectedCategory, setSelectedCategory] = useState('Maths SAT')
+    const [selectedCategory, setSelectedCategory] = useState('Maths SAT');
 
     const handleButtonClick = (category) => {
-        setSelectedCategory(category)
-    }
+        setSelectedCategory(category);
+    };
 
     const renderContent = () => {
         switch (selectedCategory) {
             case 'Maths SAT':
-                return <MathsSAT />
+                return <MathsSAT />;
             case 'English SAT':
-                return <EnglishSAT />
+                return <EnglishSAT />;
             case 'Tests Only':
-                return <TestsOnly />
+                return <TestsOnly />;
             case 'Explore After Diagnose Test':
-                return <ExploreAfterDiagnoseTest />
+                return <ExploreAfterDiagnoseTest />;
             default:
-                return <div>Please select a category.</div>
+                return <div>Please select a category.</div>;
         }
-    }
+    };
+
+    const handleViewAllCoursesClick = () => {
+        navigate("/allcourses");
+    };
 
     return (
         <div>
@@ -152,7 +159,10 @@ const Animation_Courses = () => {
                             </div>
                             <div className="animation-courses-title-underline"></div>
                         </div>
-                        <div className="animation-courses-title-button">
+                        <div
+                            className="animation-courses-title-button"
+                            onClick={handleViewAllCoursesClick}
+                        >
                             View All Courses
                         </div>
                     </div>
@@ -175,7 +185,7 @@ const Animation_Courses = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Animation_Courses
+export default Animation_Courses;

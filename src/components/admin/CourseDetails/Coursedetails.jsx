@@ -166,7 +166,7 @@ const Coursedetails = ({ edit }) => {
   return (
     <>
       {Loading ? (
-        <div className="w-full bg-gray-300 h-max flex justify-center items-center">
+        <div className="w-full bg-gray-300 h-screen flex justify-center items-center">
           <Loader />
         </div>
       ) : (

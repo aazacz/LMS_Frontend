@@ -178,7 +178,7 @@
 //       <div className="main-container">
 //         <div>
 //           <div className="heading-column-toggle-container py-2">
-//             <h1 className="font-plusjakartasans text-xl font-semibold ">
+//             <h1 className="font-poppins text-xl font-semibold ">
 //               Students List
 //             </h1>
 //           </div>
@@ -341,7 +341,6 @@
 
 // export default Students;
 
-
 import React from "react";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -499,7 +498,7 @@ const Students = () => {
       <div className="main-container">
         <div>
           <div className="heading-column-toggle-container py-2">
-            <h1 className="font-plusjakartasans text-xl font-semibold ">
+            <h1 className="font-poppins text-xl font-semibold ">
               Students List
             </h1>
           </div>

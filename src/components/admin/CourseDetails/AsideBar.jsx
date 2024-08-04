@@ -112,20 +112,28 @@ const Asidebar = ({ course, setTutorModal, setStudentModal }) => {
           className="rounded-full border-[3px] text-gray-700 hover:text-gray-900 border-gray-700 hover:border-gray-900 transition-all duration-200 bg-white w-14 h-14 flex justify-center items-center"
         >
           +<PiStudentBold className="text-2xl" />
-          <Tooltip id="assignstudent" place="bottom" type="dark" effect="solid" />
+          <Tooltip
+            id="assignstudent"
+            place="bottom"
+            type="dark"
+            effect="solid"
+          />
         </div>
       </div>
 
       <div className="px-6">
-        <h1 className="font-plusjakartasans font-bold">Modules List</h1>
+        <h1 className="font-poppins font-bold">Modules List</h1>
 
         <div className="bg-white rounded-lg flex flex-col mt-5 p-5 items-center">
-          <h1 className="font-plusjakartasans font-bold line-clamp-2">
+          <h1 className="font-poppins font-bold line-clamp-2">
             {course ? course.courseName : ""}
           </h1>
 
           {modules.map((value, index) => (
-            <div key={index} className="flex w-full justify-between items-center py-5">
+            <div
+              key={index}
+              className="flex w-full justify-between items-center py-5"
+            >
               <div className="flex gap-x-3 items-center w-[65%]">
                 <div>
                   <div className="w-6 h-6 bg-[#C75625] text-white rounded-[5px] text-sm flex justify-center items-center">

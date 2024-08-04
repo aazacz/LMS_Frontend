@@ -154,19 +154,19 @@ const Coursedetails = ({ edit }) => {
 
           <div className="flex flex-col lg:flex-row">
             <div className="md:w-[70%] w-full p-4 flex flex-col ">
-              <div className="w-full h-[200px]  md:h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-2xl md:text-3xl">
+              <div className="w-full h-[200px]  md:h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-poppins text-2xl md:text-3xl">
                 {Course ? Course.courseName : ""}
               </div>
               <div className="w-full  mt-4">
-                <h1 className="font-bold text-lg md:text-xl font-plusjakartasans">
+                <h1 className="font-bold text-lg md:text-xl font-poppins">
                   {Course ? Course.courseName : ""}
                 </h1>
                 <div className="flex items-center gap-x-6 mt-2">
-                  <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
+                  <span className="flex items-center gap-x-1 text-sm font-poppins">
                     <BiSpreadsheet className="text-gray-400" />
                     {Course ? Course.modules.length : 0} Modules
                   </span>
-                  <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
+                  <span className="flex items-center gap-x-1 text-sm font-poppins">
                     <LuTimer className="text-gray-400" />
                     {Course && Course.trainingDuration}Hrs
                   </span>

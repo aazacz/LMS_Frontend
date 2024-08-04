@@ -89,14 +89,18 @@ const Checkout = () => {
               "api/student-course/enroll-individual-course",
               responseData
             );
-            navigate("/student/a");
+
+            console.log("individual course bought")
+            navigate("/student/success");
+
           } else if (courseType === "group") {
             responseData.courseId = courseId;
             apiResponse = await axiosInstanceStudent.post(
               "api/student-course/enroll-group-course",
               responseData
             );
-            navigate("/student/a");
+            console.log("group course bought")
+            navigate("/student/success");
           }
         } catch (error) {
           console.error("Payment or enrollment failed:", error);

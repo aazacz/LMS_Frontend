@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 const AllCourses = () => {
     const token = useSelector((state) => state.AdminDetails.token);
 
+
     const [EnrolledCourse,SetEnrolledCourse]= useState()
     const [Course,SetCourse]= useState()
 
@@ -28,7 +29,7 @@ const AllCourses = () => {
               );
               console.log("response.data")
               console.log(response.data)
-              SetCourse(response.data)
+              SetCourse(response.data) 
           return response.data;
 
         } catch (error) {
@@ -166,7 +167,7 @@ const AllCourses = () => {
       </div>
     </div>
   );
-};
+}
  
 export default AllCourses;
 

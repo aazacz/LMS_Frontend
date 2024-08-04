@@ -74,19 +74,19 @@ const Coursedetails = ({ role }) => {
   return (
     <div className="w-full flex flex-wrap ">
       <div className="w-full md:w-[70%] lg:w-[70%] no-scrollbar overflow-y-scroll p-4 flex flex-col">
-        <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-plusjakartasans text-3xl">
+        <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-poppins text-3xl">
           Introduction to SAT & DSAT
         </div>
         <div className="w-full">
           <div className="mt-4">
-            <h1 className="font-bold text-xl font-plusjakartasans">
+            <h1 className="font-bold text-xl font-poppins">
               Introduction to Basic SAT & DSAT
             </h1>
             <div className="flex items-center gap-x-6 mt-2">
-              <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
+              <span className="flex items-center gap-x-1 text-sm font-poppins">
                 <BiSpreadsheet className="text-gray-400" /> 5 Modules
               </span>
-              <span className="flex items-center gap-x-1 text-sm font-plusjakartasans">
+              <span className="flex items-center gap-x-1 text-sm font-poppins">
                 <LuTimer className="text-gray-400" /> 60Hrs
               </span>
             </div>
@@ -216,9 +216,9 @@ const AsideBAr = ({ data, courseType, navigate, enrolled }) => {
   return (
     <div className="bg-slate-200 pb-5 w-full md:w-[30%] h-[1005] flex flex-col">
       <div className="p-6">
-        <h1 className="font-plusjakartasans font-bold">Modules List</h1>
+        <h1 className="font-poppins font-bold">Modules List</h1>
         <div className="bg-white rounded-lg flex flex-col mt-5 p-5 items-center">
-          <h1 className="font-plusjakartasans font-bold line-clamp-2">
+          <h1 className="font-poppins font-bold line-clamp-2">
             Introduction Basic SAT & DSAT
           </h1>
 

@@ -92,7 +92,7 @@ const Content = () => {
     <div className="w-full flex flex-col">
       {Loading && <FullscreenLoader />}
       <div className="w-full overflow-x-auto p-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {courses &&
             courses.map((val, index) => (
               <Link

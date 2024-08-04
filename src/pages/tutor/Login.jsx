@@ -67,7 +67,7 @@ const TutorLogin = () => {
 
         <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
           <div className="h-[20%] py-3 bg-blue-900 rounded-t-lg flex items-center justify-center">
-            <h2 className="text-2xl font-plusjakartasans font-bold text-white text-center">
+            <h2 className="text-2xl font-poppins font-bold text-white text-center">
               Tutor Login
             </h2>
           </div>

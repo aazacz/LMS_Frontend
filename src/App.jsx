@@ -1,13 +1,13 @@
-import React, { lazy, Suspense } from "react";
+import React, {lazy, Suspense} from "react";
 import "./App.css";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import Loader from "./components/reusable/Loader";
 import AdminRoutes from "./routes/AdminRoutes";
 import TutorRoutes from "./routes/TutorRoutes";
 import UserRoutes from "./routes/UserRoutes";
 import ViewAllCourses from "./components/User/ViewAllCourses";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import Coursedetails from "./components/User/Coursedetails";
 
 // const AdminRoutes = lazy(() => import('./routes/AdminRoutes'));

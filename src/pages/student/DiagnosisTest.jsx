@@ -8,15 +8,21 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./DiagnosisTest.css";
 import axios from "axios";
 import Tooltip from "@mui/material/Tooltip";
+import { setStudentDetails } from "../../store/reducers/StudentloginSlice";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
+import { useDispatch, useSelector } from "react-redux";
 
 const DiagnosisTest = () => {
+  const student = useSelector((state) => state.StudentDetails);
+  const dispatch = useDispatch();
   const [fontSize, setFontSize] = useState(15);
   const [timeLeft, setTimeLeft] = useState(600);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
+  const [testId, setTestId] = useState("");
   const [selectedAnswers, setSelectedAnswers] = useState({});
+  console.log({ selectedAnswers });
   const [questionStatuses, setQuestionStatuses] = useState({});
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
 
@@ -36,7 +42,7 @@ const DiagnosisTest = () => {
         );
         const data = response.data;
         console.log("Fetched Data:", data);
-
+        setTestId(response.data._id);
         const positiveMark = data.positiveMark;
         const negativeMark = data.negativeMark;
 
@@ -45,6 +51,7 @@ const DiagnosisTest = () => {
             positiveMark: positiveMark,
             negativeMark: negativeMark,
             text: question.question,
+            questionId: question._id,
             options: question.choices.map((choice) => choice.choiceText),
           }));
           setQuestions(formattedQuestions);
@@ -87,11 +94,26 @@ const DiagnosisTest = () => {
     }
   };
 
+  const exitFullscreen = () => {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      // Firefox
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      // Chrome, Safari and Opera
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      // IE/Edge
+      document.msExitFullscreen();
+    }
+  };
+
   useEffect(() => {
     // Function to handle visibility change (tab switch)
     const handleVisibilityChange = () => {
       if (document.hidden && document.fullscreenElement) {
-        let count = tabSwitchCount + 1;
+        let count = tabSwitchCount; // change to + 1 PENDING
         setTabSwitchCount(count);
 
         if (count > 2) {
@@ -166,22 +188,26 @@ const DiagnosisTest = () => {
         confirmButton: "my-confirm-button",
         denyButton: "my-deny-button",
       },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-          Swal.fire({
-            icon: "success",
-            title: "Submitted!",
-            text: "Your answers have been submitted successfully.",
-            customClass: {
-              confirmButton: "my-toast-confirm-button",
-            },
-          });
-          navigate("students/diagnosistest/result");
-        }, 3000);
-      }
+    }).then(async (result) => {
+      if (!result.isConfirmed) return;
+      setLoading(true);
+      const res = await axiosInstanceStudent.post("api/diagnosis/submit", {
+        testId,
+        selectedAnswers,
+      });
+
+      Swal.fire({
+        icon: "success",
+        title: "Submitted!",
+        text: "Your answers have been submitted successfully.",
+        customClass: {
+          confirmButton: "my-toast-confirm-button",
+        },
+      });
+      dispatch(setStudentDetails({ ...student, isDiagnosisTestTaken: true }));
+      exitFullscreen();
+      navigate("/diagnosistest/result/" + res.data?._id);
+      setLoading(false);
     });
   };
 
@@ -209,10 +235,7 @@ const DiagnosisTest = () => {
     console.log(selectedOption);
     updatedAnswers[currentQuestionIndex] = {
       selectedOptionIndex: optionIndex,
-      isCorrect: selectedOption.isCorrect,
-      whyIsIncorrect: selectedOption.isCorrect
-        ? ""
-        : selectedOption.whyIsIncorrect,
+      questionId: currentQuestion.questionId,
     };
     setSelectedAnswers(updatedAnswers);
 

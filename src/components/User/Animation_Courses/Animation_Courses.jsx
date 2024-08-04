@@ -166,8 +166,8 @@ const Animation_Courses = () => {
                             View All Courses
                         </div>
                     </div>
-                    <div className="animation-courses-container">
-                        <div className="dropdown-menu">
+                    <div className="animation-courses-container ">
+                        <div className="dropdown-menu ">
                             {categories.map((category, index) => (
                                 <button
                                     key={index}
@@ -178,7 +178,7 @@ const Animation_Courses = () => {
                                 </button>
                             ))}
                         </div>
-                        <div className="category-content">
+                        <div className="category-content flex flex-wrap ">
                             {renderContent()}
                         </div>
                     </div>

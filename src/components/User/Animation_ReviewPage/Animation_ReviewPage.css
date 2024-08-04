@@ -6,7 +6,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px 20px;
+    /* padding: 20px 20px; */
+    padding-bottom: 80px;
+    padding-top: 50px;
 }
 .animation-review-title-conatainer {
     display: flex;
@@ -35,11 +37,13 @@
 }
 
 .animation-review-contents {
+    /* border: 2px solid red; */
     display: flex;
     /* justify-content: space-around; */
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 75%;
+    height: 90%;
 }
 .animation-review-left-button {
     width: 50px;

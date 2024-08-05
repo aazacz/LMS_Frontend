@@ -20,7 +20,7 @@ const Modal = ({isOpen, onClose, assignmentId, onSubmit}) => {
         console.log(data?.data?.assignment);
         setLoading(false);
         setIsSubmitted(
-          data?.data?.assignment?.submissions?.status === "Submitted"
+          data?.data?.assignment?.studentSubmissionStatus === "submitted"
         );
       } catch (error) {
         console.error("Error fetching assignment details:", error);
@@ -69,6 +69,29 @@ const Modal = ({isOpen, onClose, assignmentId, onSubmit}) => {
 
   if (!isOpen) return null;
 
+  const renderSubmissionStatus = (studentSubmissionStatus) => {
+    switch (studentSubmissionStatus) {
+      case "submitted":
+        return <p className="text-blue-600">Assignment has been submitted</p>;
+      case "approved":
+        return <p className="text-green-600">Assignment has been approved</p>;
+      case "rejected":
+        return (
+          <>
+            <p className="text-red-600 mb-2">Assignment has been rejected</p>
+            <input type="file" onChange={handleFileChange} className="mb-4" />
+          </>
+        );
+      case "pending":
+      case "not-submitted":
+        return (
+          <input type="file" onChange={handleFileChange} className="mb-4" />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -108,15 +131,26 @@ const Modal = ({isOpen, onClose, assignmentId, onSubmit}) => {
               </p>
               <p className="mb-4">
                 <strong className="text-gray-800">Status:</strong>{" "}
-                {assignmentDetails?.submissions?.status || "Pending"}
+                {assignmentDetails?.studentSubmissionStatus || "Pending"}
               </p>
               <div className="flex flex-col">
-                <input
-                  type="file"
-                  onChange={handleFileChange}
-                  className="mb-4"
-                  disabled={isSubmitted}
-                />
+                {/* {["submitted"].includes(
+                  assignmentDetails?.studentSubmissionStatus?.toLowerCase()
+                ) ? (
+                  <p className="text-green-500 mb-4">
+                    Assignment has been submitted.
+                  </p>
+                ) : (
+                  <input
+                    type="file"
+                    onChange={handleFileChange}
+                    className="mb-4"
+                    disabled={isSubmitted}
+                  />
+                )} */}
+                {renderSubmissionStatus(
+                  assignmentDetails?.studentSubmissionStatus
+                )}
                 <button
                   className={`bg-blue-500 text-white rounded px-4 py-2 cursor-pointer ${
                     isSubmitted

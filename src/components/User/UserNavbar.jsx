@@ -18,7 +18,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
   const user = useSelector((state) => state.StudentDetails.token);
   const userName = useSelector((state) => state.StudentDetails.userName);
 
-  const [NameLetter, SetNameLetter] = useState(userName[0]);
+  const [NameLetter, SetNameLetter] = useState(userName?.[0]);
   const list = ["Subjects", "Courses", "Library", "Contact"];
 
   const handleToggle = () => {

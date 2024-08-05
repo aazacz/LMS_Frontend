@@ -15,15 +15,10 @@ const QuestionBank = () => {
   const handleView = (data) => {
     console.log("open modal function clicked");
     setdata([data]);
+    console.log(data)
     setModal(true);
   };
 
-
-// useEffect(()=>{
-//   console.log(Modal)
-
-
-// },[Modal])
 
   const closeModal = () => {
     setModal(false);
@@ -77,41 +72,60 @@ const QuestionBank = () => {
     <div className="font-poppins w-full   h-max flex flex-row-reverse justify-left items-left relative ">
 
       {Modal === true &&
-        (<div className=" absolute inset-0 bg-red-400 p-6 overflow-auto">
-          <div onClick={()=>setModal(false)}> close</div>
-          <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[200px]">Title</th>
-                {/* <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course ID</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tutor ID</th> */}
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marks</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time Slot</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Questions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {Data?.map((item) => (
-                <tr key={item._id} className="hover:bg-gray-50">
-                  <td className="px-4 py-4 whitespace-nowrap">{item.title}</td>
-                  {/* <td className="px-4 py-4 whitespace-nowrap">{item.courseId}</td>
-                  <td className="px-4 py-4 whitespace-nowrap">{item.tutorId}</td> */}
-                  <td className="px-4 py-4 whitespace-nowrap">
-                    +{item.positiveMark} / -{item.negativeMark}
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap">{item.timeSlot} min</td>
-                  <td className="px-4 py-4 whitespace-nowrap">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${item.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                      }`}>
-                      {item.isActive ? 'Active' : 'Inactive'}
-                    </span>
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap">{item.questions.length}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        ( <div className="absolute inset-0 bg-red-400 p-6 overflow-auto">
+          <div onClick={() => setModal(false)}>Close</div>
+          {Data?.map((item) => (
+            <div key={item._id} className="bg-white shadow-md rounded-lg p-6 mb-6">
+              <h2 className="text-xl font-bold mb-2">{item.title}</h2>
+              <div className="mb-4">
+                <strong>Marks: </strong> +{item.positiveMark} / -{item.negativeMark}
+              </div>
+              <div className="mb-4">
+                <strong>Time Slot: </strong> {item.timeSlot} min
+              </div>
+              <div className="mb-4">
+                <strong>Status: </strong>
+                <span
+                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${item.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+                >
+                  {item.isActive ? 'Active' : 'Inactive'}
+                </span>
+              </div>
+              <div className="mb-4">
+                <strong>Total Questions: </strong> {item.questions.length}
+              </div>
+    
+              <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Question</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Choices</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correct</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                      {item.questions.map((question) => (
+                        <tr key={question._id} className="hover:bg-gray-50">
+                          <td className="px-4 py-4 whitespace-nowrap">{question.question}</td>
+                          <td className="px-4 py-4 whitespace-nowrap">
+                            {question.choices.map((choice) => (
+                              <div key={choice._id} className={`${choice.isCorrect ? "text-green-700" : "text-red-700"}`}>
+                                {choice.choiceText}
+                                <br />
+                                <span className="text-xs text-gray-500">{choice.whyIsIncorrect}</span>
+                              </div>
+                            ))}
+                          </td>
+                          <td className="px-4 py-4 whitespace-nowrap">
+                            {question.choices.find((choice) => choice.isCorrect)?.choiceText || 'None'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+
+              </table>
+            </div>
+          ))}
         </div>)
        }
 

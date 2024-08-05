@@ -7,8 +7,23 @@ import { useQuery } from "@tanstack/react-query";
 
 const QuestionBank = () => {
 
-const fetchQuestions = async()=>{
 
+  const [Modal,setModal] = useState(false)
+
+  const [Data,setdata] = useState(null)
+
+  const handleView = (data) => {
+
+    console.log("open modal function clicked")
+    setModal(true)
+    console.log(data)
+    setdata([data])
+
+  }
+
+
+
+const fetchQuestions = async()=>{
 
   const response = await AdminAxiosInstance.get("api/test/course-tests?page=1&pageSize=&search=")
   console.log(response.data.data)
@@ -33,7 +48,7 @@ const { data, isPending, refetch } = useQuery({
     { name: "Jane Smith", email: "jane.smith@example.com" },
     { name: "Jane Smith", email: "jane.smith@example.com" },
     { name: "Jane Smith", email: "jane.smith@example.com" },
-    // ... more items
+  
   ];
   const least = [
     { name: "John Doe", email: "john.doe@example.com" },
@@ -43,7 +58,7 @@ const { data, isPending, refetch } = useQuery({
     { name: "Jane Smith", email: "jane.smith@example.com" },
     { name: "Jane Smith", email: "jane.smith@example.com" },
     { name: "Jane Smith", email: "jane.smith@example.com" },
-    // ... more items
+   
   ];
  
   const [searchTerm, setSearchTerm] = useState("");
@@ -51,9 +66,53 @@ const { data, isPending, refetch } = useQuery({
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
-
   return (
-    <div className="font-poppins  h-max flex flex-col justify-left items-left ">
+    <div className="font-poppins  h-max flex flex-col justify-left items-left relative ">
+      
+    { Modal ?
+
+     (
+     <div className="absolute w-full h-max top-0 left-0 container mx-auto p-6">
+      <div onClick={setModal(false)}> close</div>
+      <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course ID</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tutor ID</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marks</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time Slot</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Questions</th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {Data?.map((item) => (
+            <tr key={item._id} className="hover:bg-gray-50">
+              <td className="px-4 py-4 whitespace-nowrap">{item.title}</td>
+              <td className="px-4 py-4 whitespace-nowrap">{item.courseId}</td>
+              <td className="px-4 py-4 whitespace-nowrap">{item.tutorId}</td>
+              <td className="px-4 py-4 whitespace-nowrap">
+                +{item.positiveMark} / -{item.negativeMark}
+              </td>
+              <td className="px-4 py-4 whitespace-nowrap">{item.timeSlot} min</td>
+              <td className="px-4 py-4 whitespace-nowrap">
+                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                  item.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }`}>
+                  {item.isActive ? 'Active' : 'Inactive'}
+                </span>
+              </td>
+              <td className="px-4 py-4 whitespace-nowrap">{item.questions.length}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>)
+    :
+    null
+    }
+      
       <p className="text-base lg:text-lg font-semibold p-2">Tests</p>
 
       <div className="w-full h-max flex ">
@@ -115,7 +174,9 @@ const { data, isPending, refetch } = useQuery({
               <button className="px-2 py-1 text-xs border border-black rounded-md mr-2">
                 Review
               </button>
-              <button className="px-2 py-1 text-xs border border-black rounded-md mr-2">
+              <button 
+              onClick={()=>handleView(item)}
+              className="px-2 py-1 text-xs border border-black rounded-md mr-2">
                 view
               </button>
             </td>

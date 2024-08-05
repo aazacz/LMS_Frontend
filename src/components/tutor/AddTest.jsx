@@ -29,6 +29,8 @@ const AddTest = () => {
             },
         ],
         timeSlot: '',
+        typeName: "courseTest",
+        dueDate: ''  // Add dueDate to the initial state
     };
 
     const [test, setTest] = useState(initialTestState);
@@ -102,6 +104,7 @@ const AddTest = () => {
         if (!test.positiveMark || isNaN(test.positiveMark)) return false;
         if (!test.negativeMark || isNaN(test.negativeMark)) return false;
         if (!test.timeSlot) return false;
+        if (!test.dueDate) return false; // Validate dueDate
 
         for (let question of test.questions) {
             if (!question.question || !question.question.trim()) return false;
@@ -122,6 +125,9 @@ const AddTest = () => {
         }
         console.log('Validated data:', test);
         try {
+
+            console.log("Test payload before it is send")
+            console.log(test)
             const response = await TutorAxiosInstance.post(`api/test/course-tests`, test);
             if (response.data.success) {
                 setTest(initialTestState);
@@ -153,6 +159,13 @@ const AddTest = () => {
         setTest((prevState) => ({
             ...prevState,
             timeSlot: e.target.value,
+        }));
+    };
+
+    const handleDateChange = (e) => {
+        setTest((prevState) => ({
+            ...prevState,
+            dueDate: e.target.value,
         }));
     };
 
@@ -199,37 +212,44 @@ const AddTest = () => {
                         />
                     </div>
                 </div>
+<div className='w-full grid md:grid-cols-2 grid-cols-1 gap-x-4  '>
 
-                <select
-                        id="timeSlot"
-                        value={test.timeSlot} // Bind value to state
-                        onChange={handleDurationChange}
-                        className="w-full h-10 bg-white border-[2px] text-sm rounded shadow-lg px-3 mt-2  focus:outline-blue-900"
+<div>
+<label className="text-sm font-semibold">Test Duration</label>
+
+<select
+                    id="timeSlot"
+                    value={test.timeSlot} 
+                    onChange={handleDurationChange}
+                    className="w-full h-10 bg-white border-[2px] text-sm rounded shadow-lg px-3 mt-2  focus:outline-blue-900"
                     >
-                        <option defaultChecked disabled value="">
-                                Select a course type
-                            </option>
-                       
-                        <option className="h-max" value="15">
-                            15 minutes
-                        </option>
-                        <option className="h-max" value="30">
-                            30 minutes
-                        </option>
-                        <option className="h-max" value="45">
-                            45 minutes
-                        </option>
-                        <option className="h-max" value="60">
-                            1 hour
-                        </option>
-                        <option className="h-max" value="90">
-                            1.5 hours
-                        </option>
-                        <option className="h-max" value="120">
-                            2 hours
-                        </option>
-                        {/* Add more options as needed */}
-                    </select>
+                    <option defaultChecked disabled value="">  Select a course type         </option>
+                    <option className="h-max" value="15">    15 minutes                     </option>
+                    <option className="h-max" value="30">    30 minutes                     </option>
+                    <option className="h-max" value="45">    45 minutes                     </option>
+                    <option className="h-max" value="60">     1 hour                        </option>
+                    <option className="h-max" value="90">   1.5 hours                       </option>
+                    <option className="h-max" value="120">    2 hours                       </option>
+                 
+                </select>
+
+                    </div>
+
+
+
+                
+                <div className="w-full  ">
+                    <label className="text-sm font-semibold">Due Date</label>
+                    <input
+                        name="dueDate"
+                        value={test.dueDate}
+                        onChange={handleDateChange}
+                        type="date"
+                        className="w-full h-10 bg-white text-sm rounded shadow-lg px-3 mt-2 focus:outline-blue-900"
+                    />
+                </div>
+</div>
+              
 
 
                 {test.questions.map((question, qIndex) => (

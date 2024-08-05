@@ -3,7 +3,7 @@ import './HomePageDiagnosis.css'
 
 const HomePageDiagnosis = () => {
     return (
-        <div className="container">
+        <div className="diagnosis-container">
             <div className="left">
                 <p className="left-heading">
                     Get Your <span>Diagnosis Test </span> Now

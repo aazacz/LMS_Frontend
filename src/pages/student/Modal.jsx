@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { axiosInstanceStudent } from "../../routes/UserRoutes";
+import React, {useState, useEffect} from "react";
+import {axiosInstanceStudent} from "../../routes/UserRoutes";
 import "./Modal.css";
 
-const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
+const Modal = ({isOpen, onClose, assignmentId, onSubmit}) => {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState("");
   const [assignmentDetails, setAssignmentDetails] = useState(null);
@@ -12,12 +12,16 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
   useEffect(() => {
     const fetchAssignmentDetails = async () => {
       try {
-        const response = await axiosInstanceStudent.get(
-          `api/studentAssignments/one-assignment/${assignmentId}`
+        const {data} = await axiosInstanceStudent.get(
+          `api/assignments/assignment/${assignmentId}`
         );
-        setAssignmentDetails(response.data);
+        setAssignmentDetails(data?.data?.assignment);
+        console.log(data?.data);
+        console.log(data?.data?.assignment);
         setLoading(false);
-        setIsSubmitted(response.data.student.status === "Submitted");
+        setIsSubmitted(
+          data?.data?.assignment?.submissions?.status === "Submitted"
+        );
       } catch (error) {
         console.error("Error fetching assignment details:", error);
         setStatus("Error fetching assignment details.");
@@ -46,7 +50,7 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
 
     try {
       const response = await axiosInstanceStudent.post(
-        `api/studentAssignments/submit-assignment/${assignmentId}`,
+        `api/assignments/student/submit/${assignmentId}`,
         formData,
         {
           headers: {
@@ -81,17 +85,17 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
             <>
               <p className="mb-2">
                 <strong className="text-gray-800">Assignment:</strong>{" "}
-                {assignmentDetails.assignment.assignmentName || "N/A"}
+                {assignmentDetails?.assignmentName || "N/A"}
               </p>
               <p className="mb-2">
                 <strong className="text-gray-800">Description:</strong>{" "}
-                {assignmentDetails.assignment.assignmentDescription || "N/A"}
+                {assignmentDetails?.assignmentDescription || "N/A"}
               </p>
               <p className="mb-2">
                 <strong className="text-gray-800">File:</strong>{" "}
-                {assignmentDetails.assignment.filePath ? (
+                {assignmentDetails?.filePath ? (
                   <a
-                    href={assignmentDetails.assignment.filePath}
+                    href={assignmentDetails?.assignment?.filePath}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:text-blue-700"
@@ -104,7 +108,7 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
               </p>
               <p className="mb-4">
                 <strong className="text-gray-800">Status:</strong>{" "}
-                {assignmentDetails.student.status || "N/A"}
+                {assignmentDetails?.submissions?.status || "Pending"}
               </p>
               <div className="flex flex-col">
                 <input

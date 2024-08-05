@@ -176,7 +176,7 @@ const Assignments = () => {
                         {assignment?.dueDate}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-[#FE9519]">
-                        {assignment?.submissions.length || "pending"}
+                        {assignment?.studentSubmissionStatus || "pending"}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
                         <button

@@ -10,6 +10,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import usePasswordToggle from "../../hooks/usePasswordToggle";
 import { FiPlusCircle } from "react-icons/fi";
 import { useSelector } from "react-redux";
+import { IoChevronBackCircleOutline } from "react-icons/io5";
 import "./AddTutor.css";
 
 const AddTutor = () => {
@@ -346,6 +347,12 @@ const AddTutor = () => {
   return (
     <div className=" w-full   h-screen overflow-y-scroll no-scrollbar p-5   mt-5">
       <div className=" w-full h-max p-5 px-8 bg-slate-200 rounded-2xl ">
+      <button
+                className="w-[50%]"
+                onClick={() => navigate(-1)}
+              >
+                <IoChevronBackCircleOutline className="text-4xl mb-2 " />
+              </button>
         <h1 className="text-2xl font-poppins font-semibold">Tutor Form</h1>
         <form className="">
           <div className="grid grid-flow-row grid-cols-2 gap-4">

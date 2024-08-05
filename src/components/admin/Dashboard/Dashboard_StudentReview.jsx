@@ -1,26 +1,7 @@
 import React from 'react'
-import { AiOutlinePieChart } from 'react-icons/ai'
-import { PiDownloadSimpleFill } from 'react-icons/pi'
-import { PiMoney } from 'react-icons/pi'
-import { FaBook } from 'react-icons/fa'
-import { FaBookBookmark } from 'react-icons/fa6'
-import { FaUserGraduate } from 'react-icons/fa'
-import { FaChalkboardTeacher } from 'react-icons/fa'
-import { FaUsersRectangle } from 'react-icons/fa6'
-import { GoPerson } from 'react-icons/go'
-import { IoMdTime } from 'react-icons/io'
-import { IoBookOutline } from 'react-icons/io5'
-import { CiLocationOn } from 'react-icons/ci'
-import { CiCalendar } from 'react-icons/ci'
+
 import { FaRegCircle } from 'react-icons/fa6'
-import { FaCircle } from 'react-icons/fa'
-import { CiSettings } from 'react-icons/ci'
-import { FaRegArrowAltCircleUp } from 'react-icons/fa'
-import { SlOptions } from 'react-icons/sl'
-import { FaMedal } from 'react-icons/fa'
-import { FaTrophy } from 'react-icons/fa'
-import { FaCrown } from 'react-icons/fa6'
-import { Bar } from 'react-chartjs-2'
+
 
 const Dashboard_StudentReview = () => {
     const tutors = [

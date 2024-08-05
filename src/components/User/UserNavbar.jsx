@@ -133,9 +133,6 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
               <div className="flex items-center">
                 <div className="md:px-3">
                   <p className="font-poppins">{userName}</p>
-                  <p className="text-gray-500 font-poppins">
-                    {user ? user : ""}
-                  </p>
                 </div>
                 <IoIosArrowForward className="text-2xl" />
               </div>

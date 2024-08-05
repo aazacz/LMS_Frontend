@@ -12,7 +12,7 @@ const AssignmentModal = ({isOpen, onClose, assignmentId}) => {
       const fetchAssignment = async () => {
         try {
           const {data} = await TutorAxiosInstance.get(
-            `api/assignments/assignment/${assignmentId}`
+            `api/assignments/tutor/assignment/${assignmentId}`
           );
           console.log(data.data.assignment);
           console.log(data);

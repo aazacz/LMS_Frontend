@@ -3,6 +3,9 @@ import { CiSearch } from "react-icons/ci";
 import "./QuestionBank.css";
 import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
 import { useQuery } from "@tanstack/react-query";
+import BackButton from "../../reusable/BackButton";
+import ViewModal from "./ViewModal";
+import Loader from "../../reusable/Loader";
 
 
 const QuestionBank = () => {
@@ -34,12 +37,11 @@ const QuestionBank = () => {
   }
 
 
-
-  const { data, isPending, refetch } = useQuery({
-    queryKey: ["fetchAllTests"],
-    queryFn: fetchQuestions,
-    staleTime: 1000,
-    refetchInterval: 60000,
+  const { data, isPending } = useQuery({
+                  queryKey: ["fetchAllTests"],
+                  queryFn: fetchQuestions,
+                  staleTime: 1000 * 60 * 5, // Data remains fresh for 5 minutes
+                  cacheTime: 1000 * 60 * 10, // Data remains in cache for 10 minutes
   });
 
   const best = [
@@ -71,76 +73,22 @@ const QuestionBank = () => {
   return (
     <div className="font-poppins w-full   h-max flex flex-row-reverse justify-left items-left relative ">
 
-      {Modal === true &&
-        ( <div className="absolute inset-0 bg-red-400 p-6 overflow-auto">
-          <div onClick={() => setModal(false)}>Close</div>
-          {Data?.map((item) => (
-            <div key={item._id} className="bg-white shadow-md rounded-lg p-6 mb-6">
-              <h2 className="text-xl font-bold mb-2">{item.title}</h2>
-              <div className="mb-4">
-                <strong>Marks: </strong> +{item.positiveMark} / -{item.negativeMark}
-              </div>
-              <div className="mb-4">
-                <strong>Time Slot: </strong> {item.timeSlot} min
-              </div>
-              <div className="mb-4">
-                <strong>Status: </strong>
-                <span
-                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${item.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
-                >
-                  {item.isActive ? 'Active' : 'Inactive'}
-                </span>
-              </div>
-              <div className="mb-4">
-                <strong>Total Questions: </strong> {item.questions.length}
-              </div>
-    
-              <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Question</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Choices</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correct</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                      {item.questions.map((question) => (
-                        <tr key={question._id} className="hover:bg-gray-50">
-                          <td className="px-4 py-4 whitespace-nowrap">{question.question}</td>
-                          <td className="px-4 py-4 whitespace-nowrap">
-                            {question.choices.map((choice) => (
-                              <div key={choice._id} className={`${choice.isCorrect ? "text-green-700" : "text-red-700"}`}>
-                                {choice.choiceText}
-                                <br />
-                                <span className="text-xs text-gray-500">{choice.whyIsIncorrect}</span>
-                              </div>
-                            ))}
-                          </td>
-                          <td className="px-4 py-4 whitespace-nowrap">
-                            {question.choices.find((choice) => choice.isCorrect)?.choiceText || 'None'}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-
-              </table>
-            </div>
-          ))}
-        </div>)
-       }
+    {/* Modal for viewing the list of questions */}
+      {Modal === true &&   <ViewModal Data={Data} />   }
 
 
       {/* Aside Bar Starts Here*/}
-      <div className="w-[350px] h-max  flex-col justify-center items-center  pl-4 gap-2 font-poppins border-l border-black hidden lg:block">
-        <div className="w-full h-72 flex flex-col">
+      <div className="w-[320px] h-max  flex-col justify-center items-center  pl-4 gap-2 font-poppins border-l border-black hidden lg:block">
+        <div className="w-full  h-72 flex flex-col">
           <p className="text-sm font-semibold p-2">Top Performers in Tests</p>
 
-          <div className="w-full h-64 overflow-y-scroll no-scrollbar ">
+          <div className="w-full  h-64  overflow-y-scroll no-scrollbar ">
             {best.map((item, index) => (
               <div
                 key={index}
-                className="w-full h-max flex justify-start items-start p-2"
+                className="w-full h-max border-b-[1px] border-gray-300  flex justify-start items-start p-2"
               >
+                {/* user image div  */}
                 <div className="w-10 h-10 rounded-full bg-black"></div>
                 <div className="w-max flex flex-col ml-2 justify-start items-start text-xs">
                   <p>{item.name}</p>{" "}
@@ -193,63 +141,47 @@ const QuestionBank = () => {
             </div>
             {/*Table Starts Here*/}
 
-            <div className=" w-full  overflow-x-auto ">
-
-              <table className="border-collapse w-full">
-                <thead>
-                  <tr className="bg-gray-50">
-                    <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                      Sl No
-                    </th>
-                    <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                      Title
-                    </th>
-                    <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden sm:table-cell">
-                      Positive Mark
-                    </th>
-                    <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden md:table-cell">
-                      Negative Mark
-                    </th>
-                    <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider hidden lg:table-cell">
-                      No. of Questions
-                    </th>
-                    <th className="p-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {!isPending && data?.map((item, index) => (
-                    <tr key={item._id}>
-                      <td className="p-2 whitespace-nowrap">{index + 1}</td>
-                      <td className="p-2 whitespace-nowrap">{item.title}</td>
-                      <td className="p-2 whitespace-nowrap hidden sm:table-cell">
-                        {item.positiveMark}
-                      </td>
-                      <td className="p-2 whitespace-nowrap hidden md:table-cell">
-                        {item.negativeMark}
-                      </td>
-                      <td className="p-2 whitespace-nowrap hidden lg:table-cell">
-                        {item.questions.length}
-                      </td>
-                      <td className="p-2 flex gap-2 flex-wrap">
-
-                        <button className="px-2 py-1 text-xs border border-black rounded-md mr-2">
-                          Review
-                        </button>
-
-                        <button
-                          onClick={() => handleView(item)}
-                          className="px-2 py-1 text-xs border border-black rounded-md mr-2">
-                          view
-                        </button>
-
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <div className="relative overflow-x-auto shadow-md rounded-lg">
+    <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+      <thead className="bg-gray-100">
+        <tr>
+          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Positive Mark</th>
+          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Negative Mark</th>
+          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Total Questions</th>
+          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody className="bg-white divide-y divide-gray-200">
+        {isPending ? (
+          <tr>
+            <td colSpan="6" className="p-4 h-36 ">
+              <Loader />
+            </td>
+          </tr>
+        ) : (
+          data?.map((item, index) => (
+            <tr key={item._id}>
+              <td className="p-2 whitespace-nowrap">{index + 1}</td>
+              <td className="p-2 whitespace-nowrap">{item.title}</td>
+              <td className="p-2 whitespace-nowrap hidden sm:table-cell">{item.positiveMark}</td>
+              <td className="p-2 whitespace-nowrap hidden md:table-cell">{item.negativeMark}</td>
+              <td className="p-2 whitespace-nowrap hidden lg:table-cell">{item.questions.length}</td>
+              <td className="p-2 flex gap-2 flex-wrap">
+                <button className="px-2 py-1 text-xs border border-black rounded-md mr-2">Review</button>
+                <button
+                  onClick={() => handleView(item)}
+                  className="px-2 py-1 text-xs border border-black rounded-md mr-2">
+                  View
+                </button>
+              </td>
+            </tr>
+          ))
+        )}
+      </tbody>
+    </table>
+  </div>
           </div>
 
 

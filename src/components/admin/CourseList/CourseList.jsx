@@ -71,7 +71,7 @@ const CourseList = () => {
             id=""
           />
         </div>
-        <div className='bg-gray-100 px-2 justify-center items-center rounded-md text-sm font-poppins gap-2 flex'><TbCategory/>Category</div>
+        <div className='bg-gray-100 px-2 justify-center cursor-pointer items-center rounded-md text-sm font-poppins gap-2 flex'><TbCategory/>Category</div>
       </div>
       <div className="w-full  pt-4  flex justify-end ">
         <div className="w-[80px]  flex  items-center ">

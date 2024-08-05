@@ -20,11 +20,9 @@ const Coursedetails = ({ edit }) => {
   const baseUrl = process.env.REACT_APP_API_URL;
   const token = useSelector((state) => state.AdminDetails.token);
   const [Course, SetCourse] = useState();
-  const [Loading, SetLoading] = useState(false);
+  const [Loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("about");
   const [slideDirection, setSlideDirection] = useState("left");
-
-  const [TutorDropDownLoader, SetTutorDropDownLoader] = useState(false);
 
   const [TutorDropDownList, SetTutorDropDownList] = useState();
   const [StudentDropDownList, SetStudentDropDownList] = useState();
@@ -125,7 +123,7 @@ const Coursedetails = ({ edit }) => {
   useEffect(() => {
     const getTutorList = async () => {
       console.log("courseId", courseId);
-      SetTutorDropDownLoader(true);
+      
 
       const response = await AdminAxiosInstance.get(
         `api/course/tutor-not-added/${courseId}`
@@ -138,7 +136,7 @@ const Coursedetails = ({ edit }) => {
       if (response.data && EnrolledTutors.data) {
         SetTutorDropDownList(response.data);
         SetEnrolledTutorDropDownList(EnrolledTutors.data);
-        SetTutorDropDownLoader(false);
+     
       }
     };
 

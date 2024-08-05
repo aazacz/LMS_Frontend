@@ -482,7 +482,7 @@ const AddCourseStructure = ({ view }) => {
   };
 
   return (
-    <div className="w-full pt-4 px-4 md:p-5 md:px-16 bg-slate-200 rounded-lg mt-2">
+    <div className="w-full pt-4 px-4 md:p-5 md:px-6 bg-slate-200 rounded-lg mt-2">
       {View && (
         <IoChevronBackCircleOutline
           className="text-4xl mb-4 cursor-pointer  hover:scale-105"

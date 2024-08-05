@@ -53,6 +53,11 @@ const UserRoutes = () => {
   const user = useSelector((state) => state.StudentDetails);
 
   token = useSelector((state) => state.StudentDetails.token);
+  const studentNavigate = () => {
+    if (!user.token) return <Navigate to="/login" />;
+    if (!user.isDiagnosisTestTaken) return <Navigate to="/diagnosistest" />;
+    return <StudentHomepage User={true} />;
+  };
 
   return (
     <AnimatePresence mode="wait">
@@ -60,22 +65,9 @@ const UserRoutes = () => {
         <Route path="/" element={<Homepage />} />
         <Route
           path="/login"
-          element={user ? <Navigate to="/student" /> : <Login />}
+          element={user.token ? <Navigate to="/student" /> : <Login />}
         />
-        <Route
-          path="/student/*"
-          element={
-            user ? (
-              user.isDiagnosisTestTaken ? (
-                <StudentHomepage User={true} />
-              ) : (
-                <Navigate to="/diagnosistest" />
-              )
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
+        <Route path="/student/*" element={studentNavigate()} />
         <Route path="/signup/*" element={<SignupRoute />} />
         <Route path="/diagnosistest" element={<Student_Diagnostic />} />
         <Route path="/diagnosistest/*" element={<DiagnosisTestRoute />} />

@@ -60,6 +60,15 @@ const DiagnosisTest = () => {
           console.error("Unexpected data structure:", data);
         }
       } catch (error) {
+        if (error.response?.status === 403 && error.response?.data?.notPaid) {
+          return navigate("/diagnosistest/payment");
+        }
+        if (
+          error.response?.status === 400 &&
+          error.response?.data?.alreadyTaken
+        ) {
+          return navigate("/student");
+        }
         console.error("Error fetching data", error);
       }
     }

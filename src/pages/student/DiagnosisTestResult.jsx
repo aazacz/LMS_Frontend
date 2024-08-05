@@ -24,6 +24,9 @@ const DiagnosisTestResult = () => {
         });
         setTestResult(response.data);
       } catch (error) {
+        if (error.response?.status === 404) {
+          return navigate("/diagnosistest");
+        }
         console.error("Error fetching test details:", error);
       } finally {
         setLoading(false);

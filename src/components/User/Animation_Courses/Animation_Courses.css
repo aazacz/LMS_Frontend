@@ -105,7 +105,6 @@
 .animation-courses-maths {
   width: 95%;
   height: 80%;
-
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
@@ -121,10 +120,11 @@
 
 .animation-courses-maths-sub2 {
   width: 50%;
-  height: 350px;
+  height: fit-content;
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  padding: 10px;
+  display: flex;
 }
 
 .maths-sat-title {
@@ -171,36 +171,39 @@
 }
 
 .maths-sat-programme1 {
-  width: max-content;
+  width: fit-content;
   height: max-content;
   border: 1px solid black;
   margin: 0 auto;
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   border-radius: 30px;
 }
 
 .maths-sat-programme2 {
-  width: max-content;
+  width: fit-content;
   height: max-content;
   border: 1px solid black;
   margin: 0 auto;
-  margin-top: 20px;
   border-radius: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .maths-sat-programme1-photo {
-  height: 100px;
+  height: auto;
   width: 100%;
-
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
+  display: block;
+  
 }
 
 .maths-sat-programme1-type {
-  width: 70%;
+  width: fit-content;
   height: max-content;
+  padding: 10px;
+  border-radius: 10px;
   border: none;
   background-color: #b7d5e4;
   font-size: 10px;
@@ -215,8 +218,9 @@
 .maths-sat-programme1-title {
   font-size: 18px;
   margin-top: 20px;
+  padding: 10px;
   font-weight: 800;
-  width: 50%;
+  width: fit-content;
   margin: 0 20px;
   height: max-content;
 }
@@ -279,6 +283,12 @@
 
   .maths-sat-programme1-duration {
     font-size: 10px;
+  }
+  .animation-courses-maths-sub2 {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
   }
 }
 

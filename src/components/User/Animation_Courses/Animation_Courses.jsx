@@ -5,7 +5,7 @@ import PopularCourses from "../../../assets/Student/PopularCourses.png";
 
 const MathsSAT = () => (
     <div className="animation-courses-maths">
-        <div className="animation-courses-maths-sub1">
+        <div className="animation-courses-maths-sub1 ">
             <div className="maths-sat-title">MATHS SAT</div>
             <div className="maths-sat-content">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -24,11 +24,11 @@ const MathsSAT = () => (
             <button className="maths-sat-button">Explore Course</button>
         </div>
         <div className="animation-courses-maths-sub2">
-            <div className="maths-sat-programme1">
+            <div className="maths-sat-programme1 ">
                 <div className="maths-sat-programme1-photo overflow-hidden">
                     <img src={PopularCourses} alt="Course Image" />
                 </div>
-                <div className="maths-sat-programme1-type">
+                <div className="maths-sat-programme1-type ">
                     Self Assessment Test
                 </div>
                 <div className="maths-sat-programme1-title">MATHS SAT</div>
@@ -178,7 +178,7 @@ const Animation_Courses = () => {
                                 </button>
                             ))}
                         </div>
-                        <div className="category-content flex flex-wrap ">
+                        <div className="category-content ">
                             {renderContent()}
                         </div>
                     </div>

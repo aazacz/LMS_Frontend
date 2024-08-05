@@ -1,6 +1,7 @@
 import React from "react";
 import "./HomePageContact.css";
 
+
 const HomePageContact = () => {
   return (
     <div className="HomePageContact-main-main-container">
@@ -60,9 +61,9 @@ const HomePageContact = () => {
                     viewBox="0 0 24 24"
                     fill="orange"
                     stroke="white"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                     className="feather feather-chevron-right"
                   ></svg>
                 </button>
@@ -93,3 +94,4 @@ const HomePageContact = () => {
 };
 
 export default HomePageContact;
+

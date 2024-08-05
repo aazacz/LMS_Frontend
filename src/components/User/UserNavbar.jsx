@@ -5,21 +5,21 @@ import { IoIosArrowForward } from "react-icons/io";
 import { FiBookOpen, FiBook } from "react-icons/fi";
 import { IoSearch } from "react-icons/io5";
 import logo from "../../assets/mindsatlogo.webp";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import profile from "../../assets/Student/profile.jpeg";
 import { motion, AnimatePresence } from "framer-motion";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { clearStudentDetails } from "../../store/reducers/StudentloginSlice";
 
 const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
-  const [show, setShow] = useState(false);
   const [Showsidebar, setShowsidebar] = useState(false);
+  const [show, setShow] = useState(false);
 
   const user = useSelector((state) => state.StudentDetails.token);
   const userName = useSelector((state) => state.StudentDetails.userName);
+  const navigate = useNavigate();
 
-  const [NameLetter, SetNameLetter] = useState(userName?.[0]);
-  const list = ["Subjects", "Courses", "Library", "Contact"];
+  const [NameLetter, SetNameLetter] = useState(userName ? userName[0] : "");
 
   const handleToggle = () => {
     setShow(!show);
@@ -30,6 +30,10 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
   }, [Showsidebar]);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(Showsidebar);
+  }, [Showsidebar]);
+
 
   const handleLogout = () => {
     setShowsidebar(false);
@@ -39,11 +43,11 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
 
   return (
     <div
-      className=" Test md:px-4 px-4 justify-between w-full bg-white h-[7vh]
-                              md:h-[12vh] border-b-[1px] flex items-center md:py-0 relative 
-                              transition-all duration-500"
+      className="Test px-8 justify-between w-full bg-white h-[12vh]
+                  border-b-[1px] flex items-center  relative 
+                 transition-all duration-500"
     >
-      <div className="md:w-[10%] w-[30%] h-full font-poppins flex justify-center items-center">
+      <div className="w-[140px] lg:w-[200px] text-5xl h-full font-poppins flex justify-center items-center">
         <Link to="/">
           <img src={logo} className="w-full cursor-pointer" alt="logo" />
         </Link>
@@ -57,33 +61,29 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
             initial={{ opacity: 0, y: "20px" }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "20px" }}
-            className=" absolute top-[8vh] right-3 w-[200px] cursor-pointer z-[9] bg-transparent h-max"
+            className="absolute top-[8vh] right-3 w-[200px] cursor-pointer z-[9] bg-transparent h-max"
           >
-            <div className="relative top-[20px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-  w-full h-full">
+            <div className=" relative top-[20px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-  w-full h-full">
               <Link to={"/student/courses"}>
-                {" "}
                 <div
                   onClick={() => setShowsidebar(false)}
-                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 font-Roboto text-gray-600"
+                  className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
                 >
-                  Courses{" "}
+                  Courses
                 </div>
               </Link>
               <Link to={"/student/assignments"}>
-                {" "}
                 <div
                   onClick={() => setShowsidebar(false)}
-                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 font-Roboto text-gray-600"
+                  className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
                 >
-                  {" "}
-                  Assignment{" "}
+                  Assignment
                 </div>
               </Link>
               <Link to={"/student/settings"}>
-                {" "}
                 <div
                   onClick={() => setShowsidebar(false)}
-                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 font-Roboto text-gray-600"
+                  className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
                 >
                   Settings
                 </div>
@@ -91,7 +91,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
 
               <div
                 onClick={() => handleLogout()}
-                className="w-full h-[50px] bg-gray-100 flex justify-center gap-x-2 text-red-700  items-center px-5 font-Roboto "
+                className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
               >
                 <LiaSignOutAltSolid className="text-xl" />
                 Signout
@@ -101,7 +101,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
         )}
       </AnimatePresence>
 
-      {User ? (
+      {user ? (
         <div className="w-[40%] flex justify-end">
           <div className="flex items-center">
             <div className="w-16 flex h-9 justify-start px-2">
@@ -132,42 +132,65 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
               />
               <div className="flex items-center">
                 <div className="md:px-3">
-                  <p className="font-poppins">Abin</p>
-                  <p className="text-gray-500 font-poppins">abin@gmail.com</p>
+                  <p className="font-poppins">{userName}</p>
                 </div>
                 <IoIosArrowForward className="text-2xl" />
               </div>
             </div>
           </div>
         </div>
-      ) : user ? (
-        <div className="hidden md:flex md:w-[40%] justify-end items-center h-full">
-          <div
-            onMouseOver={() => setShowsidebar(true)}
-            onMouseOut={() => setShowsidebar(false)}
-            className=" rounded-full z-10 font-Roboto text-white cursor-pointer w-12 h-12 flex justify-center items-center bg-gray-600 text-3xl"
-          >
-            {NameLetter}
-          </div>
-        </div>
       ) : (
-        <div className="hidden md:flex md:w-[40%] justify-end items-center h-full">
-          <div className="h-1/2 flex gap-4 justify-between">
-            <Link to={"/login"}>
-              <button className="px-3 text-[14px] bg-blue-700 h-[35px] text-white font-poppins">
-                Sign in
-              </button>
-            </Link>
-            <Link to={"/signup"}>
-              <button className="px-3 text-[14px] bg-blue-700 h-[35px] text-white font-poppins">
-                Register
-              </button>
-            </Link>
+        <div className="hidden xl:flex xl:w-[90%] justify-end items-center h-full">
+          <div className="h-1/2 flex gap-8 justify-between ">
+            <div className="flex gap-5">
+              <Link to={"/login"}>
+                <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
+                  Courses
+                </button>
+              </Link>
+              <Link to={"/login"}>
+                <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
+                  Tutors
+                </button>
+              </Link>
+              <Link to={"/login"}>
+                <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
+                  Team
+                </button>
+              </Link>
+              <Link to={"/login"}>
+                <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
+                  Pricing
+                </button>
+              </Link>
+              <Link to={"/login"}>
+                <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
+                  Diagnose Test
+                </button>
+              </Link>
+              <Link to={"/login"}>
+                <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
+                  Contact
+                </button>
+              </Link>
+            </div>
+            <div className="flex gap-5">
+              <Link to={"/login"}>
+                <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
+                  Sign in
+                </button>
+              </Link>
+              <Link to={"/signup"}>
+                <button className="px-3 text-[14px] bg-blue-700 h-[35px] text-white font-poppins rounded-lg font-semibold">
+                  Register
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       )}
 
-      <button className="md:hidden ml-auto mr-4" onClick={handleToggle}>
+      <button className="xl:hidden ml-auto mr-4" onClick={handleToggle}>
         <FaBars
           className={`text-lg ${
             show ? "rotate-90" : ""
@@ -177,36 +200,103 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
 
       <div
         className={`${
-          !show ? "-translate-y-[700px]" : ""
-        } transition-all z-50 duration-700 absolute top-[7vh] right-0 w-full bg-white shadow-lg md:hidden`}
+          !show ? "-translate-y-[1280px]" : ""
+        } xl:hidden fixed top-[12vh] right-0 w-full bg-white h-max transition-transform duration-700 ease-in-out flex flex-col items-center`}
       >
-        <h1 className="md:hidden block hover:text-lg bg-white text-[#0066DE] font-poppins text-base font-semibold px-4 py-2 border-b">
-          Login
-        </h1>
-        <h1 className="md:hidden block hover:text-lg bg-white text-[#0066DE] font-poppins text-base font-semibold px-4 py-2 border-b">
-          Register
-        </h1>
-        {list.map((val, index) => (
-          <h1
-            key={index}
-            className="text-[#0066DE] bg-white hover:text-lg font-poppins text-base font-semibold px-4 py-2 border-b"
-          >
-            {val}
-          </h1>
-        ))}
-
-        <div className="md:flex flex-col p-4 hidden">
-          <input className="h-[35px] border-2 mb-2" type="text" />
-          <button className="w-full bg-blue-700 h-[35px] flex justify-center items-center mb-2">
-            <IoSearch className="text-white" />
-          </button>
-          <button className="w-full text-blue-700 h-[35px] mb-2">
-            Sign in
-          </button>
-          <button className="w-full bg-blue-700 h-[35px] text-white">
-            Register
-          </button>
-        </div>
+        {user ? (
+          <>
+            <div
+              onClick={() => handleLogout()}
+              className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+            >
+              <LiaSignOutAltSolid className="text-xl" />
+              Signout
+            </div>
+            <Link to={"/student/courses"}>
+              <div
+                onClick={() => setShow(false)}
+                className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+              >
+                Courses
+              </div>
+            </Link>
+            <Link to={"/student/assignments"}>
+              <div
+                onClick={() => setShow(false)}
+                className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+              >
+                Assignment
+              </div>
+            </Link>
+            <Link to={"/student/settings"}>
+              <div
+                onClick={() => setShow(false)}
+                className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+              >
+                Settings
+              </div>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to={"/login"}>
+              <div
+                onClick={() => setShow(false)}
+                className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+              >
+                Courses
+              </div>
+            </Link>
+            <Link to={"/login"}>
+              <div
+                onClick={() => setShow(false)}
+                className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+              >
+                Tutors
+              </div>
+            </Link>
+            <Link to={"/login"}>
+              <div
+                onClick={() => setShow(false)}
+                className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+              >
+                Pricing
+              </div>
+            </Link>
+            <Link to={"/login"}>
+              <div
+                onClick={() => setShow(false)}
+                className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+              >
+                Diagnose Test
+              </div>
+            </Link>
+            <Link to={"/login"}>
+              <div
+                onClick={() => setShow(false)}
+                className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+              >
+                Contact
+              </div>
+            </Link>
+            <Link to={"/login"}>
+              <div
+                onClick={() => setShow(false)}
+                className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+              >
+                Sign in
+              </div>
+            </Link>
+            <Link to={"/signup"}>
+              <div
+                onClick={() => setShow(false)}
+                className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+              >
+                Register
+              </div>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

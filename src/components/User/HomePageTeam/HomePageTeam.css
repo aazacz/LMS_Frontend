@@ -1,9 +1,15 @@
+.homepage-team-container {
+    background-color: white;
+    padding: 2rem 0;
+}
+
 .heading-team-container {
     padding: 10px;
     display: flex;
     flex-direction: row;
     gap: 1%;
     /* border: 1px solid black; */
+    margin-bottom: 20px;
 }
 
 .sub-heading-team {
@@ -11,7 +17,7 @@
     padding: 20px 30px;
     margin-left: 5%;
     width: 50%;
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
     font-size: 30px;
     font-weight: 600;
     text-align: left;
@@ -21,7 +27,7 @@
     /* border: 1px solid black; */
     padding: 10px;
     width: 50%;
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
     font-size: 12px;
     font-weight: 400;
     text-align: left;
@@ -30,64 +36,87 @@
 
 .team-members {
     display: flex;
-    align-items: stretch;
-    justify-content: stretch;
     flex-wrap: wrap;
     gap: 20px;
     /* border: 1px solid black; */
     width: 80%;
-    margin-left: 11%;
+    margin: 0 auto;
     padding-top: 20px;
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
 }
 
 .team-member {
     flex: 1 1 calc(33.333% - 40px);
     display: flex;
-    height: fit-content;
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
     padding: 10px;
-    /* border: 1px solid lightgray; */
     border-radius: 10px;
-    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
 }
 
 .team-member-info {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid black; */
     text-align: center;
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
 }
 
 .team-member-info h3 {
     font-weight: 600;
-    margin-bottom: 1px;
-    font-family: 'Poppins';
+    margin-bottom: 5px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .team-member-info p {
     font-size: 13px;
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
+    margin: 5px 0;
 }
 
 .team-member-image {
     width: 100%;
-    height: 100%;
+    height: auto;
     max-width: 200px;
-    /* border-radius: 50%; */
     margin: 10px auto;
     object-fit: cover;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1024px) {
+    .sub-heading-team, .sub-sub-heading-team {
+        font-size: 25px;
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+    .heading-team-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .team-member {
+        flex: 1 1 calc(50% - 20px);
+    }
     .team-member-info p {
-        font-size: 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-member {
+        flex: 1 1 100%;
     }
     .sub-heading-team {
-        font-size: 25px;
+        font-size: 20px;
+        text-align: center;
     }
     .sub-sub-heading-team {
-        font-size: 10px;
+        font-size: 12px;
+        text-align: center;
     }
 }

@@ -1,20 +1,20 @@
-import React, { useState, useRef } from "react";
+import {useState, useRef} from "react";
 import "./Assignments.css";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import Swal from "sweetalert2";
-import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
-
+import {TutorAxiosInstance} from "../../../routes/TutorRoutes";
 
 const Assignments = () => {
   const input = useRef();
 
-
-  const { courseId } = useParams();
+  const {courseId} = useParams();
   console.log(courseId);
   const [assignmentName, setAssignmentName] = useState("");
   const [assignmentDescription, setassignmentDescription] = useState("");
   const [file, setFile] = useState();
   const [fileName, setfileName] = useState("");
+  const [dueDate, setDueDate] = useState({value: "", error: null});
+  const [totalMarks, setTotalMark] = useState({value: 0, error: null});
 
   const [nameError, setNameError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
@@ -55,6 +55,15 @@ const Assignments = () => {
       valid = false;
     }
 
+    if (dueDate.value === "") {
+      setDueDate({...dueDate, error: "Due date is required"});
+      valid = false;
+    }
+    if (totalMarks.value === 0) {
+      setTotalMark({...totalMarks, error: "Total marks is required"});
+      valid = false;
+    }
+
     if (!valid) return;
     const fileName = `${Date.now()}-${file.name}`;
     const formData = new FormData();
@@ -62,27 +71,20 @@ const Assignments = () => {
     formData.append("assignmentDescription", assignmentDescription);
     formData.append("fileName", fileName);
     formData.append("file", file);
-
-    // console.log(formData.get("assignmentName")); // Check formData content
-    // console.log(formData.get("assignmentDescription")); // Check formData content
-    // console.log(formData.get("fileName")); // Check formData content
-    // console.log(formData.get("file")); // Check formData content
+    formData.append("dueDate", dueDate.value);
+    formData.append("totalMarks", totalMarks.value);
+    formData.append("courseId", courseId);
 
     try {
-      console.log(formData.get("assignmentName")); // Check formData content
-      console.log(formData.get("assignmentDescription")); // Check formData content
-      console.log(formData.get("fileName")); // Check formData content
-      console.log(formData.get("file")); // Check formData content
-
       const response = await TutorAxiosInstance.post(
-        `api/assignments/create-assignment/${courseId}`,
+        // `api/assignments/create-assignment/${courseId}`,
+        `api/assignments/tutor/create`,
         formData,
         {
-          headers: {  "Content-Type": "multipart/form-data"},
+          headers: {"Content-Type": "multipart/form-data"},
         }
       );
-      console.log("Here are the assignment details:", formData);
-      if (response.data.message === "Assignment created successfully") {
+      if (response?.data?.success) {
         Swal.fire({
           icon: "success",
           title: "Assignment created successfully",
@@ -93,6 +95,8 @@ const Assignments = () => {
         setFile(null);
         setfileName("");
         input.current.value = "";
+        setDueDate({value: "", error: null});
+        setTotalMark({value: 0, error: null});
       }
 
       console.log(response.data);
@@ -128,6 +132,30 @@ const Assignments = () => {
         />
         {descriptionError && (
           <p className="text-red-500 text-sm">{descriptionError}</p>
+        )}
+        {/* total mark */}
+        <input
+          type="number"
+          value={totalMarks.value}
+          onChange={(e) => setTotalMark({value: e.target.value, error: null})}
+          className="new-assignment-name"
+          placeholder="Total Marks"
+          min={0}
+          max={100}
+        />
+        {totalMarks.error && (
+          <p className="text-red-500 text-sm">{totalMarks.error}</p>
+        )}
+        <p className="new-assignment-instruction">Due Date</p>
+        <input
+          type="date"
+          value={dueDate.value}
+          onChange={(e) => setDueDate({value: e.target.value, error: null})}
+          className="new-assignment-name"
+          min={new Date().toISOString().split("T")[0]}
+        />
+        {dueDate.error && (
+          <p className="text-red-500 text-sm">{dueDate.error}</p>
         )}
         {/* 
         <p className="new-assignment-instruction">Assign To</p>

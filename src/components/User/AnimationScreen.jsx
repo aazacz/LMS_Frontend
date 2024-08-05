@@ -22,12 +22,12 @@ const AnimationScreen = () => {
           <div className="md:w-[70%] md:h-[50vh] h-[50%]   md:pt-0  flex flex-col gap-4 justify-center i ">
             <div className="w-full flex flex-col md:flex-row gap-x-4 px-8 md:px-12">
               <h1 className="text-left md:text-6xl text-[55px] font-poppins font-black text-[#0066de] ">
-                1600/1600{" "}
+                1600/1600    Can Be Achieved
               </h1>
-              <span className=" animate-SlidefromRight text-left md:text-6xl text-[40px] font-poppins font-black text-[#0066de]">
+              {/* <span className=" animate-SlidefromRight text-left md:text-6xl text-[40px] font-poppins font-black text-[#0066de]">
                 {" "}
                 Can Be Achieved
-              </span>
+              </span> */}
             </div>
             <div className="w-full flex  md:px-12 px-4">
               <h1 className="text-2xl font-poppins font-bold animate-diagonalSlide text-[#0066de]">
@@ -50,7 +50,7 @@ const AnimationScreen = () => {
             <div className="absolute bottom-0  right-0 animate-appear ">
               <img
                 src={kidLeft2}
-                className="md:w-[350px] w-[250px] "
+                className="md:w-[350px] w-[200px] "
                 alt="kidLeft2"
               />
             </div>
@@ -62,16 +62,15 @@ const AnimationScreen = () => {
                     Without mind SAT
                   </div>
                 </div>
-
-                <div className="hidden md:block h-20"></div>
-                <div className="hidden md:block h-20"></div>
-                <div className=" h-20"></div>
-                <div className="backdrop-blur-md  h-20 flex justify-center items-center">
-                  <div className="md:px-8  py-2  bg-[#0066de] text-white font-poppins font-bold animate-SlidefromRight">
+              </div>
+              <div className="hidden md:block h-20"></div>
+              <div className="hidden md:block h-20"></div>
+              <div className=" h-20"></div>
+              <div className="backdrop-blur-md pr-16  h-20 flex justify-center items-center animate-SlidefromLeft">
+                  <div className="md:px-8 md:py-2 px-2 py-2 text-xs md:text-base bg-[#0066de] text-white font-poppins font-bold">
                     With mind SAT
                   </div>
                 </div>
-              </div>
             </div>
           </div>
 

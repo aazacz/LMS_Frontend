@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { axiosInstanceStudent } from "../../routes/UserRoutes";
+import React, {useState, useEffect} from "react";
+import {axiosInstanceStudent} from "../../routes/UserRoutes";
 import "./Modal.css";
 
-const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
+const Modal = ({isOpen, onClose, assignmentId, onSubmit}) => {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState("");
   const [assignmentDetails, setAssignmentDetails] = useState(null);
@@ -12,12 +12,16 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
   useEffect(() => {
     const fetchAssignmentDetails = async () => {
       try {
-        const response = await axiosInstanceStudent.get(
-          `api/studentAssignments/one-assignment/${assignmentId}`
+        const {data} = await axiosInstanceStudent.get(
+          `api/assignments/assignment/${assignmentId}`
         );
-        setAssignmentDetails(response.data);
+        setAssignmentDetails(data?.data?.assignment);
+        console.log(data?.data);
+        console.log(data?.data?.assignment);
         setLoading(false);
-        setIsSubmitted(response.data.student.status === "Submitted");
+        setIsSubmitted(
+          data?.data?.assignment?.studentSubmissionStatus === "submitted"
+        );
       } catch (error) {
         console.error("Error fetching assignment details:", error);
         setStatus("Error fetching assignment details.");
@@ -46,7 +50,7 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
 
     try {
       const response = await axiosInstanceStudent.post(
-        `api/studentAssignments/submit-assignment/${assignmentId}`,
+        `api/assignments/student/submit/${assignmentId}`,
         formData,
         {
           headers: {
@@ -65,6 +69,29 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
 
   if (!isOpen) return null;
 
+  const renderSubmissionStatus = (studentSubmissionStatus) => {
+    switch (studentSubmissionStatus) {
+      case "submitted":
+        return <p className="text-blue-600">Assignment has been submitted</p>;
+      case "approved":
+        return <p className="text-green-600">Assignment has been approved</p>;
+      case "rejected":
+        return (
+          <>
+            <p className="text-red-600 mb-2">Assignment has been rejected</p>
+            <input type="file" onChange={handleFileChange} className="mb-4" />
+          </>
+        );
+      case "pending":
+      case "not-submitted":
+        return (
+          <input type="file" onChange={handleFileChange} className="mb-4" />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -81,17 +108,17 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
             <>
               <p className="mb-2">
                 <strong className="text-gray-800">Assignment:</strong>{" "}
-                {assignmentDetails.assignment.assignmentName || "N/A"}
+                {assignmentDetails?.assignmentName || "N/A"}
               </p>
               <p className="mb-2">
                 <strong className="text-gray-800">Description:</strong>{" "}
-                {assignmentDetails.assignment.assignmentDescription || "N/A"}
+                {assignmentDetails?.assignmentDescription || "N/A"}
               </p>
               <p className="mb-2">
                 <strong className="text-gray-800">File:</strong>{" "}
-                {assignmentDetails.assignment.filePath ? (
+                {assignmentDetails?.filePath ? (
                   <a
-                    href={assignmentDetails.assignment.filePath}
+                    href={assignmentDetails?.assignment?.filePath}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:text-blue-700"
@@ -104,15 +131,26 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
               </p>
               <p className="mb-4">
                 <strong className="text-gray-800">Status:</strong>{" "}
-                {assignmentDetails.student.status || "N/A"}
+                {assignmentDetails?.studentSubmissionStatus || "Pending"}
               </p>
               <div className="flex flex-col">
-                <input
-                  type="file"
-                  onChange={handleFileChange}
-                  className="mb-4"
-                  disabled={isSubmitted}
-                />
+                {/* {["submitted"].includes(
+                  assignmentDetails?.studentSubmissionStatus?.toLowerCase()
+                ) ? (
+                  <p className="text-green-500 mb-4">
+                    Assignment has been submitted.
+                  </p>
+                ) : (
+                  <input
+                    type="file"
+                    onChange={handleFileChange}
+                    className="mb-4"
+                    disabled={isSubmitted}
+                  />
+                )} */}
+                {renderSubmissionStatus(
+                  assignmentDetails?.studentSubmissionStatus
+                )}
                 <button
                   className={`bg-blue-500 text-white rounded px-4 py-2 cursor-pointer ${
                     isSubmitted

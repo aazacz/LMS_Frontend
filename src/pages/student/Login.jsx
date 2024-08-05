@@ -12,6 +12,7 @@ import UserNavbar from "../../components/User/UserNavbar";
 import Loader from "../../components/reusable/Loader";
 import "./Login.css";
 import { TutorAxiosInstance } from "../../routes/TutorRoutes";
+import { axiosInstanceStudent } from "../../routes/UserRoutes";
 
 const StudentLogin = () => {
   const baseUrl = process.env.REACT_APP_API_URL;
@@ -30,7 +31,7 @@ const StudentLogin = () => {
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      const res = await TutorAxiosInstance.post(
+      const res = await axiosInstanceStudent.post(
         `api/students/login-student`,
         data,
         {
@@ -40,6 +41,9 @@ const StudentLogin = () => {
       // console.log(res.data);
       toast.success("Login Successful");
       dispatch(setStudentDetails(res.data || []));
+      console.log({
+        studentData: res.data,
+      });
       if (res.data.role === "student") {
         setLoading(true);
         navigate("/student/*");

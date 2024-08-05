@@ -387,7 +387,7 @@ const EditDiagnosistest = () => {
             className="px-12 py-2 bg-green-600 rounded-md text-white font-poppins"
             type="submit"
           >
-            Create Test
+            Edit Test
           </button>
         </div>
       </form>

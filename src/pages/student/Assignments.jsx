@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
-import { PiNotepadBold } from "react-icons/pi";
+import {PiNotepadBold} from "react-icons/pi";
 import "./Assignment.css";
-import { axiosInstanceStudent } from "../../routes/UserRoutes";
-import { FaEye } from "react-icons/fa";
+import {axiosInstanceStudent} from "../../routes/UserRoutes";
+import {FaEye} from "react-icons/fa";
 import Modal from "./Modal";
 
 const Assignments = () => {
   const assignments1 = [
-    { id: 1, name: "SAT Assignment 1", feedbackLink: "#", score: "25/35" },
-    { id: 2, name: "SAT Assignment 2", feedbackLink: "#", score: "30/35" },
-    { id: 3, name: "SAT Assignment 3", feedbackLink: "#", score: "28/35" },
-    { id: 4, name: "SAT Assignment 4", feedbackLink: "#", score: "27/35" },
-    { id: 5, name: "SAT Assignment 5", feedbackLink: "#", score: "26/35" },
+    {id: 1, name: "SAT Assignment 1", feedbackLink: "#", score: "25/35"},
+    {id: 2, name: "SAT Assignment 2", feedbackLink: "#", score: "30/35"},
+    {id: 3, name: "SAT Assignment 3", feedbackLink: "#", score: "28/35"},
+    {id: 4, name: "SAT Assignment 4", feedbackLink: "#", score: "27/35"},
+    {id: 5, name: "SAT Assignment 5", feedbackLink: "#", score: "26/35"},
   ];
 
   const baseURL = process.env.REACT_APP_API_URL;
@@ -27,28 +27,29 @@ const Assignments = () => {
 
   const fetchAssignments = async (type) => {
     try {
-      let url = `api/studentAssignments/all-assignments`;
+      let url = `api/assignments/student-all-assignments`;
       if (type === "pending") {
-        url = `api/studentAssignments/pendingAssignments`;
+        url = `api/assignments/student-all-assignments/pending`;
       } else if (type === "completed") {
-        url = `api/studentAssignments/submitted-Assignments`;
+        url = `api/assignments/student-all-assignments/completed`;
       }
 
-      const response = await axiosInstanceStudent.get(url, {});
+      const {data} = await axiosInstanceStudent.get(url, {});
 
       // Extract assignments from nested courses
-      const courses = response.data;
+      // const courses = response.data;
+      console.log("d", data);
       let allAssignments = [];
-      courses.forEach((course) => {
-        course.assignments.forEach((assignment) => {
-          allAssignments.push({
-            ...assignment,
-            courseName: course.courseName, // Add course name to each assignment
-          });
-        });
-      });
+      // courses.forEach((course) => {
+      //   course.assignments.forEach((assignment) => {
+      //     allAssignments.push({
+      //       ...assignment,
+      //       courseName: course.courseName, // Add course name to each assignment
+      //     });
+      //   });
+      // });
 
-      setAssignments(allAssignments);
+      setAssignments(data?.data?.assignments);
     } catch (error) {
       console.error("Error fetching assignments:", error);
     }
@@ -162,20 +163,20 @@ const Assignments = () => {
                 <tbody>
                   {currentAssignments.map((assignment) => (
                     <tr
-                      key={assignment._id}
+                      key={assignment?._id}
                       className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text:xs md:text-base rounded-xl cursor-pointer"
                     >
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
-                        {assignment.assignmentName}
+                        {assignment?.assignmentName}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
-                        {assignment.courseName}
+                        {assignment?.courseId?.courseName}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
-                        {assignment.dueDate}
+                        {assignment?.dueDate}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-[#FE9519]">
-                        {assignment.student.status}
+                        {assignment?.studentSubmissionStatus || "pending"}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
                         <button

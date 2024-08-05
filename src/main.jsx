@@ -11,32 +11,28 @@ import "react-toastify/dist/ReactToastify.css";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import { BrowserRouter as Router } from "react-router-dom";
 
-
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <ErrorBoundary>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition="Bounce" />
-      
-            <App />
-       
-          
+  <ErrorBoundary>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition="Bounce"
+        />
 
-          <ToastContainer />
-        </PersistGate>
-      </Provider>
-    </ErrorBoundary>
-  </React.StrictMode>
+        <App />
+
+        <ToastContainer />
+      </PersistGate>
+    </Provider>
+  </ErrorBoundary>
 );

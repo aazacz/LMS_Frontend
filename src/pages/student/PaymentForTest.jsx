@@ -8,34 +8,25 @@ const PaymentForTest = () => {
   useEffect(() => {
     displayRazorpay();
   }, []);
-  function loadScript(src) {
-    try {
-      return new Promise((resolve) => {
-        const script = document.createElement("script");
-        script.src = src;
-        script.onload = () => {
-          resolve(true);
-        };
-        script.onerror = () => {
-          resolve(false);
-        };
-        document.body.appendChild(script);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // function loadScript(src) {
+  //   try {
+  //     return new Promise((resolve) => {
+  //       const script = document.createElement("script");
+  //       script.src = src;
+  //       script.onload = () => {
+  //         resolve(true);
+  //       };
+  //       script.onerror = () => {
+  //         resolve(false);
+  //       };
+  //       document.body.appendChild(script);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
   async function displayRazorpay() {
     try {
-      const res = await loadScript(
-        "https://checkout.razorpay.com/v1/checkout.js"
-      );
-
-      if (!res) {
-        alert("Razorpay SDK failed to load. Are you online?");
-        return;
-      }
-
       // creating a new order
       const result = await axiosInstanceStudent.get(
         "/api/diagnosis/prepare-payment"

@@ -30,7 +30,7 @@ const ClassesToday = () => {
 
   return (
     <div
-      className={`w-full -z-10 flex-wrap  overflow-y-scroll no-scrollbar flex relative`}
+      className={`w-full -z-10 flex-wrap  overflow-y-scroll no-scrollbar flex relative border-2 border-red-800`}
     >
       <>
         <div className="w-full md:w-[70%] h-max p-5 overflow-y-scroll no-scrollbar ">

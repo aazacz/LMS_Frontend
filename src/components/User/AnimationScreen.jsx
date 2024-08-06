@@ -21,8 +21,8 @@ const AnimationScreen = () => {
         <div className="w-[100%] h-screen ">
           <div className="md:w-[70%] md:h-[50vh] h-[50%]   md:pt-0  flex flex-col gap-4 justify-center i ">
             <div className="w-full flex flex-col md:flex-row gap-x-4 px-8 md:px-12">
-              <h1 className="text-left md:text-6xl text-[55px] font-poppins font-black text-[#0066de] ">
-                1600/1600    Can Be Achieved
+              <h1 className="text-left text-[40px] md:text-5xl  font-poppins font-black text-[#0066de] ">
+                1600/1600 Can Be Achieved
               </h1>
               {/* <span className=" animate-SlidefromRight text-left md:text-6xl text-[40px] font-poppins font-black text-[#0066de]">
                 {" "}

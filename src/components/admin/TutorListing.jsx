@@ -7,6 +7,7 @@ import { FaCirclePlus } from "react-icons/fa6";
 import axios from "axios";
 import { useState } from "react";
 import ReusablePagination from "../reusable/ReusablePagination";
+import Loader from "../reusable/Loader";
 
 const baseURL = process.env.REACT_APP_API_URL;
 
@@ -28,6 +29,8 @@ const TutorCard = ({ tutor }) => {
               <p className="text-gray-600 text-xs font-poppins">
                 {2} Sessions attended
               </p>
+              <span className=" font-semibold pr-2">{1}</span>
+              <span className="text-xs text-gray-600">({1} Review)</span>
             </div>
           </div>
 
@@ -56,15 +59,18 @@ const TutorListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
+  const [loading, setLoading] = useState(true); // Loader state
 
   useEffect(() => {
+    setLoading(true);
     axios
-      .get(`${baseURL}api/tutor/tutors?page=1&pageSize=5&search=`, {
+      .get(`${baseURL}api/tutor/tutors?page=1&pageSize=&search=`, {
         "user-agent": navigator.userAgent,
       })
       .then((res) => {
         console.log(res.data.data);
         setTutorList(res.data.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching tutors:", error);
@@ -99,20 +105,27 @@ const TutorListing = () => {
           </button>
         </Link>
       </div>
+      <div className="font-poppins w-full flex flex-col col relative">
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
+            <Loader /> {/* Your Loader component */}
+          </div>
+        )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-x-2 ">
-        {TutorList.map((tutor, index) => {
-          return <TutorCard key={index} tutor={tutor} />;
-        })}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-x-2 ">
+          {TutorList.map((tutor, index) => {
+            return <TutorCard key={index} tutor={tutor} />;
+          })}
+        </div>
+
+        <ReusablePagination
+          currentPage={currentPage}
+          pageSize={pageSize}
+          totalRows={totalRows}
+          handlePageChange={handlePageChange}
+          handlePageSizeChange={handlePageSizeChange}
+        />
       </div>
-
-      <ReusablePagination
-        currentPage={currentPage}
-        pageSize={pageSize}
-        totalRows={totalRows}
-        handlePageChange={handlePageChange}
-        handlePageSizeChange={handlePageSizeChange}
-      />
     </div>
   );
 };

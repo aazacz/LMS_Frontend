@@ -5,11 +5,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.student-detail-profile {
-    display: flex;
-    gap: 25px;
-    align-items: center;
-}
+
 
 .student-detail-profile p {
     font-size: 15px;

@@ -1,15 +1,14 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import profile from "../../assets/Admin/profile.jpeg";
 import { LuPhone } from "react-icons/lu";
 import { CiMail } from "react-icons/ci";
 import { IoTrashOutline, IoAddCircleOutline } from "react-icons/io5";
-import { FaArrowCircleRight } from "react-icons/fa";
-import { FaEdit } from "react-icons/fa";
-import { FaSave } from "react-icons/fa";
+import { FaArrowCircleRight, FaEdit, FaSave } from "react-icons/fa";
+import { IoChevronBackCircleOutline } from "react-icons/io5";
 
-const TutorDetails = () => {
+const TutorDetails = ({}) => {
   const baseURL = process.env.REACT_APP_API_URL;
   const { tutorId } = useParams();
   const [tutor, setTutor] = useState({
@@ -30,21 +29,28 @@ const TutorDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [cvFile, setCvFile] = useState(null);
   const [identityFile, setIdentityFile] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(tutor);
     axios
       .get(`${baseURL}api/tutor/single-tutor/${tutorId}`)
       .then((res) => {
         setTutor({
-          ...res.data,
-          courses: res.data.courses || [],
-          education: res.data.education || [],
+          name: res.data.name || "",
+          email: res.data.email || "",
+          role: res.data.role || "",
+          password: res.data.password || "",
+          number: res.data.number || "",
           experience: res.data.experience || "",
-          awards: res.data.awards || [],
+          cv: res.data.cv || "",
+          education: res.data.educations || [],
           skills: res.data.skills || [],
           projects: res.data.projects || [],
+          awards: res.data.awards || [],
+          status: res.data.status || "",
+          reviews: res.data.reviews || [],
         });
+        console.log(res.data);
       })
       .catch((error) => {
         console.error("Error fetching tutor details:", error);
@@ -53,7 +59,6 @@ const TutorDetails = () => {
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
-    // Save functionality can be added here if needed
   };
 
   const handleChange = (e) => {
@@ -71,18 +76,11 @@ const TutorDetails = () => {
     if (name === "identityProof") setIdentityFile(file);
   };
 
-  const handleDelete = (field, index) => {
-    setTutor((prevTutor) => {
-      if (field === "cv") return { ...prevTutor, cv: "" };
-      if (field === "identityProof") return { ...prevTutor, identityProof: "" };
-
-      const updatedField = [...prevTutor[field]];
-      updatedField.splice(index, 1);
-      return {
-        ...prevTutor,
-        [field]: updatedField,
-      };
-    });
+  const handleDelete = (field) => {
+    setTutor((prevTutor) => ({
+      ...prevTutor,
+      [field]: "",
+    }));
   };
 
   const handleAdd = (field) => {
@@ -92,9 +90,30 @@ const TutorDetails = () => {
     }));
   };
 
+  const handleFieldChange = (field, index, value) => {
+    const updatedField = [...tutor[field]];
+    updatedField[index] = value;
+    setTutor((prevTutor) => ({
+      ...prevTutor,
+      [field]: updatedField,
+    }));
+  };
+
+  const handleDeleteField = (field, index) => {
+    const updatedField = [...tutor[field]];
+    updatedField.splice(index, 1);
+    setTutor((prevTutor) => ({
+      ...prevTutor,
+      [field]: updatedField,
+    }));
+  };
+
   return (
     <div className="p-2 w-full font-poppins">
-      <div className="w-full  bg-[#F4F6F7] h-30 p-2 flex">
+      <button className="w-[50%]" onClick={() => navigate(-1)}>
+        <IoChevronBackCircleOutline className="text-4xl mb-2 " />
+      </button>
+      <div className="w-full bg-[#F4F6F7] h-30 p-2 flex">
         <div className="w-[40%] md:w-[15%] lg:w-[10%] justify-center items-center flex">
           <img
             src={profile}
@@ -124,7 +143,7 @@ const TutorDetails = () => {
       <div className="w-full flex justify-center items-center py-2 md:px-4 lg:px-8">
         <div className="justify-end w-[100%] md:-[97%] flex">
           <button
-            className=" text-black  py-2 md:text-2xl rounded text-xl"
+            className="text-black py-2 md:text-2xl rounded text-xl"
             onClick={handleEditClick}
           >
             {isEditing ? <FaSave /> : <FaEdit />}
@@ -134,12 +153,12 @@ const TutorDetails = () => {
 
       {/* About Section */}
       <div className="flex flex-col gap-y-4 overflow-y-scroll no-scrollbar w-full">
-        <div className="flex w-full  justify-center items-center gap-2 flex-wrap">
-          <div className="w-full  md:w-[20%] flex justify-between flex-wrap">
+        <div className="flex w-full justify-center items-center gap-2 flex-wrap">
+          <div className="w-full md:w-[20%] flex justify-between flex-wrap">
             <p className="text-[15px] text-[#666666] font-semibold">ABOUT ME</p>
             <FaArrowCircleRight className="text-xl" />
           </div>
-          <div className="w-full  md:w-[75%] p-5 rounded-md bg-[#E5F0FC]">
+          <div className="w-full md:w-[75%] p-5 rounded-md bg-[#E5F0FC]">
             <h1 className="text-[20px] font-semibold text-[#333333] font-poppins border-b-2 border-[#DFE7EF]">
               About Tutor
             </h1>
@@ -163,7 +182,7 @@ const TutorDetails = () => {
 
         {/* File Uploads Section */}
         <div className="flex w-full justify-center items-center gap-2 flex-wrap">
-          <div className="w-full  md:w-[20%] flex justify-between gap-2 flex-wrap">
+          <div className="w-full md:w-[20%] flex justify-between gap-2 flex-wrap">
             <p className="text-[15px] text-[#666666] font-semibold">
               FILE UPLOADS
             </p>
@@ -214,7 +233,7 @@ const TutorDetails = () => {
               </div>
 
               <h1 className="text-[14px] text-[#333333] font-poppins pb-2 mt-4">
-                Upload National Identity Proof *
+                Upload Identity Proof *
               </h1>
               <div className="flex justify-between items-center">
                 {isEditing ? (
@@ -255,124 +274,9 @@ const TutorDetails = () => {
           </div>
         </div>
 
-        {/* My Courses Section */}
+        {/* Additional Details */}
         <div className="flex w-full justify-center items-center gap-2 flex-wrap">
-          <div className="w-full  md:w-[20%] flex justify-between gap-2 flex-wrap">
-            <p className="text-[15px] text-[#666666] font-semibold">
-              MY COURSES
-            </p>
-            <FaArrowCircleRight className="text-xl" />
-          </div>
-          <div className="w-full md:w-[75%] p-5 rounded-lg bg-[#E5F0FC]">
-            <h1 className="text-[20px] font-semibold text-[#333333] font-poppins border-b-2 border-[#DFE7EF]">
-              Course Details
-            </h1>
-            <div className="mt-4">
-              {isEditing ? (
-                <div>
-                  {tutor.courses.map((cour, index) => (
-                    <div key={index} className="flex items-center gap-2 mb-2">
-                      <input
-                        type="text"
-                        className="w-full bg-white text-xs outline-none p-2 rounded-lg"
-                        name={`courses-${index}`}
-                        value={cour}
-                        onChange={(e) =>
-                          setTutor((prevTutor) => {
-                            const updatedCourses = [...prevTutor.courses];
-                            updatedCourses[index] = e.target.value;
-                            return {
-                              ...prevTutor,
-                              courses: updatedCourses,
-                            };
-                          })
-                        }
-                      />
-                      <IoTrashOutline
-                        className="text-red-600 cursor-pointer"
-                        onClick={() => handleDelete("courses", index)}
-                      />
-                    </div>
-                  ))}
-                  <button
-                    className="text-blue-500 text-xs mt-2 flex items-center gap-1"
-                    onClick={() => handleAdd("courses")}
-                  >
-                    <IoAddCircleOutline /> Add Courses
-                  </button>
-                </div>
-              ) : (
-                <ul className="list-disc ml-5 text-xs text-[#454545] font-poppins">
-                  {tutor.courses.length > 0 ? (
-                    tutor.courses.map((cour, index) => (
-                      <li key={index}>{cour}</li>
-                    ))
-                  ) : (
-                    <li>No Course Details Provided.</li>
-                  )}
-                </ul>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Experience Section */}
-        {/* <div className="flex w-full justify-center items-center gap-2 flex-wrap">
-          <div className="w-full border-2 border-pink-600 md:w-[20%] flex justify-between gap-2 flex-wrap">
-            <p className="text-[15px] text-[#666666] font-semibold">WORK EXPERIENCE</p>
-            <FaArrowAltCircleRight className="text-xl" />
-          </div>
-          <div className="w-full md:w-[75%] p-5 rounded-lg bg-[#E5F0FC]">
-            <h1 className="text-[20px] font-semibold text-[#333333] font-poppins border-b-2 border-[#DFE7EF]">
-              Experience Details
-            </h1>
-            <div className="mt-4">
-              {isEditing ? (
-                <div>
-                  {tutor.experience.map((exp, index) => (
-                    <div key={index} className="flex items-center gap-2 mb-2">
-                      <input
-                        type="text"
-                        className="w-full bg-white text-xs outline-none p-2 rounded-lg"
-                        name={`experience-${index}`}
-                        value={exp}
-                        onChange={(e) =>
-                          setTutor((prevTutor) => {
-                            const updatedExperience = [...prevTutor.experience];
-                            updatedExperience[index] = e.target.value;
-                            return { ...prevTutor, experiences: updatedExperience };
-                          })
-                        }
-                      />
-                      <IoTrashOutline
-                        className="text-red-600 cursor-pointer"
-                        onClick={() => handleDelete("experience", index)}
-                      />
-                    </div>
-                  ))}
-                  <button
-                    className="text-blue-500 text-xs mt-2 flex items-center gap-1"
-                    onClick={() => handleAdd("experience")}
-                  >
-                    <IoAddCircleOutline /> Add Experience
-                  </button>
-                </div>
-              ) : (
-                <ul className="list-disc ml-5 text-xs text-[#454545] font-poppins">
-                  {tutor.experience.length > 0 ? (
-                    tutor.experience.map((exp, index) => <li key={index}>{exp}</li>)
-                  ) : (
-                    <li>No Experience Details Provided.</li>
-                  )}
-                </ul>
-              )}
-            </div>
-          </div>
-        </div> */}
-
-        {/* Education Section */}
-        <div className="flex w-full justify-center items-center gap-2 flex-wrap">
-          <div className="w-full  md:w-[20%] flex justify-between gap-2 flex-wrap">
+          <div className="w-full md:w-[20%] flex justify-between gap-2 flex-wrap">
             <p className="text-[15px] text-[#666666] font-semibold">
               EDUCATION
             </p>
@@ -380,174 +284,155 @@ const TutorDetails = () => {
           </div>
           <div className="w-full md:w-[75%] p-5 rounded-lg bg-[#E5F0FC]">
             <h1 className="text-[20px] font-semibold text-[#333333] font-poppins border-b-2 border-[#DFE7EF]">
-              Education Details
+              Education
             </h1>
-            <div className="mt-4">
-              {isEditing ? (
-                <div>
-                  {tutor.education.map((edu, index) => (
-                    <div key={index} className="flex items-center gap-2 mb-2">
-                      <input
-                        type="text"
-                        className="w-full bg-white text-xs outline-none p-2 rounded-lg"
-                        name={`education-${index}`}
-                        value={edu}
-                        onChange={(e) =>
-                          setTutor((prevTutor) => {
-                            const updatedEducation = [...prevTutor.education];
-                            updatedEducation[index] = e.target.value;
-                            return {
-                              ...prevTutor,
-                              education: updatedEducation,
-                            };
-                          })
-                        }
-                      />
-                      <IoTrashOutline
-                        className="text-red-600 cursor-pointer"
-                        onClick={() => handleDelete("education", index)}
-                      />
-                    </div>
-                  ))}
-                  <button
-                    className="text-blue-500 text-xs mt-2 flex items-center gap-1"
-                    onClick={() => handleAdd("education")}
-                  >
-                    <IoAddCircleOutline /> Add Education
-                  </button>
+            {isEditing ? (
+              tutor.education.map((edu, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    className="bg-white text-xs outline-none w-full p-2 rounded-lg"
+                    value={edu}
+                    onChange={(e) =>
+                      handleFieldChange("education", index, e.target.value)
+                    }
+                  />
+                  <IoTrashOutline
+                    className="text-red-600 cursor-pointer"
+                    onClick={() => handleDeleteField("education", index)}
+                  />
                 </div>
-              ) : (
-                <ul className="list-disc ml-5 text-xs text-[#454545] font-poppins">
-                  {tutor.education.length > 0 ? (
-                    tutor.education.map((edu, index) => (
-                      <li key={index}>{edu}</li>
-                    ))
-                  ) : (
-                    <li>No Education Details Provided.</li>
-                  )}
-                </ul>
-              )}
-            </div>
+              ))
+            ) : (
+              <ul className="list-disc pl-5 text-xs">
+                {tutor.education.length ? (
+                  tutor.education.map((education, index) => (
+                    <li key={index} className="text-[#454545]">
+                      {education}
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-[#454545]">No information provided.</li>
+                )}
+              </ul>
+            )}
+            {isEditing && (
+              <div className="mt-4 flex items-center gap-2">
+                <button
+                  className="text-green-600 text-sm flex items-center"
+                  onClick={() => handleAdd("education")}
+                >
+                  <IoAddCircleOutline /> Add Education
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Skills Section */}
         <div className="flex w-full justify-center items-center gap-2 flex-wrap">
-          <div className="w-full  md:w-[20%] flex justify-between gap-2 flex-wrap">
+          <div className="w-full md:w-[20%] flex justify-between gap-2 flex-wrap">
             <p className="text-[15px] text-[#666666] font-semibold">SKILLS</p>
             <FaArrowCircleRight className="text-xl" />
           </div>
           <div className="w-full md:w-[75%] p-5 rounded-lg bg-[#E5F0FC]">
             <h1 className="text-[20px] font-semibold text-[#333333] font-poppins border-b-2 border-[#DFE7EF]">
-              Skill Details
+              Skills
             </h1>
-            <div className="mt-4">
-              {isEditing ? (
-                <div>
-                  {tutor.skills.map((ski, index) => (
-                    <div key={index} className="flex items-center gap-2 mb-2">
-                      <input
-                        type="text"
-                        className="w-full bg-white text-xs outline-none p-2 rounded-lg"
-                        name={`skills-${index}`}
-                        value={ski}
-                        onChange={(e) =>
-                          setTutor((prevTutor) => {
-                            const updatedSkills = [...prevTutor.skills];
-                            updatedSkills[index] = e.target.value;
-                            return {
-                              ...prevTutor,
-                              skills: updatedSkills,
-                            };
-                          })
-                        }
-                      />
-                      <IoTrashOutline
-                        className="text-red-600 cursor-pointer"
-                        onClick={() => handleDelete("skills", index)}
-                      />
-                    </div>
-                  ))}
-                  <button
-                    className="text-blue-500 text-xs mt-2 flex items-center gap-1"
-                    onClick={() => handleAdd("skills")}
-                  >
-                    <IoAddCircleOutline /> Add Skills
-                  </button>
+            {isEditing ? (
+              tutor.skills.map((skill, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    className="bg-white text-xs outline-none w-full p-2 rounded-lg"
+                    value={skill}
+                    onChange={(e) =>
+                      handleFieldChange("skills", index, e.target.value)
+                    }
+                  />
+                  <IoTrashOutline
+                    className="text-red-600 cursor-pointer"
+                    onClick={() => handleDeleteField("skills", index)}
+                  />
                 </div>
-              ) : (
-                <ul className="list-disc ml-5 text-xs text-[#454545] font-poppins">
-                  {tutor.skills.length > 0 ? (
-                    tutor.skills.map((ski, index) => <li key={index}>{ski}</li>)
-                  ) : (
-                    <li>No Skill Details Provided.</li>
-                  )}
-                </ul>
-              )}
-            </div>
+              ))
+            ) : (
+              <ul className="list-disc pl-5 text-xs">
+                {tutor.skills.length ? (
+                  tutor.skills.map((skill, index) => (
+                    <li key={index} className="text-[#454545]">
+                      {skill}
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-[#454545]">No information provided.</li>
+                )}
+              </ul>
+            )}
+            {isEditing && (
+              <div className="mt-4 flex items-center gap-2">
+                <button
+                  className="text-green-600 text-sm flex items-center"
+                  onClick={() => handleAdd("skills")}
+                >
+                  <IoAddCircleOutline /> Add Skill
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Projects Section */}
         <div className="flex w-full justify-center items-center gap-2 flex-wrap">
-          <div className="w-full  md:w-[20%] flex justify-between gap-2 flex-wrap">
+          <div className="w-full md:w-[20%] flex justify-between gap-2 flex-wrap">
             <p className="text-[15px] text-[#666666] font-semibold">PROJECTS</p>
             <FaArrowCircleRight className="text-xl" />
           </div>
           <div className="w-full md:w-[75%] p-5 rounded-lg bg-[#E5F0FC]">
             <h1 className="text-[20px] font-semibold text-[#333333] font-poppins border-b-2 border-[#DFE7EF]">
-              Project Details
+              Projects
             </h1>
-            <div className="mt-4">
-              {isEditing ? (
-                <div>
-                  {tutor.projects.map((pro, index) => (
-                    <div key={index} className="flex items-center gap-2 mb-2">
-                      <input
-                        type="text"
-                        className="w-full bg-white text-xs outline-none p-2 rounded-lg"
-                        name={`projects-${index}`}
-                        value={pro}
-                        onChange={(e) =>
-                          setTutor((prevTutor) => {
-                            const updatedProjects = [...prevTutor.projects];
-                            updatedProjects[index] = e.target.value;
-                            return {
-                              ...prevTutor,
-                              projects: updatedProjects,
-                            };
-                          })
-                        }
-                      />
-                      <IoTrashOutline
-                        className="text-red-600 cursor-pointer"
-                        onClick={() => handleDelete("projects", index)}
-                      />
-                    </div>
-                  ))}
-                  <button
-                    className="text-blue-500 text-xs mt-2 flex items-center gap-1"
-                    onClick={() => handleAdd("projects")}
-                  >
-                    <IoAddCircleOutline /> Add Projects
-                  </button>
+            {isEditing ? (
+              tutor.projects.map((project, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    className="bg-white text-xs outline-none w-full p-2 rounded-lg"
+                    value={project}
+                    onChange={(e) =>
+                      handleFieldChange("projects", index, e.target.value)
+                    }
+                  />
+                  <IoTrashOutline
+                    className="text-red-600 cursor-pointer"
+                    onClick={() => handleDeleteField("projects", index)}
+                  />
                 </div>
-              ) : (
-                <ul className="list-disc ml-5 text-xs text-[#454545] font-poppins">
-                  {tutor.projects.length > 0 ? (
-                    tutor.projects.map((pro, index) => (
-                      <li key={index}>{pro}</li>
-                    ))
-                  ) : (
-                    <li>No Project Details Provided.</li>
-                  )}
-                </ul>
-              )}
-            </div>
+              ))
+            ) : (
+              <ul className="list-disc pl-5 text-xs">
+                {tutor.projects.length ? (
+                  tutor.projects.map((project, index) => (
+                    <li key={index} className="text-[#454545]">
+                      {project}
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-[#454545]">No information provided.</li>
+                )}
+              </ul>
+            )}
+            {isEditing && (
+              <div className="mt-4 flex items-center gap-2">
+                <button
+                  className="text-green-600 text-sm flex items-center"
+                  onClick={() => handleAdd("projects")}
+                >
+                  <IoAddCircleOutline /> Add Project
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Awards Section */}
         <div className="flex w-full justify-center items-center gap-2 flex-wrap">
           <div className="w-full md:w-[20%] flex justify-between gap-2 flex-wrap">
             <p className="text-[15px] text-[#666666] font-semibold">AWARDS</p>
@@ -555,52 +440,75 @@ const TutorDetails = () => {
           </div>
           <div className="w-full md:w-[75%] p-5 rounded-lg bg-[#E5F0FC]">
             <h1 className="text-[20px] font-semibold text-[#333333] font-poppins border-b-2 border-[#DFE7EF]">
-              Award Details
+              Awards
             </h1>
-            <div className="mt-4">
-              {isEditing ? (
-                <div>
-                  {tutor.awards.map((awa, index) => (
-                    <div key={index} className="flex items-center gap-2 mb-2">
-                      <input
-                        type="text"
-                        className="w-full bg-white text-xs outline-none p-2 rounded-lg"
-                        name={`awards-${index}`}
-                        value={awa}
-                        onChange={(e) =>
-                          setTutor((prevTutor) => {
-                            const updatedAwards = [...prevTutor.awards];
-                            updatedAwards[index] = e.target.value;
-                            return {
-                              ...prevTutor,
-                              projects: updatedAwards,
-                            };
-                          })
-                        }
-                      />
-                      <IoTrashOutline
-                        className="text-red-600 cursor-pointer"
-                        onClick={() => handleDelete("awards", index)}
-                      />
-                    </div>
-                  ))}
-                  <button
-                    className="text-blue-500 text-xs mt-2 flex items-center gap-1"
-                    onClick={() => handleAdd("awards")}
-                  >
-                    <IoAddCircleOutline /> Add Awards
-                  </button>
+            {isEditing ? (
+              tutor.awards.map((award, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    className="bg-white text-xs outline-none w-full p-2 rounded-lg"
+                    value={award}
+                    onChange={(e) =>
+                      handleFieldChange("awards", index, e.target.value)
+                    }
+                  />
+                  <IoTrashOutline
+                    className="text-red-600 cursor-pointer"
+                    onClick={() => handleDeleteField("awards", index)}
+                  />
                 </div>
-              ) : (
-                <ul className="list-disc ml-5 text-xs text-[#454545] font-poppins">
-                  {tutor.awards.length > 0 ? (
-                    tutor.awards.map((awa, index) => <li key={index}>{awa}</li>)
-                  ) : (
-                    <li>No Award Details Provided.</li>
-                  )}
-                </ul>
-              )}
-            </div>
+              ))
+            ) : (
+              <ul className="list-disc pl-5 text-xs">
+                {tutor.awards.length ? (
+                  tutor.awards.map((award, index) => (
+                    <li key={index} className="text-[#454545]">
+                      {award}
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-[#454545]">No information provided.</li>
+                )}
+              </ul>
+            )}
+            {isEditing && (
+              <div className="mt-4 flex items-center gap-2">
+                <button
+                  className="text-green-600 text-sm flex items-center"
+                  onClick={() => handleAdd("awards")}
+                >
+                  <IoAddCircleOutline /> Add Award
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex w-full justify-center items-center gap-2 flex-wrap">
+          <div className="w-full md:w-[20%] flex justify-between gap-2 flex-wrap">
+            <p className="text-[15px] text-[#666666] font-semibold">
+              EXPERIENCE
+            </p>
+            <FaArrowCircleRight className="text-xl" />
+          </div>
+          <div className="w-full md:w-[75%] p-5 rounded-lg bg-[#E5F0FC]">
+            <h1 className="text-[20px] font-semibold text-[#333333] font-poppins border-b-2 border-[#DFE7EF]">
+              Experience
+            </h1>
+            {isEditing ? (
+              <textarea
+                className="bg-white text-xs outline-none w-full p-2 rounded-lg"
+                rows={5}
+                value={tutor.experience}
+                onChange={(e) => handleChange(e)}
+                name="experience"
+              />
+            ) : (
+              <p className="text-xs text-[#454545]">
+                {tutor.experience || "No information provided."}
+              </p>
+            )}
           </div>
         </div>
       </div>

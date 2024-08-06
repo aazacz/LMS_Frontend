@@ -284,7 +284,7 @@ const Package = () => {
                       handleEdit(data._id, data.packageName, data.features)
                     }
                   >
-                    Edit
+                    Edit / View
                   </button>
                 )}
                 <button
@@ -293,14 +293,14 @@ const Package = () => {
                 >
                   Delete
                 </button>
-                <button
+                {/* <button
                   onClick={() =>
                     handleView(data._id, data.packageName, data.features)
                   }
                   className="px-4 py-2 bg-gray-400 text-white font-medium rounded-md"
                 >
                   View
-                </button>
+                </button> */}
               </td>
             </tr>
           ))}

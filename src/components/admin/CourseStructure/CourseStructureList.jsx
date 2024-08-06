@@ -59,82 +59,121 @@ const CourseStructureList = () => {
     setCurrentPage(1); // Reset to first page on page size change
   };
 
-  return (
-    <>
-      <div className="p-4">
-        {/* Heading and button div */}
-        <div className="flex justify-between py-2">
-          <h1 className="font-poppins font-semibold md:text-2xl text-xl">
-            Course Structure
-          </h1>
-          <Link
-            replace
-            to={`/admin/home/courseStructure/addcoursestructure`}
-            className="bg-[#F5F1F1] hidden md:block"
-          >
-            <button className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg px-2 font-poppins text-sm">
-              <FaCirclePlus className="text-slate-600" /> Add Course Structure
-            </button>
-          </Link>
-        </div>
+  const handleSearchChange = (value) => {
+    setSearch(value);
+  };
 
-        <div className="mt-2 w-full h-14">
-        <div className="flex justify-between gap-x-4">
-        <div className="w-full h-8 flex items-center bg-white rounded-lg  gap-x-3 border-[1px]  border-black">
-          <IoSearch className=" ml-1 text-2xl" />
+  const CategoryDropdown = () => {
+    const [isOpen, setIsOpen] = useState(false);
 
-          <input
-            type="search"
-            name=""
-            onChange={(e) => handleSearchChange(e.target.value)}
-            className="outline-none w-[60%] md:w-[80%] lg:w-[90%] h-full"
-            id=""
-          />
+    const toggleDropdown = () => {
+      setIsOpen(!isOpen);
+    };
+
+    return (
+      <div className="relative">
+        <div
+          className="bg-gray-100 px-2 justify-center cursor-pointer items-center rounded-md text-sm font-poppins gap-2 flex"
+          onClick={toggleDropdown}
+        >
+          <TbCategory />
+          Category
         </div>
-        <div className='bg-gray-100 px-2 justify-center items-center rounded-md text-sm font-poppins gap-2 flex'><TbCategory/>Category</div>
+        {isOpen && (
+          <div className="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+            <ul className="py-1">
+              <li className="px-4 py-2 text-sm hover:bg-gray-200 cursor-pointer">
+                Standard
+              </li>
+              <li className="px-4 py-2 text-sm hover:bg-gray-200 cursor-pointer">
+                Premium
+              </li>
+              <li className="px-4 py-2 text-sm hover:bg-gray-200 cursor-pointer">
+                Basic
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
-        </div>
+    );
+  };
 
-        <div className="w-full flex py-3 justify-end md:hidden">
-          <Link
-            replace
-            to={`/admin/home/courseStructure/addcoursestructure`}
-            className=""
-          >
-            <button className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-[#F5F1F1] p-1 rounded-lg border-slate-600 px-2 font-poppins text-sm">
-              <FaCirclePlus className="text-slate-600" /> Add Course Structure
-            </button>
-          </Link>
-        </div>
+  return (
+    <div className="p-4">
+      {/* Heading and button div */}
+      <div className="flex justify-between py-2">
+        <h1 className="font-poppins font-semibold md:text-2xl text-xl">
+          Course Structure
+        </h1>
+        <Link
+          replace
+          to={`/admin/home/courseStructure/addcoursestructure`}
+          className="bg-[#F5F1F1] hidden md:block"
+        >
+          <button className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg px-2 font-poppins text-sm">
+            <FaCirclePlus className="text-slate-600" /> Add Course Structure
+          </button>
+        </Link>
+      </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {loading ? (
-            <div className="w-full flex justify-center">
+      <div className="mt-2 w-full h-14">
+        <div className="flex justify-between gap-x-4">
+          <div className="w-full h-8 flex items-center bg-white rounded-lg  gap-x-3 border-[1px]  border-black">
+            <IoSearch className=" ml-1 text-2xl" />
+            <input
+              type="search"
+              name=""
+              onChange={(e) => handleSearchChange(e.target.value)}
+              className="outline-none w-[60%] md:w-[80%] lg:w-[90%] h-full"
+              id=""
+            />
+          </div>
+          <CategoryDropdown />
+        </div>
+      </div>
+
+      <div className="w-full flex py-3 justify-end md:hidden">
+        <Link
+          replace
+          to={`/admin/home/courseStructure/addcoursestructure`}
+          className=""
+        >
+          <button className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-[#F5F1F1] p-1 rounded-lg border-slate-600 px-2 font-poppins text-sm">
+            <FaCirclePlus className="text-slate-600" /> Add Course Structure
+          </button>
+        </Link>
+      </div>
+
+      <div className="relative w-full mt-4">
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center z-10">
+            <div className="bg-white bg-opacity-75 flex items-center justify-center w-full h-full">
               <Loader />
             </div>
-          ) : (
-            courses.map((course, index) => (
-              <Link
-                key={index}
-                to={`/admin/home/coursestructure/viewcoursestructure/${course._id}`}
-              >
-                <CourseCard course={course} />
-              </Link>
-            ))
-          )}
-        </div>
-
-        <div className="mt-4">
-          <ReusablePagination
-            currentPage={currentPage}
-            pageSize={pageSize}
-            totalRows={totalRows}
-            handlePageChange={handlePageChange}
-            handlePageSizeChange={handlePageSizeChange}
-          />
+          </div>
+        )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {courses.map((course, index) => (
+            <Link
+              key={index}
+              to={`/admin/home/coursestructure/viewcoursestructure/${course._id}`}
+            >
+              <CourseCard course={course} />
+            </Link>
+          ))}
         </div>
       </div>
-    </>
+
+      <div className="mt-4">
+        <ReusablePagination
+          currentPage={currentPage}
+          pageSize={pageSize}
+          totalRows={totalRows}
+          handlePageChange={handlePageChange}
+          handlePageSizeChange={handlePageSizeChange}
+        />
+      </div>
+    </div>
   );
 };
 

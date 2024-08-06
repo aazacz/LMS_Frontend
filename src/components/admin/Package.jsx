@@ -6,6 +6,7 @@ import PackageModal from "./Modal/PackageModal";
 import { AdminAxiosInstance } from "../../routes/AdminRoutes";
 import { toast } from "react-toastify";
 import EditPackageModal from "./Modal/EditModal";
+import Loader from "../reusable/Loader";
 
 const Package = () => {
   const baseURL = process.env.REACT_APP_API_URL || "http://localhost:4000/";
@@ -17,6 +18,7 @@ const Package = () => {
   const [error, setError] = useState();
   const [showModal, setShowModal] = useState(false);
   const [newPackageName, setNewPackageName] = useState("");
+  const [loading, setLoading] = useState(true); // Loader state
 
   ///////////////////////////////
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -41,13 +43,16 @@ const Package = () => {
 
   useEffect(() => {
     const fetchPackages = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `${baseURL}api/package/get-all-package?page=1&pageSize=10&search=`
         );
         setPackages(response.data.data);
+        setLoading(false);
       } catch (error) {
         setError(error.message);
+        setLoading(false);
       }
     };
     fetchPackages();
@@ -200,129 +205,136 @@ const Package = () => {
   };
 
   return (
-    <div className="font-poppins w-full flex flex-col p-6 col">
-      <div className=" pr-2 flex justify-between">
-        <h1 className="text-2xl font-semibold">Package</h1>
-        <button
-          onClick={openModal}
-          className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2  font-poppins text-sm"
-        >
-          <FaCirclePlus className="text-slate-600 " />
-          Add package
-        </button>
-      </div>
-
-      <div className="w-full h-2 border-b border-gray-200"></div>
-
-      {deleteSuccess && (
-        <div
-          className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-          role="alert"
-        >
-          Package deleted successfully!
+    <div className="font-poppins w-full flex flex-col col relative">
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
+          <Loader /> {/* Your Loader component */}
         </div>
       )}
-
-      {addSuccess && (
-        <div
-          className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-          role="alert"
-        >
-          Package added successfully!
+      <div className="font-poppins w-full flex flex-col p-6 col">
+        <div className=" pr-2 flex justify-between">
+          <h1 className="text-2xl font-semibold">Package</h1>
+          <button
+            onClick={openModal}
+            className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2  font-poppins text-sm"
+          >
+            <FaCirclePlus className="text-slate-600 " />
+            Add package
+          </button>
         </div>
-      )}
 
-      <table className="w-full">
-        <thead>
-          <tr>
-            <th className="text-left text-base w-[65%] bg-[#E0EDFB] border-none">
-              Package Name
-            </th>
-            <th className="text-left text-base bg-[#E0EDFB] border-none">
-              Action
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {packages.map((data, index) => (
-            <tr
-              key={index}
-              className={index % 2 === 0 ? "bg-white" : "bg-[#E0EDFB]"}
-            >
-              <td className="text-left border-none">
-                {editingPackageId === data._id ? (
-                  <input
-                    type="text"
-                    value={editPackageValue}
-                    onChange={(e) => setEditPackageValue(e.target.value)}
-                    className="border border-gray-300 rounded px-2 py-1"
-                  />
-                ) : (
-                  data.packageName
-                )}
-              </td>
-              <td className="text-left border-none flex gap-6 flex-wrap">
-                {editingPackageId === data._id ? (
-                  <>
+        <div className="w-full h-2 border-b border-gray-200"></div>
+
+        {deleteSuccess && (
+          <div
+            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
+            role="alert"
+          >
+            Package deleted successfully!
+          </div>
+        )}
+
+        {addSuccess && (
+          <div
+            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
+            role="alert"
+          >
+            Package added successfully!
+          </div>
+        )}
+
+        <table className="w-full">
+          <thead>
+            <tr className=" mt-2">
+              <th className=" bg-[#b5d2f2] text-left text-base w-[65%] border-none sticky top-0 z-10">
+                Package Name
+              </th>
+              <th className=" bg-[#b5d2f2]  text-left text-base border-none sticky top-0 z-10">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {packages.map((data, index) => (
+              <tr
+                key={index}
+                className={index % 2 === 0 ? "bg-white" : "bg-[#E0EDFB]"}
+              >
+                <td className="text-left border-none">
+                  {editingPackageId === data._id ? (
+                    <input
+                      type="text"
+                      value={editPackageValue}
+                      onChange={(e) => setEditPackageValue(e.target.value)}
+                      className="border border-gray-300 rounded px-2 py-1"
+                    />
+                  ) : (
+                    data.packageName
+                  )}
+                </td>
+                <td className="text-left border-none flex gap-6 flex-wrap">
+                  {editingPackageId === data._id ? (
+                    <>
+                      <button
+                        className="px-4 py-2 bg-green-500 text-white font-medium rounded-md"
+                        onClick={() => handleSave(data._id)}
+                      >
+                        Save
+                      </button>
+                      <button
+                        className="px-4 py-2 bg-gray-400 text-white font-medium rounded-md"
+                        onClick={handleCancelEdit}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
                     <button
                       className="px-4 py-2 bg-green-500 text-white font-medium rounded-md"
-                      onClick={() => handleSave(data._id)}
+                      onClick={() =>
+                        handleEdit(data._id, data.packageName, data.features)
+                      }
                     >
-                      Save
+                      Edit
                     </button>
-                    <button
-                      className="px-4 py-2 bg-gray-400 text-white font-medium rounded-md"
-                      onClick={handleCancelEdit}
-                    >
-                      Cancel
-                    </button>
-                  </>
-                ) : (
+                  )}
                   <button
-                    className="px-4 py-2 bg-green-500 text-white font-medium rounded-md"
-                    onClick={() =>
-                      handleEdit(data._id, data.packageName, data.features)
-                    }
+                    className="px-4 py-2 bg-red-500 text-white font-medium rounded-md"
+                    onClick={() => handleDelete(data._id)}
                   >
-                    Edit / View
+                    Delete
                   </button>
-                )}
-                <button
-                  className="px-4 py-2 bg-red-500 text-white font-medium rounded-md"
-                  onClick={() => handleDelete(data._id)}
-                >
-                  Delete
-                </button>
-                {/* <button
-                  onClick={() =>
-                    handleView(data._id, data.packageName, data.features)
-                  }
-                  className="px-4 py-2 bg-gray-400 text-white font-medium rounded-md"
-                >
-                  View
-                </button> */}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  {/* <button
+                    onClick={() =>
+                      handleView(data._id, data.packageName, data.features)
+                    }
+                    className="px-4 py-2 bg-gray-400 text-white font-medium rounded-md"
+                  >
+                    View
+                  </button> */}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-      <PackageModal
-        handleSave={handleSave}
-        isOpen={showModal}
-        closeModal={closeModal}
-        onSave={handleModalSave}
-        value={newPackageName}
-        onChange={handleModalInputChange}
-      />
+        <PackageModal
+          handleSave={handleSave}
+          isOpen={showModal}
+          closeModal={closeModal}
+          onSave={handleModalSave}
+          value={newPackageName}
+          onChange={handleModalInputChange}
+        />
 
-      <EditPackageModal
-        // handleSave={}
-        isOpen={!!editingPackageId}
-        onClose={closeEditModal}
-        value={newPackageName}
-        packageData={packages.find((pkg) => pkg._id === editingPackageId)}
-      />
+        <EditPackageModal
+          // handleSave={}
+          isOpen={!!editingPackageId}
+          onClose={closeEditModal}
+          value={newPackageName}
+          packageData={packages.find((pkg) => pkg._id === editingPackageId)}
+        />
+      </div>
     </div>
   );
 };

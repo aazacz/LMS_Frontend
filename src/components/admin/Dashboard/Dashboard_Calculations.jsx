@@ -42,7 +42,7 @@ const values = [
 
 const Dashboard_Calculations = () => {
     return (
-        <div className="w-full  h-max flex flex-wrap gap-4 p-2  justify-center ">
+        <div className=" h-max flex flex-wrap  p-0 md:p-2  justify-around gap-y-8">
             {values.map((item, index) => (
                 <div
                     key={index}

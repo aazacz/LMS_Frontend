@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { axiosInstanceStudent } from "../../../routes/UserRoutes";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
 
 const PasswordModal = ({ isOpen, onClose }) => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -31,8 +31,8 @@ const PasswordModal = ({ isOpen, onClose }) => {
     }
 
     try {
-      const response = await axiosInstanceStudent.put(
-        "/api/settings/change-password",
+      const response = await AdminAxiosInstance.put(
+        "api/adminsettings/change-admin-password",
         { currentPassword, newPassword, confirmPassword }
       );
 

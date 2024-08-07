@@ -1,0 +1,60 @@
+.custom-swal-popup {
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.custom-swal-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.custom-swal-text {
+  font-size: 16px;
+  color: #666;
+}
+
+.custom-swal-button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.custom-swal-confirm-button,
+.custom-swal-cancel-button {
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.custom-swal-confirm-button {
+  background-color: red;
+  color: white;
+}
+
+.custom-swal-cancel-button {
+  background-color: #aaa;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .custom-swal-popup {
+    padding: 15px;
+  }
+
+  .custom-swal-title {
+    font-size: 18px;
+  }
+
+  .custom-swal-text {
+    font-size: 14px;
+  }
+
+  .custom-swal-confirm-button,
+  .custom-swal-cancel-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}

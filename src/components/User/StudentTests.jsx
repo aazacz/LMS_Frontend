@@ -59,6 +59,7 @@ const StudentTests = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [list,setlist] = useState()
 
+  const [loading,setLoading] = useState(false)
 
   const normalizeString = (str) => str.replace(/\s+/g, "").toLowerCase();
 

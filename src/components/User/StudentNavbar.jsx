@@ -7,6 +7,7 @@ import { FiBookOpen, FiBook } from "react-icons/fi";
 import "../User/StudentNavbar.css";
 import logo from "../../assets/Student/Logo.png";
 
+
 const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();

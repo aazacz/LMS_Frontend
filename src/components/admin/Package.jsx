@@ -9,7 +9,7 @@ import EditPackageModal from "./Modal/EditModal";
 import Loader from "../reusable/Loader";
 
 const Package = () => {
-  const baseURL = process.env.REACT_APP_API_URL || "http://localhost:4000/";
+  // const baseURL = process.env.REACT_APP_API_URL || "http://localhost:4000/";
   const [packages, setPackages] = useState([]);
   const [editingPackageId, setEditingPackageId] = useState(null);
   const [editPackageValue, setEditPackageValue] = useState("");
@@ -45,8 +45,8 @@ const Package = () => {
     const fetchPackages = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `${baseURL}api/package/get-all-package?page=1&pageSize=10&search=`
+        const response = await AdminAxiosInstance.get(
+          `api/package/get-all-package?page=1&pageSize=10&search=`
         );
         setPackages(response.data.data);
         setLoading(false);
@@ -56,7 +56,7 @@ const Package = () => {
       }
     };
     fetchPackages();
-  }, [baseURL, deleteSuccess]);
+  }, [deleteSuccess]);
 
   const handleEdit = (id, initialPackageName) => {
     setEditingPackageId(id);
@@ -150,7 +150,7 @@ const Package = () => {
       });
 
       if (isConfirmed) {
-        await axios.delete(`${baseURL}api/package/delete-package/${packageId}`);
+        await AdminAxiosInstance.delete(`api/package/delete-package/${packageId}`);
 
         setDeleteSuccess(true);
 
@@ -168,8 +168,8 @@ const Package = () => {
 
     try {
       const packageId = id;
-      const response = await axios.get(
-        `${baseURL}api/package/get-package-by-id/${packageId}`
+      const response = await AdminAxiosInstance.get(
+        `api/package/get-package-by-id/${packageId}`
       );
       console.log(response.data);
     } catch (error) {
@@ -183,7 +183,7 @@ const Package = () => {
 
   const handleModalSave = async () => {
     try {
-      const response = await axios.post(`${baseURL}api/package/create`, {
+      const response = await AdminAxiosInstance.post(`api/package/create`, {
         packageName: newPackageName,
       });
 

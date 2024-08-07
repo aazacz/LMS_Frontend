@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Dashboard.css";
 import SearchIcon from "@mui/icons-material/Search";
 import classroomimage from "../../../assets/ClassesToday/classestoday.png";
@@ -11,8 +11,10 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { FaClock } from "react-icons/fa6";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { PiNotepadBold } from "react-icons/pi";
+import Loader from "../../reusable/Loader";
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState(false);
   const Stats = [
     {
       heading: "Classes",
@@ -31,33 +33,6 @@ const Dashboard = () => {
       module: "00/03",
     },
   ];
-  const handleReschedule = () => {
-    Swal.fire({
-      title: "Are you sure want to reschedule?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Reschedule",
-      customClass: {
-        actions: "my-actions",
-        confirmButton: "my-confirm-button",
-        denyButton: "my-deny-button",
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: "Rescheduled!",
-          text: "Your Class has been rescheduled.",
-          icon: "success",
-          customClass: {
-            confirmButton: "my-toast-confirm-button",
-          },
-        });
-      }
-    });
-  };
 
   const assignments1 = [
     { id: 1, name: "SAT Assignment 1", feedbackLink: "#", score: "25/35" },
@@ -83,6 +58,11 @@ const Dashboard = () => {
       <h1 className="p-2 font-bold text-base md:text-base lg:text-lg ">
         Dashboard
       </h1>
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-100 z-50">
+          <Loader />
+        </div>
+      )}
       <div className="font-poppins font-semibold h-max text-sm md:text-base p-2 flex gap-2 items-center">
         Classes Today
         <span className="border border-black p-2 rounded-lg">
@@ -162,70 +142,8 @@ const Dashboard = () => {
               >
                 Join Now
               </button>
-              {/* <button
-                type="button"
-                onClick={handleReschedule}
-                className="reschedule-button common-button"
-              >
-                Reschedule
-              </button> */}
-              {/* <button type="button" className="cancel-button common-button">
-                Cancel
-              </button> */}
             </div>
           </div>
-          {/* <div className=" p-2  continue-tests">
-            <h1 className=" text-sm md:text-[16px] w-full flex justify-start">
-              Continue Tests
-            </h1>
-            <div className="test-item">
-              <div className="test-image">
-                <img src={continuetests} alt="Test image" />
-              </div>
-              <div className="test-details">
-                <h2>SAT practice test</h2>
-                <p>English & Writing Skills Test</p>
-                <div className="progress-bar">
-                  <div className="progress" style={{ width: "60%" }}></div>
-                  <span className="progress-value">60%</span>
-                </div>
-              </div>
-              <button className="continue-button">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-                </svg>
-              </button>
-            </div>
-            <div className="test-item ">
-              <div className="test-image">
-                <img src={continuetests} alt="Test image" />
-              </div>
-              <div className="test-details ">
-                <h2 className="text-sm md:text-[16px]">SAT practice test</h2>
-                <p className="text-sm">English & Writing Skills Test</p>
-
-                <div className="progress-bar">
-                  <div className="progress" style={{ width: "60%" }}></div>
-                  <span className="progress-value">60%</span>
-                </div>
-              </div>
-              <button className="continue-button">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-                </svg>
-              </button>
-            </div>
-          </div> */}
         </div>
         <div className="pr-5 pl-5 pb-5 pt-3 flex flex-col right-content md:flex">
           <div className="rounded-lg bg-white p-5 right-stats">

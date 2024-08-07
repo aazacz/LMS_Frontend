@@ -6,15 +6,18 @@ import withReactContent from "sweetalert2-react-content";
 import Modal from "./PasswordModal";
 import { axiosInstanceStudent } from "../../../routes/UserRoutes";
 import "./DeleteAccount.css"
+import Loader from "../../reusable/Loader"
 
 const AccountSettings = () => {
   const [details, setDetails] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchStudentDetails = async () => {
+      setLoading(true)
       try {
         const response = await axiosInstanceStudent.get(
           "api/settings/student-details"
@@ -24,6 +27,8 @@ const AccountSettings = () => {
         setDetails(studentDetails);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false)
       }
     };
 
@@ -98,6 +103,11 @@ const AccountSettings = () => {
       <div className="flex justify-between w-full">
         <p className="font-semibold text-base md:text-lg">Account Settings</p>
       </div>
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-100 z-50">
+          <Loader />
+        </div>
+      )}
       <div className="w-full h-max flex flex-wrap justify-start items-center">
         <div className="w-full h-max flex flex-col justify-center items-left gap-6">
           <div>

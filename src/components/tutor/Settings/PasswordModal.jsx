@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { axiosInstanceStudent } from "../../../routes/UserRoutes";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
 
 const PasswordModal = ({ isOpen, onClose }) => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -31,8 +31,8 @@ const PasswordModal = ({ isOpen, onClose }) => {
     }
 
     try {
-      const response = await axiosInstanceStudent.put(
-        "/api/settings/change-password",
+      const response = await TutorAxiosInstance.put(
+        "api/tutorsettings/change-tutor-password",
         { currentPassword, newPassword, confirmPassword }
       );
 

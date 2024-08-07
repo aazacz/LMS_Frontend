@@ -68,7 +68,7 @@ const QuestionBank = () => {
     <div className="font-poppins w-full   h-max flex flex-row-reverse justify-left items-left relative ">
 
       {/* Modal for viewing the list of questions */}
-      {Modal === true && <ViewModal Data={Data} />}
+      {Modal === true && <ViewModal setModal={setModal} Data={Data} />}
 
 
       {/* Aside Bar Starts Here*/}

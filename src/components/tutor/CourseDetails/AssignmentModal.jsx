@@ -1,20 +1,35 @@
-import {useEffect, useState} from "react";
-import {FaTimes} from "react-icons/fa"; // Import a close icon
-import {TutorAxiosInstance} from "../../../routes/TutorRoutes";
+import { useEffect, useState } from "react";
+import { FaTimes } from "react-icons/fa"; // Import a close icon
+import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
+import GradingModal from "./GradingModal";
 
-const AssignmentModal = ({isOpen, onClose, assignmentId}) => {
+const AssignmentModal = ({ isOpen, onClose, assignmentId }) => {
   const [assignment, setAssignment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  //For Modal
+  const [isGradingModalOpen, setIsGradingModalOpen] = useState(false);
+  const [selectedSubmission, setSelectedSubmission] = useState(null);
+
+  const openGradingModal = (submission) => {
+    setSelectedSubmission(submission);
+    setIsGradingModalOpen(true);
+  };
+
+  const closeGradingModal = () => {
+    setIsGradingModalOpen(false);
+    setSelectedSubmission(null);
+  };
 
   useEffect(() => {
     if (isOpen && assignmentId) {
       const fetchAssignment = async () => {
         try {
-          const {data} = await TutorAxiosInstance.get(
+          const { data } = await TutorAxiosInstance.get(
             `api/assignments/tutor/assignment/${assignmentId}`
           );
-          console.log(data.data.assignment);
+          console.log(data.data.assignment, "Inside Assignemnt MOdal");
           console.log(data);
           if (data?.success) {
             setAssignment(data.data.assignment);
@@ -45,7 +60,7 @@ const AssignmentModal = ({isOpen, onClose, assignmentId}) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center backdrop-blur-sm z-50">
+    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center backdrop-blur-sm z-50 mt-5">
       <div className="relative bg-white p-6 rounded-lg w-[90%] md:w-[80%] lg:w-[70%] h-[90%] overflow-y-auto z-60">
         <button
           onClick={onClose}
@@ -81,40 +96,66 @@ const AssignmentModal = ({isOpen, onClose, assignmentId}) => {
               </p>
             )}
             <h3 className="text-xl font-semibold mt-4">Submissions</h3>
-            <div className="gap-10">
-              {assignment?.students?.length > 0 ? (
-                <ul>
-                  {assignment.students.map((student, index) => (
-                    <li key={index} className="p-2 flex justify-between h-max">
-                      <p>
-                        <strong>Name:</strong> {student.name}
-                      </p>
-                      <p>
-                        <strong>File:</strong>{" "}
-                        {student.filePath ? (
-                          <a
-                            href={student.filePath}
-                            target="_blank"
-                            className="px-4 h-max w-max rounded-md  bg-blue-600 text-white"
-                            rel="noopener noreferrer"
-                          >
-                            View File
-                          </a>
-                        ) : (
-                          "No Submissions yet."
-                        )}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
+
+            <div className="overflow-x-auto">
+              {assignment?.submissions?.filter(
+                (submission) => submission.filePath
+              ).length > 0 ? (
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Student Name
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        File
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {assignment.submissions
+                      .filter((submission) => submission.filePath)
+                      .map((submission, index) => (
+                        <tr key={index}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            {submission.studentId.name}{" "}
+                          </td>
+                          {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <a
+                              href={submission.filePath}
+                              target="_blank"
+                              className="text-blue-600 hover:text-blue-900"
+                              rel="noopener noreferrer"
+                            >
+                              View File
+                            </a>
+                          </td> */}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <button
+                              onClick={() => openGradingModal(submission)}
+                              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                            >
+                              Grade
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
               ) : (
-                <p>No students found.</p>
+                <p>No submissions found.</p>
               )}
             </div>
           </>
         ) : (
           <div className="text-center">No assignment found</div>
         )}
+       <GradingModal
+  isOpen={isGradingModalOpen}
+  onClose={closeGradingModal}
+  submission={selectedSubmission}
+  assignmentId={assignmentId} // Add this line
+/>
       </div>
     </div>
   );

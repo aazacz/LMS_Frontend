@@ -2,7 +2,7 @@ import  React from "react"
 import { IoArrowBackCircleOutline } from "react-icons/io5"
 
 
-const ViewModal =({Data})=>{
+const ViewModal =({Data,setModal})=>{
 
 
 return(

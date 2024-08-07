@@ -42,6 +42,7 @@ const Coursedetails = ({ role }) => {
     // refetch()
     console.log("coursedetails");
     console.log(courseId);
+    console.log(courseType);
 
     const fetchCourseDetails = async () => {
       try {
@@ -194,7 +195,9 @@ const ReviewContent = () => (
 );
 
 const AsideBAr = ({ data, courseType, navigate, enrolled }) => {
-  console.log(enrolled);
+  console.log("data inasidebar");
+  console.log(data);
+  console.log("data inasidebar");
   const modules = [
     "Introduction",
     "What is UX Design",
@@ -206,10 +209,7 @@ const AsideBAr = ({ data, courseType, navigate, enrolled }) => {
   const handleEnrollCourse = (event) => {
     event.preventDefault();
     navigate(`/student/courses/checkout/${courseType}/${data?._id}`, {
-      // state: {
-      //   courseId: data?._id,
-      //   courseType: courseType,
-      // },
+   
     });
   };
 

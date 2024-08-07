@@ -81,7 +81,9 @@ const Checkout = () => {
           paymentId: response.razorpay_payment_id,
           amount: Course.price,
         };
-
+      console.log(responseData)
+      console.log(courseType)
+      console.log("courseType")
         try {
           let apiResponse;
           if (courseType === "individual") {
@@ -89,6 +91,7 @@ const Checkout = () => {
               "api/student-course/enroll-individual-course",
               responseData
             );
+
 
             console.log("individual course bought")
             navigate("/student/success");

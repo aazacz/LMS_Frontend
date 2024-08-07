@@ -61,9 +61,9 @@ const Assignments = ({ courseId }) => {
         <div className="table-container">
           <table className="responsive-table">
             <thead>
-              <tr>
+              <tr >
                 {columns.map((column, index) => (
-                  <th key={index}>{column.headerName}</th>
+                  <th  key={index}>{column.headerName}</th>
                 ))}
               </tr>
             </thead>

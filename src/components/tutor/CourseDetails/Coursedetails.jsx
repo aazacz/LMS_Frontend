@@ -48,7 +48,7 @@ const Coursedetails = () => {
                 </div>
             ) : (
                 <>
-                    <div className="w-full  lg:w-[70%] scroll overflow-y-scroll h-max p-4 flex flex-col">
+                    <div className="w-full  lg:w-[70%] scroll overflow-y-scroll h-max p-4 flex flex-col ">
                         <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold text-3xl">
                             {course?.courseName}
                         </div>

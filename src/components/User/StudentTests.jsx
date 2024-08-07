@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import Aside_Section_Test_Page from "./Aside_Section_Test_Page/Aside_Section_Test_Page";
+import { axiosInstanceStudent } from "../../routes/UserRoutes";
 
 const dummyTests = [
   {
@@ -56,6 +57,8 @@ const dummyTests = [
 const StudentTests = () => {
   const [filter, setFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [list,setlist] = useState()
+
   const [loading,setLoading] = useState(false)
 
   const normalizeString = (str) => str.replace(/\s+/g, "").toLowerCase();
@@ -73,6 +76,27 @@ const StudentTests = () => {
 
     return matchesFilter && matchesSearch;
   });
+
+
+  useEffect(()=>{
+
+    const fetchcourse = async ()=>{
+      try{
+        const response = await axiosInstanceStudent.get('api/test/Enrolledcourse-coursetestslist')
+        console.log("response.data")
+        console.log(response.data.data)
+        setlist(response.data.data)
+
+      }catch(error){
+        console.log(error.message)
+      }
+    }
+
+
+    fetchcourse()
+  },[])
+
+
 
   return (
     <div className="w-full flex flex-wrap font-poppins">
@@ -166,6 +190,76 @@ const StudentTests = () => {
       <div className="w-full h-full md:w-[30%]">
         <Aside_Section_Test_Page />
       </div>
+
+
+
+
+
+
+
+ {/* extra */}
+ <div className="w-full  h-max overflow-x-auto">
+      <table className="min-w-full bg-white">
+        <thead>
+          <tr>
+            <th className="py-2 px-4 border-b border-gray-200">Course Name</th>
+            <th className="py-2 px-4 border-b border-gray-200">Tutors</th>
+            <th className="py-2 px-4 border-b border-gray-200">Tests</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list && list?.map((course) => (
+            <tr key={course.courseName}>
+              <td className="py-2 px-4 border-b border-gray-200">{course.courseName}</td>
+              <td className="py-2 px-4 border-b border-gray-200">
+                {course.tutors.map((tutor, index) => (
+                  <div key={index}>
+                    <p>Name: {tutor.name}</p>
+                    <p>Email: {tutor.email}</p>
+                  </div>
+                ))}
+              </td>
+              <td className="py-2 px-4 border-b border-gray-200">
+                {/* {course.tests.map((test) => (
+                  <div key={test._id}>
+                    <p>Title: {test.title}</p>
+                    <p>Positive Mark: {test.positiveMark}</p>
+                    <p>Negative Mark: {test.negativeMark}</p>
+                    <p>Is Active: {test.isActive ? 'Yes' : 'No'}</p>
+                    <p>Time Slot: {test.timeSlot} mins</p>
+                    {test.questions.map((question, qIndex) => (
+                      <div key={question._id} className="ml-4">
+                        <p>Question: {question.question}</p>
+                        <p>Why is Incorrect: {question.whyIsIncorrect}</p>
+                        <p>Choices:</p>
+                        <ul>
+                          {question.choices.map((choice, cIndex) => (
+                            <li key={choice._id}>
+                              {choice.choiceText} {choice.isCorrect ? '(Correct)' : ''}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ))} */}
+
+{course.tests.length}
+
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+
+
+
+
+
+
+
     </div>
   );
 };

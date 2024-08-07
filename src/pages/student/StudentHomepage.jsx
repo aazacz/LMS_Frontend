@@ -29,6 +29,8 @@ import DiagnosisTestRoute from "../../routes/DiagnosisTestRoute";
 import { AnimatePresence, motion } from "framer-motion";
 import AllCourses from "../../components/User/AllCourses";
 import EnrolledCourses from "../../components/User/EnrolledCourses";
+import CourseTest from "./CourseTest";
+import CourseTestRoute from "../../routes/CourseTestRoute";
 
 const StudentHomepage = () => {
   const user = useSelector((state) => state.StudentDetails.token);
@@ -88,18 +90,12 @@ const StudentHomepage = () => {
             <div className="w-full   ">
               <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
-                  <Route path="/*" element={<Dashboard />} />
-                  <Route
-                    path="/diagnosistestresult"
-                    element={<DiagnosisTestResult />}
-                  />
-                  <Route path="/success" element={<PaymentSuccess />} />
-                  <Route path="/courses" element={<CourseList />} />
-                  <Route path="/courses/allcourses" element={<AllCourses />} />
-                  <Route
-                    path="/courses/enrolledcourses"
-                    element={<EnrolledCourses />}
-                  />
+                  <Route path="/*"                        element={<Dashboard />} />
+                  <Route path="/diagnosistestresult"      element={<DiagnosisTestResult />}/>
+                  <Route path="/success"                  element={<PaymentSuccess />} />
+                  <Route path="/courses"                  element={<CourseList />} />
+                  <Route path="/courses/allcourses"       element={<AllCourses />} />
+                  <Route path="/courses/enrolledcourses"  element={<EnrolledCourses />} />
 
                   <Route
                     path="/tests"
@@ -117,29 +113,31 @@ const StudentHomepage = () => {
                     }
                   />
 
-                  <Route
-                    path="/courses/:courseId/:courseType/:enrolled/:role"
-                    element={
-                      <motion.div
-                        initial="initial"
-                        animate="in"
-                        exit="out"
-                        variants={pageVariants}
-                        transition={pageTransition}
-                      >
-                        {" "}
-                        <Coursedetails />{" "}
-                      </motion.div>
+
+                <Route path="/courses/:courseId/:courseType/:enrolled/:role"  element={
+                        <motion.div
+                          initial="initial"
+                          animate="in"
+                          exit="out"
+                          variants={pageVariants}
+                          transition={pageTransition} >
+
+                         <Coursedetails />
+
+                        </motion.div>
                     }
                   />
 
-                <Route path="/assignments" element={<motion.div
-                  initial="initial"
-                  animate="in"
-                  exit="out"
-                  variants={pageVariants}
-                  transition={pageTransition}
-                > <Assignments /></motion.div>} />
+                <Route path="/assignments" element={
+                  <motion.div
+                      initial="initial"
+                      animate="in"
+                      exit="out"
+                      variants={pageVariants}
+                      transition={pageTransition}>
+                        
+                         <Assignments />
+                  </motion.div>} />
                 
                 <Route path="/tutors" element={ <ClassesToday />} />
                 <Route path="/library" element={<Library />} />

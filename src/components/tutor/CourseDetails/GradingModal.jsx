@@ -3,10 +3,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import pdfIcon from "../../../assets/Tutor/pdf.png";
 import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
-import { ToastContainer, toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const GradingModal = ({ isOpen, onClose, submission, assignmentId }) => {
+const GradingModal = ({
+  isOpen,
+  onClose,
+  submission,
+  assignmentId,
+  onGradeSubmit,
+}) => {
   const [allotedMarks, setAllotedMarks] = useState("");
   const [feedback, setFeedback] = useState("");
   const [status, setStatus] = useState("pending");
@@ -27,7 +33,7 @@ const GradingModal = ({ isOpen, onClose, submission, assignmentId }) => {
         toast.error("Assignment ID is missing");
         return;
       }
-      const token = localStorage.getItem("token"); // Adjust this based on how you store the token
+      const token = localStorage.getItem("token");
       const url = `api/assignments/assign-grade/${assignmentId}/${submission._id}`;
       console.log("Request URL:", url);
 
@@ -45,24 +51,48 @@ const GradingModal = ({ isOpen, onClose, submission, assignmentId }) => {
         }
       );
       console.log("Grade submitted successfully", response.data);
+      alert("Success");
       toast.success("Grade submitted successfully");
+
+      // Check if onGradeSubmit is a function before calling it
+      if (typeof onGradeSubmit === "function") {
+        onGradeSubmit({
+          ...submission,
+          allotedMarks: Number(allotedMarks),
+          feedback,
+          status,
+        });
+      } else {
+        console.warn("onGradeSubmit is not a function or not provided");
+      }
+
       onClose();
     } catch (error) {
-      console.error(
-        "Error submitting grade:",
-        error.response ? error.response.data : error.message
-      );
-      toast.error(
-        `Error submitting grade: ${
-          error.response ? error.response.data : error.message
-        }`
-      );
+      console.error("Error submitting grade:", error);
+
+      let errorMessage = "An unexpected error occurred";
+
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        errorMessage =
+          error.response.data.message || error.response.data || error.message;
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+        errorMessage = "No response received from server";
+      } else {
+        console.error("Error setting up request:", error.message);
+        errorMessage = error.message;
+      }
+
+      toast.error(`Error submitting grade: ${errorMessage}`);
     }
   };
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center z-50">
+      <ToastContainer />
       <div className="relative bg-white p-5 rounded-lg w-full max-w-4xl mx-auto">
         <button
           className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
@@ -165,7 +195,6 @@ const GradingModal = ({ isOpen, onClose, submission, assignmentId }) => {
           </div>
         </form>
       </div>
-      <ToastContainer />
     </div>
   );
 };

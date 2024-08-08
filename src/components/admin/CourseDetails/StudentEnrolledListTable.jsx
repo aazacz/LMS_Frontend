@@ -13,7 +13,6 @@ const StudentEnrolledListTable = ({courseId}) => {
   const {
     courses,
     isPending,
-    isError,
     currentPage,
     pageSize,
     totalRows,

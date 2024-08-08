@@ -242,7 +242,7 @@ const CourseTest = () => {
         },
       });
   
-      navigate("/CourseTestResult/" + res.data?._id);
+      navigate("coursetest/CourseTestResult/CourseTestResult/" + res.data?._id);
     } catch (error) {
       console.error("Error submitting test:", error);
       Swal.fire({

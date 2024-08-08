@@ -16,6 +16,7 @@ import axios from "axios";
 import DiagnosisTestRoute from "./DiagnosisTestRoute";
 import { AnimatePresence, motion } from "framer-motion";
 import ViewAllCourses from "../components/User/ViewAllCourses";
+import CourseTestRoute from "./CourseTestRoute";
 
 let token;
 const baseURL = process.env.REACT_APP_API_URL;
@@ -68,6 +69,7 @@ const UserRoutes = () => {
           element={user.token ? <Navigate to="/student" /> : <Login />}
         />
         <Route path="/student/*" element={studentNavigate()} />
+        <Route path="/coursetest/*"        element={<CourseTestRoute/>}  />
         <Route path="/signup/*" element={<SignupRoute />} />
 
         <Route

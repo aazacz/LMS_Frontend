@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import Aside_Section_Test_Page from "./Aside_Section_Test_Page/Aside_Section_Test_Page";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
+import { useNavigate } from "react-router-dom";
 
 const StudentTests = () => {
   const [filter, setFilter] = useState("all");
@@ -9,11 +10,10 @@ const StudentTests = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [selectedTest, setSelectedTest] = useState(null);
   const [isTestModalOpen, setIsTestModalOpen] = useState(false);
-  const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
+  const [studentId, setstudentId] = useState(false);
 
-  const normalizeString = (str) => str.replace(/\s+/g, "").toLowerCase();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -32,6 +32,26 @@ const StudentTests = () => {
     fetchCourse();
   }, []);
 
+  useEffect(()=>{
+    const fetchUserId = async()=>{
+     try {
+       const response = await axiosInstanceStudent.get('api/test/getId');
+       setstudentId(response.data.userId) 
+      console.log(response.data.userId)
+     } catch (error) {
+      console.log(error)
+     }
+     }
+
+    fetchUserId()
+  })
+
+  const HandleStartTest = (courseId, testId) => {
+    console.log("courseId", courseId);
+    console.log("testId", testId);
+    navigate(`/coursetest/start/${courseId}/${testId}`);
+  };
+
   const openTestModal = (course) => {
     setSelectedCourse(course);
     setIsTestModalOpen(true);
@@ -42,45 +62,46 @@ const StudentTests = () => {
     setIsTestModalOpen(false);
   };
 
-  const openSubmissionModal = (test) => {
-    setSelectedTest(test);
-    setIsSubmissionModalOpen(true);
-  };
-
-  const closeSubmissionModal = () => {
-    setSelectedTest(null);
-    setIsSubmissionModalOpen(false);
-  };
-
-  const TestModal = ({ course, isOpen, onClose }) => {
-    if (!isOpen) return null;
+  const TestModal = ({ course, isOpen, onClose,studentId }) => {
+    if (!isOpen || !course) return null;
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-        <div className="bg-white p-6 rounded-lg w-3/4 max-h-3/4 overflow-y-auto">
-          <h2 className="text-xl font-bold mb-4">{course.courseName} Tests</h2>
+        <div className="bg-white p-4 rounded-lg w-3/4 max-h-3/4 overflow-auto">
+          <h2 className="text-xl font-bold mb-4">{course.courseName} - Tests</h2>
           <table className="w-full">
             <thead>
               <tr>
                 <th className="px-4 py-2">Title</th>
+                <th className="px-4 py-2">Positive Mark</th>
+                <th className="px-4 py-2">Negative Mark</th>
                 <th className="px-4 py-2">Time Slot</th>
-                <th className="px-4 py-2">Is Active</th>
                 <th className="px-4 py-2">Action</th>
               </tr>
             </thead>
             <tbody>
               {course.tests.map((test) => (
                 <tr key={test._id}>
-                  <td className="px-4 py-2">{test.title}</td>
-                  <td className="px-4 py-2">{test.timeSlot} mins</td>
-                  <td className="px-4 py-2">{test.isActive ? 'Yes' : 'No'}</td>
-                  <td className="px-4 py-2">
-                    <button
-                      onClick={() => openSubmissionModal(test)}
-                      className="rounded-xl px-4 py-2 text-[10px] md:text-sm bg-[#277EE3] text-white"
-                    >
-                      View Submissions
-                    </button>
+                  <td className="border px-4 py-2">{test.title}</td>
+                  <td className="border px-4 py-2">{test.positiveMark}</td>
+                  <td className="border px-4 py-2">{test.negativeMark}</td>
+                  <td className="border px-4 py-2">{test.timeSlot} minutes</td>
+                  <td className="border px-4 py-2">
+                  {test.users.includes(studentId) ? (
+                      <button
+                        onClick={() => navigate(`/results/${test._id}`)}
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                      >
+                        Show Result
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => HandleStartTest(test.courseId, test._id)}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      >
+                        Start Test
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -88,50 +109,7 @@ const StudentTests = () => {
           </table>
           <button
             onClick={onClose}
-            className="mt-4 rounded-xl px-4 py-2 bg-red-500 text-white"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    );
-  };
-
-  const SubmissionModal = ({ test, isOpen, onClose }) => {
-    if (!isOpen) return null;
-
-    // Fake submission data
-    const fakeSubmissions = [
-      { id: 1, studentName: "John Doe", score: 85, submittedAt: "2024-08-07 10:30 AM" },
-      { id: 2, studentName: "Jane Smith", score: 92, submittedAt: "2024-08-07 11:15 AM" },
-      { id: 3, studentName: "Bob Johnson", score: 78, submittedAt: "2024-08-07 09:45 AM" },
-    ];
-
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-        <div className="bg-white p-6 rounded-lg w-3/4 max-h-3/4 overflow-y-auto">
-          <h2 className="text-xl font-bold mb-4">Submissions for {test.title}</h2>
-          <table className="w-full">
-            <thead>
-              <tr>
-                <th className="px-4 py-2">Student Name</th>
-                <th className="px-4 py-2">Score</th>
-                <th className="px-4 py-2">Submitted At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {fakeSubmissions.map((submission) => (
-                <tr key={submission.id}>
-                  <td className="px-4 py-2">{submission.studentName}</td>
-                  <td className="px-4 py-2">{submission.score}</td>
-                  <td className="px-4 py-2">{submission.submittedAt}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <button
-            onClick={onClose}
-            className="mt-4 rounded-xl px-4 py-2 bg-red-500 text-white"
+            className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           >
             Close
           </button>
@@ -193,7 +171,7 @@ const StudentTests = () => {
               </tr>
             </thead>
             <tbody>
-              {list && list.map((course) => (
+              {list && list.filter(course => course.tests.length > 0).map((course) => (
                 <tr key={course.courseName}>
                   <td className="py-2 px-4 border-b border-gray-200">{course.courseName}</td>
                   <td className="py-2 px-4 border-b border-gray-200">
@@ -212,7 +190,7 @@ const StudentTests = () => {
                       onClick={() => openTestModal(course)}
                       className="rounded-xl px-4 py-2 text-[10px] md:text-sm bg-[#277EE3] text-white"
                     >
-                      View
+                      View Tests
                     </button>
                   </td>
                 </tr>
@@ -230,11 +208,7 @@ const StudentTests = () => {
         course={selectedCourse}
         isOpen={isTestModalOpen}
         onClose={closeTestModal}
-      />
-      <SubmissionModal
-        test={selectedTest}
-        isOpen={isSubmissionModalOpen}
-        onClose={closeSubmissionModal}
+        studentId={studentId}
       />
     </div>
   );

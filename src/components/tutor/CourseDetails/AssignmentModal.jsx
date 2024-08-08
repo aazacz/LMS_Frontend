@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa"; // Import a close icon
 import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
 import GradingModal from "./GradingModal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AssignmentModal = ({ isOpen, onClose, assignmentId }) => {
   const [assignment, setAssignment] = useState(null);
@@ -20,6 +22,16 @@ const AssignmentModal = ({ isOpen, onClose, assignmentId }) => {
   const closeGradingModal = () => {
     setIsGradingModalOpen(false);
     setSelectedSubmission(null);
+  };
+
+  const handleGradeSubmit = (updatedSubmission) => {
+    setAssignment((prevAssignment) => ({
+      ...prevAssignment,
+      submissions: prevAssignment.submissions.map((sub) =>
+        sub._id === updatedSubmission._id ? updatedSubmission : sub
+      ),
+    }));
+    toast.success("Assignment updated successfully");
   };
 
   useEffect(() => {
@@ -150,12 +162,14 @@ const AssignmentModal = ({ isOpen, onClose, assignmentId }) => {
         ) : (
           <div className="text-center">No assignment found</div>
         )}
-       <GradingModal
-  isOpen={isGradingModalOpen}
-  onClose={closeGradingModal}
-  submission={selectedSubmission}
-  assignmentId={assignmentId} // Add this line
-/>
+        <GradingModal
+          isOpen={isGradingModalOpen}
+          onClose={closeGradingModal}
+          submission={selectedSubmission}
+          assignmentId={assignmentId}
+          onGradeSubmit={handleGradeSubmit}
+        />
+        <ToastContainer />
       </div>
     </div>
   );

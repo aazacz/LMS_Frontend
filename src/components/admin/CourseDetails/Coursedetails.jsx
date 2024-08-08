@@ -26,13 +26,15 @@ const Coursedetails = ({ edit }) => {
 
   const [TutorDropDownList, SetTutorDropDownList] = useState();
   const [StudentDropDownList, SetStudentDropDownList] = useState();
-  const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] =
-    useState();
+  const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] =  useState();
   const [EnrolledTutorDropDownList, SetEnrolledTutorDropDownList] = useState();
 
   const [StudentModal, setStudentModal] = useState(false);
   const [TutorModal, setTutorModal] = useState(false);
   const [count, setcount] = useState(0);
+
+  const [isPending,setisPending] = useState(false)
+
 
   const { courseId } = useParams();
   const navigate = useNavigate();
@@ -45,8 +47,8 @@ const Coursedetails = ({ edit }) => {
   };
 
   useEffect(() => {
-    axios
-      .get(`${baseUrl}api/course/get-course/${courseId}`, {
+    
+    axios.get(`${baseUrl}api/course/get-course/${courseId}`, {
         headers: { authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -55,37 +57,22 @@ const Coursedetails = ({ edit }) => {
       });
   }, [baseUrl, courseId, token]);
 
-  // useEffect(() => {
-  //   const getStudentList = async () => {
-  //     const response = await AdminAxiosInstance.get( `api/course/student-not-added/${courseId}`  );
-  //     const EnrolledStudents = await AdminAxiosInstance.get( `api/course/student-enrolled/${courseId}` );
-
-  //     if (response.data && EnrolledStudents.data) {
-  //       SetEnrolledStudentDropDownList(EnrolledStudents.data);
-  //       SetStudentDropDownList(response.data);
-  //     }
-  //   };
-  //   try {
-  //     if (StudentModal === true) {
-  //       getStudentList();
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, [StudentModal, count]);
+  
 
   useEffect(() => {
     console.log(courseId);
 
     const getStudentList = async () => {
       try {
+        setisPending(true)
         const response = await AdminAxiosInstance.get(
           `api/course/paid-students/${courseId}`
         );
-        console.log("response.data student not addeddddddddd");
+        console.log("response.data student not addeddddd");
         console.log(response.data);
         if (response.data) {
           SetStudentDropDownList(response.data);
+          setisPending(false)
         }
       } catch (error) {
         if (error.response && error.response.status === 404) {
@@ -96,12 +83,15 @@ const Coursedetails = ({ edit }) => {
       }
 
       try {
+        setisPending(true)
         const EnrolledStudents = await AdminAxiosInstance.get(
           `api/course/student-enrolled/${courseId}`
         );
-        console.log(EnrolledStudents.data);
+        
         if (EnrolledStudents.data) {
+
           SetEnrolledStudentDropDownList(EnrolledStudents.data);
+          setisPending(false)
         }
       } catch (error) {
         if (error.response && error.response.status === 404) {
@@ -122,8 +112,8 @@ const Coursedetails = ({ edit }) => {
 
   useEffect(() => {
     const getTutorList = async () => {
-      console.log("courseId", courseId);
       
+      setisPending(true)
 
       const response = await AdminAxiosInstance.get(
         `api/course/tutor-not-added/${courseId}`
@@ -136,7 +126,7 @@ const Coursedetails = ({ edit }) => {
       if (response.data && EnrolledTutors.data) {
         SetTutorDropDownList(response.data);
         SetEnrolledTutorDropDownList(EnrolledTutors.data);
-     
+        setisPending(false)
       }
     };
 
@@ -171,6 +161,7 @@ const Coursedetails = ({ edit }) => {
         <>
           {StudentModal ? (
             <ListModal
+            isPending={isPending}
               List={StudentDropDownList}
               Role="Student"
               HandleModalClose={HandleModalClose}
@@ -178,11 +169,13 @@ const Coursedetails = ({ edit }) => {
               Loader={false}
               setcount={setcount}
               List2={EnrolledStudentDropDownList}
+
             />
           ) : null}
 
           {TutorModal ? (
             <ListModal
+            isPending={isPending}
               List={TutorDropDownList}
               Role="Tutor"
               HandleModalClose={HandleModalClose}

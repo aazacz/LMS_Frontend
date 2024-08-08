@@ -7,14 +7,13 @@ import StudentListTable from './StudentListTable'
 import AdminListTable from './AdminListTable'
 import StudentEnrolledListTable from './StudentEnrolledListTable'
 import "./list.css"
-const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, List2 }) => {
+const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, List2 ,isPending}) => {
 
     const [AddList, setAddList] = useState(null)
     const [RemoveList, setRemoveList] = useState(null)
     const [StudentModal, setStudentModal] = useState(false)
     const [StudentDropDownList, SetStudentDropDownList] = useState()
     const [EnrolledStudentDropDownList, SetEnrolledStudentDropDownList] = useState()
-
 
 
 
@@ -49,6 +48,7 @@ const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, L
 
                 console.log("AddList")
                 console.log(AddList)
+               
                 const response = await AdminAxiosInstance.post(`api/course/add-student/${courseId}`, data)
              
                 if (response.data.message === "Student added successfully") {
@@ -142,7 +142,7 @@ const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, L
 
                                 <div>
                                     <h1 className='mt-3  text-xl'>Student Enrolled</h1>
-                                    <StudentEnrolledListTable courseId={courseId} />
+                                    <StudentEnrolledListTable courseId={courseId} isPending={isPending} />
                                 </div>
 
                             </div>
@@ -175,7 +175,7 @@ const ListModal = ({ List, Role, HandleModalClose, courseId, Loader, setcount, L
 
                         <div>
                             <h1 className='mt-3 font-Roboto text-xl'>Tutor Enrolled</h1>
-                            <AdminListTable courseId={courseId}/>
+                            <AdminListTable courseId={courseId} isPending={isPending}/>
                         </div>
 
                     </div>

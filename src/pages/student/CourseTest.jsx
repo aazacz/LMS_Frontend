@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-// import { FaGoogleScholar } from "react-icons/fa";
 import { PiWarningOctagonDuotone } from "react-icons/pi";
 import { Hourglass } from "react-loader-spinner";
 import Swal from "sweetalert2";
 import Loader from "../../components/reusable/Loader";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./DiagnosisTest.css";
-import axios from "axios";
 import Tooltip from "@mui/material/Tooltip";
 import { setStudentDetails } from "../../store/reducers/StudentloginSlice";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
@@ -22,14 +20,14 @@ const CourseTest = () => {
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
   const [testId, setTestId] = useState("");
-  const [selectedAnswers, setSelectedAnswers] = useState({});
-  console.log({ selectedAnswers });
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [questionStatuses, setQuestionStatuses] = useState({});
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
  
   const navigate = useNavigate();
 
   const {courseId, testid } = useParams()
+
   useEffect(() => {
     console.log(selectedAnswers);
   }, [selectedAnswers]);
@@ -272,17 +270,32 @@ const CourseTest = () => {
   };
 
   const handleAnswerSelect = (optionIndex) => {
-    const updatedAnswers = { ...selectedAnswers };
     const currentQuestion = questions[currentQuestionIndex];
-    console.log(currentQuestion);
-    const selectedOption = currentQuestion.options[optionIndex];
-    console.log(selectedOption);
-    updatedAnswers[currentQuestionIndex] = {
-      selectedOptionIndex: optionIndex,
+    const newAnswer = {
       questionId: currentQuestion.questionId,
+      selectedOptionIndex: optionIndex
     };
-    setSelectedAnswers(updatedAnswers);
-
+  
+    setSelectedAnswers(prevAnswers => {
+      // Create a copy of the previous answers
+      const updatedAnswers = [...prevAnswers];
+      
+      // Find if an answer for this question already exists
+      const existingAnswerIndex = updatedAnswers.findIndex(
+        answer => answer.questionId === currentQuestion.questionId
+      );
+  
+      if (existingAnswerIndex !== -1) {
+        // If it exists, update it
+        updatedAnswers[existingAnswerIndex] = newAnswer;
+      } else {
+        // If it doesn't exist, add it
+        updatedAnswers.push(newAnswer);
+      }
+  
+      return updatedAnswers;
+    });
+  
     const updatedStatuses = { ...questionStatuses };
     updatedStatuses[currentQuestionIndex] = "answered";
     setQuestionStatuses(updatedStatuses);

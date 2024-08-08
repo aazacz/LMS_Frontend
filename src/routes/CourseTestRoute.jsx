@@ -6,8 +6,6 @@ import { Route, Routes } from "react-router-dom";
 
 const CourseTestRoute = ()=>{
 
-
-
 return(
 <>
 
@@ -15,9 +13,6 @@ return(
     <Route path="/start/:courseId/:testid" element={<CourseTest/>} />
     <Route path="/CourseTestResult/:resultId" element={<CourseTest/>} />
 </Routes>
-
-
-
 
 
 

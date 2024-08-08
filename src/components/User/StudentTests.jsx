@@ -3,6 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import Aside_Section_Test_Page from "./Aside_Section_Test_Page/Aside_Section_Test_Page";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
 import { useNavigate } from "react-router-dom";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 
 const StudentTests = () => {
   const [filter, setFilter] = useState("all");
@@ -37,6 +38,7 @@ const StudentTests = () => {
      try {
        const response = await axiosInstanceStudent.get('api/test/getId');
        setstudentId(response.data.userId) 
+      console.log("response.data.userId")
       console.log(response.data.userId)
      } catch (error) {
       console.log(error)
@@ -62,12 +64,43 @@ const StudentTests = () => {
     setIsTestModalOpen(false);
   };
 
+
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    if (isTestModalOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isTestModalOpen]);
+
   const TestModal = ({ course, isOpen, onClose,studentId }) => {
     if (!isOpen || !course) return null;
 
+
+
+
+
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-        <div className="bg-white p-4 rounded-lg w-3/4 max-h-3/4 overflow-auto">
+      <div className="fixed inset-0 bg-white flex flex-col px-6   ">
+       
+       <div className="w-full h-max">
+       <IoArrowBackCircleOutline className="text-4xl my-4 " onClick={onClose}  />
+       </div>
+
+
+
+
           <h2 className="text-xl font-bold mb-4">{course.courseName} - Tests</h2>
           <table className="w-full">
             <thead>
@@ -107,14 +140,9 @@ const StudentTests = () => {
               ))}
             </tbody>
           </table>
-          <button
-            onClick={onClose}
-            className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Close
-          </button>
+       
         </div>
-      </div>
+     
     );
   };
 

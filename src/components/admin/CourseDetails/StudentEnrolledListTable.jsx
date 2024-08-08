@@ -1,13 +1,30 @@
-// import React,{useEffect, useState} from 'react'
-// import usePaginationData from './usePaginationData'
-// import { Link }             from 'react-router-dom'
-// import Loader               from '../../reusable/Loader'
-// import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
-// import { toast } from 'react-toastify'
-// import Swal from 'sweetalert2'
+import React,{useEffect, useState} from 'react'
+import usePaginationData from './usePaginationData'
+import { Link }             from 'react-router-dom'
+import Loader               from '../../reusable/Loader'
+import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
+import { toast } from 'react-toastify'
+import Swal from 'sweetalert2'
 
 
 const StudentEnrolledListTable = ({courseId}) => {
+
+
+  const {
+    courses,
+    isPending,
+    isError,
+    currentPage,
+    pageSize,
+    totalRows,
+    searchQuery,
+    handlePageChange,
+    handlePageSizeChange,
+    handleSearchChange,
+    error,
+    refetch
+  } = usePaginationData(courseId)
+
 
  
     const handleDelete = async (studentId) => {

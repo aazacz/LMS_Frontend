@@ -230,6 +230,7 @@ const CourseTest = () => {
         selectedAnswers,
       });
   
+       
       exitFullscreen();
   
       await Swal.fire({

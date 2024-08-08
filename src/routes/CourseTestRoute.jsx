@@ -1,6 +1,7 @@
 import React from "react";
 import CourseTest from "../pages/student/CourseTest";
 import { Route, Routes } from "react-router-dom";
+import CourseTestResult from "../pages/student/CourseTestResult";
 
 
 
@@ -11,7 +12,7 @@ return(
 
 <Routes>
     <Route path="/start/:courseId/:testid" element={<CourseTest/>} />
-    <Route path="/CourseTestResult/:resultId" element={<CourseTest/>} />
+    <Route path="/CourseTestResult/:resultId" element={<CourseTestResult/>} />
 </Routes>
 
 

@@ -16,6 +16,11 @@ const Assignments = () => {
     { id: 3, name: "SAT Assignment 3", feedbackLink: "#", score: "28/35" },
     { id: 4, name: "SAT Assignment 4", feedbackLink: "#", score: "27/35" },
     { id: 5, name: "SAT Assignment 5", feedbackLink: "#", score: "26/35" },
+    { id: 1, name: "SAT Assignment 1", feedbackLink: "#", score: "25/35" },
+    { id: 2, name: "SAT Assignment 2", feedbackLink: "#", score: "30/35" },
+    { id: 3, name: "SAT Assignment 3", feedbackLink: "#", score: "28/35" },
+    { id: 4, name: "SAT Assignment 4", feedbackLink: "#", score: "27/35" },
+    { id: 5, name: "SAT Assignment 5", feedbackLink: "#", score: "26/35" },
   ];
 
   const baseURL = process.env.REACT_APP_API_URL;
@@ -25,20 +30,58 @@ const Assignments = () => {
   const assignmentsPerPage = 6;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
-  const [loading, setLoading] = useState(false);
+
+  // const fetchAssignments = async (type) => {
+  //   try {
+  //     let url = `api/assignments/student-all-assignments`;
+  //     if (type === "pending") {
+  //       url = `api/assignments/student-all-assignments/pending`;
+  //     } else if (type === "completed") {
+  //       url = `api/assignments/student-all-assignments/completed`;
+  //     }
+
+  //     const { data } = await axiosInstanceStudent.get(url, {});
+
+  //     // Extract assignments from nested courses
+  //     // const courses = response.data;
+  //     console.log("ddddd", data);
+  //     let allAssignments = [];
+  //     // courses.forEach((course) => {
+  //     //   course.assignments.forEach((assignment) => {
+  //     //     allAssignments.push({
+  //     //       ...assignment,
+  //     //       courseName: course.courseName, // Add course name to each assignment
+  //     //     });
+  //     //   });
+  //     // });
+
+  //     setAssignments(data?.data?.assignments);
+  //   } catch (error) {
+  //     console.error("Error fetching assignments:", error);
+  //   }
+  // };
+
 
   const fetchAssignments = async (type) => {
     setLoading(true); // Set loading to true when starting to fetch
     try {
       let url = `api/assignments/student-all-assignments`;
-      if (type === "pending") {
-        url = `api/assignments/student-all-assignments/pending`;
-      } else if (type === "completed") {
-        url = `api/assignments/student-all-assignments/completed`;
-      }
-
+      
       const { data } = await axiosInstanceStudent.get(url, {});
-      setAssignments(data?.data?.assignments);
+      
+      let filteredAssignments = data?.data?.assignments;
+  
+      if (type === "pending") {
+        filteredAssignments = filteredAssignments.filter(
+          assignment => assignment.studentSubmissionStatus === "pending"
+        );
+      } else if (type === "completed") {
+        filteredAssignments = filteredAssignments.filter(
+          assignment => assignment.studentSubmissionStatus === "submitted"
+        );
+      }
+  
+      setAssignments(filteredAssignments);
     } catch (error) {
       console.error("Error fetching assignments:", error);
     } finally {
@@ -46,9 +89,17 @@ const Assignments = () => {
     }
   };
 
+
   useEffect(() => {
     fetchAssignments("all");
   }, []);
+
+  // const handleTabChange = (type) => {
+  //   setActiveTab(type);
+  //   setCurrentPage(1); // Reset to first page when changing tabs
+  //   fetchAssignments(type);
+  // };
+
 
   const handleTabChange = (type) => {
     setActiveTab(type);
@@ -97,7 +148,9 @@ const Assignments = () => {
       )}
       <div className="assignment-main-container px-1 py-1 rounded-lg flex md:flex-row relative">
         <div className="w-full lg:w-[70%] md:p-4">
-          <h1 className="text-2xl font-bold mb-4">Assignments</h1>
+          <h1 className="text-2xl font-bold mb-4 border border-red-600">
+            Assignments
+          </h1>
           <div className="w-full flex md:flex-row flex-col gap-x-4 items-center gap-y-4 mb-4">
             <button
               className={`px-4 w-full h-10 py-2 rounded ${

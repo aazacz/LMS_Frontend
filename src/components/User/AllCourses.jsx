@@ -170,7 +170,7 @@ export default AllCourses;
 // Course Card Component
 const CourseCard = ({ course }) => {
   return (
-    <div className="bg-gray-200 md:p-4 h-[230px] md:h-[300px] rounded-2xl flex flex-col items-center overflow-hidden p-3">
+    <div className="bg-gray-200 md:p-4 h-[230px]  rounded-2xl flex flex-col items-center overflow-hidden p-3">
       <div className=" w-full flex justify-center object-cover items-center rounded-xl overflow-hidden">
         {course?.imageUrl ? (
           <img

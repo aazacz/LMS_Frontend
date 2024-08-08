@@ -118,7 +118,9 @@ const Modal = ({isOpen, onClose, assignmentId, onSubmit}) => {
                 <strong className="text-gray-800">File:</strong>{" "}
                 {assignmentDetails?.filePath ? (
                   <a
-                    href={assignmentDetails?.assignment?.filePath}
+                    // href={assignmentDetails?.assignment?.filePath}
+                    href={"/sample.pdf"}
+                    
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:text-blue-700"

@@ -205,7 +205,7 @@ const Assignments = ({ courseId }) => {
     <>
       <div className="h-max">
         <div className="table-container">
-          <table className="responsive-table w-full">
+          <table className="responsive-table text-center w-full">
             <thead>
               <tr className="text-center">
                 {columns.map((column, index) => (
@@ -239,7 +239,7 @@ const Assignments = ({ courseId }) => {
                         ) : null}
 
                         {column.field === "assignmentDescription" ? (
-                          <div className="w-[150px] font-semibold text-wrap line-clamp-1">
+                          <div className="font-semibold text-wrap line-clamp-1">
                             {row.assignmentDescription
                               .charAt(0)
                               .toLocaleUpperCase() +
@@ -254,10 +254,10 @@ const Assignments = ({ courseId }) => {
                         ) : null}
 
                         {column.field === "Action" ? (
-                          <span className="text-sm font-semibold">
+                          <span className="text-sm font-semibold text-center">
                             <button
                               onClick={() => handleOpenModal(row)}
-                              className="w-[80px] h-[30px] flex items-center justify-center bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+                              className="w-[80px] h-[30px]  bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition duration-300 "
                             >
                               View
                             </button>

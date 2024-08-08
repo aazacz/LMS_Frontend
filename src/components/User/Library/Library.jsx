@@ -10,6 +10,8 @@ import { BsFillFileEarmarkPdfFill, BsTrash2 } from "react-icons/bs";
 import { FaCirclePlus } from "react-icons/fa6";
 import { Delete } from "@mui/icons-material";
 import { axiosInstanceStudent } from "../../../routes/UserRoutes";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const Library = () => {
   const [courses, setCourses] = useState([]);
@@ -97,53 +99,11 @@ const Library = () => {
           console.log("res.data in then block");
           console.log(res.data);
         });
-
-      // // Create a blob URL for the file and trigger download
-      // const url = window.URL.createObjectURL(new Blob([response.data]));
-      // const link = document.createElement("a");
-      // link.href = url;
-      // link.setAttribute("download", `${materialId}.pdf`); // Adjust file name as needed
-      // document.body.appendChild(link);
-      // link.click();
-      // link.remove();
     } catch (error) {
       console.error("Error downloading file:", error);
       Swal.fire("Error!", "Failed to download file.", "error");
     }
   };
-
-  //   const handleDownload = async (materialId, bookId) => {
-  //     try {
-  //       const response = await AdminAxiosInstance.get(
-  //         `api/library/download-book/${materialId}/${bookId}`,
-  //         {
-  //           responseType: "blob", // Important: This tells axios to treat the response as binary data
-  //         }
-  //       );
-
-  //       // Create a blob from the response data
-  //       const blob = new Blob([response.data], {
-  //         type: response.headers["content-type"],
-  //       });
-
-  //       // Create a temporary URL for the blob
-  //       const url = window.URL.createObjectURL(blob);
-
-  //       // Create a temporary anchor element and trigger the download
-  //       const link = document.createElement("a");
-  //       link.href = url;
-  //       link.setAttribute("download", fileName || "download"); // Use provided fileName or default to 'download'
-  //       document.body.appendChild(link);
-  //       link.click();
-
-  //       // Clean up
-  //       link.parentNode.removeChild(link);
-  //       window.URL.revokeObjectURL(url);
-  //     } catch (error) {
-  //       console.error("Error downloading file:", error);
-  //       // Handle error (e.g., show an error message to the user)
-  //     }
-  //   };
 
   // Function to handle page change
   const handlePageChange = (event, page) => {
@@ -218,16 +178,26 @@ const Library = () => {
                       e.stopPropagation();
                       // openModal(book);
                     }}
-                    className="md:w-[180px] bg-gray-300 flex flex-col justify-center items-center px-2 py-2 m-4 rounded-md"
+                    className="md:w-[180px]  bg-gray-300 flex flex-col justify-center items-center px-2 py-3 m-4 rounded-md"
                   >
                     <div>
                       {/* <Pdflogo /> */}
                       <BsFillFileEarmarkPdfFill className="text-6xl text-red-700" />
                     </div>
                     <div className="flex justify-between mt-4 gap-5 px-2 items-center w-full relative">
-                      <h1 className="w-[90%] text-center font-poppins font-semibold text-xs line-clamp-1d uppercase">
+                      <h1
+                        data-tooltip-id="PdfName"
+                        data-tooltip-content={book?.fileName?.split(".pdf")[0]}
+                        className="w-[90%] line-clamp-1 text-center font-poppins font-semibold text-xs line-clamp-1d uppercase"
+                      >
                         {book?.fileName?.split(".pdf")[0]}
                       </h1>
+                      <Tooltip
+                        id="PdfName"
+                        place="top"
+                        type="dark"
+                        effect="solid"
+                      />
                       <div className="w-[10%]">
                         <Link to={book.filePath} target="_blank">
                           <MdFileDownload

@@ -16,6 +16,8 @@
     grid-template-columns: 2fr 1fr 1fr;
     grid-gap: 20px;
     align-items: center;
+    display: flex;
+    gap:30px;
 }
 
 .animation-tutor-sub-container-content {
@@ -106,23 +108,35 @@
 
 @media (max-width: 1300px) {
     .animation-tutor-sub-container1 {
-        grid-template-columns: 1fr 1fr;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
     }
 
     .animation-tutor-sub-container-content {
-        text-align: left;
+        text-align: center;
+    }
+
+    .animation-tutor-sub-container2 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        justify-content: center;
     }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
     .animation-tutor-sub-container1 {
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 20px;
     }
 
     .animation-tutor-sub-container-title {
-        font-size: 20px;
+        font-size: 30px;
     }
 
     .animation-tutor-sub-container-desc {
@@ -135,9 +149,14 @@
     }
 
     .animation-tutor-sub-container2 {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .animation-tutor-tutor {
+        width: 90%;
     }
 }
 
@@ -149,8 +168,17 @@
     .animation-tutor-sub-container-desc {
         font-size: 14px;
     }
-
+    .animation-tutor-sub-container2 {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+        justify-content: center;
+    }
     .animation-tutor-sub-container-button {
         font-size: 14px;
+    }
+
+    .animation-tutor-tutor {
+        width: 90%;
     }
 }

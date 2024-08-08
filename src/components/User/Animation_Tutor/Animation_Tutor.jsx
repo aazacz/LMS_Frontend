@@ -23,7 +23,7 @@ const Animation_Tutor = () => {
                         View All Tutors
                     </div>
                 </div>
-
+                <div className='grid justify-evenly w-full grid-cols-1 gap-5 xs:grid-cols-2'>
                 <div className="animation-tutor-tutor">
                     <img src={Tutor1} alt="Tutor Details" />
                     <div className="animation-tutor-content">
@@ -44,6 +44,7 @@ const Animation_Tutor = () => {
                             PU Students
                         </h3>
                     </div>
+                </div>
                 </div>
             </div>
 

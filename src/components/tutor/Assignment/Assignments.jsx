@@ -16,7 +16,7 @@ const Assignments = () => {
   const [file, setFile] = useState();
   const [fileName, setfileName] = useState("");
   const [dueDate, setDueDate] = useState({ value: "", error: null });
-  const [totalMarks, setTotalMark] = useState({ value: 0, error: null });
+  const [totalMarks, setTotalMark] = useState({ error: null });
 
   const [nameError, setNameError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
@@ -131,9 +131,11 @@ const Assignments = () => {
   };
 
   return (
-    <div className="new-assignment-container border-2 border-red-800">
+    <div className="new-assignment-container">
       <form onSubmit={handleSubmit}>
-        <p className="new-assignment-title">New Assignment - {course?.courseName}</p>
+        <p className="new-assignment-title">
+          New Assignment - {course?.courseName}
+        </p>
         <p className="new-assignment-instruction">Name of Assignment</p>
         <input
           type="text"

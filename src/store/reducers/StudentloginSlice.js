@@ -13,12 +13,12 @@ const StudentDetailsSlice = createSlice({
   initialState,
   reducers: {
     setStudentDetails: (state, action) => {
-      const { name, token, email, userImg, isDiagnosisTestTaken } =
+      const { name, token, email, profile, isDiagnosisTestTaken } =
         action.payload;
       state.userName = name;
       state.email = email;
       state.token = token;
-      state.userImg = "/profile.jpeg";
+      state.userImg =profile;
       state.isDiagnosisTestTaken = isDiagnosisTestTaken;
     },
     clearStudentDetails: (state) => {

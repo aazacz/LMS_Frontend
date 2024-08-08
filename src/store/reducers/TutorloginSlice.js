@@ -13,11 +13,11 @@ const TutorDetailsSlice = createSlice({
     initialState,
     reducers: {
       setTutorDetails: (state, action) => {
-        const { name, token, email, userImg } =  action.payload;
+        const { name, token, email, profile } =  action.payload;
         state.userName = name
         state.email = email
         state.token = token
-        state.userImg = 'https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=';
+        state.userImg = profile
           },
         clearTutorDetails: (state) => {
         Object.assign(state, initialState);

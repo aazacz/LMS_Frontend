@@ -89,7 +89,7 @@ const Content = () => {
   ];
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col ">
       {Loading && <FullscreenLoader />}
       <div className="w-full overflow-x-auto p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -103,7 +103,7 @@ const Content = () => {
               </Link>
             ))}
         </div>
-        <div className="w-full overflow-x-auto">
+        <div className="w-full overflow-x-auto  mt-9">
           <table className="min-w-full bg-white border border-gray-300">
             <thead className="bg-gray-100">
               <tr>
@@ -181,11 +181,7 @@ const CourseCard = ({ course }) => {
             alt="Course"
           />
         ) : (
-          <img
-            src={coursephoto}
-            className="w-full h-[300px] "
-            alt="Course"
-          />
+          <img src={coursephoto} className="w-full h-[300px] " alt="Course" />
         )}
       </div>
 
@@ -209,5 +205,3 @@ const CourseCard = ({ course }) => {
     </div>
   );
 };
-
-

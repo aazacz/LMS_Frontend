@@ -30,6 +30,7 @@ const Assignments = () => {
   const assignmentsPerPage = 6;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // const fetchAssignments = async (type) => {
   //   try {
@@ -148,7 +149,7 @@ const Assignments = () => {
       )}
       <div className="assignment-main-container px-1 py-1 rounded-lg flex md:flex-row relative">
         <div className="w-full lg:w-[70%] md:p-4">
-          <h1 className="text-2xl font-bold mb-4 border border-red-600">
+          <h1 className="text-2xl font-bold mb-4">
             Assignments
           </h1>
           <div className="w-full flex md:flex-row flex-col gap-x-4 items-center gap-y-4 mb-4">

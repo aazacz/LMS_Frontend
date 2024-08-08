@@ -7,7 +7,6 @@ import { FiBookOpen, FiBook } from "react-icons/fi";
 import "../User/StudentNavbar.css";
 import logo from "../../assets/Student/Logo.png";
 
-
 const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
@@ -69,7 +68,7 @@ const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
                   <p className=" font-poppins">{user.userName}</p>
                   <p className="text-gray-500 font-poppins">{user.email}</p>
                 </div>
-                <IoIosArrowForward className="text-2xl" />
+                <IoIosArrowForward className="text-2xl border border-red-400" />
               </div>
             </div>
           </div>

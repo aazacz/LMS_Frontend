@@ -36,7 +36,8 @@ const AdminLogin = () => {
                     "user-agent": navigator.userAgent,
                 },
             )
-        
+
+
             
             dispatch(setAdminDetails(res.data || []))
 

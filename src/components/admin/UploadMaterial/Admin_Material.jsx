@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from "react";
 import "./Admin_Material.css";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
 
 const Material = () => {
   const input = useRef();
@@ -15,20 +16,21 @@ const Material = () => {
   const [tfileName, settFileName] = useState("");
   const [file, setFile] = useState(null);
   const [tfile, settFile] = useState(null);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const [materialNameError, setMaterialNameError] = useState("");
   const [coursesNameError, setCoursesError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
   const [fileError, setFileError] = useState("");
+  const [tfileError, settFileError] = useState("");
 
   // Fetch courses from API
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get(
-          `${baseUrl}api/course/get-all-course-name?page=1&pageSize=&search=`
+        const response = await AdminAxiosInstance.get(
+          `api/course/get-all-course-name?page=1&pageSize=&search=`
         );
         if (response.status !== 200) {
           throw new Error("Failed to fetch courses");
@@ -64,13 +66,14 @@ const Material = () => {
     setFileError("");
   };
 
-  //   const handleThumbnailChange = (e) => {
-  //     settFile(e.target.files[0]);
-  //     settFileName(e.target.files[0].name);
-  //     settFileError("");
-  //   };
+    const handleThumbnailChange = (e) => {
+      settFile(e.target.files[0]);
+      settFileName(e.target.files[0].name);
+      settFileError("");
+    };
 
   const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     let valid = true;
     if (!materialName) {
@@ -89,21 +92,21 @@ const Material = () => {
       setFileError("Please select a file");
       valid = false;
     }
-    // if (!tfile) {
-    //   settFileError("Please select an image");
-    //   valid = false;
-    // }
+    if (!tfile) {
+      settFileError("Please select an image");
+      valid = false;
+    }
 
     if (!valid) return;
     // const fileName = `${Date.now()}-${file.name}`;
-    // const tfileName = `${Date.now()}-${tfile.name}`;
+    const tfileName = `${Date.now()}-${tfile.name}`;
     const formData = new FormData();
     formData.append("fileName", materialName);
     formData.append("courseId", selectedCourse);
     formData.append("description", description);
     formData.append("file", file);
-    // formData.append("tfileName", tfileName);
-    // formData.append("tfile", tfile);
+    formData.append("tfileName", tfileName);
+    formData.append("tfile", tfile);
 
     console.log(formData.get("materialName"));
     console.log(formData.get("courseId"));
@@ -121,11 +124,9 @@ const Material = () => {
       console.log(formData.get("file"));
       console.log(formData.get("tfileName"));
       console.log(formData.get("tfile"));
-      await axios.post(`${baseUrl}api/library/create-book`, formData, {
+      await AdminAxiosInstance.post(`api/library/create-admin-book`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NTAyYWE4YTE0ZTdiNTM1N2UwNjhlYyIsInJvbGUiOiJ0dXRvciIsImlhdCI6MTcxNzEzMDgxOH0.yQ2kisu7irJUvntqfjK-e95yys_VCbMzriFZEcv2Dks",
         },
       });
       Swal.fire({
@@ -139,7 +140,7 @@ const Material = () => {
       setFile(null);
       setFileName("");
       input.current.value = "";
-      // thumbnail.current.value = "";
+      thumbnail.current.value = "";
     } catch (error) {
       console.error("Error creating material:", error);
     }
@@ -214,7 +215,7 @@ const Material = () => {
           </div>
           {fileError && <p className="text-red-500 text-sm">{fileError}</p>}
         </div>
-        {/* <div className="new-material-duration">
+        <div className="new-material-duration">
           <p className="new-material-instruction">Upload Thumbnail</p>
           <div className="material-file-input">
             <input
@@ -233,7 +234,7 @@ const Material = () => {
             </label>
           </div>
           {tfileError && <p className="text-red-500 text-sm">{tfileError}</p>}
-        </div> */}
+        </div>
       </div>
       <button type="submit" className="create-material">
         Create Material

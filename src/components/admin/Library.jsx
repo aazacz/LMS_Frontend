@@ -1,20 +1,20 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pdflogo from "./Pdflogo";
-import {MdFileDownload, MdDelete} from "react-icons/md";
-import {useSelector} from "react-redux";
+import { MdFileDownload, MdDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
 import Swal from "sweetalert2"; // Import SweetAlert
 import ReusablePagination from "../reusable/ReusablePagination";
-import {Link} from "react-router-dom";
-import {BsFillFileEarmarkPdfFill, BsTrash2} from "react-icons/bs";
-import {FaCirclePlus} from "react-icons/fa6";
-import {AdminAxiosInstance} from "../../routes/AdminRoutes";
-import {Delete} from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { BsFillFileEarmarkPdfFill, BsTrash2 } from "react-icons/bs";
+import { FaCirclePlus } from "react-icons/fa6";
+import { AdminAxiosInstance } from "../../routes/AdminRoutes";
+import { Delete } from "@mui/icons-material";
 
 const baseURL = process.env.REACT_APP_API_URL;
 
 const Library = () => {
-  const token = useSelector((state) => state.AdminDetails.token);
+  // const token = useSelector((state) => state.AdminDetails.token);
 
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
@@ -73,7 +73,7 @@ const Library = () => {
   const handleCourseChange = (event) => {
     setSelectedCourse(event.target.value);
     let filteredData = materials?.filter(
-      ({courseId}) => courseId === event.target.value
+      ({ courseId }) => courseId === event.target.value
     );
     console.log("ee ", event.target.value);
 
@@ -127,7 +127,7 @@ const Library = () => {
           },
         }
       ).then((res) => {
-        console.log({res});
+        console.log({ res });
         console.log("res.data in then block");
         console.log(res.data);
       });
@@ -220,16 +220,17 @@ const Library = () => {
         </div>
       )}
 
-      <div className="w-full  flex md:flex-row px-6  flex-col justify-between items-start p-2">
-        <div className="w-full md:w-auto   flex  justify-between items-center  ">
-          <div className="text-sm md:text-base">Choose Course</div>
-
+      <div className="w-full px-5 flex flex-col md:flex-row justify-between flex-wrap items-center p-2 pb-5">
+        <div className="w-full lg:w-auto flex flex-col lg:flex-row justify-center flex-wrap gap-5 items-center">
+          <div className="text-lg font-poppins mt-6 font-bold">
+            Choose Course
+          </div>
           <select
-            className="ml-2 text-sm p-1 h-max rounded"
+            className="text-base font-medium mt-5 px-1 py-2 bg-[#f5f1f1] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text-black rounded-md"
             onChange={handleCourseChange}
             value={selectedCourse}
           >
-            <option value="">All courses</option>
+            <option value="">All Courses</option>
             {courses?.map((course) => (
               <option key={course._id} value={course._id}>
                 {course.courseName}
@@ -238,17 +239,17 @@ const Library = () => {
           </select>
         </div>
 
-        <div className="">
+        <div className="w-full lg:w-auto flex justify-center mt-5 lg:mt-5 pr-2">
           <Link to="uploadMaterial">
-            <button className="text-sm px-6 py-2 bg-[#f5f1f1] hover:bg-[#f5e3e3] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text-black rounded-md flex gap-x-2 items-center">
+            <button className="text-base font-medium px-3 py-2 bg-[#f5f1f1] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text-black rounded-md flex gap-x-2 items-center">
               <FaCirclePlus /> Upload Material
             </button>
           </Link>
         </div>
       </div>
 
-      <div className=" ">
-        <div className="px-2 md:px-0 justify-center spac grid  grid-flow-row place-content-center grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-5  md:gap-x-4">
+      <div className="w-full pr-2">
+        <div className="w-full px-2 md:px-0 justify-center spac grid  grid-flow-row place-content-center xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6  md:gap-x-4">
           {filteredMaterials && filteredMaterials.length ? (
             filteredMaterials?.map((material) => (
               <React.Fragment key={material._id}>
@@ -271,6 +272,17 @@ const Library = () => {
                       {/* <Pdflogo /> */}
                       <BsFillFileEarmarkPdfFill className="text-6xl text-red-700" />
                     </div>
+
+                    {/* <div className="flex-shrink-0">
+                      <img
+                       className=" rounded-lg object-contain w-full h-full"
+                        src={
+                          book.thumbnailPath ||
+                          <BsFillFileEarmarkPdfFill className="text-6xl text-red-700" />
+                        }
+                      />
+                    </div> */}
+
                     <div className="flex justify-between mt-4 gap-5 px-2 items-center w-full relative">
                       <h1 className="w-[90%] text-center font-poppins font-semibold text-xs line-clamp-1d uppercase">
                         {book?.fileName?.split(".pdf")[0]}

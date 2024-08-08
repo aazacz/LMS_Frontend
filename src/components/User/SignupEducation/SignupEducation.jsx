@@ -5,6 +5,7 @@ import Loader from '../../reusable/Loader'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { toast } from 'react-toastify'
 
 const SignupEducation = () => {
     const baseUrl = process.env.REACT_APP_API_URL
@@ -116,10 +117,7 @@ const SignupEducation = () => {
         } catch (error) {
             setLoading(false)
             console.error('Error:', error)
-            Swal.fire({
-                icon: 'warning',
-                text: 'Failed To Register.',
-            })
+            toast.error(error.response.data.error)
         }
     }
 

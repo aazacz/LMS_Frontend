@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import BackButton from "../../reusable/BackButton";
 import ViewModal from "./ViewModal";
 import Loader from "../../reusable/Loader";
+import { axiosInstanceStudent } from "../../../routes/UserRoutes";
+import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
 
 
 const QuestionBank = () => {
@@ -13,6 +15,10 @@ const QuestionBank = () => {
 
   const [Modal, setModal] = useState(false)
   const [Data, setdata] = useState(null)
+  const [searchTerm, setSearchTerm] = useState("");
+
+
+  
 
   // function to open the modal
   const handleView = (data) => {
@@ -24,10 +30,9 @@ const QuestionBank = () => {
 
 // Query funciton to fetch all the course tests
   const fetchQuestions = async () => {
-    const response = await AdminAxiosInstance.get("api/test/course-tests?page=1&pageSize=&search=")
+    const response = await TutorAxiosInstance.get("api/test/course-tests?page=1&pageSize=&search=")
     console.log(response.data.data)
     return response.data.data
-
   }
 
 // UseQuery function
@@ -59,11 +64,13 @@ const QuestionBank = () => {
 
   ];
 
-  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
+
+
+
   return (
     <div className="font-poppins w-full   h-max flex flex-row-reverse justify-left items-left relative ">
 
@@ -181,7 +188,31 @@ const QuestionBank = () => {
 
         </div>
 
+
+
+
+
+
+
+
+
+  
       </div>
+
+
+
+
+     
+
+
+
+
+
+
+
+
+
+
 
     </div>
   );

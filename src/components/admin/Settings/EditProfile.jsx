@@ -1,285 +1,238 @@
-import React, { useEffect, useState } from "react";
-import Settings1 from "../../../assets/SettingsPage/Settings1.jpg";
+import React, { useEffect, useState, useRef } from "react";
 import { GrCloudUpload } from "react-icons/gr";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import { useForm } from "react-hook-form";
-import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
-import { toast } from "react-toastify";
+import Settings1 from "../../../assets/SettingsPage/Settings1.jpg";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../reusable/Loader";
-import ChangePassword from "./ChangePassword";
+import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
 
 const EditProfile = () => {
-  const [currDetails, setCurrDetails] = useState(null);
-  useEffect(() => {
-    AdminAxiosInstance.get("api/admin/profile")
-      .then((response) => {
-        console.log(response.data);
-        setCurrDetails(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-  return currDetails ? (
-    <Page currDetails={currDetails} setCurrDetails={setCurrDetails} />
-  ) : (
-    <Loader />
-  );
-};
+  const input = useRef();
+  const [details, setDetails] = useState({});
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isEditable, setIsEditable] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
-const Page = ({ currDetails, setCurrDetails }) => {
-  const [inputValue, setInputValue] = useState("");
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      fullName: currDetails.fullName,
-      email: currDetails.email,
-      country: currDetails.country,
-    },
-  });
-  const handleInputChange = (event) => {
-    const newValue = event.target.value.slice(0, 10); // Limit input display to 10 characters
-    setInputValue(newValue);
+  // Function to fetch student details
+  const fetchAdminDetails = async () => {
+    setLoading(true);
+    try {
+      const response = await AdminAxiosInstance.get(
+        "api/adminsettings/admin-details"
+      );
+      const { adminDetails } = response.data;
+      setDetails(adminDetails);
+    } catch (error) {
+      toast.error("Failed To Fetch Admin Details.");
+    } finally {
+      setLoading(false);
+    }
   };
-  const [selectedCountry, setSelectedCountry] = useState("0");
-  const countries = [
-    { code: "US", name: "United States" },
-    { code: "UK", name: "United Kingdom" },
-    { code: "CA", name: "Canada" },
-    { code: "IN", name: "India" },
-    // ... add more countries here
-  ];
-  // const [selectedImage, setSelectedImage] = useState(null); // State to store the uploaded image file
+
+  useEffect(() => {
+    fetchAdminDetails();
+  }, []);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
 
-    // Validate file type (PNG, JPEG, JPG)
     const validImageTypes = ["image/png", "image/jpeg", "image/jpg"];
     if (!validImageTypes.includes(file.type)) {
-      alert(
-        "Invalid image format. Please upload PNG, JPEG, or JPG files only."
+      toast.error(
+        "Invalid Image Format.Please Upload PNG,JPEG or JPG Files Only."
       );
       return;
     }
 
-    // Validate image size (300x300 and max 2mb)
     if (file.size > 2 * 1024 * 1024) {
-      // Convert 2mb to bytes
-      alert(
-        "Image size exceeds the maximum limit of 2mb. Please upload a smaller image."
-      );
-      setIsImageValid(false);
+      toast.error("Image Size Should Be 2MB.");
       return;
     }
 
-    // const reader = new FileReader();
-    // reader.onload = (e) => {
-    //   const img = new Image();
-    //   img.onload = () => {
-    //     const width = img.width;
-    //     const height = img.height;
-
-    //     if (width !== 300 || height !== 300) {
-    //       alert(
-    //         "Image dimensions must be 300x300 pixels. Please resize your image and try again."
-    //       );
-    //       setIsImageValid(false);
-    //       return;
-    //     }
-
-    //     // Update state with the validated image file
-    //     setSelectedImage(file);
-    //   };
-    //   img.src = e.target.result;
-    // };
-
-    reader.readAsDataURL(file);
+    setSelectedImage(file);
   };
 
-  const submitEdit = async (values) => {
-    try {
-      console.log("submitted");
-      // const formData = new FormData();
-      // formData.append("fullName", values.fullName);
-      // formData.append("country", values.country);
-      // formData.append("email", values.email);
-      // formData.append("image", selectedImage || "");
-      const res = await AdminAxiosInstance.put("/api/admin/profile", {
-        fullName: values.fullName,
-        country: values.country,
-        email: values.email,
-      });
-      console.log(res.data);
-      toast.success("Profile successfully updated");
-      setCurrDetails((prev) => {
-        return {
-          ...prev,
-          fullName: values.fullName,
-          country: values.country,
-          email: values.email,
-        };
-      });
-    } catch (error) {
-      console.log(error);
+  // Function to validate the form fields
+  const validateForm = () => {
+    const newErrors = {};
+    const namePattern = /^[A-Za-z\s]+$/;
+    const phonePattern = /^\d{10}$/;
+
+    if (!namePattern.test(details.name)) {
+      newErrors.name = "Name should contain only alphabets.";
+    }
+
+    if (!phonePattern.test(details.number)) {
+      newErrors.number = "Phone number should be exactly 10 digits.";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Function to upload profile photo
+  const uploadProfilePhoto = async () => {
+    if (selectedImage) {
+      const formData = new FormData();
+      formData.append("profilePhoto", selectedImage);
+      try {
+        const response = await AdminAxiosInstance.post(
+          "api/adminsettings/upload-admin-profile-photo",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          toast.success("Profile Photo Uploaded Successfully.");
+          fetchAdminDetails();
+        } else {
+          toast.error("Unexpected Response From Server.");
+        }
+      } catch (error) {
+        console.error("Upload Error:", error.response);
+        toast.error(
+          error.response?.data?.error || "Failed To Upload Profile Photo"
+        );
+      }
     }
   };
+
+  // Function to edit profile
+  const toggleEditMode = async () => {
+    if (isEditable) {
+      if (!validateForm()) {
+        return;
+      }
+      try {
+        const response = await AdminAxiosInstance.put(
+          "api/adminsettings/edit-admin-profile",
+          details
+        );
+        if (response.status === 200) {
+          if (selectedImage) {
+            await uploadProfilePhoto();
+          } else {
+            toast.success("Profile updated successfully!");
+            fetchAdminDetails();
+          }
+        } else {
+          toast.error("Unexpected response from server.");
+        }
+      } catch (error) {
+        console.error("Update Error:", error.response);
+        toast.error(error.response?.data?.error || "Failed to update profile");
+      }
+    }
+    setIsEditable(!isEditable);
+  };
+
   return (
-    <div className="w-full  p-2  overflow-y-scroll flex flex-col justify-center items-start gap-4 font-poppins">
-      <p className="font-semibold text-sm md:text-lg ">Edit Profile</p>
+    <div className="w-full p-2 flex flex-col justify-center items-start gap-4 font-poppins relative">
+      <p className="font-semibold text-base md:text-lg">Edit Profile</p>
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-100 z-50">
+          <Loader />
+        </div>
+      )}
       <div className="w-full h-max flex flex-wrap justify-start items-center">
-        <div className=" bg-slate-400 border rounded-full flex items-center justify-center  w-28 h-28 md:size-32 mx-auto  ">
-          <p className="text-[5rem] text-white">{currDetails.fullName[0]}</p>
-          {/* {selectedImage ? (
+        <div className="relative">
+          <div className="rounded-full overflow-hidden object-cover w-28 h-28 md:w-32 md:h-32 lg:w-32 lg:h-32">
+            {selectedImage ? (
               <img
                 data-tooltip-id="my-tooltip"
                 src={URL.createObjectURL(selectedImage)}
                 alt="Uploaded profile picture"
               />
             ) : (
-              <img src={Settings1} alt="Placeholder profile picture" />
-            )} */}
+              <img src={details.adminImg || Settings1} alt="Profile picture" />
+            )}
 
-          {/* <Tooltip id="my-tooltip">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
+            <Tooltip id="my-tooltip">
+              <div style={{ display: "flex", flexDirection: "column" }}>
                 <span className="font-poppins font-semibold">Upload photo</span>
                 <span className="text-[#84818A] font-light text-sm">
-                  300x300 and max 2 MB
+                  Max 2 MB
                 </span>
               </div>
-            </Tooltip> */}
+            </Tooltip>
 
-          {/* uploading the image */}
-          {/* <div className=" absolute rounded-full border-[1px] border-gray-500 flex items-center justify-center shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] w-8 h-8 bg-white bottom-0 translate-y-1/2  left-1/2 -translate-x-1/2 text-xl text-black cursor-pointer">
-              <label htmlFor="profile-picture-upload">
-                <GrCloudUpload
-                  data-tooltip-id="my-tooltip"
-                  className="cursor-pointer"
-                />
-              </label>
-            </div> */}
+            {isEditable && (
+              <div className="absolute rounded-full border-[1px] border-gray-500 flex items-center justify-center shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] w-8 h-8 bg-white bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 text-xl text-black cursor-pointer">
+                <label htmlFor="profile-picture-upload">
+                  <GrCloudUpload
+                    data-tooltip-id="my-tooltip"
+                    className="cursor-pointer"
+                  />
+                </label>
+              </div>
+            )}
+          </div>
+
+          {isEditable && (
+            <input
+              ref={input}
+              type="file"
+              id="profile-picture-upload"
+              accept="image/png, image/jpeg, image/jpg"
+              style={{ display: "none" }}
+              onChange={handleImageUpload}
+            />
+          )}
         </div>
-
-        {/* <input
-            id="profile-picture-upload"
-            type="file"
-            accept="image/png, image/jpeg, image/jpg"
-            style={{ display: "none" }}
-            onChange={handleImageUpload}
-          /> */}
-
-        {/*Section for profile picture */}
       </div>
-      {/*Details starts here*/}
 
-      <form
-        onSubmit={handleSubmit(submitEdit)}
-        action=""
-        className="w-full"
-        encType="multipart/form-data"
-      >
+      <form className="w-full">
         <div className="w-full">
           <label className="block font-medium text-sm mb-1">Full Name</label>
           <input
-            {...register("fullName", {
-              required: "Full name is required",
-              minLength: { value: 3, message: "Minimum length is 3" },
-              maxLength: { value: 20, message: "Maximum length is 20" },
-            })}
-            className="w-full h-10 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none mb-4"
+            className="w-full h-10 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none mb-1"
             type="text"
+            name="username"
+            value={details.username || ""}
+            readOnly={!isEditable}
+            onChange={handleInputChange}
           />
-          {errors.fullName && (
-            <p className="text-red-500 -mt-2 mb-2">
-              {errors.fullName?.message}
-            </p>
+          {errors.username && (
+            <p className="text-red-500 text-sm">{errors.username}</p>
           )}
         </div>
-
-        <div className="w-full grid grid-flow-row grid-cols-2 gap-x-4">
-          <div className="">
-            <label className="block font-medium text-sm mb-1">Country</label>
-            <select
-              {...register("country", {
-                required: "Country is required",
-              })}
-              className="w-full h-10 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none mb-4"
-              defaultValue={selectedCountry}
-            >
-              <option value="">Select Country</option>
-              {countries.map((country) => (
-                <option key={country.code} value={country.code}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
-            {errors.country && (
-              <p className="text-red-500 -mt-2 mb-2">
-                {errors.country?.message}
-              </p>
-            )}
-          </div>
-
-          <div className="w-full">
-            <label className="block font-medium text-sm mb-1">Email</label>
-
-            <input
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address",
-                },
-              })}
-              className="w-full h-10 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none mb-4"
-            />
-            {errors.email && (
-              <p className="text-red-500 -mt-2 mb-2">{errors.email?.message}</p>
-            )}
-          </div>
+        <div className="w-full mb-5">
+          <label className="block font-medium text-sm mb-1">Phone Number</label>
+          <input
+            className="w-full h-10 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none mb-1"
+            type="text"
+            name="number"
+            maxLength="10"
+            value={details.number || ""}
+            readOnly={!isEditable}
+            onChange={handleInputChange}
+          />
+          {errors.number && (
+            <p className="text-red-500 text-sm">{errors.number}</p>
+          )}
         </div>
-
-        {/* <div className="w-full grid grid-flow-row grid-cols-2 gap-x-4">
-          <div>
-            <label className="block font-medium text-sm mb-1">Password</label>
-            <input
-              {...register("password", {
-                required: "Password is required",
-                minLength: { value: 8, message: "Minimum length is 8" },
-                maxLength: { value: 20, message: "Maximum length is 20" },
-                pattern: {
-                  value:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                  message:
-                    "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
-                },
-              })}
-              className="w-full h-10 border-2 border-gray-300 px-2 rounded-lg text-sm outline-none mb-4"
-              value={inputValue}
-              onChange={handleInputChange}
-            />
-            {errors.phone && (
-              <p className="text-red-500 -mt-2 mb-2">{errors.phone?.message}</p>
-            )}
-          </div>
-        </div> */}
         <button
-          type="submit"
-          className="w-fit px-6 self-center py-2 bg-blue-500 font-semibold text-sm text-white rounded-md"
+          type="button"
+          className="w-full py-2 bg-blue-500 font-semibold text-sm text-white rounded-md"
+          onClick={toggleEditMode}
         >
-          Save Changes
+          {isEditable ? "Save Changes" : "Edit"}
         </button>
       </form>
-      <ChangePassword />
     </div>
   );
 };

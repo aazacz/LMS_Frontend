@@ -124,11 +124,11 @@ const AdminSidebar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
           path: "/admin/home/settings/accountsettings",
           icon: <IoIosKey className="text-xl text-gray-700" />,
         },
-        {
-          title: "Notifications",
-          path: "/admin/home/settings/notifications",
-          icon: <IoNotifications className="text-xl text-gray-700" />,
-        },
+        // {
+        //   title: "Notifications",
+        //   path: "/admin/home/settings/notifications",
+        //   icon: <IoNotifications className="text-xl text-gray-700" />,
+        // },
       ],
     },
   ];

@@ -10,6 +10,7 @@ import { BsFillFileEarmarkPdfFill, BsTrash2 } from "react-icons/bs";
 import { FaCirclePlus } from "react-icons/fa6";
 import { AdminAxiosInstance } from "../../routes/AdminRoutes";
 import { Delete } from "@mui/icons-material";
+import { Tooltip } from "react-tooltip";
 
 const baseURL = process.env.REACT_APP_API_URL;
 
@@ -284,9 +285,19 @@ const Library = () => {
                     </div> */}
 
                     <div className="flex justify-between mt-4 gap-5 px-2 items-center w-full relative">
-                      <h1 className="w-[90%] text-center font-poppins font-semibold text-xs line-clamp-1d uppercase">
+                      <h1
+                        data-tooltip-id="PdfName"
+                        data-tooltip-content={book?.fileName?.split(".pdf")[0]}
+                        className="w-[90%] line-clamp-1 text-center font-poppins font-semibold text-xs line-clamp-1d uppercase"
+                      >
                         {book?.fileName?.split(".pdf")[0]}
                       </h1>
+                      <Tooltip
+                        id="PdfName"
+                        place="top"
+                        type="dark"
+                        effect="solid"
+                      />
                       <div className="w-[10%]">
                         <Link to={book.filePath} target="_blank">
                           <MdFileDownload

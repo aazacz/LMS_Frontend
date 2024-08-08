@@ -64,7 +64,7 @@ const Assignments = () => {
 
 
   const fetchAssignments = async (type) => {
-    setLoading(true); // Set loading to true when starting to fetch
+    setLoading(true);
     try {
       let url = `api/assignments/student-all-assignments`;
       
@@ -86,7 +86,7 @@ const Assignments = () => {
     } catch (error) {
       console.error("Error fetching assignments:", error);
     } finally {
-      setLoading(false); // Set loading to false when fetch is complete
+      setLoading(false); 
     }
   };
 
@@ -95,16 +95,10 @@ const Assignments = () => {
     fetchAssignments("all");
   }, []);
 
-  // const handleTabChange = (type) => {
-  //   setActiveTab(type);
-  //   setCurrentPage(1); // Reset to first page when changing tabs
-  //   fetchAssignments(type);
-  // };
-
 
   const handleTabChange = (type) => {
     setActiveTab(type);
-    setCurrentPage(1); // Reset to first page when changing tabs
+    setCurrentPage(1);
     fetchAssignments(type);
   };
 

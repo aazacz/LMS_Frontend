@@ -12,17 +12,17 @@ const CourseTestResult = () => {
   const [testResult, setTestResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const topRef = useRef(null);
+
   const { resultId } = useParams();
 
   useEffect(() => {
     const fetchTestDetails = async () => {
       try {
         const response = await axiosInstanceStudent.get(
-          `api/diagnosis/result/${resultId}`
+          `api/test/course-test-submission/${resultId}`
         );
-        console.log({
-          response: response.data,
-        });
+        console.log("response.data")
+        console.log(response.data)
         setTestResult(response.data);
       } catch (error) {
         if (error.response?.status === 404) {

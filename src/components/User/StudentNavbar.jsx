@@ -68,7 +68,7 @@ const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
                   <p className=" font-poppins">{user.userName}</p>
                   <p className="text-gray-500 font-poppins">{user.email}</p>
                 </div>
-                <IoIosArrowForward className="text-2xl border border-red-400" />
+                <IoIosArrowForward className="text-2xl" />
               </div>
             </div>
           </div>

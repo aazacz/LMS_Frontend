@@ -30,40 +30,10 @@ const Assignments = () => {
   const assignmentsPerPage = 6;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
-
-  // const fetchAssignments = async (type) => {
-  //   try {
-  //     let url = `api/assignments/student-all-assignments`;
-  //     if (type === "pending") {
-  //       url = `api/assignments/student-all-assignments/pending`;
-  //     } else if (type === "completed") {
-  //       url = `api/assignments/student-all-assignments/completed`;
-  //     }
-
-  //     const { data } = await axiosInstanceStudent.get(url, {});
-
-  //     // Extract assignments from nested courses
-  //     // const courses = response.data;
-  //     console.log("ddddd", data);
-  //     let allAssignments = [];
-  //     // courses.forEach((course) => {
-  //     //   course.assignments.forEach((assignment) => {
-  //     //     allAssignments.push({
-  //     //       ...assignment,
-  //     //       courseName: course.courseName, // Add course name to each assignment
-  //     //     });
-  //     //   });
-  //     // });
-
-  //     setAssignments(data?.data?.assignments);
-  //   } catch (error) {
-  //     console.error("Error fetching assignments:", error);
-  //   }
-  // };
-
+  const [loading, setLoading] = useState(false)
 
   const fetchAssignments = async (type) => {
-    setLoading(true); // Set loading to true when starting to fetch
+    setLoading(true);
     try {
       let url = `api/assignments/student-all-assignments`;
       
@@ -85,7 +55,7 @@ const Assignments = () => {
     } catch (error) {
       console.error("Error fetching assignments:", error);
     } finally {
-      setLoading(false); // Set loading to false when fetch is complete
+      setLoading(false); 
     }
   };
 
@@ -94,16 +64,10 @@ const Assignments = () => {
     fetchAssignments("all");
   }, []);
 
-  // const handleTabChange = (type) => {
-  //   setActiveTab(type);
-  //   setCurrentPage(1); // Reset to first page when changing tabs
-  //   fetchAssignments(type);
-  // };
-
 
   const handleTabChange = (type) => {
     setActiveTab(type);
-    setCurrentPage(1); // Reset to first page when changing tabs
+    setCurrentPage(1);
     fetchAssignments(type);
   };
 
@@ -148,7 +112,7 @@ const Assignments = () => {
       )}
       <div className="assignment-main-container px-1 py-1 rounded-lg flex md:flex-row relative">
         <div className="w-full lg:w-[70%] md:p-4">
-          <h1 className="text-2xl font-bold mb-4 border border-red-600">
+          <h1 className="text-2xl font-bold mb-4">
             Assignments
           </h1>
           <div className="w-full flex md:flex-row flex-col gap-x-4 items-center gap-y-4 mb-4">

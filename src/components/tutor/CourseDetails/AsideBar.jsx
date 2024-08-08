@@ -8,7 +8,7 @@ import { IoDocuments } from "react-icons/io5";
 
 const AsideBar = ({ courseId, course }) => {
   return (
-    <div className="w-full lg:w-[30%] bg-slate-200 z-[1] flex flex-col h-max   lg:overflow-y-scroll lg:h-max lg:relative lg:flex-none">
+    <div className="relative bg-slate-200 lg:w-[30%] w-full h-screen flex flex-col">
       <div className="p-6">
         <div className="flex flex-wrap gap-4">
           <div className="flex justify-left">

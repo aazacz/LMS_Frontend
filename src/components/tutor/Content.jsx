@@ -181,11 +181,7 @@ const CourseCard = ({ course }) => {
             alt="Course"
           />
         ) : (
-          <img
-            src={coursephoto}
-            className="w-full h-[300px] "
-            alt="Course"
-          />
+          <img src={coursephoto} className="w-full h-[300px] " alt="Course" />
         )}
       </div>
 
@@ -194,6 +190,11 @@ const CourseCard = ({ course }) => {
           <h1 className="font-poppins font-semibold text-base line-clamp-1 md:line-clamp-2">
             {course.courseName}
           </h1>
+        </div>
+        <div className="flex flex-col md:flex-row md:items-center gap-x-2 ">
+          <span className="flex font-poppins items-center gap-x-1 text-sm text-red-600">
+            Rs. {course.price}
+          </span>
         </div>
 
         <div className="flex flex-col md:flex-row md:items-center gap-x-2 ">
@@ -209,5 +210,3 @@ const CourseCard = ({ course }) => {
     </div>
   );
 };
-
-

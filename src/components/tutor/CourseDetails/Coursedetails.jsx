@@ -47,7 +47,7 @@ const Coursedetails = () => {
   };
 
     return (
-        <div className="font-poppins flex flex-col lg:flex-row">
+        <div className="font-poppins flex flex-col lg:flex-row ">
             {loading ? (
                 <div className='w-full h-full absolute top-0 left-0 flex justify-center items-center'> 
                     <Loader/>   

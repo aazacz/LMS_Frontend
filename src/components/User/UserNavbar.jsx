@@ -16,6 +16,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
   const [show, setShow] = useState(false);
 
   const user = useSelector((state) => state.StudentDetails.token);
+  const student = useSelector((state) => state.StudentDetails);
   const userName = useSelector((state) => state.StudentDetails.userName);
   const navigate = useNavigate();
 
@@ -112,7 +113,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
               <img
                 onClick={() => setShowsidebar(!Showsidebar)}
                 className="rounded-full object-cover cursor-pointer w-[42px] h-[42px]"
-                src={profile}
+                src={student.userImg}
                 alt="profile"
               />
               <div className="ml-3 mt-2 font-semibold text-lg">{userName}</div>

@@ -93,8 +93,9 @@ const Asidebar = ({ course, setTutorModal, setStudentModal }) => {
   };
 
   return (
-    <div className="relative bg-slate-200 lg:w-[30%] w-full h-screen flex flex-col">
+    <div className="relative bg-slate-200 lg:w-[45%] w-full h-screen flex flex-col">
       {/* Adding student and tutor */}
+
       <div className="w-full relative flex justify-evenly h-max p-4">
         <div
           onClick={() => setTutorModal(true)}

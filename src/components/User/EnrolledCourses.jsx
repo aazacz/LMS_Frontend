@@ -182,6 +182,11 @@ const CourseCard = ({ course }) => {
             {course.courseName}
           </h1>
         </div>
+        <div className="flex flex-col md:flex-row md:items-center gap-x-2 ">
+          <span className="flex font-poppins items-center gap-x-1 text-sm text-red-600">
+            Rs. {course.price}
+          </span>
+        </div>
         <div className="flex items-center gap-x-6 mt-2">
           <span className="flex items-center gap-x-1 text-sm font-poppins">
             <BiSpreadsheet className="text-gray-400" /> 5 Modules

@@ -10,7 +10,7 @@ import { setStudentDetails } from "../../store/reducers/StudentloginSlice";
 import studentLoginimage from "../../assets/SignupPersonalDetails/personal.svg";
 import UserNavbar from "../../components/User/UserNavbar";
 import Loader from "../../components/reusable/Loader";
-import "./Login.css";
+// import "./Login.css";
 import { TutorAxiosInstance } from "../../routes/TutorRoutes";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
 
@@ -71,7 +71,7 @@ const StudentLogin = () => {
               loading ? "blur-sm" : ""
             } flex flex-col justify-center items-center w-[99%] h-[99%] rounded-full bg-white absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2`}
           >
-            <div className="w-full">
+            <div className=" bg-white  rounded-3xl border-[2px] border-[#0066de] shadow-lg w-full max-w-md">
               <div className="flex justify-center items-center">
                 <img
                   src={studentLoginimage}

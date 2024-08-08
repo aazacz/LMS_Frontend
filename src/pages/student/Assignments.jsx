@@ -30,7 +30,38 @@ const Assignments = () => {
   const assignmentsPerPage = 6;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+
+  // const fetchAssignments = async (type) => {
+  //   try {
+  //     let url = `api/assignments/student-all-assignments`;
+  //     if (type === "pending") {
+  //       url = `api/assignments/student-all-assignments/pending`;
+  //     } else if (type === "completed") {
+  //       url = `api/assignments/student-all-assignments/completed`;
+  //     }
+
+  //     const { data } = await axiosInstanceStudent.get(url, {});
+
+  //     // Extract assignments from nested courses
+  //     // const courses = response.data;
+  //     console.log("ddddd", data);
+  //     let allAssignments = [];
+  //     // courses.forEach((course) => {
+  //     //   course.assignments.forEach((assignment) => {
+  //     //     allAssignments.push({
+  //     //       ...assignment,
+  //     //       courseName: course.courseName, // Add course name to each assignment
+  //     //     });
+  //     //   });
+  //     // });
+
+  //     setAssignments(data?.data?.assignments);
+  //   } catch (error) {
+  //     console.error("Error fetching assignments:", error);
+  //   }
+  // };
+
 
   const fetchAssignments = async (type) => {
     setLoading(true);

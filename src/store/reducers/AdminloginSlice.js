@@ -14,11 +14,11 @@ const AdminDetailsSlice = createSlice({
     initialState,
     reducers: {
       setAdminDetails: (state, action) => {
-        const { userName, token, email, userImg } =  action.payload;
+        const { userName, token, email, profile } =  action.payload;
         state.userName = "Admin"
         state.email = email
         state.token = token
-        state.userImg = '/profile.jpeg';
+        state.userImg = profile;
           },
       clearAdminDetails: (state) => {
         Object.assign(state, initialState);

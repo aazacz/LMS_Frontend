@@ -6,28 +6,33 @@ import axios from "axios";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
 import { get } from "react-hook-form";
 import Loader from "../../components/reusable/Loader";
-
+import { useNavigate } from "react-router-dom";
 const CourseTestResult = () => {
+
   const baseURL = process.env.REACT_APP_API_URL;
   const [testResult, setTestResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const topRef = useRef(null);
 
   const { resultId } = useParams();
+  console.log(resultId)
+   const navigate = useNavigate()
 
   useEffect(() => {
     const fetchTestDetails = async () => {
       try {
+        // const response = await axiosInstanceStudent.get( `api/test/course-test-submission/${resultId}` );
         const response = await axiosInstanceStudent.get(
-          `api/test/course-test-submission/${resultId}`
+          `api/diagnosis/result/66b3bf171fdd83b5b2bd5b1a`
         );
         console.log("response.data")
         console.log(response.data)
         setTestResult(response.data);
       } catch (error) {
-        if (error.response?.status === 404) {
-          return navigate("/diagnosistest");
-        }
+        console.log(error)
+        // if (error.response?.status === 404) {
+        //   return navigate("/diagnosistest");
+        // }
         console.error("Error fetching test details:", error);
       } finally {
         setLoading(false);
@@ -35,7 +40,7 @@ const CourseTestResult = () => {
     };
 
     fetchTestDetails();
-  }, [baseURL]);
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;

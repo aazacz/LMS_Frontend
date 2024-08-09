@@ -167,7 +167,7 @@ const SignupEducation = () => {
                                     universities & scholarships that match your
                                     profile.
                                 </p>
-                                <section className="education-detail-section">
+                                <section className=" education-detail-section">
                                     <div className="education-input-row">
                                         <input
                                             type="file"

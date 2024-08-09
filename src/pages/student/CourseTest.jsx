@@ -25,7 +25,6 @@ const CourseTest = () => {
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
  
   const navigate = useNavigate();
-
   const {courseId, testid } = useParams()
 
   useEffect(() => {

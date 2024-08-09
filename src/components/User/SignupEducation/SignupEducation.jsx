@@ -112,7 +112,7 @@ const SignupEducation = () => {
                     text: 'User Registerd Successfully.',
                 })
                 sessionStorage.clear()
-                navigate('/diagnosistest')
+                navigate('/login')
             }
         } catch (error) {
             setLoading(false)
@@ -167,7 +167,7 @@ const SignupEducation = () => {
                                     universities & scholarships that match your
                                     profile.
                                 </p>
-                                <section className="education-detail-section">
+                                <section className=" education-detail-section">
                                     <div className="education-input-row">
                                         <input
                                             type="file"

@@ -43,7 +43,7 @@ const QuestionBank = () => {
   };
 
   const fetchQuestions = async () => {
-    const response = await TutorAxiosInstance.get("api/test/course-tests?page=1&pageSize=&search=");
+    const response = await TutorAxiosInstance.get("api/test/course-tests?page=1&pageSize=10&search=");
     console.log(response.data.data);
     return response.data.data;
   };

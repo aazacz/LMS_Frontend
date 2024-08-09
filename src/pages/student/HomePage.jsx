@@ -15,7 +15,7 @@ const Homepage = () => {
 
   return (
     <div>
-      <div className="sticky top-0 z-10 w-full">
+      <div className="sticky  top-0 z-10 w-full">
         <UserNavbar
           toggleSidebar={toggleSidebar}
           isSidebarOpen={isSidebarOpen}

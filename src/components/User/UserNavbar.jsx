@@ -109,13 +109,22 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
                 <p className="text-xs text-white">8</p>
               </div>
             </div> */}
-            <div className="relative flex">
-              <img
-                onClick={() => setShowsidebar(!Showsidebar)}
-                className="rounded-full object-cover cursor-pointer w-[42px] h-[42px]"
-                src={student.userImg}
-                alt="profile"
-              />
+            <div className="relative flex items-center">
+              {student.userImg ? (
+                <img
+                  onClick={() => setShowsidebar(!Showsidebar)}
+                  className="rounded-full object-cover cursor-pointer w-[42px] h-[42px]"
+                  src={student.userImg}
+                  alt="profile"
+                />
+              ) : (
+                <div
+                  onClick={() => setShowsidebar(!Showsidebar)}
+                  className="rounded-full cursor-pointer mt-2 w-[42px] h-[42px] bg-gray-600 flex items-center justify-center text-white font-bold text-2xl"
+                >
+                  {userName.charAt(0).toUpperCase()}
+                </div>
+              )}
               <div className="ml-3 mt-2 font-semibold text-lg">{userName}</div>
             </div>
           </div>

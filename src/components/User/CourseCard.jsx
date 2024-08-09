@@ -5,12 +5,12 @@ import coursephoto from "../../assets/Admin/coursephoto.jpeg";
 
 const CourseCard = ({ course }) => {
   return (
-    <div className="bg-gray-200 md:p-4 h-[230px]  rounded-2xl flex flex-col items-center overflow-hidden p-3">
+    <div className="bg-gray-200 md:p-3 h-[280px]  rounded-2xl flex flex-col items-center overflow-hidden p-3">
       <div className=" w-full flex justify-center object-cover items-center rounded-xl overflow-hidden">
         {course?.imageUrl ? (
           <img
             src={course?.imageUrl}
-            className="w-full h-[300px] "
+            className="w-fit h-[300px] "
             alt="Course"
           />
         ) : (

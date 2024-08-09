@@ -112,7 +112,7 @@ const SignupEducation = () => {
                     text: 'User Registerd Successfully.',
                 })
                 sessionStorage.clear()
-                navigate('/diagnosistest')
+                navigate('/login')
             }
         } catch (error) {
             setLoading(false)

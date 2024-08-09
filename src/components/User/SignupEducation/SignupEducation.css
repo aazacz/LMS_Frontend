@@ -1,3 +1,16 @@
+.chooseFile::file-selector-button{
+    display: none !important;
+  }
+
+  input[type="file"]:-webkit-file-upload-button{
+    width: 0 !important;
+    display: none !important;
+  }
+ 
+
+
+
+
 .educationdetailscontainer {
     border: 2px solid #0062cc;
     border-radius: 50px;

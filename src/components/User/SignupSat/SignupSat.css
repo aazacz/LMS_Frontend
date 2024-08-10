@@ -80,8 +80,8 @@
     display: flex;
     gap: 25px;
     margin-bottom: 10px;
-    background-color: #fafafa;
-    border: 1.5px solid #e2e2e2;
+    background-color: transparent;
+    border: 1px solid black;
     outline: none;
     height: 40px;
     padding-left: 5px;
@@ -115,14 +115,14 @@
 .sat-request {
     display: flex;
     justify-content: center;
-    width: max-content;
+    width: 200px;
     padding: 10px;
     font-size: 14px;
     font-weight: 600;
     background-color: #0066de;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    /* border-radius: 4px; */
     cursor: pointer;
     transition: background-color 0.3s ease;
 }

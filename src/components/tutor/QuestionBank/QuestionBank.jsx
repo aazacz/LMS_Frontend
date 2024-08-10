@@ -59,6 +59,30 @@ const QuestionBank = () => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
+  const best = [
+    { name: "John Doe", email: "john.doe@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+  ];
+  const least = [
+    { name: "John Doe", email: "john.doe@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "Jane Smith", email: "jane.smith@example.com" },
+  ];
+
+
+
+
+
+
   const ReviewModal = ({ test, isOpen, onClose, onSubmissionView }) => {
     if (!isOpen) return null;
 
@@ -177,7 +201,43 @@ const QuestionBank = () => {
       />
 
       {/* Aside Bar */}
-      {/* ... (keep your existing aside bar code) ... */}
+      <div className="w-[320px] h-max  flex-col justify-center items-center  pl-4 gap-2 font-poppins border-l border-black hidden lg:block">
+        <div className="w-full  h-72 flex flex-col">
+          <p className="text-sm font-semibold p-2">Top Performers in Tests</p>
+          <div className="w-full  h-64  overflow-y-scroll no-scrollbar ">
+            {best.map((item, index) => (
+              <div
+                key={index}
+                className="w-full h-max border-b-[1px] border-gray-300  flex justify-start items-start p-2"
+              >
+                {/* user image div  */}
+                <div className="w-10 h-10 rounded-full bg-black"></div>
+                <div className="w-max flex flex-col ml-2 justify-start items-start text-xs">
+                  <p>{item.name}</p>{" "}
+                  <p className="text-gray-500">{item.email}</p>{" "}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="w-full mt-8 h-72 flex flex-col">
+          <p className="text-sm font-semibold p-2">Least Performing</p>
+          <div className="w-full h-64 overflow-y-scroll no-scrollbar ">
+            {least.map((item, index) => (
+              <div
+                key={index}
+                className="w-[90%] h-max flex justify-start items-start p-2"
+              >
+                <div className="w-10 h-10 rounded-full bg-black"></div>
+                <div className="w-max flex flex-col ml-2 justify-start items-start text-xs">
+                  <p>{item.name}</p>{" "}
+                  <p className="text-gray-500">{item.email}</p>{" "}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* Body */}
       <div className="flex-1 flex flex-col">

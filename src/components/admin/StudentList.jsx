@@ -41,7 +41,7 @@ const StudentList = () => {
       setLoading(false);
     }
   };
-  
+
   const { data, isPending, isError, error, refetch } = useQuery({
     queryKey: ["studentList"],
     queryFn: fetchStudents,
@@ -53,6 +53,7 @@ const StudentList = () => {
     const params = new URLSearchParams(window.location.search);
     setCurrentPage(parseInt(params.get("page"), 10) || 1);
     setPageSize(parseInt(params.get("pageSize"), 10) || 10);
+    setSortOrder(params.get("sort") || "newest");
   }, []);
 
   useEffect(() => {
@@ -60,14 +61,16 @@ const StudentList = () => {
   }, [currentPage, pageSize, searchQuery, sortOrder]);
 
   const updateUrl = ({ page, pageSize, sort }) => {
-    const newUrl = `?page=${page}&pageSize=${pageSize}&sort=${sort}`;
+    const newUrl = `?page=${page}&pageSize=${pageSize}&sort=${
+      sort || sortOrder
+    }`;
     window.history.pushState({}, "", newUrl);
   };
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
     setCurrentPage(1);
-    updateUrl({ page: 1, pageSize });
+    updateUrl({ page: 1, pageSize, sort: sortOrder });
   };
 
   const handlePageChange = (event, newPage) => {
@@ -238,44 +241,74 @@ const StudentList = () => {
           <Loader /> {/* Your Loader component */}
         </div>
       )}
-      <div className="main-container p-2 font-poppins w-full">
-        <div>
-          <div className="heading-column-toggle-container py-2">
+
+      {/* Heading Section */}
+      <div className="pl-3 font-poppins w-full">
+        <div className="w-full">
+          <div className="py-2">
             <h1 className="font-poppins text-xl font-semibold ">
               Students List
             </h1>
           </div>
-          <div className=" h-10   flex flex-wrap ">
-            <div className=" w-full flex h-full gap-x-4 ">
-              <div className=" w-full md:w-[50%] h-full   border border-[#4348DB] rounded-md p-1 flex  ">
+          <div className="w-full flex flex-wrap h-fit gap-x-4">
+            <div className="w-full md:w-[50%] h-fit border border-[#4348DB] rounded-md p-2">
+              <div className="w-full flex items-center bg-gray-100 rounded-lg">
                 <input
                   type="text"
-                  placeholder="Search"
+                  placeholder="Search For Student"
                   value={searchQuery}
                   onChange={handleSearchInputChange}
-                  className="w-full outline-none px-2 h-full bg-gray-100 rounded-lg"
+                  className="w-full outline-none px-2 h-12 bg-transparent placeholder:text-black text-sm font-normal"
                 />
-                <button className="text-sm w-[200px] h-full  bg-[#4348DB] flex items-center text-white rounded-lg p-2">
+                <button className="text-sm w-[185px] p-2 h-10 bg-[#4348DB] flex items-center justify-center text-white rounded-lg mr-1">
                   {" "}
                   <SearchIcon className="text-white h-full" />
                   Show Results
                 </button>
               </div>
-
-              <div className="w-32 h-full border-[1px] border-gray-300 flex justify-center items-center rounded-lg">
-                <select
-                  name="Filter"
-                  className="w-full  outline-none"
-                  onChange={(e) => handleSortChange(e.target.value)}
+            </div>
+            <div className="mt-2 w-[170px] h-12 border-[1.5px] border-[#ECECEC] flex justify-center items-center rounded-lg relative">
+              <select
+                name="Filter"
+                className="w-full h-full px-3 appearance-none outline-none bg-transparent"
+              >
+                <option value="individual">Individual</option>
+                <option value="group">Group</option>
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[5px] h-8 mr-1 pointer-events-none rounded-lg text-gray-700 bg-[#ECECEC]">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
                 >
-                  <option value="w-full">Newest</option>
-                  <option value="w-full">Oldest</option>
-                </select>
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+            <div className="mt-2 w-[170px] h-12 border-[1.5px] border-[#ECECEC] flex justify-center items-center rounded-lg relative">
+              <select
+                name="Filter"
+                className="w-full h-full px-3 appearance-none outline-none bg-transparent"
+                onChange={(e) => handleSortChange(e.target.value)}
+                value={sortOrder}
+              >
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[5px] h-8 mr-1 pointer-events-none rounded-lg text-gray-700 bg-[#ECECEC]">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
               </div>
             </div>
           </div>
         </div>
 
+        {/* Table Section */}
         <div className="table-container font-poppins mt-2 ">
           <table className="responsive-table">
             <thead>

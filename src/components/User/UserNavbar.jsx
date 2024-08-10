@@ -15,7 +15,9 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
   const student = useSelector((state) => state.StudentDetails);
   const userName = useSelector((state) => state.StudentDetails.userName);
   const navigate = useNavigate();
-
+  
+  console.log(userName)
+  // console.log(userName[0])
   const [NameLetter, SetNameLetter] = useState(userName ? userName[0] : "");
 
   const handleToggle = () => {

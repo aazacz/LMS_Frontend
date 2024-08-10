@@ -19,13 +19,21 @@ const StudentList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState("newest");
+
+  const handleSortChange = (sort) => {
+    setSortOrder(sort);
+    updateUrl({ page: 1, pageSize, sort });
+    setCurrentPage(1);
+  };
 
   const fetchStudents = async () => {
     setLoading(true);
     try {
       const response = await AdminAxiosInstance.get(
-        `api/students/getAll-students?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`
+        `api/students/getAll-students?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}&sort=${sortOrder}`
       );
+      setTotalRows(response.data.totalRows);
       setLoading(false);
       return response.data;
     } catch (error) {
@@ -33,7 +41,7 @@ const StudentList = () => {
       setLoading(false);
     }
   };
-
+  
   const { data, isPending, isError, error, refetch } = useQuery({
     queryKey: ["studentList"],
     queryFn: fetchStudents,
@@ -49,10 +57,10 @@ const StudentList = () => {
 
   useEffect(() => {
     refetch();
-  }, [currentPage, pageSize, searchQuery]);
+  }, [currentPage, pageSize, searchQuery, sortOrder]);
 
-  const updateUrl = ({ page, pageSize }) => {
-    const newUrl = `?page=${page}&pageSize=${pageSize}`;
+  const updateUrl = ({ page, pageSize, sort }) => {
+    const newUrl = `?page=${page}&pageSize=${pageSize}&sort=${sort}`;
     window.history.pushState({}, "", newUrl);
   };
 
@@ -224,7 +232,7 @@ const StudentList = () => {
   ];
 
   return (
-    <div className="font-poppins w-full flex flex-col col relative ">
+    <div className="font-poppins w-full flex flex-col col relative">
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-100 z-50">
           <Loader /> {/* Your Loader component */}
@@ -253,8 +261,13 @@ const StudentList = () => {
                   Show Results
                 </button>
               </div>
+
               <div className="w-32 h-full border-[1px] border-gray-300 flex justify-center items-center rounded-lg">
-                <select name="Filter" className="w-full  outline-none">
+                <select
+                  name="Filter"
+                  className="w-full  outline-none"
+                  onChange={(e) => handleSortChange(e.target.value)}
+                >
                   <option value="w-full">Newest</option>
                   <option value="w-full">Oldest</option>
                 </select>
@@ -262,6 +275,7 @@ const StudentList = () => {
             </div>
           </div>
         </div>
+
         <div className="table-container font-poppins mt-2 ">
           <table className="responsive-table">
             <thead>
@@ -291,6 +305,7 @@ const StudentList = () => {
                         ) : (
                           <></>
                         )}
+
                         {column.field === "name" ? (
                           <Link to={`/admin/home/students/${row._id}`}>
                             <span className="action-container text-blue-600 capitalize text-sm font-semibold ">
@@ -300,6 +315,7 @@ const StudentList = () => {
                         ) : (
                           <></>
                         )}
+
                         {column.field === "grade" ? (
                           <span className="action-container text-sm font-semibold">
                             {row[column.field]}{" "}
@@ -321,6 +337,7 @@ const StudentList = () => {
                         ) : (
                           <></>
                         )}
+
                         {column.field === "createdAt" ? (
                           <span className="action-container text-sm font-semibold">
                             {formatDate(row[column.field])}{" "}
@@ -335,6 +352,7 @@ const StudentList = () => {
                         ) : (
                           <></>
                         )}
+
                         {column.field === "button" ? (
                           <div className="action-container">
                             <div className="font-poppins text-sm  border-[1px] border-gray-500 cursor-pointer hover:bg-slate-200   flex justify-center items-center">
@@ -380,12 +398,12 @@ const StudentList = () => {
             </tbody>
           </table>
         </div>
-        <div className="bulk-upload-container flex justify-between items-end gap-x-2 ">
+
+        <div className="bulk-upload-container flex justify-between items-end gap-x-2">
           <div>
-            <div className="select-container ">
+            <div className="select-container">
               <div>
                 <select value={pageSize} onChange={handlePageSizeSelectChange}>
-                  <option value="2">2</option>
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="100">100</option>
@@ -422,18 +440,21 @@ const StudentList = () => {
                 className="hidden"
                 onChange={handleFileChange}
               />
+
               <label
                 htmlFor="fileInput"
                 className="file-label bg-gray-300 text-blue-700 px-4 py-2 rounded cursor-pointer"
               >
                 {file ? file.name : "Select"}
               </label>
+
               <button
                 onClick={handleFileUpload}
                 className="upload-button bg-green-500 text-white px-4 py-2 rounded"
               >
                 Upload
               </button>
+
               <button
                 onClick={handleDownloadTemplate}
                 className="download-button bg-blue-500 text-white px-4 py-2 rounded"

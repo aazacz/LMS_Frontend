@@ -2,6 +2,7 @@
     border: 2px solid #0062cc;
     border-radius: 50px;
     z-index: -10;
+    width: 100%;
 }
 
 .personaldetailsphoto {

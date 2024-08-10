@@ -129,11 +129,11 @@ const SignupEducation = () => {
             <Loader />
           </div>
         )}
-      <div className="relative  h-full w-screen flex justify-center items-center">
+      <div className="relative  h-full w-screen flex justify-center items-center bg-white bg-opacity-50">
 
 <form
           onSubmit={registerUser}
-          className="w-max h-1/2 p-6 border-2 bg-white bg-opacity-60 border-blue-500 rounded-[50px]"
+          className="w-max h-1/2 p-6 border-2  bg-opacity-60 border-blue-500 rounded-[50px]"
         >          <div className="">
             <div className="flex">
               <img
@@ -171,7 +171,7 @@ const SignupEducation = () => {
             </p>
 
             <div className="grid grid-flow-row grid-cols-2 gap-x-6">
-              <div className="w-full relative overflow-hidden h-10 border-black border-[1px]  bg-white text-sm rounded shadow-lg px-3  flex items-center">
+              <div className="w-full relative overflow-hidden h-10 border-black border-[1px]  text-sm rounded shadow-lg px-3  flex items-center">
                 <input
                   value={englishSatMarkFile}
                   type="file"
@@ -187,10 +187,10 @@ const SignupEducation = () => {
                 </label>
               </div>
 
-              <div className="w-full relative overflow-hidden h-10 border-black border-[1px]  bg-white text-sm rounded shadow-lg px-3  flex items-center">
+              <div className="w-full relative overflow-hidden h-10 border-black border-[1px]  text-sm rounded shadow-lg px-3  flex items-center">
                 <input
                   type="text"
-                  className="w-full h-full outline-none"
+                  className="w-full h-full outline-none  bg-transparent"
                   name="grade"
                   placeholder="Enter English marks"
                   value={englishSatMark}
@@ -204,26 +204,26 @@ const SignupEducation = () => {
 
           {/*Maths Exam MArk and File  */}
           <div className="grid grid-flow-row grid-cols-2 gap-x-6">
-            <div className="w-full relative overflow-hidden h-10 border-black border-[1px]  bg-white text-sm rounded shadow-lg px-3  flex items-center">
+            <div className="w-full relative overflow-hidden h-10 border-black border-[1px]   text-sm rounded shadow-lg px-3  flex items-center">
               <input
                 value={mathSatMarkFile}
                 type="file"
-                className="choose focus:outline-blue-900 cursor-pointer"
+                className="choose focus:outline-blue-900 cursor-pointer "
                 id="file-upload-math"
                 onChange={handleMathFileChange}
               />
               <label
                 htmlFor="file-upload-math"
-                className="text-black font-semibold text-sm cursor-pointer font-poppins absolute right-2 top-1/2 -translate-y-1/2"
+                className="text-black font-semibold  text-sm cursor-pointer font-poppins absolute right-2 top-1/2 -translate-y-1/2"
               >
                 <MdOutlineFileUpload className="text-xl" />
               </label>
             </div>
 
-            <div className="w-full relative overflow-hidden h-10 bg-white border-black border-[1px]  text-sm rounded shadow-lg px-3  flex items-center">
+            <div className="w-full relative overflow-hidden h-10  border-black border-[1px]  text-sm rounded shadow-lg px-3  flex items-center">
               <input
                 type="text"
-                className="w-full h-full outline-none"
+                className="w-full h-full outline-none  bg-transparent"
                 name="grade"
                 placeholder="Enter Maths marks"
                 value={mathSatMark}
@@ -238,11 +238,11 @@ const SignupEducation = () => {
           </p>
           {/*Total MArk and File  */}
           <div className="grid grid-flow-row grid-cols-2 gap-x-6">
-            <div className="w-full relative overflow-hidden h-10 border-black border-[1px]  bg-white text-sm rounded shadow-lg px-3  flex items-center">
+            <div className="w-full relative overflow-hidden h-10 border-black border-[1px]   text-sm rounded shadow-lg px-3  flex items-center">
               <input
                 value={totalSatMarkFile}
                 type="file"
-                className="choose focus:outline-blue-900 cursor-pointer"
+                className="choose focus:outline-blue-900 cursor-pointer "
                 id="file-upload-total"
                 onChange={handleTotalFileChange}
               />
@@ -254,10 +254,10 @@ const SignupEducation = () => {
               </label>
             </div>
 
-            <div className="w-full relative overflow-hidden h-10 border-black border-[1px]  bg-white text-sm rounded shadow-lg px-3  flex items-center">
+            <div className="w-full relative overflow-hidden h-10 border-black border-[1px]   text-sm rounded shadow-lg px-3  flex items-center">
               <input
                 type="text"
-                className="w-full h-full outline-none"
+                className="w-full h-full outline-none  bg-transparent"
                 name="grade"
                 placeholder="Enter Maths marks"
                 value={totalSatMark}

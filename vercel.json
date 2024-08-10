@@ -1,0 +1,21 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/:path*",
+        "destination": "https://external-api-url.com/:path*"
+      }
+    ],
+    "redirects": [
+      {
+        "source": "/old-path",
+        "destination": "/new-path",
+        "permanent": true
+      },
+      {
+        "source": "/another-old-path",
+        "destination": "/another-new-path",
+        "permanent": false
+      }
+    ]
+  }
+  

@@ -60,22 +60,22 @@ const QuestionBank = () => {
   };
 
   const best = [
-    { name: "John Doe", email: "john.doe@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "John Doe", email: "john.doe@example.com"     ,image:"/photo1.jpg"},
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo2.jpg"},
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo3.jpg"},
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo4.jpg"},
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo5.jpg"},
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo6.jpg"},
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo7.jpg"},
   ];
   const least = [
-    { name: "John Doe", email: "john.doe@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
+    { name: "John Doe",   email: "john.doe@example.com  " ,image:"/photo8.jpg"       },
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo7.jpg" },
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo6.jpg" },
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo5.jpg" },
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo4.jpg" },
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo3.jpg" },
+    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo2.jpg" },
   ];
 
 
@@ -211,7 +211,10 @@ const QuestionBank = () => {
                 className="w-full h-max border-b-[1px] border-gray-300  flex justify-start items-start p-2"
               >
                 {/* user image div  */}
-                <div className="w-10 h-10 rounded-full bg-black"></div>
+                <div className="w-10 h-10 rounded-full overflow-hidden ">
+
+                  <img src={item.image} alt="" />
+                </div>
                 <div className="w-max flex flex-col ml-2 justify-start items-start text-xs">
                   <p>{item.name}</p>{" "}
                   <p className="text-gray-500">{item.email}</p>{" "}
@@ -228,7 +231,11 @@ const QuestionBank = () => {
                 key={index}
                 className="w-[90%] h-max flex justify-start items-start p-2"
               >
-                <div className="w-10 h-10 rounded-full bg-black"></div>
+                <div className="w-10 h-10 rounded-full overflow-hidden">
+
+                <img src={item.image} alt="" />
+
+                </div>
                 <div className="w-max flex flex-col ml-2 justify-start items-start text-xs">
                   <p>{item.name}</p>{" "}
                   <p className="text-gray-500">{item.email}</p>{" "}

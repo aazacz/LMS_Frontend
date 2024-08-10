@@ -178,7 +178,7 @@ const Library = () => {
                       e.stopPropagation();
                       // openModal(book);
                     }}
-                    className="md:w-[180px]  bg-gray-300 flex flex-col justify-center items-center px-2 py-3 m-4 rounded-md"
+                    className="md:w-[180px]  bg-[#F5F1F1] flex flex-col justify-center items-center px-2 py-3 m-4 rounded-md"
                   >
                     <div>
                       {/* <Pdflogo /> */}

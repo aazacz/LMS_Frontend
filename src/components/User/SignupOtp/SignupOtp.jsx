@@ -81,7 +81,7 @@ const SignupOtp = () => {
 
     return (
         <div>
-            <div className="otpcontainer">
+            <div className="otpcontainer bg-white bg-opacity-50">
                 <form onSubmit={handleSubmit}>
                     <div className="flex">
                         <div className="otpphoto">

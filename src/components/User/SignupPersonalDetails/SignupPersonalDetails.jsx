@@ -110,144 +110,145 @@ const SignupPersonalDetails = () => {
     }
 
     return (
-        <div>
-            <div className="personaldetailscontainer">
-                <form onSubmit={handleSubmit}>
-                    <div className="flex">
-                        <div className="personaldetailsphoto">
-                            <img
-                                className="detailphoto -z-20"
-                                src={personalDetailsImage}
-                                alt="Personal Details"
-                            />
-                            <div className="details-content-container">
-                                <p className="details-content">
-                                    Signup to get started
-                                </p>
-                                <p className="details-sub-content">
-                                    2,97,565 students and parents signed up to
-                                    study <br />
-                                    abroad.Make an informed decision about your
-                                    abroad education.
-                                </p>
+        <div className="relative">
+        <div className="bg-white bg-opacity-60 z-[999999] personaldetailscontainer">
+            <form className='relative' onSubmit={handleSubmit}>
+                <div className="flex relative z-[9999]">
+                    <div className="personaldetailsphoto relative z-[9999]">
+                        <img
+                            className="detailphoto relative z-[9999]"
+                            src={personalDetailsImage}
+                            alt="Personal Details"
+                        />
+                        <div className="details-content-container relative z-[9999]">
+                            <p className="details-content relative z-[99999]">
+                                Signup to get started
+                            </p>
+                            <p className="details-sub-content relative z-[9999]">
+                                2,97,565 students and parents signed up to
+                                study <br />
+                                abroad. Make an informed decision about your
+                                abroad education.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div className="personal-details-heading relative z-[9999]">
+                    <div className="details-heading relative z-[9999]">
+                        <p className="deatils-sub-heading relative z-[9999]">
+                            1. Personal details
+                        </p>
+                        <p className="details-sub-sub-heading relative z-[9999]">
+                            This will create your account and enable you to
+                            receive recommendations (you can opt-out
+                            anytime)
+                        </p>
+                        <section className="detail-section relative z-[9999]">
+                            <div className="input-row relative z-[9999]">
+                                <input
+                                    type="text"
+                                    className="detail-input relative z-[9999]"
+                                    name="name"
+                                    placeholder="Student Name"
+                                    value={session.name}
+                                    onChange={handleChange}
+                                />
+                                <input
+                                    type="text"
+                                    className="detail-input relative z-[9999]"
+                                    name="grade"
+                                    placeholder="Current Studying Grade"
+                                    value={session.grade}
+                                    onChange={handleChange}
+                                    pattern="\d*"
+                                    onKeyPress={(e) => {
+                                        const charCode = e.which
+                                            ? e.which
+                                            : e.keyCode
+                                        if (
+                                            charCode < 48 ||
+                                            charCode > 57
+                                        ) {
+                                            e.preventDefault()
+                                        }
+                                    }}
+                                />
                             </div>
-                        </div>
+                            <div className="input-row relative z-[9999]">
+                                <input
+                                    type="text"
+                                    className="detail-input relative z-[9999]"
+                                    name="number"
+                                    placeholder="Mobile Number"
+                                    value={session.number}
+                                    onChange={handleChange}
+                                    pattern="\d*"
+                                    onKeyPress={(e) => {
+                                        const charCode = e.which
+                                            ? e.which
+                                            : e.keyCode
+                                        if (
+                                            charCode < 48 ||
+                                            charCode > 57
+                                        ) {
+                                            e.preventDefault()
+                                        }
+                                    }}
+                                />
+                                <input
+                                    type="email"
+                                    className="detail-input relative z-[9999]"
+                                    name="email"
+                                    placeholder="Email ID"
+                                    value={session.email}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="input-row relative z-[9999]">
+                                <input
+                                    type="text"
+                                    className="detail-input relative z-[9999]"
+                                    name="parentNumber"
+                                    placeholder="Parent Number"
+                                    value={session.parentNumber}
+                                    onChange={handleChange}
+                                    pattern="\d*"
+                                    onKeyPress={(e) => {
+                                        const charCode = e.which
+                                            ? e.which
+                                            : e.keyCode
+                                        if (
+                                            charCode < 48 ||
+                                            charCode > 57
+                                        ) {
+                                            e.preventDefault()
+                                        }
+                                    }}
+                                />
+                                <input
+                                    type="email"
+                                    className="detail-input relative z-[9999]"
+                                    name="parentEmail"
+                                    placeholder="Parent Mail ID"
+                                    value={session.parentEmail}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="flex flex-col md:flex-row items-center w-full justify-center relative z-[9999]">
+                                <button
+                                    type="submit"
+                                    className="personal-detail-submit relative z-[9999]"
+                                >
+                                    Set Password
+                                </button>
+                            </div>
+                        </section>
                     </div>
-                    <div className="personal-details-heading">
-                        <div className="details-heading ">
-                            <p className="deatils-sub-heading">
-                                1. Personal details
-                            </p>
-                            <p className="details-sub-sub-heading">
-                                This will create your account and enable you to
-                                receive recommendations (you can opt-out
-                                anytime)
-                            </p>
-                            <section className="detail-section">
-                                <div className="input-row">
-                                    <input
-                                        type="text"
-                                        className="detail-input"
-                                        name="name"
-                                        placeholder="Student Name"
-                                        value={session.name}
-                                        onChange={handleChange}
-                                    />
-                                    <input
-                                        type="text"
-                                        className="detail-input"
-                                        name="grade"
-                                        placeholder="Current Studying Grade"
-                                        value={session.grade}
-                                        onChange={handleChange}
-                                        pattern="\d*"
-                                        onKeyPress={(e) => {
-                                            const charCode = e.which
-                                                ? e.which
-                                                : e.keyCode
-                                            if (
-                                                charCode < 48 ||
-                                                charCode > 57
-                                            ) {
-                                                e.preventDefault()
-                                            }
-                                        }}
-                                    />
-                                </div>
-                                <div className="input-row">
-                                    <input
-                                        type="text"
-                                        className="detail-input"
-                                        name="number"
-                                        placeholder="Mobile Number"
-                                        value={session.number}
-                                        onChange={handleChange}
-                                        pattern="\d*"
-                                        onKeyPress={(e) => {
-                                            const charCode = e.which
-                                                ? e.which
-                                                : e.keyCode
-                                            if (
-                                                charCode < 48 ||
-                                                charCode > 57
-                                            ) {
-                                                e.preventDefault()
-                                            }
-                                        }}
-                                    />
-                                    <input
-                                        type="email"
-                                        className="detail-input"
-                                        name="email"
-                                        placeholder="Email ID"
-                                        value={session.email}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className="input-row ">
-                                    <input
-                                        type="text"
-                                        className="detail-input"
-                                        name="parentNumber"
-                                        placeholder="Parent Number"
-                                        value={session.parentNumber}
-                                        onChange={handleChange}
-                                        pattern="\d*"
-                                        onKeyPress={(e) => {
-                                            const charCode = e.which
-                                                ? e.which
-                                                : e.keyCode
-                                            if (
-                                                charCode < 48 ||
-                                                charCode > 57
-                                            ) {
-                                                e.preventDefault()
-                                            }
-                                        }}
-                                    />
-                                    <input
-                                        type="email"
-                                        className="detail-input"
-                                        name="parentEmail"
-                                        placeholder="Parent Mail ID"
-                                        value={session.parentEmail}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className="flex flex-col md:flex-row items-center w-full justify-center">
-                                    <button
-                                        type="submit"
-                                        className="personal-detail-submit "
-                                    >
-                                        Set Password
-                                    </button>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
+    </div>
+    
     )
 }
 

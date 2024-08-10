@@ -52,7 +52,7 @@ const SignupSat = () => {
 
     return (
         <>
-            <div className="satcontainer">
+            <div className="satcontainer bg-white bg-opacity-50">
                 <form onSubmit={handleSubmit}>
                     <div className="satphoto">
                         <img

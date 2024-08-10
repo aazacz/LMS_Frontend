@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { FaBell, FaBars } from "react-icons/fa";
-import { IoIosArrowForward } from "react-icons/io";
-import { FiBookOpen, FiBook } from "react-icons/fi";
-import { IoSearch } from "react-icons/io5";
-import logo from "../../assets/mindsatlogo.webp";
-import { Link, useNavigate } from "react-router-dom";
-import profile from "../../assets/Student/profile.jpeg";
-import { motion, AnimatePresence } from "framer-motion";
-import { LiaSignOutAltSolid } from "react-icons/lia";
-import { clearStudentDetails } from "../../store/reducers/StudentloginSlice";
+import React, { useEffect, useState }   from "react";
+import { useDispatch, useSelector }     from "react-redux";
+import { FaBars }                       from "react-icons/fa";
+import logo                             from "../../assets/mindsatlogo.webp";
+import { Link, useNavigate }            from "react-router-dom";
+import { motion, AnimatePresence }      from "framer-motion";
+import { LiaSignOutAltSolid }           from "react-icons/lia";
+import { clearStudentDetails }          from "../../store/reducers/StudentloginSlice";
 
 const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
   const [Showsidebar, setShowsidebar] = useState(false);
@@ -40,7 +36,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
 
   return (
     <div
-      className="Test px-8 justify-between w-full bg-white h-[12vh]
+      className="Test  px-8 justify-between w-full h-[12vh]
                   border-b-[1px] flex items-center  relative 
                  transition-all duration-500"
     >
@@ -64,16 +60,15 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
               <Link to={"/student/courses"}>
                 <div
                   onClick={() => setShowsidebar(false)}
-                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700"
-                >
+                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700"  >
                   Courses
                 </div>
               </Link>
+            
               <Link to={"/student/assignments"}>
                 <div
                   onClick={() => setShowsidebar(false)}
-                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700"
-                >
+                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700" >
                   Assignment
                 </div>
               </Link>
@@ -109,13 +104,22 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
                 <p className="text-xs text-white">8</p>
               </div>
             </div> */}
-            <div className="relative flex">
-              <img
-                onClick={() => setShowsidebar(!Showsidebar)}
-                className="rounded-full object-cover cursor-pointer w-[42px] h-[42px]"
-                src={student.userImg}
-                alt="profile"
-              />
+            <div className="relative flex items-center">
+              {student.userImg ? (
+                <img
+                  onClick={() => setShowsidebar(!Showsidebar)}
+                  className="rounded-full object-cover cursor-pointer w-[42px] h-[42px]"
+                  src={student.userImg}
+                  alt="profile"
+                />
+              ) : (
+                <div
+                  onClick={() => setShowsidebar(!Showsidebar)}
+                  className="rounded-full cursor-pointer mt-2 w-[42px] h-[42px] bg-gray-600 flex items-center justify-center text-white font-bold text-2xl"
+                >
+                  {userName.charAt(0).toUpperCase()}
+                </div>
+              )}
               <div className="ml-3 mt-2 font-semibold text-lg">{userName}</div>
             </div>
           </div>
@@ -192,7 +196,13 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
             </div>
           </>
         )}
-        {!user && (
+       
+       
+       {/*Show the profile image if the user is already logged in    */}
+        {!user 
+           &&
+        
+        (
           <div className="hidden xl:flex xl:w-[90%] justify-end items-center h-full">
             <div className="h-1/2 flex gap-8 justify-between">
               <div className="flex gap-5">
@@ -243,3 +253,7 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
 };
 
 export default UserNavbar;
+
+
+
+

@@ -48,7 +48,7 @@ const Coursedetails = ({ edit }) => {
 
   useEffect(() => {
     
-    axios.get(`${baseUrl}api/course/get-course/${courseId}`, {
+    AdminAxiosInstance.get(`api/course/get-course/${courseId}`, {
         headers: { authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -186,7 +186,7 @@ const Coursedetails = ({ edit }) => {
             />
           ) : null}
 
-          <div className="flex flex-col lg:flex-row   ">
+          <div className="flex flex-col lg:flex-row  ">
             <div className=" w-full   p-4 flex flex-col">
               <button
                 className="w-[50%]"

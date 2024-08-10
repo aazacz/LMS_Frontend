@@ -37,18 +37,14 @@ const AdminLogin = () => {
                 },
             )
 
-
-            
-            dispatch(setAdminDetails(res.data || []))
-
-
       if (res.data.role === "admin") {
+        dispatch(setAdminDetails(res.data || []))
         navigate("/admin/home");
       }
     } catch (error) {
       setIsSubmitting(false);
-      toast.error(error.message);
-      console.log(error.message);
+      toast.error(error.response.data.error);
+      console.log(error);
     }
   };
 

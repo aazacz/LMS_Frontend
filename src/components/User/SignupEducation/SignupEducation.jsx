@@ -124,40 +124,43 @@ const SignupEducation = () => {
 
   return (
     <>
-        {loading && (
-          <div className=" h-screen w-screen top-0 left-0 absolute z-[9999] flex justify-center items-center bg-black  bg-opacity-60">
-            <Loader />
-          </div>
-        )}
-      <div className="relative  h-full w-screen flex justify-center items-center bg-white bg-opacity-50">
-
-<form
+      {loading && (
+        <div className="h-full w-full top-0 left-0 absolute z-[9999] flex justify-center items-center bg-black  bg-opacity-60">
+          <Loader />
+        </div>
+      )}
+      <div className="relative h-fit w-full flex justify-center items-center bg-opacity-50">
+        <form
           onSubmit={registerUser}
-          className="w-max h-1/2 p-6 border-2  bg-opacity-60 border-blue-500 rounded-[50px]"
-        >          <div className="">
-            <div className="flex">
-              <img
-                className=" educationphoto"
-                src={personalDetailsImage}
-                alt="Personal Details"
-              />
-              <div className="education-details-content-container">
-                <p className="education-details-content">
-                  Signup to get started
-                </p>
-                <p className="education-details-sub-content">
-                  2,97,565 students and parents signed up to study <br />
-                  abroad. Make an informed decision about your abroad education.
-                </p>
+          className="w-fit h-1/2 pr-5 pl-5 pb-2 border-2  bg-opacity-60 border-blue-500 rounded-[50px]"
+        >
+          {" "}
+          <div className="">
+            <div className="flex relative z-[9999]">
+              <div className="educationdetailsphoto relative z-[9999]">
+                <img
+                  className="relative z-[9999]"
+                  src={personalDetailsImage}
+                  alt="Personal Details"
+                />
+                <div className="education-details-content-container relative z-[9999]">
+                  <p className="education-details-content relative z-[99999]">
+                    Signup to get started
+                  </p>
+                  <p className="education-details-sub-content relative z-[9999]">
+                    2,97,565 students and parents signed up to study <br />
+                    abroad. Make an informed decision about your abroad
+                    education.
+                  </p>
+                </div>
               </div>
             </div>
-
-            <div>
-              <p className="font-poppins text-lg font-bold ">
+            <div className="">
+              <p className="font-poppins text-sm text-justify font-bold ">
                 {" "}
                 3. Current Details Education{" "}
               </p>
-              <p className="font-poppins text-sm text-gray-600  ">
+              <p className="font-poppins text-[12px] text-left  text-[#555]  ">
                 {" "}
                 Accurate details will help us show universities & scholarships
                 that match your profile.{" "}
@@ -165,7 +168,7 @@ const SignupEducation = () => {
             </div>
 
             {/*English Exam MArk and File  */}
-            <p className="font-poppins text-lg font-bold pt-[1%]">
+            <p className="font-poppins text-sm pt-1 font-bold">
               {" "}
               English (Reading & Writing){" "}
             </p>
@@ -190,18 +193,19 @@ const SignupEducation = () => {
               <div className="w-full relative overflow-hidden h-10 border-black border-[1px]  text-sm rounded shadow-lg px-3  flex items-center">
                 <input
                   type="text"
-                  className="w-full h-full outline-none  bg-transparent"
+                  className="w-full h-full outline-none text-[12px] placeholder:text-black  bg-transparent"
                   name="grade"
-                  placeholder="Enter English marks"
+                  placeholder="Enter English Marks"
                   value={englishSatMark}
                   onChange={handleEnglishMarksChange}
                 />
               </div>
             </div>
           </div>
-
-          <p className="font-poppins text-lg font-bold pt-[1%]"> Math </p>
-
+          <p className="font-poppins text-sm pb-1 font-bold pt-1">
+            {" "}
+            Math{" "}
+          </p>
           {/*Maths Exam MArk and File  */}
           <div className="grid grid-flow-row grid-cols-2 gap-x-6">
             <div className="w-full relative overflow-hidden h-10 border-black border-[1px]   text-sm rounded shadow-lg px-3  flex items-center">
@@ -223,16 +227,15 @@ const SignupEducation = () => {
             <div className="w-full relative overflow-hidden h-10  border-black border-[1px]  text-sm rounded shadow-lg px-3  flex items-center">
               <input
                 type="text"
-                className="w-full h-full outline-none  bg-transparent"
+                className="w-full h-full outline-none text-[12px] placeholder:text-black bg-transparent"
                 name="grade"
-                placeholder="Enter Maths marks"
+                placeholder="Enter Maths Marks"
                 value={mathSatMark}
                 onChange={handleMathMarksChange}
               />
             </div>
           </div>
-
-          <p className="font-poppins text-lg font-bold pt-[1%] ">
+          <p className="font-poppins text-sm font-bold pt-[1%] ">
             {" "}
             Total Score{" "}
           </p>
@@ -242,7 +245,7 @@ const SignupEducation = () => {
               <input
                 value={totalSatMarkFile}
                 type="file"
-                className="choose focus:outline-blue-900 cursor-pointer "
+                className="choose focus:outline-blue-900 placeholder:text-black cursor-pointer "
                 id="file-upload-total"
                 onChange={handleTotalFileChange}
               />
@@ -257,24 +260,23 @@ const SignupEducation = () => {
             <div className="w-full relative overflow-hidden h-10 border-black border-[1px]   text-sm rounded shadow-lg px-3  flex items-center">
               <input
                 type="text"
-                className="w-full h-full outline-none  bg-transparent"
+                className="w-full h-full outline-none text-[12px] placeholder:text-black  bg-transparent"
                 name="grade"
-                placeholder="Enter Maths marks"
+                placeholder="Enter Total Marks"
                 value={totalSatMark}
                 onChange={handleTotalMarksChange}
               />
             </div>
           </div>
-
           <div className="w-full flex items-start gap-x-2 pt-[1%]">
             <input
               type="checkbox"
               value={consent}
               onChange={handleConsentChange}
-              className="w-4 h-5 border-blue border-[1px]"
+              className="w-4 h-5 border-blue border-[1px] mt-2"
             />
 
-            <p className="text-xs">
+            <p className=" mt-2 font-poppins text-xs text-left  text-[#555]">
               I have read and provide consent for my data to be processed for
               purposes mentioned
               <br />
@@ -283,18 +285,16 @@ const SignupEducation = () => {
               agree to be contacted for Education related services & promotions.
             </p>
           </div>
-
           {/* signup button */}
-
-          <div className="flex flex-col md:flex-row items-center w-full justify-center">
-              <button
-                type="submit"
-                className="text-white font-poppins mt-2 font-bold text-lg w-[200px] h-max py-1 px-4 bg-blue-600"
-              >
-                Signup
-              </button>
-            </div>
-          </form>
+          <div className="flex flex-col md:flex-row items-center w-full justify-center ">
+            <button
+              type="submit"
+              className="text-white font-poppins mt-2 font-normal text-sm w-[200px] h-max py-1 px-4 bg-blue-600"
+            >
+              Signup
+            </button>
+          </div>
+        </form>
       </div>
     </>
   );

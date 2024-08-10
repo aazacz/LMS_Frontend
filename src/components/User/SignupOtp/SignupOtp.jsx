@@ -108,7 +108,7 @@ const SignupOtp = () => {
                         <div className="otp-number">
                             <div className="password-input-container">
                                 <input
-                                    className="input"
+                                    className="input placeholder:text-black"
                                     type={showPassword ? 'text' : 'password'}
                                     name="password"
                                     placeholder="Password"
@@ -125,7 +125,7 @@ const SignupOtp = () => {
                             </div>
                             <div className="password-input-container">
                                 <input
-                                    className="input"
+                                    className="input placeholder:text-black"
                                     type={
                                         showConfirmPassword
                                             ? 'text'

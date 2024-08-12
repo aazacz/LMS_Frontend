@@ -81,7 +81,7 @@ const SignupOtp = () => {
 
     return (
         <div>
-            <div className="otpcontainer">
+            <div className="otpcontainer bg-white bg-opacity-50">
                 <form onSubmit={handleSubmit}>
                     <div className="flex">
                         <div className="otpphoto">
@@ -108,7 +108,7 @@ const SignupOtp = () => {
                         <div className="otp-number">
                             <div className="password-input-container">
                                 <input
-                                    className="input"
+                                    className="input placeholder:text-black"
                                     type={showPassword ? 'text' : 'password'}
                                     name="password"
                                     placeholder="Password"
@@ -125,7 +125,7 @@ const SignupOtp = () => {
                             </div>
                             <div className="password-input-container">
                                 <input
-                                    className="input"
+                                    className="input placeholder:text-black"
                                     type={
                                         showConfirmPassword
                                             ? 'text'

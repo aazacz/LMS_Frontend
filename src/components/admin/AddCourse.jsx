@@ -131,7 +131,7 @@ const AddCourse = ({ edit }) => {
   //getting the package information from database
   useEffect(() => {
     AdminAxiosInstance.get(
-      `api/package/get-all-package?page=1&pageSize=10&search=`
+      `api/package/all-package?page=1&pageSize=10&search=`
     )
       .then((res) => {
         setpackages(res.data.data);

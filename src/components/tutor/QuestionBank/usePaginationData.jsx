@@ -1,4 +1,4 @@
-// usePaginationData.js
+
 import {useState, useEffect, useCallback} from "react";
 import {TutorAxiosInstance} from "../../../routes/TutorRoutes";
 import {useQuery} from "@tanstack/react-query";
@@ -19,8 +19,7 @@ const usePaginationData = (
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      console.log("courseId");
-      console.log(courseId);
+    
       const response = await TutorAxiosInstance.get(`api/test/course-tests?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`);
 
       console.log("data.data");

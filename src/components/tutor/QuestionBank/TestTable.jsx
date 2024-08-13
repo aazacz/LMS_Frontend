@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Loader from "../../reusable/Loader";
 import "./TestTable.css"
 import { PiDotsThreeCircleVerticalDuotone } from "react-icons/pi";
+import ReusablePagination from "../../reusable/ReusablePagination";
 
 const TestTable = ({ handleView, handleReview }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -39,7 +40,7 @@ const TestTable = ({ handleView, handleReview }) => {
   return (
     <div className="w-full" onClick={() => setActiveDropdown(null)}>
       <div className="table-container">
-        <table className="responsive-Testtable font-Roboto">
+        <table className="responsive-Testtable font-poppins">
           <thead>
             <tr>
               {columns.map((column, index) => (
@@ -49,18 +50,22 @@ const TestTable = ({ handleView, handleReview }) => {
           </thead>
           <tbody>
             {isPending ? (
-              <tr>
-                <td colSpan={columns.length}>
-                  <div className="w-full h-full flex justify-center items-center">
+              <tr className="">
+                <td colSpan={columns.length } rowSpan={5}>
+                  <div className="w-full flex justify-center items-center">
                     <Loader />
                   </div>
                 </td>
               </tr>
             ) : (
               tests?.map((test, index) => (
-                <tr key={test._id} className="text-gray-500 font-extralight ">
+                <tr key={test._id} className="text-gray-700 font-extralight ">
                   <td>{(currentPage - 1) * pageSize + index + 1}</td>
-                  <td>{test.title}</td>
+                  <td className="title-column">
+                    <div className="title-text" title={test.title}>
+                      {test.title}
+                    </div>
+                  </td>
                   <td className=" ">{test.positiveMark}</td>
                   <td className=" ">{test.negativeMark}</td>
                   <td className=" ">{test.questions.length}</td>
@@ -73,11 +78,14 @@ const TestTable = ({ handleView, handleReview }) => {
                     </div>
 
                     {activeDropdown === index && (
+
                       <div className="absolute right-0 mt-2 w-[100px] bg-white shadow-lg  rounded-md overflow-hidden z-10">
-                        <button 
-                          onClick={() => handleReview(test._id)} 
-                          className="w-full h-10 hover:bg-gray-100 text-[13px]  text-center border-b-2 border-gray-200 px-4"
-                        >
+
+                        <button  onClick={() => {
+                            console.log("test._id",test._id)
+                            console.log()
+                            handleReview(test._id)}} 
+                          className="w-full h-10 hover:bg-gray-100 text-[13px]  text-center border-b-2 border-gray-200 px-4" >
                           Review
                         </button>
                         <button 
@@ -95,7 +103,15 @@ const TestTable = ({ handleView, handleReview }) => {
           </tbody>
         </table>
       </div>
-      {/* Add pagination controls here */}
+    
+      <ReusablePagination
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalRows={totalRows}
+            handlePageChange={handlePageChange}
+            handlePageSizeChange={handlePageSizeChange}
+          />
+    
     </div>
   );
 };

@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import axios from "axios";
 import { PiNotepadBold } from "react-icons/pi";
 import "./Assignment.css";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
-import { FaEye } from "react-icons/fa";
 import Modal from "./Modal";
 import Loader from "../../components/reusable/Loader";
+import { useQuery } from "@tanstack/react-query";
 
 const Assignments = () => {
+  const baseURL = process.env.REACT_APP_API_URL;
+  const [assignments, setAssignments] = useState([]);
+  const [activeTab, setActiveTab] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const assignmentsPerPage = 6;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+
   const assignments1 = [
     { id: 1, name: "SAT Assignment 1", feedbackLink: "#", score: "25/35" },
     { id: 2, name: "SAT Assignment 2", feedbackLink: "#", score: "30/35" },
@@ -23,52 +32,22 @@ const Assignments = () => {
     { id: 5, name: "SAT Assignment 5", feedbackLink: "#", score: "26/35" },
   ];
 
-  const baseURL = process.env.REACT_APP_API_URL;
-  const [assignments, setAssignments] = useState([]);
-  const [activeTab, setActiveTab] = useState("all");
-  const [currentPage, setCurrentPage] = useState(1);
-  const assignmentsPerPage = 6;
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedAssignment, setSelectedAssignment] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  // const fetchAssignments = async (type) => {
-  //   try {
-  //     let url = `api/assignments/student-all-assignments`;
-  //     if (type === "pending") {
-  //       url = `api/assignments/student-all-assignments/pending`;
-  //     } else if (type === "completed") {
-  //       url = `api/assignments/student-all-assignments/completed`;
-  //     }
+  const dateformat = (value)=>{
+  
+ const date = new Date(value);
+ const formattedDate = date.toISOString().split('T')[0];
+console.log(formattedDate); // Output: "2024-08-22"
+return formattedDate
 
-  //     const { data } = await axiosInstanceStudent.get(url, {});
-
-  //     // Extract assignments from nested courses
-  //     // const courses = response.data;
-  //     console.log("ddddd", data);
-  //     let allAssignments = [];
-  //     // courses.forEach((course) => {
-  //     //   course.assignments.forEach((assignment) => {
-  //     //     allAssignments.push({
-  //     //       ...assignment,
-  //     //       courseName: course.courseName, // Add course name to each assignment
-  //     //     });
-  //     //   });
-  //     // });
-
-  //     setAssignments(data?.data?.assignments);
-  //   } catch (error) {
-  //     console.error("Error fetching assignments:", error);
-  //   }
-  // };
-
+  }
 
   const fetchAssignments = async (type) => {
     setLoading(true);
     try {
-      let url = `api/assignments/student-all-assignments`;
       
-      const { data } = await axiosInstanceStudent.get(url, {});
+      
+      const { data } = await axiosInstanceStudent.get(`api/assignments/student-all-assignments`, {});
       
       let filteredAssignments = data?.data?.assignments;
   
@@ -91,15 +70,21 @@ const Assignments = () => {
   };
 
 
-  useEffect(() => {
-    fetchAssignments("all");
-  }, []);
+
+  const { data, isPending, refetch } = useQuery({
+    queryKey: ["fetchAssignment", activeTab],
+    queryFn: () => fetchAssignments(activeTab),
+    staleTime: 1000,
+    refetchInterval: 60000,
+  });
+
+
 
 
   const handleTabChange = (type) => {
     setActiveTab(type);
     setCurrentPage(1);
-    fetchAssignments(type);
+    refetch();
   };
 
   const indexOfLastAssignment = currentPage * assignmentsPerPage;
@@ -136,7 +121,7 @@ const Assignments = () => {
 
   return (
     <>
-      {loading && (
+      {isPending && (
         <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-100 z-50">
           <Loader />
         </div>
@@ -210,16 +195,16 @@ const Assignments = () => {
                       key={assignment?._id}
                       className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text:xs md:text-base rounded-xl cursor-pointer"
                     >
-                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
+                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold capitalize text-black">
                         {assignment?.assignmentName}
                       </td>
-                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
+                      <td className="border-none text-left md:px-4 py-4 line-clamp-1 text:xs md:text-base font-semibold text-black">
                         {assignment?.courseId?.courseName}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
-                        {assignment?.dueDate}
+                        { dateformat(assignment?.dueDate)}
                       </td>
-                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-[#FE9519]">
+                      <td className={`border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold ${assignment?.studentSubmissionStatus==="pending" ? "text-[#FE9519]":"text-green-600"} `}>
                         {assignment?.studentSubmissionStatus || "pending"}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">

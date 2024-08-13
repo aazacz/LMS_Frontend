@@ -2,20 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
-      display: none;
-  }
- /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scrollbar {
-      -ms-overflow-style: none; 
-      scrollbar-width: none; 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-
-
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
 body {
   padding: 0;
@@ -29,72 +24,46 @@ textarea {
   resize: none;
 }
 
+/* Table */
 .table-container {
   margin-top: 10px;
   overflow-x: auto;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  height: 60vh;
-  /* border-radius: 10px; */
-  border: 1px solid #ddd;
+  font-family: "Poppins";
+  height: 70vh;
+  padding-right: 2px;
 }
 
 .responsive-table {
   width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 0px;
-}
-
-.responsive-table th,
-.responsive-table td {
-  padding: 5px 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  font-size: 12px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
 }
 
 .responsive-table th {
-  background-color: #03729b;
-  color: #ffffff;
-}
-
-.responsive-table tbody tr:nth-child(even) {
-  background-color: #03729b1e;
-}
-
-.responsive-table tbody tr:hover {
-  background-color: #e0e0e0;
-}
-.table-container {
-  margin-top: 10px;
-  overflow-x: auto;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  height: 60vh;
-  /* border-radius: 10px; */
-  border: 1px solid #ddd;
-}
-
-.responsive-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 0px;
   border: none;
-}
-
-.responsive-table th,
-.responsive-table td {
-  padding: 5px 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  font-size: 12px;
-}
-
-.responsive-table th {
-  background-color: #E6F0FC;
+  background-color: #e6f0fc;
   color: black;
+  padding: 10px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+  /* white-space: nowrap; */
+  width: 150px;
+}
+
+.responsive-table td {
+  border: none;
+  color: black;
+  padding: 5px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  /* white-space: nowrap; */
+  width: 150px;
 }
 
 .responsive-table tbody tr:nth-child(even) {
-  background-color: #03729b1e;
+  background-color: #e6f0fc;
 }
 
 .responsive-table tbody tr:hover {
@@ -173,7 +142,6 @@ textarea {
   width: 25%;
 }
 
-
 /* Slider in the course Details, Course structure details Page */
 .slide-content {
   position: absolute;
@@ -226,11 +194,15 @@ textarea {
 .custom-gradient {
   @apply bg-cover;
   background-position: 0 0;
-  background-image: radial-gradient(75% 75% at 50% 50%, rgba(0, 255, 255, 0) 0%, rgba(0, 255, 255, 0) 33%, rgba(0, 255, 255, 0.85) 37%, rgba(7, 58, 255, 0) 87%);
+  background-image: radial-gradient(
+    75% 75% at 50% 50%,
+    rgba(0, 255, 255, 0) 0%,
+    rgba(0, 255, 255, 0) 33%,
+    rgba(0, 255, 255, 0.85) 37%,
+    rgba(7, 58, 255, 0) 87%
+  );
 }
 
-
-
-.swal2-shown{
+.swal2-shown {
   padding-right: 0px !important;
 }

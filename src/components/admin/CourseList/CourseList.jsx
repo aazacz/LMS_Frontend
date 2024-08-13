@@ -9,23 +9,12 @@ import CourseListTable from "./CourseListTable";
 import ReusablePagination from "../../reusable/ReusablePagination";
 import usePaginationData from "./usePaginationData";
 import { TbCategory } from "react-icons/tb";
+import SearchIcon from "@mui/icons-material/Search";
+import { CgSortAz } from "react-icons/cg";
 
 const CourseList = () => {
-  const [Search, setSearch] = useState("");
   const [ListModal, setListModal] = useState(false);
   const [GridModal, setGridModal] = useState(true);
-
-  //   useEffect(() => {
-  //         const debounce = setTimeout(() => {
-  //             refetch()
-  //         }, 1000)
-  //         return () => clearTimeout(debounce)
-  //     }, [Search, refetch])
-
-  //     useEffect(()=>{
-  //             console.log(Search)
-  //     },[Search])
-
   const {
     courses,
     isPending,
@@ -41,40 +30,50 @@ const CourseList = () => {
   } = usePaginationData();
 
   return (
-    <div className="p-4 w-full h-max">
-      {/* Add Button */}
-      <div className="flex justify-between py-4">
-        <h1 className="font-poppins font-semibold md:text-2xl text-xl ">
-          Courses
-        </h1>
-
-        <Link
-          replace
-          to={`/admin/home/courses/addcourse`}
-          className="bg-[#F5F1F1]"
-        >
-          <button className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg border-slate-600 px-2 font-poppins text-sm">
-            <FaCirclePlus className="text-slate-600" />
-            Add Course
-          </button>
-        </Link>
+    <div className="pl-3 pt-2 font-poppins w-full h-max mb-3">
+      <div className="flex justify-between pb-5">
+        <h1 className="font-poppins font-semibold text-xl ">Courses</h1>
       </div>
-      <div className="flex justify-between gap-x-4">
-        <div className="w-full h-8 flex items-center bg-white rounded-lg  gap-x-3 border-[1px]  border-black">
-          <IoSearch className=" ml-1 text-2xl" />
 
-          <input
-            type="search"
-            name=""
-            onChange={(e) => handleSearchChange(e.target.value)}
-            className="outline-none w-[60%] md:w-[80%] lg:w-[90%] h-full"
-            id=""
-          />
+      {/* Search Button  */}
+      <div className="flex flex-col dg:flex-row md:justify-between gap-4 pr-2">
+        <div className="w-full md:w-[50%] h-fit rounded-md">
+          <div className="w-full flex items-center bg-transparent border-[1.5px] border-[#F4EFEF] rounded-lg">
+            <input
+              type="text"
+              placeholder="Search For Courses"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-full outline-none px-2 h-12 bg-transparent placeholder:text-black text-sm font-normal"
+            />
+            <button className="text-sm w-[20px] pr-5 p-2 h-10 flex items-center justify-center text-white rounded-lg mr-1">
+              <SearchIcon className="text-black h-full" />
+            </button>
+          </div>
         </div>
-        <div className='bg-gray-100 px-2 justify-center cursor-pointer items-center rounded-md text-sm font-poppins gap-2 flex'><TbCategory/>Category</div>
+        <div className="w-full flex flex-col justify-evenly sm:flex-row gap-4 mt-1">
+          <div className="bg-transparent border-[1.5px] border-[#F4EFEF] h-fit p-2 px-2 justify-center cursor-pointer items-center rounded-lg text-sm font-poppins gap-2 flex">
+            <TbCategory />
+            Category
+          </div>
+          <div className="bg-transparent border-[1.5px] border-[#F4EFEF] px-2 h-fit p-2 justify-center cursor-pointer items-center rounded-lg text-sm font-poppins gap-2 flex">
+            <CgSortAz />
+            Sort By Recent
+          </div>
+          <div className="flex justify-end md:ml-auto">
+            <Link replace to={`/admin/home/courses/addcourse`} className="pr-2">
+              <button className="w-full bg-transparent border-[1.5px] border-[#F4EFEF] px-2 h-fit p-2 justify-center cursor-pointer items-center rounded-lg text-sm font-poppins gap-2 flex">
+                <FaCirclePlus className="text-slate-600" />
+                Add Course
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
-      <div className="w-full  pt-4  flex justify-end ">
-        <div className="w-[80px]  flex  items-center ">
+
+      {/* List or Grid Model */}
+      <div className="w-full pt-4 flex justify-end pr-3">
+        <div className="w-[80px] flex items-center ">
           <div
             onClick={() => {
               setListModal(true);
@@ -113,7 +112,7 @@ const CourseList = () => {
       ) : (
         <>
           {GridModal && (
-            <div className="grid grid-cols-1 mt-4 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
+            <div className="pr-3 grid grid-cols-1 mt-4 sm:grid-cols-2 md:grid-cols-3 mg:grid-cols-4 2xl:grid-cols-6 gap-4 ">
               {courses?.map((course, index) => (
                 <Link
                   key={index}

@@ -109,7 +109,6 @@
 @media (max-width: 1300px) {
     .animation-tutor-sub-container1 {
         display: flex;
-        flex-direction: column;
         align-items: center;
         text-align: center;
         gap: 20px;
@@ -121,7 +120,7 @@
 
     .animation-tutor-sub-container2 {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 20px;
         justify-content: center;
     }

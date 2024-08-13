@@ -14,10 +14,15 @@ const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
 
   // Fake data for notifications
   const notifications = [
-    { type: 'test', title: 'Math Test', date: '2024-08-15', time: '10:00 AM' },
-    { type: 'assignment', title: 'History Essay', deadline: '2024-08-20' },
-    { type: 'test', title: 'Science Quiz', date: '2024-08-18', time: '2:00 PM' },
-    { type: 'assignment', title: 'English Project', deadline: '2024-08-25' },
+    { type: "test", title: "Math Test", date: "2024-08-15", time: "10:00 AM" },
+    { type: "assignment", title: "History Essay", deadline: "2024-08-20" },
+    {
+      type: "test",
+      title: "Science Quiz",
+      date: "2024-08-18",
+      time: "2:00 PM",
+    },
+    { type: "assignment", title: "English Project", deadline: "2024-08-25" },
   ];
 
   const handleNotificationCard = () => {
@@ -41,7 +46,7 @@ const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
           <div className="flex items-center">
             {/* Notification bell */}
             <div className="w-16 flex h-9 justify-start px-2 relative">
-              <div 
+              <div
                 className="rounded-lg h-8 w-8 flex justify-center items-center text-black border-[1px] border-black mr-1 cursor-pointer"
                 onClick={handleNotificationCard}
               >
@@ -56,12 +61,17 @@ const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
               {/* Notification Dropdown */}
               {showNotification && (
                 <div className="absolute top-full right-0 mt-2 w-64 bg-white rounded-md shadow-lg z-50">
-                  <div className="py-2 px-4 bg-gray-100 font-bold">Notifications</div>
+                  <div className="py-2 px-4 bg-gray-100 font-bold">
+                    Notifications
+                  </div>
                   <div className="max-h-64 overflow-y-auto">
                     {notifications.map((notification, index) => (
-                      <div key={index} className="py-2 px-4 border-b hover:bg-gray-50">
+                      <div
+                        key={index}
+                        className="py-2 px-4 border-b hover:bg-gray-50"
+                      >
                         <p className="font-semibold">{notification.title}</p>
-                        {notification.type === 'test' ? (
+                        {notification.type === "test" ? (
                           <p className="text-sm text-gray-600">
                             Test on {notification.date} at {notification.time}
                           </p>
@@ -92,11 +102,19 @@ const StudentNavbar = ({ toggleSidebar, isSidebarOpen }) => {
 
             {/* Admin NAME EMAIL AND PROFILE PHOTO */}
             <div className="flex-1 h-auto md:flex md:flex-row items-center flex-col hidden">
-              <img
-                className="rounded-full object-cover overflow-hidden md:w-[42px] md:h-[42px] w-[20px]"
-                src={user.userImg}
-                alt=""
-              />
+              <div className="relative flex items-center">
+                {user.userImg ? (
+                  <img
+                    className="rounded-full object-cover overflow-hidden md:w-[42px] md:h-[42px] w-[20px]"
+                    src={user.userImg}
+                    alt="Profile"
+                  />
+                ) : (
+                  <div className="rounded-full bg-gray-600 flex items-center justify-center text-white font-bold text-xl md:w-[42px] md:h-[42px] w-[20px] h-[20px]">
+                    {user.userName ? user.userName.charAt(0).toUpperCase() : ""}
+                  </div>
+                )}
+              </div>
               <div className="flex items-center">
                 <div className="md:px-3">
                   <p className="font-poppins">{user.userName}</p>

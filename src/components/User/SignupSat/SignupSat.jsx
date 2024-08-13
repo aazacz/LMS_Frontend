@@ -84,7 +84,7 @@ const SignupSat = () => {
                             </div>
                             <div className="sat-date">
                                 <input
-                                    className="bg-transparent outline-none w-full"
+                                    className="bg-transparent outline-none w-full placeholder:text-black"
                                     type="date"
                                     value={comingSatExamDate}
                                     onChange={handleDateChange}

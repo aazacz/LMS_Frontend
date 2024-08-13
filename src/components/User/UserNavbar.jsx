@@ -203,7 +203,6 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
        {/*Show the profile image if the user is already logged in    */}
         {!user 
            &&
-        
         (
           <div className="hidden xl:flex xl:w-[90%] justify-end items-center h-full">
             <div className="h-1/2 flex gap-8 justify-between">

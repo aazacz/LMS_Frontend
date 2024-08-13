@@ -23,11 +23,11 @@ const CourseStructureList = () => {
     try {
       setLoading(true);
       const response = await AdminAxiosInstance.get(
-        `api/structure/get-all-structure?page=${currentPage}&pageSize=${pageSize}&search=${search}`
+        `api/structure/all-structure?page=${currentPage}&pageSize=${pageSize}&search=${search}`
       );
       console.log(response.data);
       setCourses(response.data.data);
-      setTotalRows(response.data.totalRows); // Assuming the API response includes the total row count
+      setTotalRows(response.data.totalRows); 
       setLoading(false);
     } catch (err) {
       console.log(err);

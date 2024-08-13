@@ -5,7 +5,7 @@ import coursephoto from "../../assets/Admin/coursephoto.jpeg";
 
 const CourseCard = ({ course }) => {
   return (
-    <div className="bg-gray-200 md:p-3 h-[280px]  rounded-2xl flex flex-col items-center overflow-hidden p-3">
+    <div className="bg-[#F4F5FB] md:p-4 h-[280px]  rounded-2xl flex flex-col items-center overflow-hidden p-3">
       <div className=" w-full flex justify-center object-cover items-center rounded-xl overflow-hidden">
         {course?.imageUrl ? (
           <img
@@ -18,22 +18,22 @@ const CourseCard = ({ course }) => {
         )}
       </div>
       <div className="w-full mt-4">
-        <div className="min-h-[3rem]">
+        <div className="h-[25px]">
           <h1 className="font-poppins font-semibold text-base line-clamp-2">
             {course.courseName}
           </h1>
         </div>
         <div className="flex flex-col md:flex-row md:items-center gap-x-2 ">
-          <span className="flex font-poppins items-center gap-x-1 text-sm text-red-600">
+          <span className="flex font-poppins font-normal items-center gap-x-1 text-sm text-gray-600">
             Rs. {course.price}
           </span>
         </div>
         <div className="flex items-center gap-x-6 mt-2">
           <span className="flex items-center gap-x-1 text-sm font-poppins">
-            <BiSpreadsheet className="text-gray-400" /> 5 Modules
+            <BiSpreadsheet className="text-gray-400" /> {course.modules.length} Modules
           </span>
           <span className="flex items-center gap-x-1 text-sm font-poppins">
-            <LuTimer className="text-gray-400" /> 60Hrs
+            <LuTimer className="text-gray-400" /> {}Hrs
           </span>
         </div>
       </div>

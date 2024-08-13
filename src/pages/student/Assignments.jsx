@@ -3,27 +3,20 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import axios from "axios";
 import "./Assignment.css";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
 import Modal from "./Modal";
 import Loader from "../../components/reusable/Loader";
+import { useQuery } from "@tanstack/react-query";
 import { PiNotepadBold } from "react-icons/pi";
 
 const Assignments = () => {
-  // const assignments1 = [
-  //   { id: 1, name: "SAT Assignment 1", feedbackLink: "#", score: "25/35" },
-  //   { id: 2, name: "SAT Assignment 2", feedbackLink: "#", score: "30/35" },
-  //   { id: 3, name: "SAT Assignment 3", feedbackLink: "#", score: "28/35" },
-  //   { id: 4, name: "SAT Assignment 4", feedbackLink: "#", score: "27/35" },
-  //   { id: 5, name: "SAT Assignment 5", feedbackLink: "#", score: "26/35" },
-  //   { id: 1, name: "SAT Assignment 1", feedbackLink: "#", score: "25/35" },
-  //   { id: 2, name: "SAT Assignment 2", feedbackLink: "#", score: "30/35" },
-  //   { id: 3, name: "SAT Assignment 3", feedbackLink: "#", score: "28/35" },
-  //   { id: 4, name: "SAT Assignment 4", feedbackLink: "#", score: "27/35" },
-  //   { id: 5, name: "SAT Assignment 5", feedbackLink: "#", score: "26/35" },
-  // ];
-
+  const dateformat = (value) => {
+    const date = new Date(value);
+    const formattedDate = date.toISOString().split("T")[0];
+    console.log(formattedDate); // Output: "2024-08-22"
+    return formattedDate;
+  };
   const baseURL = process.env.REACT_APP_API_URL;
   const [assignments, setAssignments] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
@@ -58,8 +51,11 @@ const Assignments = () => {
   const fetchAssignments = async (type) => {
     setLoading(true);
     try {
-      let url = `api/assignments/student-all-assignments`;
-      const { data } = await axiosInstanceStudent.get(url);
+      const { data } = await axiosInstanceStudent.get(
+        `api/assignments/student-all-assignments`,
+        {}
+      );
+
       let filteredAssignments = data?.data?.assignments;
 
       if (type === "pending") {
@@ -87,14 +83,17 @@ const Assignments = () => {
     }
   };
 
-  useEffect(() => {
-    fetchAssignments("all");
-  }, []);
+  const { data, isPending, refetch } = useQuery({
+    queryKey: ["fetchAssignment", activeTab],
+    queryFn: () => fetchAssignments(activeTab),
+    staleTime: 120000,
+    refetchInterval: 60000,
+  });
 
   const handleTabChange = (type) => {
     setActiveTab(type);
     setCurrentPage(1);
-    fetchAssignments(type);
+    refetch();
   };
 
   const indexOfLastAssignment = currentPage * assignmentsPerPage;
@@ -121,12 +120,16 @@ const Assignments = () => {
   };
 
   const getAssignmentName = (date) => {
-    const assignment = calendarAssignments.find(
+    const assignmentsOnDate = calendarAssignments.filter(
       (assignment) =>
         new Date(assignment.dueDate).toDateString() === date.toDateString()
     );
-    return assignment ? assignment.assignmentName : null;
+  
+    return assignmentsOnDate.length
+      ? assignmentsOnDate.map((assignment) => assignment.assignmentName).join(", ")
+      : null;
   };
+  
 
   const openModal = (assignment) => {
     setSelectedAssignment(assignment._id); // Ensure only the ID is being passed
@@ -146,7 +149,7 @@ const Assignments = () => {
 
   return (
     <>
-      {loading && (
+      {isPending && (
         <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-100 z-50">
           <Loader />
         </div>
@@ -218,16 +221,22 @@ const Assignments = () => {
                       key={assignment?._id}
                       className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text:xs md:text-base rounded-xl cursor-pointer"
                     >
-                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
+                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold capitalize text-black">
                         {assignment?.assignmentName}
                       </td>
-                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
+                      <td className="border-none text-left md:px-4 py-4 line-clamp-1 text:xs md:text-base font-semibold text-black">
                         {assignment?.courseId?.courseName}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
-                        {assignment?.dueDate}
+                        {dateformat(assignment?.dueDate)}
                       </td>
-                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-[#FE9519]">
+                      <td
+                        className={`border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold ${
+                          assignment?.studentSubmissionStatus === "pending"
+                            ? "text-[#FE9519]"
+                            : "text-green-600"
+                        } `}
+                      >
                         {assignment?.studentSubmissionStatus || "pending"}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">

@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import ViewModal from "./ViewModal";
 import Loader from "../../reusable/Loader";
 import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
+import TestTable from "./TestTable";
 
 const QuestionBank = () => {
   const [Modal, setModal] = useState(false);
@@ -23,6 +24,8 @@ const QuestionBank = () => {
   };
 
   const handleReview = (test) => {
+    console.log(test)
+    
     setSelectedTest(test);
     setIsReviewModalOpen(true);
   };
@@ -267,7 +270,10 @@ const QuestionBank = () => {
             </div>
 
             {/* Table */}
-            <div className="relative overflow-x-auto shadow-md rounded-lg">
+            <TestTable handleReview={handleReview} handleView={handleView} />
+
+
+            {/* <div className="relative overflow-x-auto shadow-md rounded-lg">
               <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
                 <thead className="bg-gray-100">
                   <tr>
@@ -313,7 +319,7 @@ const QuestionBank = () => {
                   )}
                 </tbody>
               </table>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

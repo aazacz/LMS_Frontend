@@ -1,8 +1,8 @@
 .assignment-calender {
   width: 100%;
-  border-radius: 15px;
-  padding: 10px;
-   /* background-color: blue; */
+  border-radius: 10px;
+  padding: 6px;
+  margin: 2px;
 }
 
 .assignment-main-calender {
@@ -11,49 +11,71 @@
   border: none;
 }
 
+.highlight {
+  background-color: #ffcccb; /* Light red background */
+  border-radius: 100%; /* Circular background */
+  color: #000;
+}
+
+.assignment-due {
+  background-color: #ffcccb !important; /* Light red background */
+  color: #ff0000 !important; /* Red text */
+  font-weight: bold;
+  border-radius: 100%; /* Circular background */
+}
+
+.assignment-name-tooltip {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 3px;
+  border-radius: 3px;
+  font-size: 12px;
+  z-index: 1000;
+}
+
+.react-calendar__tile:hover .assignment-name-tooltip {
+  display: block;
+}
+
 .assignment-right-section2 {
   width: 100%;
 }
 
 @media (max-width: 1006px) {
-.assignment-main-container{
-  display: flex;
-  flex-direction: column;
-}
-.assignment-calender {
-  width: 100%;
-}
-.assignment-main-class {
-  /* background-color: blue; */
-  width: 50%;
-}
-.assignment-right-section {
-  display: flex;
-  width: 100%;
-}
-.assignment-right-section2 {
-  /* background-color: red; */
-  width: 50%;
-  padding-right: 8px;
-}
+  .assignment-main-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .assignment-calender {
+    width: 100%;
+  }
+  .assignment-main-class {
+    width: 50%;
+  }
+  .assignment-right-section {
+    display: flex;
+    width: 100%;
+  }
+  .assignment-right-section2 {
+    width: 50%;
+    padding-right: 8px;
+  }
 }
 
 @media (max-width: 500px) {
   .assignment-calender {
     width: 100%;
-     /* background-color: blue; */
   }
   .assignment-right-section {
     display: flex;
     flex-direction: column;
-     /* background-color: blue; */
   }
   .assignment-main-class {
-    /* background-color: blue; */
     width: 100%;
   }
   .assignment-right-section2 {
-    /* background-color: red; */
     width: 100%;
     padding-right: 8px;
   }

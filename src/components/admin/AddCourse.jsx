@@ -112,7 +112,7 @@ const AddCourse = ({ edit }) => {
 
   //Getting course structure data from database
   useEffect(() => {
-    AdminAxiosInstance.get(`api/structure/get-all-structure`)
+    AdminAxiosInstance.get(`api/structure/all-structure`)
       .then((res) => {
         const data = res.data.data;
         setCourseStructure(data);

@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SearchIcon from "@mui/icons-material/Search";
 import Pagination from "@mui/material/Pagination";
-import { FaChevronDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../reusable/Loader";
@@ -126,10 +125,10 @@ const StudentList = () => {
 
   const formatDate = (date) => {
     return new Date(date).toLocaleString("en-IN", {
-      timeZone: "Asia/Kolkata",
-      hour12: true,
-      hour: "numeric",
-      minute: "2-digit",
+      // timeZone: "Asia/Kolkata",
+      // hour12: true,
+      // hour: "numeric",
+      // minute: "2-digit",
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
@@ -224,13 +223,20 @@ const StudentList = () => {
   };
 
   const columns = [
+    { field: "serialNumber", headerName: "SL.No." },
     { field: "name", headerName: "Name" },
     { field: "grade", headerName: "Grade" },
+    { field: "courseName", headerName: "Course" },
     { field: "number", headerName: "Phone" },
     { field: "parentNumber", headerName: "Parent Number" },
-    { field: "createdAt", headerName: "Created Date" },
-    { field: "comingSatExamDate", headerName: "Next Exam Date" },
+    { field: "classesAttended", headerName: "Classes Attended" },
+    { field: "modulesCompleted", headerName: "Modules Completed" },
+    { field: "assignmentsCompleted", headerName: "Assignments Completed" },
+    { field: "recentTestResult", headerName: "Recent Test Result" },
+    { field: "createdAt", headerName: "Joined Date" },
+    { field: "comingSatExamDate", headerName: "Exam Date" },
     { field: "status", headerName: "Status" },
+    { field: "analysis", headerName: "Analysis" },
     { field: "actions", headerName: "Actions" },
   ];
 
@@ -250,8 +256,8 @@ const StudentList = () => {
               Students List
             </h1>
           </div>
-          <div className="w-full flex flex-wrap h-fit gap-x-4">
-            <div className="w-full md:w-[50%] h-fit border border-[#4348DB] rounded-md p-2">
+          <div className="w-full flex pr-3 flex-col h-fit gap-x-4 mg:flex-row">
+            <div className="w-full md:w-[100%] h-fit border border-[#4348DB] rounded-md p-2">
               <div className="w-full flex items-center bg-gray-100 rounded-lg">
                 <input
                   type="text"
@@ -267,49 +273,72 @@ const StudentList = () => {
                 </button>
               </div>
             </div>
-            <div className="mt-2 w-[170px] h-12 border-[1.5px] border-[#ECECEC] flex justify-center items-center rounded-lg relative">
-              <select
-                name="Filter"
-                className="w-full h-full px-3 appearance-none outline-none bg-transparent"
-              >
-                <option value="individual">Individual</option>
-                <option value="group">Group</option>
-              </select>
-              <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[5px] h-8 mr-1 pointer-events-none rounded-lg text-gray-700 bg-[#ECECEC]">
-                <svg
-                  className="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
+            <div className="w-full flex flex-col gap-5 sm:flex-row ">
+              <div className="mt-2 w-full mg:w-[150px] h-12 border-[1.5px] border-[#ECECEC] flex justify-center items-center rounded-lg relative">
+                <select
+                  name="selection"
+                  className="w-full h-full px-3 appearance-none outline-none bg-transparent"
                 >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
+                  <option value="individual">Individual</option>
+                  <option value="group">Group</option>
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[5px] h-8 mr-1 pointer-events-none rounded-lg text-gray-700 bg-[#ECECEC]">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
               </div>
-            </div>
-            <div className="mt-2 w-[170px] h-12 border-[1.5px] border-[#ECECEC] flex justify-center items-center rounded-lg relative">
-              <select
-                name="Filter"
-                className="w-full h-full px-3 appearance-none outline-none bg-transparent"
-                onChange={(e) => handleSortChange(e.target.value)}
-                value={sortOrder}
-              >
-                <option value="newest">Newest</option>
-                <option value="oldest">Oldest</option>
-              </select>
-              <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[5px] h-8 mr-1 pointer-events-none rounded-lg text-gray-700 bg-[#ECECEC]">
-                <svg
-                  className="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
+              <div className="mt-2 w-full mg:w-[150px] h-12 border-[1.5px] border-[#ECECEC] flex justify-center items-center rounded-lg relative">
+                <select
+                  name="sorting"
+                  className="w-full h-full px-3 appearance-none outline-none bg-transparent"
+                  onChange={(e) => handleSortChange(e.target.value)}
+                  value={sortOrder}
                 >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[5px] h-8 mr-1 pointer-events-none rounded-lg text-gray-700 bg-[#ECECEC]">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
+              </div>
+              <div className="mt-2 w-full mg:w-[150px] h-12 border-[1.5px] border-[#ECECEC] flex justify-center items-center rounded-lg relative">
+                <select
+                  name="marks"
+                  className="w-full h-full px-3 appearance-none outline-none bg-transparent"
+                  onChange={(e) => handleSortChange(e.target.value)}
+                  value={sortOrder}
+                >
+                  <option value="newest">Highest</option>
+                  <option value="oldest">Lowest</option>
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[5px] h-8 mr-1 pointer-events-none rounded-lg text-gray-700 bg-[#ECECEC]">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Table Section */}
-        <div className="table-container font-poppins mt-2 ">
+        {/* Refer index.css */}
+        <div className="table-container w-full">
           <table className="responsive-table">
             <thead>
               <tr>
@@ -320,7 +349,7 @@ const StudentList = () => {
             </thead>
             <tbody className="relative">
               {isPending || isError ? (
-                <div className="absolute w-full h-[150px]  top-[50%] translate-y-[50%] flex justify-center  ">
+                <div className="absolute w-full h-[150px] top-[50%] translate-y-[50%] flex justify-center">
                   <Loader />
                 </div>
               ) : (
@@ -328,20 +357,17 @@ const StudentList = () => {
                   <tr key={row._id}>
                     {columns.map((column, index) => (
                       <td key={index}>
-                        {column.field === "actions" ? (
-                          <div className="action-container flex items-center justify-center gap-x-2">
-                            <AiTwotoneDelete
-                              onClick={() => handleSoftDelete(row._id)}
-                              className="hover:text-gray-600 text-red-700 text-xl duration-300 transition-all cursor-pointer"
-                            />
-                          </div>
+                        {column.field === "serialNumber" ? (
+                          <Link to={`/admin/home/students/${row._id}`}>
+                            <span>{row[column.field]}</span>
+                          </Link>
                         ) : (
                           <></>
                         )}
 
                         {column.field === "name" ? (
                           <Link to={`/admin/home/students/${row._id}`}>
-                            <span className="action-container text-blue-600 capitalize text-sm font-semibold ">
+                            <span className="text-[#407BFF] underline">
                               {row[column.field]}
                             </span>
                           </Link>
@@ -350,60 +376,83 @@ const StudentList = () => {
                         )}
 
                         {column.field === "grade" ? (
-                          <span className="action-container text-sm font-semibold">
-                            {row[column.field]}{" "}
-                          </span>
+                          <span>{row[column.field]} </span>
                         ) : (
                           <></>
                         )}
+
+                        {column.field === "courseName" ? (
+                          <Link to={`/admin/home/students/${row._id}`}>
+                            <span>{row[column.field]}</span>
+                          </Link>
+                        ) : (
+                          <></>
+                        )}
+
                         {column.field === "number" ? (
-                          <span className="action-container text-sm font-semibold">
-                            {row[column.field]}{" "}
-                          </span>
+                          <span>{row[column.field]} </span>
                         ) : (
                           <></>
                         )}
+
                         {column.field === "parentNumber" ? (
-                          <span className="action-container text-sm font-semibold">
-                            {row[column.field]}{" "}
-                          </span>
+                          <span>{row[column.field]} </span>
+                        ) : (
+                          <></>
+                        )}
+
+                        {column.field === "classesAttended" ? (
+                          <Link to={`/admin/home/students/${row._id}`}>
+                            <span>{row[column.field]}</span>
+                          </Link>
+                        ) : (
+                          <></>
+                        )}
+
+                        {column.field === "modulesCompleted" ? (
+                          <Link to={`/admin/home/students/${row._id}`}>
+                            <span>{row[column.field]}</span>
+                          </Link>
+                        ) : (
+                          <></>
+                        )}
+
+                        {column.field === "assignmentsCompleted" ? (
+                          <Link to={`/admin/home/students/${row._id}`}>
+                            <span>{row[column.field]}</span>
+                          </Link>
+                        ) : (
+                          <></>
+                        )}
+
+                        {column.field === "recentTestResults" ? (
+                          <Link to={`/admin/home/students/${row._id}`}>
+                            <span>{row[column.field]}</span>
+                          </Link>
                         ) : (
                           <></>
                         )}
 
                         {column.field === "createdAt" ? (
-                          <span className="action-container text-sm font-semibold">
-                            {formatDate(row[column.field])}{" "}
-                          </span>
-                        ) : (
-                          <></>
-                        )}
-                        {column.field === "comingSatExamDate" ? (
-                          <span className="action-container text-sm font-semibold">
-                            {formatDate(row[column.field])}{" "}
-                          </span>
+                          <span>{formatDate(row[column.field])} </span>
                         ) : (
                           <></>
                         )}
 
-                        {column.field === "button" ? (
-                          <div className="action-container">
-                            <div className="font-poppins text-sm  border-[1px] border-gray-500 cursor-pointer hover:bg-slate-200   flex justify-center items-center">
-                              {" "}
-                              Review
-                            </div>
-                          </div>
+                        {column.field === "comingSatExamDate" ? (
+                          <span>{formatDate(row[column.field])} </span>
                         ) : (
                           <></>
                         )}
+
                         {column.field === "status" ? (
-                          <div className="action-container ">
+                          <div>
                             {row.status === "active" ? (
                               <div
                                 onClick={() =>
                                   handleStudentBlocking("active", row._id)
                                 }
-                                className="font-poppins text-sm  border-[1px] px-2 text-[10px] border-blue-700 bg-blue-700 text-white cursor-pointer flex justify-center items-center"
+                                className="border-[1px] px-2 bg-[#0066DE] text-white cursor-pointer flex justify-center items-center"
                               >
                                 {" "}
                                 Active
@@ -413,12 +462,31 @@ const StudentList = () => {
                                 onClick={() =>
                                   handleStudentBlocking("inactive", row._id)
                                 }
-                                className="font-poppins text-sm  border-[1px] border-blue-700  cursor-pointer text-blue-700  flex justify-center items-center"
+                                className="px-2 border-[1px] border-blue-700 cursor-pointer text-[#0066DE] flex justify-center items-center"
                               >
                                 {" "}
                                 Inactive
                               </div>
                             )}
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+
+                        {column.field === "analysis" ? (
+                          <button className="border-[1px] w-full px-2 bg-[#0066DE] text-white cursor-pointer flex justify-center items-center">
+                            <p>View</p>
+                          </button>
+                        ) : (
+                          <></>
+                        )}
+
+                        {column.field === "actions" ? (
+                          <div className="flex justify-center items-center">
+                            <AiTwotoneDelete
+                              onClick={() => handleSoftDelete(row._id)}
+                              className="text-red-700 bg-none text-xl duration-300 transition-all cursor-pointer"
+                            />
                           </div>
                         ) : (
                           <></>
@@ -432,17 +500,22 @@ const StudentList = () => {
           </table>
         </div>
 
-        <div className="bulk-upload-container flex justify-between items-end gap-x-2">
-          <div>
-            <div className="select-container">
-              <div>
-                <select value={pageSize} onChange={handlePageSizeSelectChange}>
+        {/* Pagination Section */}
+        <div className="w-full flex flex-col mg:flex-row justify-between items-start  gap-3 md:gap-x-4 py-3">
+          <div className="w-full md:w-auto">
+            <div className="select-container flex flex-col gap-y-2">
+              <div className="pr-5">
+                <select
+                  value={pageSize}
+                  onChange={handlePageSizeSelectChange}
+                  className="w-full md:w-auto px-3 py-2 border border-gray-300 rounded-md"
+                >
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="100">100</option>
                 </select>
               </div>
-              <div>Total Items : {data?.totalRows}</div>
+              <div>Total Items: {data?.totalRows}</div>
             </div>
 
             <Pagination
@@ -464,9 +537,13 @@ const StudentList = () => {
               }}
             />
           </div>
-          <div className="">
-            <h3 className="mr-4">Bulk upload Student Details</h3>
-            <div className="flex gap-x-2 ">
+
+          {/* Upload Section */}
+          <div className="w-full xl:w-[520px] pr-5 mt-10">
+            <h3 className="text-base md:text-lg mb-2 md:mr-4">
+              Bulk upload Student Details
+            </h3>
+            <div className="flex flex-col justify-evenly sm:flex-row sm:items-center gap-y-2 sm:gap-x-2">
               <input
                 type="file"
                 id="fileInput"
@@ -476,21 +553,21 @@ const StudentList = () => {
 
               <label
                 htmlFor="fileInput"
-                className="file-label bg-gray-300 text-blue-700 px-4 py-2 rounded cursor-pointer"
+                className="w-full file-label bg-gray-300 text-blue-700 px-4 py-2 rounded cursor-pointer flex items-center justify-center"
               >
                 {file ? file.name : "Select"}
               </label>
 
               <button
                 onClick={handleFileUpload}
-                className="upload-button bg-green-500 text-white px-4 py-2 rounded"
+                className="w-full upload-button bg-green-500 text-white px-4 py-2 rounded flex items-center justify-center"
               >
                 Upload
               </button>
 
               <button
                 onClick={handleDownloadTemplate}
-                className="download-button bg-blue-500 text-white px-4 py-2 rounded"
+                className="w-full  download-button bg-blue-500 text-white px-4 py-2 rounded flex items-center justify-center"
               >
                 Download Excel
               </button>

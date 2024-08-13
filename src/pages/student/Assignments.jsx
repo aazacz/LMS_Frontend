@@ -124,12 +124,13 @@ const Assignments = () => {
       (assignment) =>
         new Date(assignment.dueDate).toDateString() === date.toDateString()
     );
-  
+
     return assignmentsOnDate.length
-      ? assignmentsOnDate.map((assignment) => assignment.assignmentName).join(", ")
+      ? assignmentsOnDate
+          .map((assignment) => assignment.assignmentName)
+          .join(", ")
       : null;
   };
-  
 
   const openModal = (assignment) => {
     setSelectedAssignment(assignment._id); // Ensure only the ID is being passed
@@ -282,7 +283,9 @@ const Assignments = () => {
         </div>
 
         <div className="assignment-main-calender md:w-[30%] flex flex-col w-full">
-          <h1 className="text-2xl font-bold mb-4">Calendar</h1>
+          <h1 className="text-2xl font-poppins font-bold mb-4">
+            Assignment Calendar
+          </h1>
           <div className="assignment-calender">
             <Calendar
               className="assignment-main-calender"

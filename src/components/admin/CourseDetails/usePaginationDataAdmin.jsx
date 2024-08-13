@@ -1,48 +1,62 @@
-import { useState, useEffect,useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query";
 
-
-const usePaginationDataAdmin = (courseId, initialPage = 1, initialPageSize = 10, initialSearchQuery = "" ,) => {
-
-  const [currentPage, setCurrentPage]   = useState(initialPage);
-  const [pageSize, setPageSize]         = useState(initialPageSize);
-  const [totalRows, setTotalRows]       = useState(0);
-  const [searchQuery, setSearchQuery]   = useState(initialSearchQuery);
-  const [loading, setLoading]           = useState(true);
-  const [error, setError]               = useState(null);
+const usePaginationDataAdmin = (
+  courseId,
+  initialPage = 1,
+  initialPageSize = 10,
+  initialSearchQuery = ""
+) => {
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [pageSize, setPageSize] = useState(initialPageSize);
+  const [totalRows, setTotalRows] = useState(0);
+  const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchData = useCallback(async () => {
-    console.log("courseId", courseId);
+    console.log("courseId:", courseId);
     setLoading(true);
     try {
-      const response = await AdminAxiosInstance.get(`api/course/tutor-enrolled/${courseId}`);
-      console.log("response.data")
-      console.log(response.data)
+      const response = await AdminAxiosInstance.get(
+        `api/course/tutor-enrolled/${courseId}`,
+        {
+          params: {
+            page: currentPage,
+            pageSize,
+            search: searchQuery,
+          },
+        }
+      );
+      console.log("API Response:", response.data);
       setTotalRows(response.data.totalRows);
       setLoading(false);
-      return response.data
-
+      return response.data;
     } catch (error) {
-
+      console.error("Failed to fetch data:", error);
       setError(error);
       setLoading(false);
+      return [];
     }
-    
-  })
+  }, [courseId, currentPage, pageSize, searchQuery]);
 
-  const {data,isPending,isError,refetch} = useQuery({
-                                            queryKey:["AdminEnrolledcourseList"],
-                                            queryFn:fetchData,
-                                            staleTime: 1000,
-                                            refetchInterval: 600000,
-                                                     })
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: [
+      "AdminEnrolledcourseList",
+      courseId,
+      currentPage,
+      pageSize,
+      searchQuery,
+    ],
+    queryFn: fetchData,
+    staleTime: 1000,
+    refetchInterval: 600000,
+  });
 
   useEffect(() => {
-    refetch()
-  }, [currentPage, pageSize, searchQuery]);
-
-  
+    refetch();
+  }, [currentPage, pageSize, searchQuery, refetch]);
 
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
@@ -59,8 +73,8 @@ const usePaginationDataAdmin = (courseId, initialPage = 1, initialPageSize = 10,
   };
 
   return {
-    courses: data ? data : [],
-    isPending,
+    courses: data ? data.data : [],
+    isLoading,
     isError,
     currentPage,
     pageSize,
@@ -71,7 +85,7 @@ const usePaginationDataAdmin = (courseId, initialPage = 1, initialPageSize = 10,
     handlePageChange,
     handlePageSizeChange,
     handleSearchChange,
-    refetch
+    refetch,
   };
 };
 

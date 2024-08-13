@@ -232,7 +232,7 @@ const StudentList = () => {
     { field: "classesAttended", headerName: "Classes Attended" },
     { field: "modulesCompleted", headerName: "Modules Completed" },
     { field: "assignmentsCompleted", headerName: "Assignments Completed" },
-    { field: "recentTestResult", headerName: "Recent Test Result" },
+    { field: "recentTestResult", headerName: "Test Result" },
     { field: "createdAt", headerName: "Joined Date" },
     { field: "comingSatExamDate", headerName: "Exam Date" },
     { field: "status", headerName: "Status" },

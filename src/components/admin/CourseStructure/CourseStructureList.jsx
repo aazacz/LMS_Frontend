@@ -27,7 +27,7 @@ const CourseStructureList = () => {
       );
       console.log(response.data);
       setCourses(response.data.data);
-      setTotalRows(response.data.totalRows); // Assuming the API response includes the total row count
+      setTotalRows(response.data.totalRows); 
       setLoading(false);
     } catch (err) {
       console.log(err);

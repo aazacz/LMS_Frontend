@@ -6,6 +6,8 @@ import ViewModal from "./ViewModal";
 import Loader from "../../reusable/Loader";
 import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
 import TestTable from "./TestTable";
+import TopPerformer from "./TopPerformer";
+import LeastPerformer from "./LeastPerformer";
 
 const QuestionBank = () => {
   const [Modal, setModal] = useState(false);
@@ -15,7 +17,51 @@ const QuestionBank = () => {
   const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);
   const [selectedTest, setSelectedTest] = useState(null);
   const [selectedSubmission, setSelectedSubmission] = useState(null);
+  const [selectedTestId, setSelectedTestId] = useState(null);
 
+
+  //useQuery function calling
+  const fetchQuestions = async () => {
+    const response = await TutorAxiosInstance.get("api/test/course-tests?page=1&pageSize=10&search=");
+    console.log(response.data.data);
+    return response.data.data;
+  };
+
+  
+  const { data: reviewData, isPending: reviewLoading } = useQuery({
+    queryKey: ["getReviewList", selectedTestId],
+    queryFn: () => fetchReviewList(selectedTestId),
+    enabled: !!selectedTestId,
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 10,
+  });
+
+  
+  const fetchReviewList = async (testId) => {
+    try {
+      console.log("fetch Review List step 1");
+      const response = await TutorAxiosInstance.get(`api/test/submissions/${testId}`);
+      console.log("fetch Review List step 2");
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching review list:", error);
+      console.error( error.response.data.error);
+      // You can also throw the error again or handle it according to your needs
+      return error.response.data.error;
+    }
+  };
+  
+  
+  const { data: questionsData, isPending: questionsLoading } = useQuery({
+    queryKey: ["fetchAllTests"],
+    queryFn: fetchQuestions,
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 10,
+  });
+ 
+ 
+ 
   const handleView = (data) => {
     console.log("open modal function clicked");
     setdata([data]);
@@ -24,11 +70,14 @@ const QuestionBank = () => {
   };
 
   const handleReview = (test) => {
+    console.log("review funciotn is triggered")
     console.log(test)
-    
     setSelectedTest(test);
+    setSelectedTestId(test); // Assuming `test.id` is the correct ID
     setIsReviewModalOpen(true);
   };
+
+
 
   const handleSubmissionView = (submission) => {
     setSelectedSubmission(submission);
@@ -45,18 +94,7 @@ const QuestionBank = () => {
     setIsSubmissionModalOpen(false);
   };
 
-  const fetchQuestions = async () => {
-    const response = await TutorAxiosInstance.get("api/test/course-tests?page=1&pageSize=10&search=");
-    console.log(response.data.data);
-    return response.data.data;
-  };
 
-  const { data, isPending } = useQuery({
-    queryKey: ["fetchAllTests"],
-    queryFn: fetchQuestions,
-    staleTime: 1000 * 60 * 5,
-    cacheTime: 1000 * 60 * 10,
-  });
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
@@ -86,45 +124,55 @@ const QuestionBank = () => {
 
 
 
-  const ReviewModal = ({ test, isOpen, onClose, onSubmissionView }) => {
+  const ReviewModal = ({ test, isOpen, onClose, reviewLoading, reviewData, onSubmissionView }) => {
     if (!isOpen) return null;
-
-    // Fake submissions data
-    const fakeSubmissions = [
-      { id: 1, studentName: "John Doe", score: 85 },
-      { id: 2, studentName: "Jane Smith", score: 92 },
-      { id: 3, studentName: "Bob Johnson", score: 78 },
-    ];
-
+  
+    console.log("reviewLoading:", reviewLoading);
+    console.log("reviewData:", reviewData);
+  
+    // Destructure and map the submissions from reviewData
+    
+    const submissions = reviewData?.submissions || [];
+  
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
         <div className="bg-white p-6 rounded-lg w-3/4 max-h-3/4 overflow-y-auto">
           <h2 className="text-xl font-bold mb-4">Review: {test.title}</h2>
-          <table className="w-full mb-4">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 text-left">Student Name</th>
-                <th className="px-4 py-2 text-left">Score</th>
-                <th className="px-4 py-2 text-left">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {fakeSubmissions.map((submission) => (
-                <tr key={submission.id}>
-                  <td className="px-4 py-2">{submission.studentName}</td>
-                  <td className="px-4 py-2">{submission.score}</td>
-                  <td className="px-4 py-2">
-                    <button
-                      onClick={() => onSubmissionView(submission)}
-                      className="px-2 py-1 text-xs bg-blue-500 text-white rounded-md"
-                    >
-                      View
-                    </button>
-                  </td>
+          {reviewLoading ? (
+            
+            <div className=" flex justify-center items-center w-full h-full">
+              <Loader/>
+            </div>
+          ) : (
+            <table className="w-full mb-4">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 text-left">Student Name</th>
+                  <th className="px-4 py-2 text-left">Score</th>
+                  <th className="px-4 py-2 text-left">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {submissions.map((submission) => (
+                  <tr key={submission._id}>
+                    <td className="px-4 py-2">{submission.studentId.name}</td>
+                    <td className="px-4 py-2">
+                      {/* Assuming score is calculated as the number of correct answers */}
+                      {submission.tests[0].result.filter((r) => r.isCorrect).length}
+                    </td>
+                    <td className="px-4 py-2">
+                      <button
+                        onClick={() => onSubmissionView(submission)}
+                        className="px-2 py-1 text-xs bg-blue-500 text-white rounded-md"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
           <button
             onClick={onClose}
             className="px-4 py-2 bg-red-500 text-white rounded-md"
@@ -135,6 +183,7 @@ const QuestionBank = () => {
       </div>
     );
   };
+  
 
   const SubmissionModal = ({ submission, isOpen, onClose }) => {
     if (!isOpen) return null;
@@ -196,6 +245,8 @@ const QuestionBank = () => {
         isOpen={isReviewModalOpen}
         onClose={closeReviewModal}
         onSubmissionView={handleSubmissionView}
+        reviewLoading={reviewLoading}
+        reviewData={reviewData}
       />
       <SubmissionModal
         submission={selectedSubmission}
@@ -205,48 +256,8 @@ const QuestionBank = () => {
 
       {/* Aside Bar */}
       <div className="w-[320px] h-max  flex-col justify-center items-center  pl-4 gap-2 font-poppins border-l border-black hidden lg:block">
-        <div className="w-full  h-72 flex flex-col">
-          <p className="text-sm font-semibold p-2">Top Performers in Tests</p>
-          <div className="w-full  h-64  overflow-y-scroll no-scrollbar ">
-            {best.map((item, index) => (
-              <div
-                key={index}
-                className="w-full h-max border-b-[1px] border-gray-300  flex justify-start items-start p-2"
-              >
-                {/* user image div  */}
-                <div className="w-10 h-10 rounded-full overflow-hidden ">
-
-                  <img src={item.image} alt="" />
-                </div>
-                <div className="w-max flex flex-col ml-2 justify-start items-start text-xs">
-                  <p>{item.name}</p>{" "}
-                  <p className="text-gray-500">{item.email}</p>{" "}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="w-full mt-8 h-72 flex flex-col">
-          <p className="text-sm font-semibold p-2">Least Performing</p>
-          <div className="w-full h-64 overflow-y-scroll no-scrollbar ">
-            {least.map((item, index) => (
-              <div
-                key={index}
-                className="w-[90%] h-max flex justify-start items-start p-2"
-              >
-                <div className="w-10 h-10 rounded-full overflow-hidden">
-
-                <img src={item.image} alt="" />
-
-                </div>
-                <div className="w-max flex flex-col ml-2 justify-start items-start text-xs">
-                  <p>{item.name}</p>{" "}
-                  <p className="text-gray-500">{item.email}</p>{" "}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+          <TopPerformer   best={best}  />
+          <LeastPerformer least={least}  />
       </div>
 
       {/* Body */}
@@ -271,55 +282,7 @@ const QuestionBank = () => {
 
             {/* Table */}
             <TestTable handleReview={handleReview} handleView={handleView} />
-
-
-            {/* <div className="relative overflow-x-auto shadow-md rounded-lg">
-              <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Positive Mark</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Negative Mark</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Total Questions</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {isPending ? (
-                    <tr>
-                      <td colSpan="6" className="p-4 h-36">
-                        <Loader />
-                      </td>
-                    </tr>
-                  ) : (
-                    data?.map((item, index) => (
-                      <tr key={item._id}>
-                        <td className="p-2 whitespace-nowrap">{index + 1}</td>
-                        <td className="p-2 whitespace-nowrap">{item.title}</td>
-                        <td className="p-2 whitespace-nowrap hidden sm:table-cell">{item.positiveMark}</td>
-                        <td className="p-2 whitespace-nowrap hidden md:table-cell">{item.negativeMark}</td>
-                        <td className="p-2 whitespace-nowrap hidden lg:table-cell">{item.questions.length}</td>
-                        <td className="p-2 flex gap-2 flex-wrap">
-                          <button
-                            onClick={() => handleReview(item)}
-                            className="px-2 py-1 text-xs border border-black rounded-md mr-2"
-                          >
-                            Review
-                          </button>
-                          <button
-                            onClick={() => handleView(item)}
-                            className="px-2 py-1 text-xs border border-black rounded-md mr-2"
-                          >
-                            View
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div> */}
+        
           </div>
         </div>
       </div>

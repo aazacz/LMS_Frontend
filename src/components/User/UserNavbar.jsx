@@ -15,7 +15,9 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
   const student = useSelector((state) => state.StudentDetails);
   const userName = useSelector((state) => state.StudentDetails.userName);
   const navigate = useNavigate();
-
+  
+  console.log(student)
+  // console.log(userName[0])
   const [NameLetter, SetNameLetter] = useState(userName ? userName[0] : "");
 
   const handleToggle = () => {
@@ -201,7 +203,6 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
        {/*Show the profile image if the user is already logged in    */}
         {!user 
            &&
-        
         (
           <div className="hidden xl:flex xl:w-[90%] justify-end items-center h-full">
             <div className="h-1/2 flex gap-8 justify-between">

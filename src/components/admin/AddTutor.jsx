@@ -310,7 +310,7 @@ const AddTutor = () => {
     // Append the education files
     tutor.educations.forEach((education, index) => {
       if (education.File) {
-        formData.append(`educationFile${index}`, education.File);
+        formData.append(`educations${index}`, education.File);
       }
     });
 
@@ -347,12 +347,12 @@ const AddTutor = () => {
   return (
     <div className=" w-full   h-screen overflow-y-scroll no-scrollbar p-5   mt-5">
       <div className=" w-full h-max p-5 px-8 bg-slate-200 rounded-2xl ">
-      <button
-                className="w-[50%]"
-                onClick={() => navigate(-1)}
-              >
-                <IoChevronBackCircleOutline className="text-4xl mb-2 " />
-              </button>
+        <button
+          className="w-[50%]"
+          onClick={() => navigate(-1)}
+        >
+          <IoChevronBackCircleOutline className="text-4xl mb-2 " />
+        </button>
         <h1 className="text-2xl font-poppins font-semibold">Tutor Form</h1>
         <form className="">
           <div className="grid grid-flow-row grid-cols-2 gap-4">
@@ -410,9 +410,8 @@ const AddTutor = () => {
                   onMouseUp={handleMouseUp}
                   data-tooltip-id="my-tooltip"
                   data-tooltip-content=""
-                  className={`p-2 px-3  bg-slate-400 h-10 mt-2 flex justify-center rounded-md items-center ${
-                    isClicked ? "scale-95 bg-bg-slate-300" : ""
-                  }`}
+                  className={`p-2 px-3  bg-slate-400 h-10 mt-2 flex justify-center rounded-md items-center ${isClicked ? "scale-95 bg-bg-slate-300" : ""
+                    }`}
                 >
                   <IoMdKey />
                 </div>
@@ -644,10 +643,10 @@ const AddTutor = () => {
                         // value={tempEducation.File.name}
                         type="file"
                         className="choose focus:outline-blue-900 cursor-pointer"
-                        id="file-upload"
+                        id="file-upload-education"
                       />
                       <label
-                        htmlFor="file-upload"
+                        htmlFor="file-upload-education"
                         className="text-blue-500 font-semibold  text-sm cursor-pointer font-poppins absolute right-2 top-1/2 -translate-y-1/2"
                       >
                         Upload

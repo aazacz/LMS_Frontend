@@ -8,6 +8,8 @@ import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
 import TestTable from "./TestTable";
 import TopPerformer from "./TopPerformer";
 import LeastPerformer from "./LeastPerformer";
+import ReviewModal from "./ReviewModal";
+import SubmissionModal from "./SubmissionModal";
 
 const QuestionBank = () => {
   const [Modal, setModal] = useState(false);
@@ -60,6 +62,31 @@ const QuestionBank = () => {
     cacheTime: 1000 * 60 * 10,
   });
  
+  const fetchSubmissionList = async (submissionId) => {
+    try {
+      console.log("fetch Submission List step 1");
+      const response = await TutorAxiosInstance.get(`api/test/course-results/${submissionId}`);
+      console.log("fetch Submission List step 2");
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching review list:", error);
+      console.error( error.response.data.error);
+      // You can also throw the error again or handle it according to your needs
+      return error.response.data.error;
+    }
+  };
+
+
+  // const { data: submissionsData, isPending: submissionLoading } = useQuery({
+  //   queryKey: ["fetchSubmissionList", selectedSubmission],
+  //   queryFn: () => fetchSubmissionList(selectedSubmission),
+  //   enabled: !!selectedSubmission,
+  //   staleTime: 1000 * 60 * 5,
+  //   cacheTime: 1000 * 60 * 10,
+  // });
+
+
  
  
   const handleView = (data) => {
@@ -73,13 +100,16 @@ const QuestionBank = () => {
     console.log("review funciotn is triggered")
     console.log(test)
     setSelectedTest(test);
-    setSelectedTestId(test); // Assuming `test.id` is the correct ID
+    setSelectedTestId(test);
     setIsReviewModalOpen(true);
   };
 
 
 
   const handleSubmissionView = (submission) => {
+    console.log("submission")
+    console.log(submission)
+    console.log(submission)
     setSelectedSubmission(submission);
     setIsSubmissionModalOpen(true);
   };
@@ -120,122 +150,6 @@ const QuestionBank = () => {
   ];
 
 
-
-
-
-
-  const ReviewModal = ({ test, isOpen, onClose, reviewLoading, reviewData, onSubmissionView }) => {
-    if (!isOpen) return null;
-  
-    console.log("reviewLoading:", reviewLoading);
-    console.log("reviewData:", reviewData);
-  
-    // Destructure and map the submissions from reviewData
-    
-    const submissions = reviewData?.submissions || [];
-  
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="bg-white p-6 rounded-lg w-3/4 max-h-3/4 overflow-y-auto">
-          <h2 className="text-xl font-bold mb-4">Review: {test.title}</h2>
-          {reviewLoading ? (
-            
-            <div className=" flex justify-center items-center w-full h-full">
-              <Loader/>
-            </div>
-          ) : (
-            <table className="w-full mb-4">
-              <thead>
-                <tr>
-                  <th className="px-4 py-2 text-left">Student Name</th>
-                  <th className="px-4 py-2 text-left">Score</th>
-                  <th className="px-4 py-2 text-left">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {submissions.map((submission) => (
-                  <tr key={submission._id}>
-                    <td className="px-4 py-2">{submission.studentId.name}</td>
-                    <td className="px-4 py-2">
-                      {/* Assuming score is calculated as the number of correct answers */}
-                      {submission.tests[0].result.filter((r) => r.isCorrect).length}
-                    </td>
-                    <td className="px-4 py-2">
-                      <button
-                        onClick={() => onSubmissionView(submission)}
-                        className="px-2 py-1 text-xs bg-blue-500 text-white rounded-md"
-                      >
-                        View
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          <button
-            onClick={onClose}
-            className="px-4 py-2 bg-red-500 text-white rounded-md"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    );
-  };
-  
-
-  const SubmissionModal = ({ submission, isOpen, onClose }) => {
-    if (!isOpen) return null;
-
-    // Fake detailed submission data
-    const fakeDetailedSubmission = {
-      studentName: submission.studentName,
-      score: submission.score,
-      submittedAt: "2024-08-07 10:30 AM",
-      answers: [
-        { question: "Question 1", answer: "Answer 1", correct: true },
-        { question: "Question 2", answer: "Answer 2", correct: false },
-        { question: "Question 3", answer: "Answer 3", correct: true },
-      ],
-    };
-
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="bg-white p-6 rounded-lg w-3/4 max-h-3/4 overflow-y-auto">
-          <h2 className="text-xl font-bold mb-4">Submission Details</h2>
-          <p><strong>Student:</strong> {fakeDetailedSubmission.studentName}</p>
-          <p><strong>Score:</strong> {fakeDetailedSubmission.score}</p>
-          <p><strong>Submitted At:</strong> {fakeDetailedSubmission.submittedAt}</p>
-          <h3 className="font-bold mt-4 mb-2">Answers:</h3>
-          <table className="w-full">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 text-left">Question</th>
-                <th className="px-4 py-2 text-left">Answer</th>
-                <th className="px-4 py-2 text-left">Correct</th>
-              </tr>
-            </thead>
-            <tbody>
-              {fakeDetailedSubmission.answers.map((answer, index) => (
-                <tr key={index}>
-                  <td className="px-4 py-2">{answer.question}</td>
-                  <td className="px-4 py-2">{answer.answer}</td>
-                  <td className="px-4 py-2">{answer.correct ? "Yes" : "No"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <button
-            onClick={onClose}
-            className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="font-poppins w-full h-max flex flex-row-reverse justify-left items-left relative">

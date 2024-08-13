@@ -50,9 +50,9 @@ const TestTable = ({ handleView, handleReview }) => {
           </thead>
           <tbody>
             {isPending ? (
-              <tr>
-                <td colSpan={columns.length}>
-                  <div className="w-full h-full flex justify-center items-center">
+              <tr className="">
+                <td colSpan={columns.length } rowSpan={5}>
+                  <div className="w-full flex justify-center items-center">
                     <Loader />
                   </div>
                 </td>

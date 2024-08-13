@@ -34,7 +34,7 @@ textarea {
   overflow-x: auto;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   height: 60vh;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   border: 1px solid #ddd;
 }
 
@@ -69,7 +69,7 @@ textarea {
   overflow-x: auto;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   height: 60vh;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   border: 1px solid #ddd;
 }
 

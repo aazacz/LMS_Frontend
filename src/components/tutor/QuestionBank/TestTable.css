@@ -6,6 +6,21 @@
   border: none;
 }
 
+
+.responsive-Testtable td.title-column {
+  max-width: 150px; /* Adjust this value as needed */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .responsive-Testtable {
   width: 100%;
   border-collapse: separate;

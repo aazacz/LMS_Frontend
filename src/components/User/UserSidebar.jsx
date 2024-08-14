@@ -92,11 +92,11 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
       path: "/student/tests",
       icon: <PiExamFill className="text-xl text-gray-900" />,
     },
-    {
-      title: "Tutors",
-      path: "/student/tutors",
-      icon: <PiChalkboardTeacherFill className="text-xl text-gray-900" />,
-    },
+    // {
+    //   title: "Tutors",
+    //   path: "/student/tutors",
+    //   icon: <PiChalkboardTeacherFill className="text-xl text-gray-900" />,
+    // },
     {
       title: "Library",
       path: "/student/library",

@@ -6,64 +6,31 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { axiosInstanceStudent } from "../../../routes/UserRoutes";
 import "./Coursedetails.css";
 import TestsContent from "./TestsContent";
+import { PiChalkboardTeacherBold } from "react-icons/pi";
 
-const Coursedetails = ({ role }) => {
+const Coursedetails = () => {
   const [activeTab, setActiveTab] = useState("about");
   const [slideDirection, setSlideDirection] = useState("left");
-  const [Course, setCourse] = useState(null);
+  const [course, setCourse] = useState(null);
 
   const navigate = useNavigate();
   const { courseId, courseType, enrolled } = useParams();
 
   const getCourseDetails = async () => {
-    if (courseType === "individual") {
-      const response = await axiosInstanceStudent.get(
-        `api/structure/get/${courseId}`
-      );
+    try {
+      const response =
+        courseType === "individual"
+          ? await axiosInstanceStudent.get(`api/structure/get/${courseId}`)
+          : await axiosInstanceStudent.get(`api/course/get-course/${courseId}`);
       setCourse(response.data);
-      return response.data;
-    } else {
-      const response = await axiosInstanceStudent.get(
-        `api/course/get-course/${courseId}`
-      );
-      setCourse(response.data);
-      return response.data;
+    } catch (error) {
+      console.error("Error fetching course details:", error);
     }
   };
-  // useQuery function to get the course details
-  // const { data, isLoading, isError, refetch } = useQuery({
-  //     queryKey: ['CourseDetails'],
-  //     queryFn: getCourseDetails,
-  //     staleTime: 8000,
-  //     refreshInterval: 60000,
-  // });
 
   useEffect(() => {
-    // refetch()
-    console.log("coursedetails");
-    console.log(courseId);
-    console.log(courseType);
-
-    const fetchCourseDetails = async () => {
-      try {
-        if (courseType === "individual") {
-          let response = await axiosInstanceStudent.get(
-            `api/structure/get/${courseId}`
-          );
-          setCourse(response.data);
-        } else {
-          let response = await axiosInstanceStudent.get(
-            `api/course/get-course/${courseId}`
-          );
-          setCourse(response.data);
-        }
-      } catch (error) {
-        console.error("Error fetching course details:", error);
-      }
-    };
-
-    fetchCourseDetails();
-  }, []);
+    getCourseDetails();
+  }, [courseId, courseType]);
 
   const handleTabClick = (tab) => {
     setSlideDirection(
@@ -73,22 +40,36 @@ const Coursedetails = ({ role }) => {
   };
 
   return (
-    <div className="w-full flex flex-wrap ">
+    <div className="w-full flex flex-wrap">
       <div className="w-full md:w-[70%] lg:w-[70%] no-scrollbar overflow-y-scroll p-4 flex flex-col">
         <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold font-poppins text-3xl">
-          Introduction to SAT & DSAT
+          {course?.courseName || "Course Title"}
         </div>
         <div className="w-full">
           <div className="mt-4">
             <h1 className="font-bold text-xl font-poppins">
-              Introduction to Basic SAT & DSAT
+              {course?.courseName || "Course Name"}
             </h1>
             <div className="flex items-center gap-x-6 mt-2">
               <span className="flex items-center gap-x-1 text-sm font-poppins">
-                <BiSpreadsheet className="text-gray-400" /> 5 Modules
+                <BiSpreadsheet className="text-gray-400" />{" "}
+                {course?.modules?.length || 0} Modules
               </span>
               <span className="flex items-center gap-x-1 text-sm font-poppins">
-                <LuTimer className="text-gray-400" /> 60Hrs
+                <LuTimer className="text-gray-400" />{" "}
+                {course?.trainingDuration || "N/A"} Hrs
+              </span>
+              <span className="flex items-center gap-x-1 text-sm font-poppins">
+                <PiChalkboardTeacherBold className="text-gray-400" /> Tutors:{" "}
+                {course?.tutors?.length > 0
+                  ? course.tutors.map((tutor, index) => (
+                      <span key={index} className="text-sm font-poppins">
+                        {tutor.id.name}
+                        {index < course.tutors.length - 1 && ", "}{" "}
+                        {/* Add a comma between names except after the last one */}
+                      </span>
+                    ))
+                  : "Not Assigned"}
               </span>
             </div>
           </div>
@@ -115,16 +96,22 @@ const Coursedetails = ({ role }) => {
                   : "slide-right-enter"
               }`}
             >
-              {activeTab === "about" && <AboutContent />}
-              {activeTab === "module" && <ModuleContent />}
+              {activeTab === "about" && (
+                <AboutContent description={course?.description} />
+              )}
+              {activeTab === "module" && (
+                <ModuleContent modules={course?.modules} />
+              )}
               {activeTab === "tests" && <TestsContent enrolled={enrolled} />}
-              {activeTab === "review" && <ReviewContent />}
+              {activeTab === "review" && (
+                <ReviewContent reviews={course?.reviews} />
+              )}
             </div>
           </div>
         </div>
       </div>
       <AsideBAr
-        data={Course}
+        data={course}
         courseType={courseType}
         navigate={navigate}
         enrolled={enrolled}
@@ -135,82 +122,52 @@ const Coursedetails = ({ role }) => {
 
 export default Coursedetails;
 
-const AboutContent = () => (
+const AboutContent = ({ description }) => (
   <div className="w-full h-full border-t-2 p-4 overflow-y-auto">
     <h2 className="text-lg font-bold mb-2">About the Course</h2>
-    <p>
-      This course offers a comprehensive introduction to the basics of SAT &
-      DSAT. The curriculum is designed to help students grasp fundamental
-      concepts and build a strong foundation in the subject. Key topics covered
-      include:
-    </p>
-    <ul className="list-disc ml-5">
-      <li>Overview of SAT & DSAT</li>
-      <li>Core principles and methodologies</li>
-      <li>Application of theories in real-world scenarios</li>
-    </ul>
+    <p>{description || "No description available"}</p>
   </div>
 );
 
-const ModuleContent = () => (
+const ModuleContent = ({ modules }) => (
   <div className="w-full h-full border-t-2 p-4 overflow-y-auto">
     <h2 className="text-lg font-bold mb-2">Course Modules</h2>
     <ol className="list-decimal ml-5">
-      <li>Introduction to SAT & DSAT</li>
-      <li>Key Concepts and Techniques</li>
-      <li>Advanced Topics and Applications</li>
-      <li>Case Studies and Practical Examples</li>
-      <li>Final Review and Assessment</li>
+      {modules && modules.length > 0 ? (
+        modules.map((module, index) => <li key={index}>{module.moduleName}</li>)
+      ) : (
+        <li>No modules available</li>
+      )}
     </ol>
   </div>
 );
 
-const ReviewContent = () => (
+const ReviewContent = ({ reviews }) => (
   <div className="w-full h-full px-4 overflow-y-auto">
     <h2 className="text-lg font-bold mb-2">Student Reviews</h2>
     <div className="space-y-4">
-      <div className="p-3 bg-orange-200 rounded-md shadow-md">
-        <h3 className="font-bold">John Doe</h3>
-        <p className="text-sm">
-          This course was extremely helpful. The content was well-structured and
-          easy to follow. Highly recommend it!
-        </p>
-      </div>
-      <div className="p-3 bg-orange-200 rounded-md shadow-md">
-        <h3 className="font-bold">Jane Smith</h3>
-        <p className="text-sm">
-          I learned a lot from this course. The practical examples and case
-          studies were particularly useful.
-        </p>
-      </div>
-      <div className="p-3 bg-orange-200 rounded-md shadow-md">
-        <h3 className="font-bold">Sam Wilson</h3>
-        <p className="text-sm">
-          A great introduction to SAT & DSAT. The assessments helped me to
-          understand my progress throughout the course.
-        </p>
-      </div>
+      {reviews && reviews.length > 0 ? (
+        reviews.map((review, index) => (
+          <div key={index} className="p-3 bg-orange-200 rounded-md shadow-md">
+            <h3 className="font-bold">{review.studentName}</h3>
+            <p className="text-sm">{review.feedback}</p>
+          </div>
+        ))
+      ) : (
+        <div className="p-3 bg-orange-200 rounded-md shadow-md">
+          <p className="text-sm">No reviews available</p>
+        </div>
+      )}
     </div>
   </div>
 );
 
 const AsideBAr = ({ data, courseType, navigate, enrolled }) => {
-  console.log("data inasidebar");
-  console.log(data);
-  console.log("data inasidebar");
-  const modules = [
-    "Introduction",
-    "What is UX Design",
-    "Usability testing",
-    "Create Usability Test",
-    "How to implement",
-  ];
+  const modules = data?.modules?.map((module) => module.moduleName) || [];
 
   const handleEnrollCourse = (event) => {
     event.preventDefault();
-    navigate(`/student/courses/checkout/${courseType}/${data?._id}`, {
-   
-    });
+    navigate(`/student/courses/checkout/${courseType}/${data?._id}`);
   };
 
   return (
@@ -219,29 +176,33 @@ const AsideBAr = ({ data, courseType, navigate, enrolled }) => {
         <h1 className="font-poppins font-bold">Modules List</h1>
         <div className="bg-white rounded-lg flex flex-col mt-5 p-5 items-center">
           <h1 className="font-poppins font-bold line-clamp-2">
-            Introduction Basic SAT & DSAT
+            {data?.courseName || "Course Name"}
           </h1>
 
-          {modules.map((value, index) => (
-            <div
-              key={index}
-              className="flex w-full justify-between items-center py-5"
-            >
-              <div className="flex gap-x-3 items-center w-[65%]">
-                <div>
-                  <div className="w-6 h-6 bg-[#C75625] text-white rounded-[5px] text-sm flex justify-center items-center">
-                    {index + 1}
+          {modules.length > 0 ? (
+            modules.map((value, index) => (
+              <div
+                key={index}
+                className="flex w-full justify-between items-center py-5"
+              >
+                <div className="flex gap-x-3 items-center w-[65%]">
+                  <div>
+                    <div className="w-6 h-6 bg-[#C75625] text-white rounded-[5px] text-sm flex justify-center items-center">
+                      {index + 1}
+                    </div>
                   </div>
+                  <h1 className="text-orange-600 text-[12px] line-clamp-1">
+                    {value}
+                  </h1>
                 </div>
-                <h1 className="text-orange-600 text-[12px] line-clamp-1 ">
-                  {value}
+                <h1 className="w-[35%] text-right text-xs text-gray-400">
+                  {data?.modules[index]?.sessions?.length || 0} Sessions
                 </h1>
               </div>
-              <h1 className="w-[35%] text-right text-xs text-gray-400 ">
-                2 Sessions
-              </h1>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="p-3 text-gray-600">No modules available</div>
+          )}
 
           {enrolled === "true" ? null : (
             <div className="w-[90%] flex justify-center items-center bg-[#FFBB54] text-black rounded-md py-2">

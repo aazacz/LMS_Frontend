@@ -37,7 +37,7 @@ const CourseTest = () => {
 
     async function fetchQuestions() {
       try {
-        const response = await axiosInstanceStudent.get(`api/test/one-course-test/${courseId}/${testid}`
+        const response = await axiosInstanceStudent.get(`api/test/one-course-tests/${courseId}/${testid}`
         );
         const data = response.data;
         console.log("Fetched Data:", data);

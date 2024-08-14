@@ -122,7 +122,7 @@ const StudentTests = () => {
                   <td className="border px-4 py-2">
                   {test.users.includes(studentId) ? (
                       <button
-                        onClick={() => navigate(`/results/${test._id}`)}
+                        onClick={() => navigate(`/coursetest/CourseTestResult/${test._id}`)}
                         className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                       >
                         Show Result

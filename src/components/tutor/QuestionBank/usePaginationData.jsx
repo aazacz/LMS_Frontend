@@ -1,9 +1,10 @@
-// usePaginationData.js
-import { useState, useEffect, useCallback } from "react";
-import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
-import { useQuery } from "@tanstack/react-query";
+
+import {useState, useEffect, useCallback} from "react";
+import {TutorAxiosInstance} from "../../../routes/TutorRoutes";
+import {useQuery} from "@tanstack/react-query";
 
 const usePaginationData = (
+  courseId,
   initialPage = 1,
   initialPageSize = 10,
   initialSearchQuery = ""
@@ -18,13 +19,12 @@ const usePaginationData = (
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await AdminAxiosInstance.get(
-        `api/course/get-all-course?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`
-      );
+    
+      const response = await TutorAxiosInstance.get(`api/test/course-tests?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`);
 
-      console.log("response.data.data in pagination");
+      console.log("data.data");
       console.log(response.data.data);
-      setTotalRows(response.data.totalRows);
+      setTotalRows(response.totalRows);
       setLoading(false);
       return response.data.data;
     } catch (error) {
@@ -33,8 +33,8 @@ const usePaginationData = (
     }
   });
 
-  const { data, isPending, isError, refetch } = useQuery({
-    queryKey: ["courseList"],
+  const {data, isPending, isError, refetch} = useQuery({
+    queryKey: ["CoursetestList"],
     queryFn: fetchData,
     staleTime: 1000,
     refetchInterval: 600000,
@@ -54,13 +54,12 @@ const usePaginationData = (
   };
 
   const handleSearchChange = (event) => {
-    console.log(event)
     setSearchQuery(event.target.value);
     setCurrentPage(1);
   };
 
   return {
-    courses: data ? data : [],
+    tests: data ? data : [],
     isPending,
     isError,
     currentPage,

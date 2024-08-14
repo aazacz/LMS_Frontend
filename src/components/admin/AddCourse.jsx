@@ -112,7 +112,7 @@ const AddCourse = ({ edit }) => {
 
   //Getting course structure data from database
   useEffect(() => {
-    AdminAxiosInstance.get(`api/structure/get-all-structure`)
+    AdminAxiosInstance.get(`api/structure/all-structure`)
       .then((res) => {
         const data = res.data.data;
         setCourseStructure(data);
@@ -131,7 +131,7 @@ const AddCourse = ({ edit }) => {
   //getting the package information from database
   useEffect(() => {
     AdminAxiosInstance.get(
-      `api/package/get-all-package?page=1&pageSize=10&search=`
+      `api/package/all-package?page=1&pageSize=10&search=`
     )
       .then((res) => {
         setpackages(res.data.data);
@@ -402,7 +402,7 @@ const AddCourse = ({ edit }) => {
 
   return (
     <div className="w-full p-5 md:px-16 bg-slate-200 rounded-lg mt-2">
-      <button onClick={() => navigate(-1)}><IoChevronBackCircleOutline className="text-4xl"/></button>
+      <button onClick={() => navigate("/admin/home/courses")}><IoChevronBackCircleOutline className="text-4xl"/></button>
       {edit ? (
         <h1 className="font-bold font-poppins text-2xl pb-6 flex items-center gap-x-4">
           Edit Course {<TfiWrite className="text-lg " />}

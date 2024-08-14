@@ -142,7 +142,7 @@ const StudentTests = () => {
   };
 
   return (
-    <div className="w-full flex flex-wrap font-poppins border-2 border-red-800">
+    <div className="w-full flex flex-wrap font-poppins">
       <div className="p-2 flex flex-col gap-2 h-max w-full md:w-[70%]">
         <div className="flex justify-between flex-wrap">
           <p className="p-2 font-bold text-lg lg:text-xl">Tests</p>

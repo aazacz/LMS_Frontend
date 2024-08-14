@@ -18,6 +18,7 @@ import { PiStudentFill } from "react-icons/pi";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 const TutorSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
+  
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const TutorSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
       icon: <MdContentPaste className="text-xl text-black" />,
     },
     {
-      title: "Question Bank",
+      title: "Test",
       path: "/tutor/home/questionbank",
       icon: <FaClipboardQuestion className="text-xl text-black" />,
     },

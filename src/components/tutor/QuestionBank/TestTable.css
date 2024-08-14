@@ -1,0 +1,63 @@
+.table-container {
+  margin-top: 10px;
+  overflow-x: auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  height: 60vh;
+  border: none;
+}
+
+
+.responsive-Testtable td.title-column {
+  max-width: 150px; /* Adjust this value as needed */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.responsive-Testtable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 0px;
+  border: none;
+}
+
+.responsive-Testtable th,
+.responsive-Testtable td {
+  padding: 10px 10px; /* Increased padding to adjust row height */
+  text-align: left;
+  font-size: 12px;
+  border: none;
+  line-height: 20px; /* Optional: Increase line-height for better spacing */
+}
+
+.responsive-Testtable td {
+  border-bottom: 1px solid #ddd;
+}
+
+.responsive-Testtable th {
+  background-color: #E6F0FC;
+  font-weight: 500;
+  color: black;
+  height: 50px; /* Adjusted header height */
+}
+
+.responsive-Testtable tbody tr {
+  border-bottom: 1px solid #ddd;
+  height: 50px; /* Increased row height */
+}
+
+.responsive-Testtable tbody tr:last-child {
+  border-bottom: 1px solid #ddd;
+}
+
+.responsive-Testtable tbody tr:hover {
+  background-color: #f5f5f5;
+}

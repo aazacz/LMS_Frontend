@@ -37,7 +37,7 @@ const CourseListTable = ({ data, isPending }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full pr-3">
       <div className="table-container">
         <table className="responsive-table">
           <thead>

@@ -15,6 +15,12 @@ export default {
 
       'md': '768px',
 
+      'dm': '830px',
+
+      'dg': '1100px',
+
+      'mg':  '1190px',
+
       'lg': '1024px',
 
       'xl': '1280px',

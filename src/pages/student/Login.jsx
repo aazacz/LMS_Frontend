@@ -32,8 +32,8 @@ const StudentLogin = () => {
     try {
       setIsSubmitting(true);
       setLoading(true)
-      const res = await axiosInstanceStudent.post(
-        `api/students/login-student`,
+      const res = await axios.post(
+        `${baseUrl}api/students/login-student`,
         data,
         {
           "user-agent": navigator.userAgent,

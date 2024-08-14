@@ -1,28 +1,22 @@
+//
+
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import axios from "axios";
-import { PiNotepadBold } from "react-icons/pi";
 import "./Assignment.css";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
-import { FaEye } from "react-icons/fa";
 import Modal from "./Modal";
 import Loader from "../../components/reusable/Loader";
+import { useQuery } from "@tanstack/react-query";
+import { PiNotepadBold } from "react-icons/pi";
 
 const Assignments = () => {
-  const assignments1 = [
-    { id: 1, name: "SAT Assignment 1", feedbackLink: "#", score: "25/35" },
-    { id: 2, name: "SAT Assignment 2", feedbackLink: "#", score: "30/35" },
-    { id: 3, name: "SAT Assignment 3", feedbackLink: "#", score: "28/35" },
-    { id: 4, name: "SAT Assignment 4", feedbackLink: "#", score: "27/35" },
-    { id: 5, name: "SAT Assignment 5", feedbackLink: "#", score: "26/35" },
-    { id: 1, name: "SAT Assignment 1", feedbackLink: "#", score: "25/35" },
-    { id: 2, name: "SAT Assignment 2", feedbackLink: "#", score: "30/35" },
-    { id: 3, name: "SAT Assignment 3", feedbackLink: "#", score: "28/35" },
-    { id: 4, name: "SAT Assignment 4", feedbackLink: "#", score: "27/35" },
-    { id: 5, name: "SAT Assignment 5", feedbackLink: "#", score: "26/35" },
-  ];
-
+  const dateformat = (value) => {
+    const date = new Date(value);
+    const formattedDate = date.toISOString().split("T")[0];
+    console.log(formattedDate); // Output: "2024-08-22"
+    return formattedDate;
+  };
   const baseURL = process.env.REACT_APP_API_URL;
   const [assignments, setAssignments] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
@@ -31,75 +25,75 @@ const Assignments = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [hoveredDate, setHoveredDate] = useState(null);
+  const [calendarAssignments, setCalendarAssignments] = useState([]);
+  const [gradings, setGradings] = useState([]);
+  const [visibleTooltipIndex, setVisibleTooltipIndex] = useState(null);
 
-  // const fetchAssignments = async (type) => {
-  //   try {
-  //     let url = `api/assignments/student-all-assignments`;
-  //     if (type === "pending") {
-  //       url = `api/assignments/student-all-assignments/pending`;
-  //     } else if (type === "completed") {
-  //       url = `api/assignments/student-all-assignments/completed`;
-  //     }
+  const handleFeedbackClick = (index) => {
+    setVisibleTooltipIndex(index === visibleTooltipIndex ? null : index);
+  };
 
-  //     const { data } = await axiosInstanceStudent.get(url, {});
-
-  //     // Extract assignments from nested courses
-  //     // const courses = response.data;
-  //     console.log("ddddd", data);
-  //     let allAssignments = [];
-  //     // courses.forEach((course) => {
-  //     //   course.assignments.forEach((assignment) => {
-  //     //     allAssignments.push({
-  //     //       ...assignment,
-  //     //       courseName: course.courseName, // Add course name to each assignment
-  //     //     });
-  //     //   });
-  //     // });
-
-  //     setAssignments(data?.data?.assignments);
-  //   } catch (error) {
-  //     console.error("Error fetching assignments:", error);
-  //   }
-  // };
-
+  useEffect(() => {
+    // Fetch the assignment gradings
+    axiosInstanceStudent
+      .get("api/assignments/assignment-gradings")
+      .then((response) => {
+        if (response.data.success) {
+          setGradings(response.data.data.gradings);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching assignment gradings:", error);
+      });
+  }, []);
 
   const fetchAssignments = async (type) => {
     setLoading(true);
     try {
-      let url = `api/assignments/student-all-assignments`;
-      
-      const { data } = await axiosInstanceStudent.get(url, {});
-      
+      const { data } = await axiosInstanceStudent.get(
+        `api/assignments/student-all-assignments`,
+        {}
+      );
+
       let filteredAssignments = data?.data?.assignments;
-  
+
       if (type === "pending") {
         filteredAssignments = filteredAssignments.filter(
-          assignment => assignment.studentSubmissionStatus === "pending"
+          (assignment) => assignment.studentSubmissionStatus === "pending"
         );
       } else if (type === "completed") {
         filteredAssignments = filteredAssignments.filter(
-          assignment => assignment.studentSubmissionStatus === "submitted"
+          (assignment) => assignment.studentSubmissionStatus === "submitted"
         );
       }
-  
+
       setAssignments(filteredAssignments);
+
+      // Fetch assignments by date for calendar
+      const assignmentsForCalendar = filteredAssignments.map((assignment) => ({
+        assignmentName: assignment.assignmentName,
+        dueDate: assignment.dueDate,
+      }));
+      setCalendarAssignments(assignmentsForCalendar);
     } catch (error) {
       console.error("Error fetching assignments:", error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
-
-  useEffect(() => {
-    fetchAssignments("all");
-  }, []);
-
+  const { data, isPending, refetch } = useQuery({
+    queryKey: ["fetchAssignment", activeTab],
+    queryFn: () => fetchAssignments(activeTab),
+    staleTime: 120000,
+    refetchInterval: 60000,
+  });
 
   const handleTabChange = (type) => {
     setActiveTab(type);
     setCurrentPage(1);
-    fetchAssignments(type);
+    refetch();
   };
 
   const indexOfLastAssignment = currentPage * assignmentsPerPage;
@@ -117,8 +111,28 @@ const Assignments = () => {
     }
   };
 
+  const handleDayMouseEnter = (date) => {
+    setHoveredDate(date);
+  };
+
+  const handleDayMouseLeave = () => {
+    setHoveredDate(null);
+  };
+
+  const getAssignmentName = (date) => {
+    const assignmentsOnDate = calendarAssignments.filter(
+      (assignment) =>
+        new Date(assignment.dueDate).toDateString() === date.toDateString()
+    );
+
+    return assignmentsOnDate.length
+      ? assignmentsOnDate
+          .map((assignment) => assignment.assignmentName)
+          .join(", ")
+      : null;
+  };
+
   const openModal = (assignment) => {
-    console.log("Opening modal for assignment:", assignment); // Debugging log
     setSelectedAssignment(assignment._id); // Ensure only the ID is being passed
     setIsModalOpen(true);
   };
@@ -136,16 +150,14 @@ const Assignments = () => {
 
   return (
     <>
-      {loading && (
+      {isPending && (
         <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-100 z-50">
           <Loader />
         </div>
       )}
       <div className="assignment-main-container px-1 py-1 rounded-lg flex md:flex-row relative">
         <div className="w-full lg:w-[70%] md:p-4">
-          <h1 className="text-2xl font-bold mb-4">
-            Assignments
-          </h1>
+          <h1 className="text-2xl font-bold mb-4">Assignments</h1>
           <div className="w-full flex md:flex-row flex-col gap-x-4 items-center gap-y-4 mb-4">
             <button
               className={`px-4 w-full h-10 py-2 rounded ${
@@ -210,16 +222,22 @@ const Assignments = () => {
                       key={assignment?._id}
                       className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] text:xs md:text-base rounded-xl cursor-pointer"
                     >
-                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
+                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold capitalize text-black">
                         {assignment?.assignmentName}
                       </td>
-                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
+                      <td className="border-none text-left md:px-4 py-4 line-clamp-1 text:xs md:text-base font-semibold text-black">
                         {assignment?.courseId?.courseName}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
-                        {assignment?.dueDate}
+                        {dateformat(assignment?.dueDate)}
                       </td>
-                      <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-[#FE9519]">
+                      <td
+                        className={`border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold ${
+                          assignment?.studentSubmissionStatus === "pending"
+                            ? "text-[#FE9519]"
+                            : "text-green-600"
+                        } `}
+                      >
                         {assignment?.studentSubmissionStatus || "pending"}
                       </td>
                       <td className="border-none text-left md:px-4 py-4 text:xs md:text-base font-semibold text-black">
@@ -263,43 +281,74 @@ const Assignments = () => {
             </div>
           </div>
         </div>
-        <div className="assignment-right-section bg-[#F3F3F3] mt-8 lg:mt-0">
-          <div className="assignment-main-class w-full">
-            <h1 className="font-poppins font-semibold text-xl px-2 py-2">
-              Assignment Calendar
-            </h1>
 
-            <div className="w-full ">
-              <div className="assignment-calender">
-                <Calendar className="assignment-main-calender text-xs " />
-              </div>
-            </div>
+        <div className="assignment-main-calender md:w-[30%] flex flex-col w-full">
+          <h1 className="text-2xl font-poppins font-bold mb-4">
+            Assignment Calendar
+          </h1>
+          <div className="assignment-calender">
+            <Calendar
+              className="assignment-main-calender"
+              tileContent={({ date }) => {
+                const assignmentName = getAssignmentName(date);
+                return assignmentName ? (
+                  <div className="assignment-name-tooltip">
+                    {assignmentName}
+                  </div>
+                ) : null;
+              }}
+              tileClassName={({ date }) => {
+                return calendarAssignments.some(
+                  (assignment) =>
+                    new Date(assignment.dueDate).toDateString() ===
+                    date.toDateString()
+                )
+                  ? "highlight"
+                  : null;
+              }}
+            />
           </div>
 
           <div className="assignment-right-section2">
             <h1 className="font-poppins font-semibold text-xl px-2 py-2">
               Assignment Grading
             </h1>
-            <div className="no-scrollbar flex flex-col gap-4 px-4 pb-2">
-              {assignments1.map((assignment1) => (
+            <div className="no-scrollbar flex flex-col gap-4 px-4 pb-2 overflow-y-auto max-h-[400px]">
+              {gradings.map((grading, index) => (
                 <div
-                  key={assignment1.id}
-                  className="bg-white justify-between h-max shadow-md rounded-lg p-2 flex"
+                  key={index}
+                  className="bg-white justify-between h-max shadow-md rounded-lg p-2 flex flex-col"
                 >
-                  <div className="flex">
-                    <PiNotepadBold className="w-8 h-10" />
-                    <div className="p-1 flex flex-col">
-                      <h2 className="text-blue-gray-600 text-xs font-bold">
-                        {assignment1.name}
-                      </h2>
-                      <p className="text-gray-700 text-xs underline">
-                        <a href={assignment1.feedbackLink}>View Feedback</a>
-                      </p>
+                  <div className="flex justify-between">
+                    <div className="flex">
+                      <PiNotepadBold className="w-8 h-10" />
+                      <div className="p-1 flex flex-col">
+                        <h2 className="text-blue-gray-600 text-xs font-bold">
+                          {grading.assignmentName}
+                        </h2>
+                      </div>
                     </div>
+                    {grading.allotedMarks !== undefined && (
+                      <button className="ml-5 bg-[#6C51D9] text-white p-1 rounded-lg text-xs">
+                        {grading.allotedMarks}/100
+                      </button>
+                    )}
                   </div>
-                  <button className="ml-5 bg-[#6C51D9] text-white p-1 rounded-lg text-xs">
-                    {assignment1.score}
-                  </button>
+                  {grading.remarks && (
+                    <div className="relative mt-2 text-gray-600 text-xs">
+                      <button
+                        onClick={() => handleFeedbackClick(index)}
+                        className="underline text-blue-500 hover:text-blue-700"
+                      >
+                        View Feedback
+                      </button>
+                      {visibleTooltipIndex === index && (
+                        <div className="absolute left-0 mt-1 bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg z-10">
+                          {grading.remarks}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -307,12 +356,14 @@ const Assignments = () => {
         </div>
       </div>
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        assignmentId={selectedAssignment}
-        onSubmit={handleSubmit}
-      />
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+          assignmentId={selectedAssignment}
+          onSubmit={handleSubmit}
+        />
+      )}
     </>
   );
 };

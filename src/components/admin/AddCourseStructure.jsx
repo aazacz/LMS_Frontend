@@ -509,6 +509,7 @@ const AddCourseStructure = ({ view }) => {
         </div>
       ) : (
         <h1 className="font-bold font-poppins text-xl md:text-2xl pb-6 flex items-center justify-between md:justify-start gap-x-4">
+          <button onClick={() => navigate("/admin/home/courseStructure")}><IoChevronBackCircleOutline className="text-4xl"/></button>
           {structureId
             ? "Edit Course Structure"
             : "Create New Course Structure"}{" "}

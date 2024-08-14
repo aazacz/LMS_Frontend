@@ -358,6 +358,7 @@ const Assignments = () => {
 
       {isModalOpen && (
         <Modal
+          isOpen={isModalOpen}
           closeModal={closeModal}
           assignmentId={selectedAssignment}
           onSubmit={handleSubmit}

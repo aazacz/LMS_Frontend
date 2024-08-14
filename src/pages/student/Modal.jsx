@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from "react";
-import {axiosInstanceStudent} from "../../routes/UserRoutes";
+import React, { useState, useEffect } from "react";
+import { axiosInstanceStudent } from "../../routes/UserRoutes";
 import "./Modal.css";
 
-const Modal = ({isOpen, onClose, assignmentId, onSubmit}) => {
+const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState("");
   const [assignmentDetails, setAssignmentDetails] = useState(null);
@@ -12,7 +12,7 @@ const Modal = ({isOpen, onClose, assignmentId, onSubmit}) => {
   useEffect(() => {
     const fetchAssignmentDetails = async () => {
       try {
-        const {data} = await axiosInstanceStudent.get(
+        const { data } = await axiosInstanceStudent.get(
           `api/assignments/assignment/${assignmentId}`
         );
         setAssignmentDetails(data?.data?.assignment);
@@ -121,7 +121,7 @@ const Modal = ({isOpen, onClose, assignmentId, onSubmit}) => {
                     href={assignmentDetails?.filePath}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-500 hover:text-blue-700"
+                    className="text-blue-500 hover:text-blue-700 "
                   >
                     View File
                   </a>

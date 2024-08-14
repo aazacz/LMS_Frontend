@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
 import "./Modal.css";
 
-const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
+const Modal = ({ isOpen, onClose,closeModal, assignmentId, onSubmit }) => {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState("");
   const [assignmentDetails, setAssignmentDetails] = useState(null);
@@ -97,7 +97,7 @@ const Modal = ({ isOpen, onClose, assignmentId, onSubmit }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button
           className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold hover:bg-red-700 transition"
-          onClick={onClose}
+          onClick={closeModal}
         >
           X
         </button>

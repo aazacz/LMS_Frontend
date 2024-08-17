@@ -13,7 +13,12 @@ import Defaultcourseimage from "../../assets/Admin/Defaultcourseimage.png";
 import { useParams } from "react-router-dom";
 import { IoChevronBackCircleOutline } from 'react-icons/io5';
 
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import TextEditor from "../reusable/TextEditor";
+
 const AddCourse = ({ edit }) => {
+
   const navigate = useNavigate();
   const token = useSelector((state) => state.AdminDetails.token);
   const { courseId } = useParams();
@@ -26,6 +31,10 @@ const AddCourse = ({ edit }) => {
   const [CourseStructure, setCourseStructure] = useState([]);
   const [Image, setImage] = useState("");
 
+  // const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+
+
   const [imageUrl, setImageUrl] = useState("");
   const [course, setCourse] = useState({
     courseType: "",
@@ -35,7 +44,7 @@ const AddCourse = ({ edit }) => {
     trainingDuration: "",
     hoursPerDay: "",
     price: "",
-    description: "",
+    description: EditorState.createEmpty(),
     trainingDateTimeDetails: "This Course will start from June 1st",
     modules: [
       {
@@ -55,6 +64,16 @@ const AddCourse = ({ edit }) => {
     tutors: [],
     imgUrl: "",
   });
+
+
+  const onEditorStateChange = (newState) => {
+    // setEditorState(newState);
+    setCourse(prevState => ({
+      ...prevState,
+      description: newState
+    }));
+  };
+  
 
   const extractNumber = (str) => {
     const match = str.match(/\d+/);
@@ -78,7 +97,9 @@ const AddCourse = ({ edit }) => {
           trainingDuration: extractNumber(response.data.trainingDuration),
           hoursPerDay: extractNumber(response.data.hoursPerDay),
           price: response.data.price,
-          description: response.data.description,
+          description:  response.data.description 
+                        ? EditorState.createWithContent(convertFromRaw(JSON.parse(response.data.description)))
+                        : EditorState.createEmpty(),
           modules: response.data.modules,
           trainingDateTimeDetails: "This Course will start from June 1st",
           imgUrl: response.data.imageUrl,
@@ -130,9 +151,7 @@ const AddCourse = ({ edit }) => {
 
   //getting the package information from database
   useEffect(() => {
-    AdminAxiosInstance.get(
-      `api/package/all-package?page=1&pageSize=10&search=`
-    )
+    AdminAxiosInstance.get(`api/package/get-all-package?page=1&pageSize=10&search=`)
       .then((res) => {
         setpackages(res.data.data);
       })
@@ -249,7 +268,9 @@ const AddCourse = ({ edit }) => {
         trainingDuration: selectedCourse.trainingDuration,
         hoursPerDay: selectedCourse.hoursPerDay,
         price: selectedCourse.price,
-        description: selectedCourse.description,
+        description: selectedCourse.description ? 
+                     EditorState.createWithContent(convertFromRaw(JSON.parse(selectedCourse.description)))
+                    : EditorState.createEmpty(),
         modules: selectedCourse.modules,
       }));
     }
@@ -258,10 +279,17 @@ const AddCourse = ({ edit }) => {
   // Function to change the input element value
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setCourse((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name === 'description') {
+      setCourse((prevState) => ({
+        ...prevState,
+        editorState: value,
+      }));
+    } else {
+      setCourse((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
   useEffect(() => {
@@ -271,6 +299,7 @@ const AddCourse = ({ edit }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     const formData = new FormData();
+    const rawContent = convertToRaw(course.description.getCurrentContent());
 
     formData.append("courseType", course.courseType);
     formData.append("courseStructure", course.courseStructure);
@@ -279,7 +308,9 @@ const AddCourse = ({ edit }) => {
     formData.append("trainingDuration", course.trainingDuration);
     formData.append("hoursPerDay", course.hoursPerDay);
     formData.append("price", course.price);
-    formData.append("description", course.description);
+    formData.append('description', JSON.stringify(rawContent));
+
+    // formData.append("description", course.description);
     formData.append("trainingDateTimeDetails", course.trainingDateTimeDetails);
     formData.append("students", JSON.stringify(course.students));
     formData.append("modules", JSON.stringify(course.modules));
@@ -312,7 +343,7 @@ const AddCourse = ({ edit }) => {
               trainingDuration: "",
               hoursPerDay: "",
               price: "",
-              description: "",
+              description: EditorState.createEmpty(),
               trainingDateTimeDetails: "This Course will start from June 1st",
               modules: [
                 {
@@ -415,7 +446,7 @@ const AddCourse = ({ edit }) => {
 
       <form className="space-y-6">
         <div className="pt-4 flex w-full h-auto gap-x-4">
-          {console.log(course.imgUrl)}
+
 
           {course.imgUrl ? (
             <div className=" w-[300px] h-[200px] border-[1px] border-gray-700 bg-white  rounded-xl">
@@ -611,13 +642,17 @@ const AddCourse = ({ edit }) => {
 
         <div className="flex flex-col ">
           <label className="text-sm font-semibold">Description</label>
-          <textarea
+          
+  
+          <TextEditor editorState={course.description}  onEditorStateChange={onEditorStateChange}  />
+          
+          {/* <textarea
             onChange={handleInputChange}
             name="description"
             placeholder="Description"
             value={course.description}
             className="w-full h-20 md:h-20 rounded border-[1px] border-gray-500 mt-2 shadow-lg p-2"
-          />
+          /> */}
           {errors.description && (
             <p className="text-red-500 text-xs">{errors.description}</p>
           )}

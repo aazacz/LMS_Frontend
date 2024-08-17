@@ -78,7 +78,7 @@ const StudentHomepage = () => {
 
         <div className=" fixed  flex  w-full h-[90dvh] overflow-hidden ">
           {/* Side Bar component  */}
-          <div className="">
+          <div className="h-full">
             <UserSidebar
               isSidebarOpen={isSidebarOpen}
               setIsSidebarOpen={setIsSidebarOpen}

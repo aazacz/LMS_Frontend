@@ -5,6 +5,7 @@ import Homepage from '../pages/tutor/Homepage';
 import { useSelector } from 'react-redux';
 import TutorLogin from '../pages/tutor/Login';
 import  axios  from "axios";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 
 
@@ -49,14 +50,30 @@ TutorAxiosInstance.interceptors.response.use(function (response) {
     return Promise.reject(error);
   })
 
+  const queryClient = new QueryClient();
 
 
 
 const TutorRoutes = () => {
+  const [showModal, setShowModal] = useState(true);
+  
+  const handleClose = () => {
+    setShowModal(false);
+  };
   const user = useSelector((state) => state.TutorDetails.token)
        token = useSelector((state) => state.TutorDetails.token)
 
-  return (
+  return ( 
+<>
+
+    {showModal && (
+        <InfoModal
+          Line1="I added a text editor to the course structure and course, "
+          Line2="Therefore you may face error with old course and courseSturuture datas"
+          Line3="If error occurs create new COURSE AND COURSE STURUCTURE," 
+          onClose={handleClose}
+        />
+      )}
 
         <Routes>
           
@@ -70,8 +87,10 @@ const TutorRoutes = () => {
         <Route path='*' element={<div className='w-screen h-screen'> <ErrorPage /> </div>}/>
 
         </Routes>
+
       
 
+</>
   )
 }
 

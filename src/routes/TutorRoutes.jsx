@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {  Route,  Routes,  Navigate,   BrowserRouter as Router, } from "react-router-dom";
 import ErrorPage from '../pages/ErrorPage';
 import Homepage from '../pages/tutor/Homepage';
@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import TutorLogin from '../pages/tutor/Login';
 import  axios  from "axios";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import InfoModal from './InfoModal';
 
 
 
@@ -69,7 +70,7 @@ const TutorRoutes = () => {
     {showModal && (
         <InfoModal
           Line1="I added a text editor to the course structure and course, "
-          Line2="Therefore you may face error with old course and courseSturuture datas"
+          Line2="Therefore you may face error with old course and courseStructure datas"
           Line3="If error occurs create new COURSE AND COURSE STURUCTURE," 
           onClose={handleClose}
         />

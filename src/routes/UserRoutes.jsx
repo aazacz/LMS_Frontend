@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Route,
   Routes,
@@ -17,6 +17,7 @@ import DiagnosisTestRoute from "./DiagnosisTestRoute";
 import { AnimatePresence, motion } from "framer-motion";
 import ViewAllCourses from "../components/User/ViewAllCourses";
 import CourseTestRoute from "./CourseTestRoute";
+import InfoModal from "./InfoModal";
 
 let token;
 const baseURL = process.env.REACT_APP_API_URL;

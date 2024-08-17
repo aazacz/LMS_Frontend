@@ -17,19 +17,19 @@ const CourseStructureList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
-  const [type,setType]=useState("")
+  const [type, setType] = useState("");
   // Getting data from backend
   const getdata = async () => {
     try {
       setLoading(true);
       const response = await AdminAxiosInstance.get(
-        `api/structure/all-structure?page=${currentPage}&pageSize=${pageSize}&search=${search}`
+        `api/structure/all-structure?page=${currentPage}&pageSize=${pageSize}&search=${search}`,
       );
       console.log(response.type);
       console.log(response.data.type);
-      setType(response.data.type)
+      setType(response.data.type);
       setCourses(response.data.data);
-      setTotalRows(response.data.totalRows); 
+      setTotalRows(response.data.totalRows);
       setLoading(false);
     } catch (err) {
       console.log(err);

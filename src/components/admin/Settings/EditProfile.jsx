@@ -21,7 +21,7 @@ const EditProfile = () => {
     setLoading(true);
     try {
       const response = await AdminAxiosInstance.get(
-        "api/adminsettings/admin-details"
+        "api/adminsettings/admin-details",
       );
       const { adminDetails } = response.data;
       setDetails(adminDetails);
@@ -50,7 +50,7 @@ const EditProfile = () => {
     const validImageTypes = ["image/png", "image/jpeg", "image/jpg"];
     if (!validImageTypes.includes(file.type)) {
       toast.error(
-        "Invalid Image Format.Please Upload PNG,JPEG or JPG Files Only."
+        "Invalid Image Format.Please Upload PNG,JPEG or JPG Files Only.",
       );
       return;
     }
@@ -93,7 +93,7 @@ const EditProfile = () => {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-          }
+          },
         );
 
         if (response.status === 200) {
@@ -105,7 +105,7 @@ const EditProfile = () => {
       } catch (error) {
         console.error("Upload Error:", error.response);
         toast.error(
-          error.response?.data?.error || "Failed To Upload Profile Photo"
+          error.response?.data?.error || "Failed To Upload Profile Photo",
         );
       }
     }
@@ -120,7 +120,7 @@ const EditProfile = () => {
       try {
         const response = await AdminAxiosInstance.put(
           "api/adminsettings/edit-admin-profile",
-          details
+          details,
         );
         if (response.status === 200) {
           if (selectedImage) {

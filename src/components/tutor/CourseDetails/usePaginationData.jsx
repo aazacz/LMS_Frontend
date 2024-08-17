@@ -1,14 +1,14 @@
 // usePaginationData.js
-import {useState, useEffect, useCallback} from "react";
-import {AdminAxiosInstance} from "../../../routes/AdminRoutes";
-import {TutorAxiosInstance} from "../../../routes/TutorRoutes";
-import {useQuery} from "@tanstack/react-query";
+import { useState, useEffect, useCallback } from "react";
+import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
+import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
+import { useQuery } from "@tanstack/react-query";
 
 const usePaginationData = (
   courseId,
   initialPage = 1,
   initialPageSize = 10,
-  initialSearchQuery = ""
+  initialSearchQuery = "",
 ) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -22,8 +22,8 @@ const usePaginationData = (
     try {
       console.log("courseId");
       console.log(courseId);
-      const {data} = await TutorAxiosInstance.get(
-        `api/assignments/course/${courseId}`
+      const { data } = await TutorAxiosInstance.get(
+        `api/assignments/course/${courseId}`,
       );
 
       console.log("data.data");
@@ -37,7 +37,7 @@ const usePaginationData = (
     }
   });
 
-  const {data, isPending, isError, refetch} = useQuery({
+  const { data, isPending, isError, refetch } = useQuery({
     queryKey: ["AssignmentList"],
     queryFn: fetchData,
     staleTime: 1000,

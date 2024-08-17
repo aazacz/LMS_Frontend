@@ -13,8 +13,10 @@ const Student_Diagnostic_Test = () => {
     const fetchTestDetails = async () => {
       try {
         console.log("else execeuted");
-        const response = await axiosInstanceStudent.get(`api/test/diagnosis-test-active` );
-        
+        const response = await axiosInstanceStudent.get(
+          `api/test/diagnosis-test-active`,
+        );
+
         console.log("response");
         console.log(response);
 

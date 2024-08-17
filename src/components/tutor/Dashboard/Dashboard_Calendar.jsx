@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import Calendar from 'react-calendar'; // or your preferred calendar library
-import 'react-calendar/dist/Calendar.css';
-import Modal from './Calendar_Modal'; // Import the Modal component
-import { GoPerson } from 'react-icons/go';
-import { IoMdTime } from 'react-icons/io';
-import { IoBookOutline } from 'react-icons/io5';
-import { CiLocationOn, CiCalendar } from 'react-icons/ci';
+import React, { useState } from "react";
+import Calendar from "react-calendar"; // or your preferred calendar library
+import "react-calendar/dist/Calendar.css";
+import Modal from "./Calendar_Modal"; // Import the Modal component
+import { GoPerson } from "react-icons/go";
+import { IoMdTime } from "react-icons/io";
+import { IoBookOutline } from "react-icons/io5";
+import { CiLocationOn, CiCalendar } from "react-icons/ci";
 
 const data = [
   {
@@ -44,7 +44,10 @@ const Dashboard_Calendar = () => {
 
       {/* Calendar Icon - Visible on medium and small screens */}
       <div className="lg:hidden p-4">
-        <button onClick={openModal} className="flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full shadow-md">
+        <button
+          onClick={openModal}
+          className="flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full shadow-md"
+        >
           <CiCalendar className="text-2xl" />
         </button>
       </div>

@@ -20,7 +20,7 @@ const StudentLogin = () => {
     register,
     handleSubmit,
     formState: { errors },
-                          } = useForm();
+  } = useForm();
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const StudentLogin = () => {
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      setLoading(true)
+      setLoading(true);
       const res = await axios.post(
         `${baseUrl}api/students/login-student`,
         data,
@@ -39,12 +39,11 @@ const StudentLogin = () => {
           "user-agent": navigator.userAgent,
         }
       );
-      
-  
+
       console.log({
         studentData: res.data,
       });
-      
+
       if (res.data.role === "student") {
         setLoading(false);
         toast.success("Login Successful");

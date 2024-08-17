@@ -1,6 +1,3 @@
-const TestsContent = () => <div className="bg-blue-300">Tests Content</div>
+const TestsContent = () => <div className="bg-blue-300">Tests Content</div>;
 
-
-
-
-export default TestsContent
+export default TestsContent;

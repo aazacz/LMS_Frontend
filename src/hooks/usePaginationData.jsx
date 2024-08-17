@@ -2,7 +2,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const usePaginationData = (Data, initialPage = 1, initialPageSize = 10, initialSearchQuery = "") => {
+const usePaginationData = (
+  Data,
+  initialPage = 1,
+  initialPageSize = 10,
+  initialSearchQuery = "",
+) => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -17,8 +22,8 @@ const usePaginationData = (Data, initialPage = 1, initialPageSize = 10, initialS
   //     const response = await axios.get(
   //       `${apiURL}?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`
   //     );
-      
-  //     // 
+
+  //     //
   //     setData(response.data.data);
   //     setTotalRows(response.data.totalRows);
   //     setLoading(false);
@@ -32,10 +37,9 @@ const usePaginationData = (Data, initialPage = 1, initialPageSize = 10, initialS
   //   fetchData();
   // }, [currentPage, pageSize, searchQuery]);
 
-  
-  useEffect(()=>{
-console.log("reuusable")
-  },[])
+  useEffect(() => {
+    console.log("reuusable");
+  }, []);
 
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);

@@ -33,7 +33,7 @@ const PasswordModal = ({ isOpen, onClose }) => {
     try {
       const response = await AdminAxiosInstance.put(
         "api/adminsettings/change-admin-password",
-        { currentPassword, newPassword, confirmPassword }
+        { currentPassword, newPassword, confirmPassword },
       );
 
       if (response.status === 200) {
@@ -44,7 +44,7 @@ const PasswordModal = ({ isOpen, onClose }) => {
       }
     } catch (error) {
       toast.error(
-        error.response?.data?.message || "An error occurred. Please try again."
+        error.response?.data?.message || "An error occurred. Please try again.",
       );
     }
 

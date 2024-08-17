@@ -23,9 +23,6 @@ import GradingAssignment from "../../components/tutor/GradingAssignment";
 import MarksGrading from "../../components/tutor/MarksGrading";
 import AllMaterials from "../../components/tutor/AllMaterials";
 
-
-
-
 const Homepage = () => {
   const queryClient = new QueryClient();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

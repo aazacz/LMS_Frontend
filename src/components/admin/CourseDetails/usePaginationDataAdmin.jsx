@@ -6,7 +6,7 @@ const usePaginationDataAdmin = (
   courseId,
   initialPage = 1,
   initialPageSize = 10,
-  initialSearchQuery = ""
+  initialSearchQuery = "",
 ) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -27,7 +27,7 @@ const usePaginationDataAdmin = (
             pageSize,
             search: searchQuery,
           },
-        }
+        },
       );
       console.log("API Response:", response.data);
       setTotalRows(response.data.totalRows);

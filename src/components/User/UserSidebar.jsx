@@ -217,7 +217,7 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
                   link.title
                 )}
               </MenuItem>
-            )
+            ),
           )}
 
           <button

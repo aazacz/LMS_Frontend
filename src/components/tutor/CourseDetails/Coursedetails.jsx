@@ -27,7 +27,7 @@ const Coursedetails = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${baseURL}api/course/get-course/${courseId}`
+          `${baseURL}api/course/get-course/${courseId}`,
         );
         setCourse(response.data);
         console.log(data);
@@ -46,18 +46,18 @@ const Coursedetails = () => {
     setActiveTab(tab);
   };
 
-    return (
-        <div className="font-poppins flex flex-col lg:flex-row ">
-            {loading ? (
-                <div className='w-full h-full absolute top-0 left-0 flex justify-center items-center'> 
-                    <Loader/>   
-                </div>
-            ) : (
-                <>
-                    <div className="w-full  lg:w-[70%] scroll overflow-y-scroll h-max p-4 flex flex-col">
-                        <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold text-3xl">
-                            {course?.courseName}
-                        </div>
+  return (
+    <div className="font-poppins flex flex-col lg:flex-row ">
+      {loading ? (
+        <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <div className="w-full  lg:w-[70%] scroll overflow-y-scroll h-max p-4 flex flex-col">
+            <div className="w-full h-[300px] bg-gray-800 flex items-center justify-center text-white font-semibold text-3xl">
+              {course?.courseName}
+            </div>
 
             <div className="w-full mt-4">
               <div className="mb-4">
@@ -88,7 +88,7 @@ const Coursedetails = () => {
                     >
                       {tab.charAt(0).toUpperCase() + tab.slice(1)}
                     </button>
-                  )
+                  ),
                 )}
               </div>
             </div>

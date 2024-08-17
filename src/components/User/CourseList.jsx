@@ -17,7 +17,7 @@ const CourseList = () => {
 
   const getEnrolledList = async () => {
     const response = await axiosInstanceStudent.get(
-      "api/student-course/enrolled-courses"
+      "api/student-course/enrolled-courses",
     );
     SetEnrolledCourse(response.data);
     // return response.data;
@@ -26,7 +26,7 @@ const CourseList = () => {
   const getCourseList = async () => {
     try {
       const response = await axiosInstanceStudent.get(
-        `api/student-course/all-active-courses`
+        `api/student-course/all-active-courses`,
       );
       console.log("response.data api/student-course/all-active-courses");
       console.log(response.data);

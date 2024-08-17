@@ -1,13 +1,12 @@
-
-import {useState, useEffect, useCallback} from "react";
-import {TutorAxiosInstance} from "../../../routes/TutorRoutes";
-import {useQuery} from "@tanstack/react-query";
+import { useState, useEffect, useCallback } from "react";
+import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
+import { useQuery } from "@tanstack/react-query";
 
 const usePaginationData = (
   courseId,
   initialPage = 1,
   initialPageSize = 10,
-  initialSearchQuery = ""
+  initialSearchQuery = "",
 ) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -19,8 +18,9 @@ const usePaginationData = (
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-    
-      const response = await TutorAxiosInstance.get(`api/test/course-tests?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`);
+      const response = await TutorAxiosInstance.get(
+        `api/test/course-tests?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`,
+      );
 
       console.log("data.data");
       console.log(response.data.data);
@@ -33,7 +33,7 @@ const usePaginationData = (
     }
   });
 
-  const {data, isPending, isError, refetch} = useQuery({
+  const { data, isPending, isError, refetch } = useQuery({
     queryKey: ["CoursetestList"],
     queryFn: fetchData,
     staleTime: 1000,

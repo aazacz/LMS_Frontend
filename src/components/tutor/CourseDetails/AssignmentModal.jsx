@@ -28,7 +28,7 @@ const AssignmentModal = ({ isOpen, onClose, assignmentId }) => {
     setAssignment((prevAssignment) => ({
       ...prevAssignment,
       submissions: prevAssignment.submissions.map((sub) =>
-        sub._id === updatedSubmission._id ? updatedSubmission : sub
+        sub._id === updatedSubmission._id ? updatedSubmission : sub,
       ),
     }));
     toast.success("Assignment updated successfully");
@@ -39,7 +39,7 @@ const AssignmentModal = ({ isOpen, onClose, assignmentId }) => {
       const fetchAssignment = async () => {
         try {
           const { data } = await TutorAxiosInstance.get(
-            `api/assignments/tutor/assignment/${assignmentId}`
+            `api/assignments/tutor/assignment/${assignmentId}`,
           );
           console.log(data.data.assignment, "Inside Assignemnt MOdal");
           console.log(data);
@@ -111,7 +111,7 @@ const AssignmentModal = ({ isOpen, onClose, assignmentId }) => {
 
             <div className="overflow-x-auto">
               {assignment?.submissions?.filter(
-                (submission) => submission.filePath
+                (submission) => submission.filePath,
               ).length > 0 ? (
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">

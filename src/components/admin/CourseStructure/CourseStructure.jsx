@@ -387,7 +387,7 @@ const CourseStructure = () => {
                             handleSessionInputChange(
                               e,
                               moduleIndex,
-                              sessionIndex
+                              sessionIndex,
                             )
                           }
                           type="date"
@@ -421,7 +421,7 @@ const CourseStructure = () => {
                             handleSessionInputChange(
                               e,
                               moduleIndex,
-                              sessionIndex
+                              sessionIndex,
                             )
                           }
                           type="text"

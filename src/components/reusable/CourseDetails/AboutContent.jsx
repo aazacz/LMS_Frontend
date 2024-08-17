@@ -1,9 +1,7 @@
-import { useState } from "react"
-
-
+import { useState } from "react";
 
 const AboutContent = () => {
-    return <div className="bg-red-300">About Content</div>
-}
+  return <div className="bg-red-300">About Content</div>;
+};
 
-export default AboutContent
+export default AboutContent;

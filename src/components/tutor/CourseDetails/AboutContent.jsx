@@ -1,6 +1,5 @@
 const AboutContent = ({ about }) => {
-    return <div className="font-poppins">{about}</div>
-}
+  return <div className="font-poppins">{about}</div>;
+};
 
-
-export default AboutContent
+export default AboutContent;

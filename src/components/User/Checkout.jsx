@@ -17,14 +17,14 @@ const Checkout = () => {
       if (courseId && courseType) {
         if (courseType === "individual") {
           const response = await axiosInstanceStudent.get(
-            `api/structure/get/${courseId}`
+            `api/structure/get/${courseId}`,
           );
           console.log("individual response.data");
           console.log(response.data);
           setCourse(response.data);
         } else {
           const response = await axiosInstanceStudent.get(
-            `api/course/get-course/${courseId}`
+            `api/course/get-course/${courseId}`,
           );
           console.log("group response.data");
           console.log(response.data);
@@ -51,7 +51,9 @@ const Checkout = () => {
 
   useEffect(() => {
     const loadRazorpayScript = async () => {
-      const result = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+      const result = await loadScript(
+        "https://checkout.razorpay.com/v1/checkout.js",
+      );
       if (!result) {
         console.error("Failed to load Razorpay script");
       }
@@ -60,7 +62,9 @@ const Checkout = () => {
     loadRazorpayScript();
 
     return () => {
-      const script = document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]');
+      const script = document.querySelector(
+        'script[src="https://checkout.razorpay.com/v1/checkout.js"]',
+      );
       if (script) {
         script.remove();
       }
@@ -81,28 +85,26 @@ const Checkout = () => {
           paymentId: response.razorpay_payment_id,
           amount: Course.price,
         };
-      console.log(responseData)
-      console.log(courseType)
-      console.log("courseType")
+        console.log(responseData);
+        console.log(courseType);
+        console.log("courseType");
         try {
           let apiResponse;
           if (courseType === "individual") {
             apiResponse = await axiosInstanceStudent.post(
               "api/student-course/enroll-individual-course",
-              responseData
+              responseData,
             );
 
-
-            console.log("individual course bought")
+            console.log("individual course bought");
             navigate("/student/success");
-
           } else if (courseType === "group") {
             responseData.courseId = courseId;
             apiResponse = await axiosInstanceStudent.post(
               "api/student-course/enroll-group-course",
-              responseData
+              responseData,
             );
-            console.log("group course bought")
+            console.log("group course bought");
             navigate("/student/success");
           }
         } catch (error) {
@@ -202,6 +204,5 @@ const Checkout = () => {
     </>
   );
 };
-
 
 export default Checkout;

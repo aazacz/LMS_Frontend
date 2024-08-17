@@ -41,7 +41,7 @@ const Coursedetails = () => {
 
   const handleTabClick = (tab) => {
     setSlideDirection(
-      activeTab === "about" && tab === "module" ? "left" : "right"
+      activeTab === "about" && tab === "module" ? "left" : "right",
     );
     setActiveTab(tab);
   };
@@ -59,10 +59,10 @@ const Coursedetails = () => {
   useEffect(() => {
     const getStudentList = async () => {
       const response = await AdminAxiosInstance.get(
-        `api/course/student-not-added/${courseId}`
+        `api/course/student-not-added/${courseId}`,
       );
       const EnrolledStudents = await AdminAxiosInstance.get(
-        `api/course/student-enrolled/${courseId}`
+        `api/course/student-enrolled/${courseId}`,
       );
       console.log("Student list");
 
@@ -88,10 +88,10 @@ const Coursedetails = () => {
       SetTutorDropDownLoader(true);
 
       const response = await AdminAxiosInstance.get(
-        `api/course/tutor-not-added/${courseId}`
+        `api/course/tutor-not-added/${courseId}`,
       );
       const EnrolledTutors = await AdminAxiosInstance.get(
-        `api/course/tutor-enrolled/${courseId}`
+        `api/course/tutor-enrolled/${courseId}`,
       );
       console.log("tutor list");
       console.log(EnrolledTutors.data);

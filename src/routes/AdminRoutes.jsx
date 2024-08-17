@@ -13,7 +13,7 @@ import axios from "axios";
 
 const baseURL = process.env.REACT_APP_API_URL;
 let token = null;
-    
+
 export const AdminAxiosInstance = axios.create();
 
 AdminAxiosInstance.interceptors.request.use(
@@ -28,7 +28,7 @@ AdminAxiosInstance.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  }
+  },
 );
 
 AdminAxiosInstance.interceptors.response.use(
@@ -41,7 +41,7 @@ AdminAxiosInstance.interceptors.response.use(
   },
   function (error) {
     return Promise.reject(error);
-  }
+  },
 );
 
 const AdminRoutes = () => {

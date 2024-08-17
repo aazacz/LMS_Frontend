@@ -36,9 +36,11 @@ const TutorDetails = ({}) => {
 
   const fetchTutorDetails = async () => {
     try {
-      const res = await AdminAxiosInstance.get(`api/tutor/single-tutor/${tutorId}`);
+      const res = await AdminAxiosInstance.get(
+        `api/tutor/single-tutor/${tutorId}`,
+      );
       const { status, ...tutorData } = res.data;
-  
+
       // Set the state based on the tutor's status
       setIsBlocked(status === "blocked");
       setTutor({
@@ -63,24 +65,29 @@ const TutorDetails = ({}) => {
   const handleToggleBlock = async () => {
     const action = isBlocked ? "unblock" : "block";
     const url = `${baseURL}api/tutor/${action}/${tutorId}`;
-  
+
     try {
       const response = await AdminAxiosInstance.post(url);
       console.log("API response:", response.data);
-      const message = response.data.message || 'Operation completed successfully';
+      const message =
+        response.data.message || "Operation completed successfully";
       await fetchTutorDetails();
       if (response.data.success) {
         // Refetch tutor details to get the latest status
-       
+
         console.log("Status after refetch:", isBlocked);
         toast.success(message);
       } else {
-        
         toast.error(message);
       }
     } catch (error) {
-      console.error(`Error ${isBlocked ? "unblocking" : "blocking"} tutor:`, error);
-      toast.error(`An error occurred while ${isBlocked ? "unblocking" : "blocking"} the tutor`);
+      console.error(
+        `Error ${isBlocked ? "unblocking" : "blocking"} tutor:`,
+        error,
+      );
+      toast.error(
+        `An error occurred while ${isBlocked ? "unblocking" : "blocking"} the tutor`,
+      );
     }
   };
 
@@ -559,9 +566,7 @@ const TutorDetails = ({}) => {
               </p>
             )}
           </div>
-         
         </div>
-
       </div>
       <ToastContainer />
     </div>

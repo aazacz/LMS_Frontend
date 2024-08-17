@@ -309,7 +309,7 @@ const EditPackageModal = ({
     if (packageData) {
       setPackageName(packageData.packageName || "");
       setFeatures(
-        packageData.features || [{ description: "", isActive: true }]
+        packageData.features || [{ description: "", isActive: true }],
       );
       setPrice(packageData.price || "");
       setCurrency(packageData.currency || "");
@@ -331,7 +331,7 @@ const EditPackageModal = ({
       return;
     }
     const emptyFeature = features.some(
-      (feature) => !feature.description.trim()
+      (feature) => !feature.description.trim(),
     );
     if (emptyFeature) {
       setError("All feature descriptions must be filled.");
@@ -356,7 +356,7 @@ const EditPackageModal = ({
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (response.status === 200) {
@@ -369,7 +369,7 @@ const EditPackageModal = ({
     } catch (error) {
       if (error.response) {
         toast.error(
-          `Error: ${error.response.data.message || "Failed to update package"}`
+          `Error: ${error.response.data.message || "Failed to update package"}`,
         );
       } else if (error.request) {
         toast.error("No response received from server");

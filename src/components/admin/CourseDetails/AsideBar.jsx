@@ -155,21 +155,21 @@ const Asidebar = ({ course, setTutorModal, setStudentModal }) => {
         </div>
       </div>
 
-          <div className="w-full absolute bottom-0 grid grid-flow-row grid-cols-2 gap-x-4 mb-4 px-4">
-            <div
-              className="cursor-pointer h-max rounded-xl flex justify-center items-center text-base font-semibold font-poppins border-[1px] text-blue-700 border-blue-600 bg-opacity-30 bg-blue-500"
-              onClick={handleEditCourse}
-            >
-              <h1 className="text-sm md:text-base">Edit</h1>
-            </div>
+      <div className="w-full absolute bottom-0 grid grid-flow-row grid-cols-2 gap-x-4 mb-4 px-4">
+        <div
+          className="cursor-pointer h-max rounded-xl flex justify-center items-center text-base font-semibold font-poppins border-[1px] text-blue-700 border-blue-600 bg-opacity-30 bg-blue-500"
+          onClick={handleEditCourse}
+        >
+          <h1 className="text-sm md:text-base">Edit</h1>
+        </div>
 
-            <div
-              className="cursor-pointer h-max rounded-xl flex justify-center items-center text-base font-semibold font-poppins border-[1px] text-red-700 border-red-600 bg-opacity-30 bg-red-500"
-              onClick={handleDeleteCourse}
-            >
-              <h1 className="text-sm md:text-base">Delete</h1>
-            </div>
-          </div>
+        <div
+          className="cursor-pointer h-max rounded-xl flex justify-center items-center text-base font-semibold font-poppins border-[1px] text-red-700 border-red-600 bg-opacity-30 bg-red-500"
+          onClick={handleDeleteCourse}
+        >
+          <h1 className="text-sm md:text-base">Delete</h1>
+        </div>
+      </div>
     </div>
   );
 };

@@ -219,7 +219,7 @@ const AdminSidebar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
                   link.title
                 )}
               </MenuItem>
-            )
+            ),
           )}
 
           <button

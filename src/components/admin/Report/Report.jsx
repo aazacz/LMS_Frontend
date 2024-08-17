@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import StudentListTable from "./StudentListTable";
 import ReusablePagination from "../../reusable/ReusablePagination";
 import usePaginationData from "./usePaginationData";
-import {AdminAxiosInstance} from "../../../routes/AdminRoutes";
+import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
 import Swal from "sweetalert2";
 
 const Report = () => {
@@ -46,7 +46,7 @@ const Report = () => {
 
     const response = await AdminAxiosInstance.put(
       `api/payment/payment?courseId=${CourseId}&studentId=${StudentId}`,
-      paymentpayload
+      paymentpayload,
     );
 
     if (response.data.message === "Payment status updated successfully") {

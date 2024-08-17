@@ -90,7 +90,7 @@ const Addiagnosistest = () => {
     const updatedQuestions = [...test.questions];
 
     const correctIndex = updatedQuestions[questionIndex].choices.findIndex(
-      (choice) => choice.isCorrect
+      (choice) => choice.isCorrect,
     );
     console.log(correctIndex);
 
@@ -322,7 +322,7 @@ const Addiagnosistest = () => {
                     handleIsCorrectChange(choice.isCorrect, qIndex, cIndex)
                   }
                   className={`flex w-20 h-9 items-center cursor-pointer  justify-center text-center shadow-[0_3px_10px_rgb(0,0,0,0.2)] ${getBackgroundColor(
-                    choice.isCorrect
+                    choice.isCorrect,
                   )} px-2 rounded-sm `}
                 >
                   {choice.isCorrect ? "True" : "False"}

@@ -78,7 +78,7 @@ const SignupEducation = () => {
 
     try {
       const storedDetails = JSON.parse(
-        sessionStorage.getItem("SignupPersonalDetails")
+        sessionStorage.getItem("SignupPersonalDetails"),
       );
 
       for (const key in storedDetails) {
@@ -103,7 +103,7 @@ const SignupEducation = () => {
         {
           "user-agent": navigator.userAgent,
           "Content-Type": "multipart/form-data",
-        }
+        },
       );
 
       if (response.status === 200) {
@@ -202,10 +202,7 @@ const SignupEducation = () => {
               </div>
             </div>
           </div>
-          <p className="font-poppins text-sm pb-1 font-bold pt-1">
-            {" "}
-            Math{" "}
-          </p>
+          <p className="font-poppins text-sm pb-1 font-bold pt-1"> Math </p>
           {/*Maths Exam MArk and File  */}
           <div className="grid grid-flow-row grid-cols-2 gap-x-6">
             <div className="w-full relative overflow-hidden h-10 border-black border-[1px]   text-sm rounded shadow-lg px-3  flex items-center">

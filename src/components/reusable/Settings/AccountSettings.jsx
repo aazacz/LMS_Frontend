@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "./CustomAlert";
-import Modal from "./PasswordModal"; 
+import Modal from "./PasswordModal";
 import { axiosInstanceStudent } from "../../../routes/UserRoutes";
 
 const AccountSettings = () => {
   const [details, setDetails] = useState({});
   const [showAlert, setShowAlert] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStudentDetails = async () => {
       try {
         const response = await axiosInstanceStudent.get(
-          "api/settings/student-details"
+          "api/settings/student-details",
         );
         console.log(response.data);
         const { studentDetails } = response.data;
@@ -31,7 +31,7 @@ const AccountSettings = () => {
   const handleDeleteAccount = async () => {
     try {
       const response = await axiosInstanceStudent.put(
-        "/api/settings/change-status"
+        "/api/settings/change-status",
       );
       if (response.status === 200) {
         toast.success("Account deleted successfully!");
@@ -42,7 +42,7 @@ const AccountSettings = () => {
     } catch (error) {
       toast.error(
         error.response?.data?.message ||
-          "An error occurred. Please try again later."
+          "An error occurred. Please try again later.",
       );
     }
   };

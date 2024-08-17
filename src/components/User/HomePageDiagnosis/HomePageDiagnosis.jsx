@@ -1,5 +1,6 @@
 import React from "react";
 import "./HomePageDiagnosis.css";
+import { Link } from "react-router-dom";
 
 const HomePageDiagnosis = () => {
   return (
@@ -16,7 +17,9 @@ const HomePageDiagnosis = () => {
           Invest in your future with Unlimited access to 1400+ high-quality
           short courses and digital certificates from world-class institutions.
         </p>
-        <button className="left-box-btn">Get Now</button>
+        <Link to="/diagnosistest">
+          <button className="left-box-btn">Get Now</button>
+        </Link>
       </div>
       <div className="right">
         <div className="right-box">

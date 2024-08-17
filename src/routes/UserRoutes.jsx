@@ -38,7 +38,7 @@ axiosInstanceStudent.interceptors.request.use(
   function (error) {
     console.log("error in the interceptor request");
     return Promise.reject(error);
-  },
+  }
 );
 
 axiosInstanceStudent.interceptors.response.use(
@@ -47,7 +47,7 @@ axiosInstanceStudent.interceptors.response.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 const UserRoutes = () => {
@@ -75,7 +75,7 @@ const UserRoutes = () => {
         <Route
           path="/diagnosistest/*"
           element={
-            user.isDiagnosticTestTaken ? (
+            user.token && user.isDiagnosticTestTaken ? (
               <Navigate to="/student" />
             ) : (
               <DiagnosisTestRoute />

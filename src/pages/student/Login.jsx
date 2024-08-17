@@ -34,7 +34,10 @@ const StudentLogin = () => {
       setLoading(true);
       const res = await axios.post(
         `${baseUrl}api/students/login-student`,
-        data,
+        {
+          data,
+          tempTestId: localStorage.getItem("tempTestId"),
+        },
         {
           "user-agent": navigator.userAgent,
         }
@@ -48,7 +51,12 @@ const StudentLogin = () => {
         setLoading(false);
         toast.success("Login Successful");
         dispatch(setStudentDetails(res.data || []));
-        navigate("/student/*");
+        if (res.data.testResultId) {
+          localStorage.removeItem("tempTestId");
+          navigate(`/student/diagnosistestresult`);
+        } else {
+          navigate("/student/dashboard");
+        }
       }
     } catch (error) {
       setIsSubmitting(false);

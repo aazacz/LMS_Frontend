@@ -59,9 +59,9 @@ const CourseTest = () => {
           console.error("Unexpected data structure:", data);
         }
       } catch (error) {
-        if (error.response?.status === 403 && error.response?.data?.notPaid) {
-          return navigate("/diagnosistest/payment");
-        }
+        // if (error.response?.status === 403 && error.response?.data?.notPaid) {
+        //   return navigate("/diagnosistest/payment");
+        // }
         if (
           error.response?.status === 400 &&
           error.response?.data?.alreadyTaken

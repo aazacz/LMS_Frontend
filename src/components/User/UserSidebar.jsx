@@ -123,23 +123,24 @@ const UserSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
         // },
       ],
     },
-  ];
+  ]; 
 
   return (
     <div
-      className={` h-full bg-white overflow-y-auto  no-scrollbar absolute  md:sticky  z-50
+      className={` h-full bg-white bg-red-30 overflow-y-auto  no-scrollbar absolute  md:sticky  z-50
                        ${
                          isSidebarOpen
                            ? ""
                            : " -translate-x-full md:translate-x-0"
                        }
-                        transition-all duration-500  font-poppins text-sm font-medium`}
+                        transition-all duration-500  font-poppins text-sm font-medium shadow-[5px_2px_9px_0px_#00000024]`}
     >
       <Sidebar
         // className="h-screen"
         collapsed={collapsed}
         backgroundColor="#fff"
         width="210px"
+        height='100%'
       >
         <Menu
           className=""

@@ -51,6 +51,14 @@ axiosInstanceStudent.interceptors.response.use(
 );
 
 const UserRoutes = () => {
+  
+  const [showModal, setShowModal] = useState(true);
+  
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
+
   const user = useSelector((state) => state.StudentDetails);
 
   token = useSelector((state) => state.StudentDetails.token);
@@ -61,6 +69,15 @@ const UserRoutes = () => {
   };
 
   return (
+    <>
+       {showModal && (
+        <InfoModal
+          Line1="I added a text editor to the course structure and course, "
+          Line2="Therefore you may face error with old course and courseSturuture datas"
+          Line3="If error occurs create new COURSE AND COURSE STURUCTURE," 
+          onClose={handleClose}
+        />
+      )}
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Homepage />} />
@@ -93,6 +110,7 @@ const UserRoutes = () => {
       /> */}
       </Routes>
     </AnimatePresence>
+    </>
   );
 };
 

@@ -5,7 +5,7 @@ import { axiosInstanceStudent } from "../../routes/UserRoutes";
 import axios from "axios";
 
 const Checkout = () => {
-  const { courseType, courseId } = useParams();
+  const { courseType, courseId, tutorId } = useParams();
   const [Course, setCourse] = useState(null);
   const navigate = useNavigate();
 
@@ -17,14 +17,14 @@ const Checkout = () => {
       if (courseId && courseType) {
         if (courseType === "individual") {
           const response = await axiosInstanceStudent.get(
-            `api/structure/get/${courseId}`,
+            `api/structure/get/${courseId}`
           );
           console.log("individual response.data");
           console.log(response.data);
           setCourse(response.data);
         } else {
           const response = await axiosInstanceStudent.get(
-            `api/course/get-course/${courseId}`,
+            `api/course/get-course/${courseId}`
           );
           console.log("group response.data");
           console.log(response.data);
@@ -52,7 +52,7 @@ const Checkout = () => {
   useEffect(() => {
     const loadRazorpayScript = async () => {
       const result = await loadScript(
-        "https://checkout.razorpay.com/v1/checkout.js",
+        "https://checkout.razorpay.com/v1/checkout.js"
       );
       if (!result) {
         console.error("Failed to load Razorpay script");
@@ -63,7 +63,7 @@ const Checkout = () => {
 
     return () => {
       const script = document.querySelector(
-        'script[src="https://checkout.razorpay.com/v1/checkout.js"]',
+        'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
       );
       if (script) {
         script.remove();
@@ -81,6 +81,7 @@ const Checkout = () => {
       description: "MindSAT Payment",
       handler: async function (response) {
         let responseData = {
+          tutorId,
           courseStructureId: courseId,
           paymentId: response.razorpay_payment_id,
           amount: Course.price,
@@ -93,7 +94,7 @@ const Checkout = () => {
           if (courseType === "individual") {
             apiResponse = await axiosInstanceStudent.post(
               "api/student-course/enroll-individual-course",
-              responseData,
+              responseData
             );
 
             console.log("individual course bought");
@@ -102,7 +103,7 @@ const Checkout = () => {
             responseData.courseId = courseId;
             apiResponse = await axiosInstanceStudent.post(
               "api/student-course/enroll-group-course",
-              responseData,
+              responseData
             );
             console.log("group course bought");
             navigate("/student/success");

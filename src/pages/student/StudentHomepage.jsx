@@ -156,7 +156,7 @@ const StudentHomepage = () => {
                   {/* <Route path="/courses/cart" element={<ShoppingCart />} /> */}
                   {/* <Route path="/courses/checkout" element={<Checkout />} /> */}
                   <Route
-                    path="/courses/checkout/:courseType/:courseId"
+                    path="/courses/checkout/:courseType/:courseId/:tutorId"
                     element={<Checkout />}
                   />
                   <Route

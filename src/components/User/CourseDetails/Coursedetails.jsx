@@ -7,6 +7,7 @@ import { axiosInstanceStudent } from "../../../routes/UserRoutes";
 import "./Coursedetails.css";
 import TestsContent from "./TestsContent";
 import { PiChalkboardTeacherBold } from "react-icons/pi";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Coursedetails = () => {
   const [activeTab, setActiveTab] = useState("about");
@@ -34,7 +35,7 @@ const Coursedetails = () => {
 
   const handleTabClick = (tab) => {
     setSlideDirection(
-      activeTab === "about" && tab === "module" ? "left" : "right",
+      activeTab === "about" && tab === "module" ? "left" : "right"
     );
     setActiveTab(tab);
   };
@@ -164,11 +165,34 @@ const ReviewContent = ({ reviews }) => (
 
 const AsideBAr = ({ data, courseType, navigate, enrolled }) => {
   const modules = data?.modules?.map((module) => module.moduleName) || [];
-
+  const [tutors, setTutors] = useState([]);
+  const [selectedTutor, setSelectedTutor] = useState(null);
+  const [totalTutors, setTotalTutors] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const handleEnrollCourse = (event) => {
     event.preventDefault();
-    navigate(`/student/courses/checkout/${courseType}/${data?._id}`);
+    navigate(
+      `/student/courses/checkout/${courseType}/${data?._id}/${selectedTutor}`
+    );
   };
+  console.log({ tutors });
+  const fetchTutors = async () => {
+    try {
+      const response = await axiosInstanceStudent.get(
+        `api/tutor/tutors?pageSize=7&page=${currentPage}`
+      );
+      const shuffledTutors = response.data?.data.sort(
+        () => Math.random() - 0.5
+      );
+      setTotalTutors(Number(response.data?.totalRows));
+      setTutors(shuffledTutors);
+    } catch (error) {
+      console.error("Error fetching tutors:", error);
+    }
+  };
+  useEffect(() => {
+    fetchTutors();
+  }, [currentPage]);
 
   return (
     <div className="bg-slate-200 pb-5 w-full md:w-[30%] h-[1005] flex flex-col">
@@ -205,12 +229,59 @@ const AsideBAr = ({ data, courseType, navigate, enrolled }) => {
           )}
 
           {enrolled === "true" ? null : (
-            <div className="w-[90%] flex justify-center items-center bg-[#FFBB54] text-black rounded-md py-2">
-              <button type="button" onClick={handleEnrollCourse}>
+            <div className="flex flex-col gap-2">
+              <button
+                disabled={!selectedTutor}
+                className="disabled:bg-slate-400 disabled:cursor-not-allowed bg-[#FFBB54] py-2 px-4 disabled:text-white rounded-md w-full"
+                type="button"
+                onClick={handleEnrollCourse}
+              >
                 Enroll Now
               </button>
+              {!selectedTutor && (
+                <p className="text-red-600">Select a tutor!</p>
+              )}
             </div>
           )}
+        </div>
+        <div className="flex flex-col gap-2 items-center">
+          <h1 className="font-poppins font-bold mt-5">Select a tutor</h1>
+          {tutors.length > 0 ? (
+            tutors.map((tutor, i) => (
+              <div
+                onClick={() => setSelectedTutor(tutor._id)}
+                key={tutor._id}
+                className={`p-4 flex items-center gap-4 rounded-md bg-white w-full ${selectedTutor === tutor._id ? "bg-sky-100 border-sky-500 border-2" : ""}`}
+              >
+                <img
+                  src={tutor.tutorImg}
+                  className="w-10 h-10 rounded-full object-cover"
+                  alt=""
+                />
+                <h1 className="w-full text-wrap">{tutor.name}</h1>
+              </div>
+            ))
+          ) : (
+            <div className="p-3 mt-16 text-gray-600">No tutors available</div>
+          )}
+          <div className="flex gap-8 items-center">
+            {currentPage > 1 && (
+              <button
+                onClick={() => setCurrentPage((prev) => prev - 1)}
+                className="bg-slate-400 rounded-full px-2 py-1 text-white"
+              >
+                <ChevronLeft />
+              </button>
+            )}
+            {totalTutors > currentPage * 7 && (
+              <button
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+                className="bg-slate-400 rounded-full px-2 py-1 text-white"
+              >
+                <ChevronRight />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -22,6 +22,7 @@ import Library from "../../components/tutor/Library";
 import GradingAssignment from "../../components/tutor/GradingAssignment";
 import MarksGrading from "../../components/tutor/MarksGrading";
 import AllMaterials from "../../components/tutor/AllMaterials";
+import TextEditor from "../../components/reusable/TextEditor";
 
 const Homepage = () => {
   const queryClient = new QueryClient();
@@ -96,22 +97,14 @@ const Homepage = () => {
                   path="/content/:courseId/material"
                   element={<Material />}
                 />
-                <Route path="/questionbank" element={<QuestionBank />} />
-                <Route path="/library" element={<Library />} />
-                <Route path="/students" element={<Students />} />
-                <Route
-                  path="/students/:studentId"
-                  element={<StudentDetail />}
-                />
-                <Route path="/grading" element={<Grading />} />
-                <Route
-                  path="/grading/assignment/:assignmentId"
-                  element={<GradingAssignment />}
-                />
-                <Route
-                  path="/grading/assignment/:assignmentId/marks"
-                  element={<MarksGrading />}
-                />
+                <Route path="/questionbank"         element={<QuestionBank />}   />
+                <Route path="/library"              element={<Library />}        />
+                <Route path="/students"             element={<Students />}       />
+                <Route path="/students/:studentId"  element={<StudentDetail />}  />
+                <Route path="/editor"               element={<TextEditor />}     />
+                <Route path="/grading"              element={<Grading />}        />
+                <Route path="/grading/assignment/:assignmentId"  element={<GradingAssignment />} />
+                <Route path="/grading/assignment/:assignmentId/marks" element={<MarksGrading />} />
                 <Route path="/insights" element={<Insights />} />
                 <Route path="/settings/*" element={<Settings />} />
                 <Route path="/allmaterials" element={<AllMaterials />} />

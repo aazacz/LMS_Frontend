@@ -204,7 +204,9 @@ const Coursedetails = ({ edit }) => {
                 )}
               </div>
             </div>
+
             <Asidebar {...asidebarProps} />
+         
           </div>
         </>
       )}

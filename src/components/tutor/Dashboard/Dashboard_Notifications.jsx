@@ -16,7 +16,7 @@ const Dashboard_Notifications = () => {
     { id: 3, info: "Student Info 3" },
   ];
   return (
-    <div className="font-poppins w-full h-full flex flex-col bg-[#E5F0FC] mt-2 rounded-md shadow-md justify-center items-center">
+    <div className="font-poppins w-full h-full flex flex-col bg-[#F4F5FB] mt-2 rounded-md shadow-md justify-center items-center">
       <p className="p-2 text-sm font-medium">Notifications</p>
       <div className="w-[90%] h-64 bg-white rounded-md">
         <div className="p-4">

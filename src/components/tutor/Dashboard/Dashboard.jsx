@@ -60,8 +60,8 @@ const Dashboard = () => {
           <Dashboard_Calendar />
           <Dashboard_TrainingList />
         </div>
-        <div className="w-[25%] h-max flex-col p-2 hidden lg:block">
-          <Dashboard_StudentRequest />
+        <div className="w-[25%] h-max flex-col p- hidden lg:block">
+          {/* <Dashboard_StudentRequest /> */}
           <Dashboard_Notifications />
         </div>
       </div>

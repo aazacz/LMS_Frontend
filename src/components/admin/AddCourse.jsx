@@ -47,14 +47,7 @@ const AddCourse = ({ edit }) => {
       {
         moduleName: "",
         moduleDescription: "",
-        sessions: [
-          {
-            sessionName: "",
-            sessionDescription: "",
-            sessionDateTime: "",
-            sessionLink: "",
-          },
-        ],
+        sessions: [],
       },
     ],
     students: [],
@@ -714,7 +707,7 @@ const AddCourse = ({ edit }) => {
                 </div>
               </div>
 
-              <div className="flex justify-end px-4 ">
+              {/* <div className="flex justify-end px-4 ">
                 <button
                   type="button"
                   onClick={(e) => addSession(moduleIndex, e)}
@@ -817,7 +810,7 @@ const AddCourse = ({ edit }) => {
                     </div>
                   </div>
                 );
-              })}
+              })} */}
             </div>
           );
         })}

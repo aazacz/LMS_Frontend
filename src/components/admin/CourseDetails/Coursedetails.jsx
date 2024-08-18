@@ -79,18 +79,20 @@ const Coursedetails = ({ edit }) => {
 
   const handleTabClick = (tab) => {
     setSlideDirection(
-      activeTab === "about" && tab === "module" ? "left" : "right",
+      activeTab === "about" && tab === "module" ? "left" : "right"
     );
     setActiveTab(tab);
   };
-
-  useEffect(() => {
+  const fetchCourse = () => {
     AdminAxiosInstance.get(`api/course/get-course/${courseId}`, {
       headers: { authorization: `Bearer ${token}` },
     }).then((response) => {
       console.log(response.data);
       SetCourse(response.data);
     });
+  };
+  useEffect(() => {
+    fetchCourse();
   }, [baseUrl, courseId, token]);
 
   useEffect(() => {
@@ -100,7 +102,7 @@ const Coursedetails = ({ edit }) => {
       try {
         setisPending(true);
         const response = await AdminAxiosInstance.get(
-          `api/course/paid-students/${courseId}`,
+          `api/course/paid-students/${courseId}`
         );
         console.log("response.data student not addeddddd");
         console.log(response.data);
@@ -119,7 +121,7 @@ const Coursedetails = ({ edit }) => {
       try {
         setisPending(true);
         const EnrolledStudents = await AdminAxiosInstance.get(
-          `api/course/student-enrolled/${courseId}`,
+          `api/course/student-enrolled/${courseId}`
         );
 
         if (EnrolledStudents.data) {
@@ -148,10 +150,10 @@ const Coursedetails = ({ edit }) => {
       setisPending(true);
 
       const response = await AdminAxiosInstance.get(
-        `api/course/tutor-not-added/${courseId}`,
+        `api/course/tutor-not-added/${courseId}`
       );
       const EnrolledTutors = await AdminAxiosInstance.get(
-        `api/course/tutor-enrolled/${courseId}`,
+        `api/course/tutor-enrolled/${courseId}`
       );
       console.log("tutor list");
       console.log(EnrolledTutors.data);
@@ -279,7 +281,11 @@ const Coursedetails = ({ edit }) => {
                 )}
               </div>
             </div>
-            <Asidebar className="hidden lg:block" {...asidebarProps} />
+            <Asidebar
+              refetch={fetchCourse}
+              className="hidden lg:block"
+              {...asidebarProps}
+            />
           </div>
         </>
       )}

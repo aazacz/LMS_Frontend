@@ -1,7 +1,7 @@
 import React from "react";
 
 const Library_Skeleton = () => {
-  const skeletons = Array.from({ length: 5 }); 
+  const skeletons = Array.from({ length: 5 });
 
   return (
     <div className="w-full mb-4">

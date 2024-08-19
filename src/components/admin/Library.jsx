@@ -31,7 +31,7 @@ const Library = () => {
     const fetchCourses = async () => {
       try {
         const response = await AdminAxiosInstance.get(
-          `api/course/get-all-course?page=1&pageSize=&search`
+          `api/course/get-all-course?page=1&pageSize=&search`,
         );
         setCourses(response.data.data);
       } catch (error) {
@@ -74,7 +74,7 @@ const Library = () => {
   const handleCourseChange = (event) => {
     setSelectedCourse(event.target.value);
     let filteredData = materials?.filter(
-      ({ courseId }) => courseId === event.target.value
+      ({ courseId }) => courseId === event.target.value,
     );
     console.log("ee ", event.target.value);
 
@@ -102,7 +102,7 @@ const Library = () => {
 
       if (confirmDelete.isConfirmed) {
         const response = await AdminAxiosInstance.delete(
-          `api/library/delete-book/${materialId}`
+          `api/library/delete-book/${materialId}`,
         );
         console.log("File deleted successfully:", response.data);
 
@@ -126,7 +126,7 @@ const Library = () => {
           headers: {
             Accept: "application/pdf",
           },
-        }
+        },
       ).then((res) => {
         console.log({ res });
         console.log("res.data in then block");

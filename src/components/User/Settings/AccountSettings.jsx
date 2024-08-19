@@ -5,22 +5,22 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Modal from "./PasswordModal";
 import { axiosInstanceStudent } from "../../../routes/UserRoutes";
-import "./DeleteAccount.css"
-import Loader from "../../reusable/Loader"
+import "./DeleteAccount.css";
+import Loader from "../../reusable/Loader";
 
 const AccountSettings = () => {
   const [details, setDetails] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchStudentDetails = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
         const response = await axiosInstanceStudent.get(
-          "api/settings/student-details"
+          "api/settings/student-details",
         );
         console.log(response.data);
         const { studentDetails } = response.data;
@@ -28,7 +28,7 @@ const AccountSettings = () => {
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     };
 
@@ -38,7 +38,7 @@ const AccountSettings = () => {
   const handleDeleteAccount = async () => {
     try {
       const response = await axiosInstanceStudent.put(
-        "/api/settings/change-status"
+        "/api/settings/change-status",
       );
       if (response.status === 200) {
         toast.success("Account deleted successfully!");
@@ -49,7 +49,7 @@ const AccountSettings = () => {
     } catch (error) {
       toast.error(
         error.response?.data?.message ||
-          "An error occurred. Please try again later."
+          "An error occurred. Please try again later.",
       );
     }
   };

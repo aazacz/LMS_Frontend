@@ -86,7 +86,7 @@ import { useQuery } from "@tanstack/react-query";
 const usePaginationData = (
   initialPage = 1,
   initialPageSize = 10,
-  initialSearchQuery = ""
+  initialSearchQuery = "",
 ) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);

@@ -21,7 +21,7 @@ const EditProfile = () => {
     setLoading(true);
     try {
       const response = await TutorAxiosInstance.get(
-        "api/tutorsettings/tutor-details"
+        "api/tutorsettings/tutor-details",
       );
       const { tutorDetails } = response.data;
       setDetails(tutorDetails);
@@ -50,7 +50,7 @@ const EditProfile = () => {
     const validImageTypes = ["image/png", "image/jpeg", "image/jpg"];
     if (!validImageTypes.includes(file.type)) {
       toast.error(
-        "Invalid Image Format.Please Upload PNG,JPEG or JPG Files Only."
+        "Invalid Image Format.Please Upload PNG,JPEG or JPG Files Only.",
       );
       return;
     }
@@ -93,14 +93,14 @@ const EditProfile = () => {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-          }
+          },
         );
 
         if (response.status === 200) {
           toast.success("Profile Photo Uploaded Successfully.");
           setDetails((prevDetails) => ({
             ...prevDetails,
-            tutorImg: response.data.imageUrl, 
+            tutorImg: response.data.imageUrl,
           }));
         } else {
           toast.error("Unexpected Response From Server.");
@@ -108,7 +108,7 @@ const EditProfile = () => {
       } catch (error) {
         console.error("Upload Error:", error.response);
         toast.error(
-          error.response?.data?.error || "Failed To Upload Profile Photo"
+          error.response?.data?.error || "Failed To Upload Profile Photo",
         );
       }
     }
@@ -123,7 +123,7 @@ const EditProfile = () => {
       try {
         const response = await TutorAxiosInstance.put(
           "api/tutorsettings/edit-tutor-profile",
-          details
+          details,
         );
         if (response.status === 200) {
           if (selectedImage) {

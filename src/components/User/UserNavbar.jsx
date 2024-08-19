@@ -1,11 +1,11 @@
-import React, { useEffect, useState }   from "react";
-import { useDispatch, useSelector }     from "react-redux";
-import { FaBars }                       from "react-icons/fa";
-import logo                             from "../../assets/mindsatlogo.webp";
-import { Link, useNavigate }            from "react-router-dom";
-import { motion, AnimatePresence }      from "framer-motion";
-import { LiaSignOutAltSolid }           from "react-icons/lia";
-import { clearStudentDetails }          from "../../store/reducers/StudentloginSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FaBars } from "react-icons/fa";
+import logo from "../../assets/mindsatlogo.webp";
+import { Link, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { LiaSignOutAltSolid } from "react-icons/lia";
+import { clearStudentDetails } from "../../store/reducers/StudentloginSlice";
 
 const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
   const [Showsidebar, setShowsidebar] = useState(false);
@@ -15,8 +15,8 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
   const student = useSelector((state) => state.StudentDetails);
   const userName = useSelector((state) => state.StudentDetails.userName);
   const navigate = useNavigate();
-  
-  console.log(student)
+
+  console.log(student);
   // console.log(userName[0])
   const [NameLetter, SetNameLetter] = useState(userName ? userName[0] : "");
 
@@ -62,15 +62,17 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
               <Link to={"/student/courses"}>
                 <div
                   onClick={() => setShowsidebar(false)}
-                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700"  >
+                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700"
+                >
                   Courses
                 </div>
               </Link>
-            
+
               <Link to={"/student/assignments"}>
                 <div
                   onClick={() => setShowsidebar(false)}
-                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700" >
+                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700"
+                >
                   Assignment
                 </div>
               </Link>
@@ -198,12 +200,9 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
             </div>
           </>
         )}
-       
-       
-       {/*Show the profile image if the user is already logged in    */}
-        {!user 
-           &&
-        (
+
+        {/*Show the profile image if the user is already logged in    */}
+        {!user && (
           <div className="hidden xl:flex xl:w-[90%] justify-end items-center h-full">
             <div className="h-1/2 flex gap-8 justify-between">
               <div className="flex gap-5">
@@ -254,7 +253,3 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
 };
 
 export default UserNavbar;
-
-
-
-

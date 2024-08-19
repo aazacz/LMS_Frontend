@@ -46,7 +46,7 @@ const Package = () => {
       setLoading(true);
       try {
         const response = await AdminAxiosInstance.get(
-          `api/package/get-all-package?page=1&pageSize=10&search=`
+          `api/package/get-all-package?page=1&pageSize=10&search=`,
         );
         setPackages(response.data.data);
         setLoading(false);
@@ -150,7 +150,9 @@ const Package = () => {
       });
 
       if (isConfirmed) {
-        await AdminAxiosInstance.delete(`api/package/delete-package/${packageId}`);
+        await AdminAxiosInstance.delete(
+          `api/package/delete-package/${packageId}`,
+        );
 
         setDeleteSuccess(true);
 
@@ -169,7 +171,7 @@ const Package = () => {
     try {
       const packageId = id;
       const response = await AdminAxiosInstance.get(
-        `api/package/get-package-by-id/${packageId}`
+        `api/package/get-package-by-id/${packageId}`,
       );
       console.log(response.data);
     } catch (error) {

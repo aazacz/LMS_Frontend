@@ -20,7 +20,9 @@ const StudentTests = () => {
     const fetchCourse = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstanceStudent.get('api/test/Enrolledcourse-coursetestslist');
+        const response = await axiosInstanceStudent.get(
+          "api/test/Enrolledcourse-coursetestslist",
+        );
         console.log("response.data", response.data.data);
         setList(response.data.data);
       } catch (error) {
@@ -33,20 +35,20 @@ const StudentTests = () => {
     fetchCourse();
   }, []);
 
-  useEffect(()=>{
-    const fetchUserId = async()=>{
-     try {
-       const response = await axiosInstanceStudent.get('api/test/getId');
-       setstudentId(response.data.userId) 
-      console.log("response.data.userId")
-      console.log(response.data.userId)
-     } catch (error) {
-      console.log(error)
-     }
-     }
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const response = await axiosInstanceStudent.get("api/test/getId");
+        setstudentId(response.data.userId);
+        console.log("response.data.userId");
+        console.log(response.data.userId);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    fetchUserId()
-  })
+    fetchUserId();
+  });
 
   const HandleStartTest = (courseId, testId) => {
     console.log("courseId", courseId);
@@ -63,8 +65,6 @@ const StudentTests = () => {
     setSelectedCourse(null);
     setIsTestModalOpen(false);
   };
-
-
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -84,65 +84,60 @@ const StudentTests = () => {
     };
   }, [isTestModalOpen]);
 
-  const TestModal = ({ course, isOpen, onClose,studentId }) => {
+  const TestModal = ({ course, isOpen, onClose, studentId }) => {
     if (!isOpen || !course) return null;
-
-
-
-
 
     return (
       <div className="fixed inset-0 bg-white flex flex-col px-6   ">
-       
-       <div className="w-full h-max">
-       <IoArrowBackCircleOutline className="text-4xl my-4 " onClick={onClose}  />
-       </div>
-
-
-
-
-          <h2 className="text-xl font-bold mb-4">{course.courseName} - Tests</h2>
-          <table className="w-full">
-            <thead>
-              <tr>
-                <th className="px-4 py-2">Title</th>
-                <th className="px-4 py-2">Positive Mark</th>
-                <th className="px-4 py-2">Negative Mark</th>
-                <th className="px-4 py-2">Time Slot</th>
-                <th className="px-4 py-2">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {course.tests.map((test) => (
-                <tr key={test._id}>
-                  <td className="border px-4 py-2">{test.title}</td>
-                  <td className="border px-4 py-2">{test.positiveMark}</td>
-                  <td className="border px-4 py-2">{test.negativeMark}</td>
-                  <td className="border px-4 py-2">{test.timeSlot} minutes</td>
-                  <td className="border px-4 py-2">
-                  {test.users.includes(studentId) ? (
-                      <button
-                        onClick={() => navigate(`/results/${test._id}`)}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                      >
-                        Show Result
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => HandleStartTest(test.courseId, test._id)}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      >
-                        Start Test
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-       
+        <div className="w-full h-max">
+          <IoArrowBackCircleOutline
+            className="text-4xl my-4 "
+            onClick={onClose}
+          />
         </div>
-     
+
+        <h2 className="text-xl font-bold mb-4">{course.courseName} - Tests</h2>
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Title</th>
+              <th className="px-4 py-2">Positive Mark</th>
+              <th className="px-4 py-2">Negative Mark</th>
+              <th className="px-4 py-2">Time Slot</th>
+              <th className="px-4 py-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {course.tests.map((test) => (
+              <tr key={test._id}>
+                <td className="border px-4 py-2">{test.title}</td>
+                <td className="border px-4 py-2">{test.positiveMark}</td>
+                <td className="border px-4 py-2">{test.negativeMark}</td>
+                <td className="border px-4 py-2">{test.timeSlot} minutes</td>
+                <td className="border px-4 py-2">
+                  {test.users.includes(studentId) ? (
+                    <button
+                      onClick={() =>
+                        navigate(`/coursetest/CourseTestResult/${test._id}`)
+                      }
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Show Result
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => HandleStartTest(test.courseId, test._id)}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Start Test
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
   };
 
@@ -192,37 +187,44 @@ const StudentTests = () => {
           <table className="min-w-full bg-white">
             <thead>
               <tr>
-                <th className="py-2 px-4 border-b border-gray-200">Course Name</th>
+                <th className="py-2 px-4 border-b border-gray-200">
+                  Course Name
+                </th>
                 <th className="py-2 px-4 border-b border-gray-200">Tutors</th>
                 <th className="py-2 px-4 border-b border-gray-200">Tests</th>
                 <th className="px-2 py-3 text-center">Action</th>
               </tr>
             </thead>
             <tbody>
-              {list && list.filter(course => course.tests.length > 0).map((course) => (
-                <tr key={course.courseName}>
-                  <td className="py-2 px-4 border-b border-gray-200">{course.courseName}</td>
-                  <td className="py-2 px-4 border-b border-gray-200">
-                    {course.tutors.map((tutor, index) => (
-                      <div key={index}>
-                        <p>Name: {tutor.name}</p>
-                        <p>Email: {tutor.email}</p>
-                      </div>
-                    ))}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200">
-                    {course.tests.length}
-                  </td>
-                  <td className="px-4 py-2 text-center">
-                    <button 
-                      onClick={() => openTestModal(course)}
-                      className="rounded-xl px-4 py-2 text-[10px] md:text-sm bg-[#277EE3] text-white"
-                    >
-                      View Tests
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {list &&
+                list
+                  .filter((course) => course.tests.length > 0)
+                  .map((course) => (
+                    <tr key={course.courseName}>
+                      <td className="py-2 px-4 border-b border-gray-200">
+                        {course.courseName}
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-200">
+                        {course.tutors.map((tutor, index) => (
+                          <div key={index}>
+                            <p>Name: {tutor.name}</p>
+                            <p>Email: {tutor.email}</p>
+                          </div>
+                        ))}
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-200">
+                        {course.tests.length}
+                      </td>
+                      <td className="px-4 py-2 text-center">
+                        <button
+                          onClick={() => openTestModal(course)}
+                          className="rounded-xl px-4 py-2 text-[10px] md:text-sm bg-[#277EE3] text-white"
+                        >
+                          View Tests
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
             </tbody>
           </table>
         </div>

@@ -1,9 +1,13 @@
 import { useState, useCallback, useEffect } from "react";
 import axios from "axios";
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
 
-const usePaginationData = (initialPage = 1, initialPageSize = 10, initialSearchQuery = "") => {
+const usePaginationData = (
+  initialPage = 1,
+  initialPageSize = 10,
+  initialSearchQuery = "",
+) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
@@ -17,14 +21,13 @@ const usePaginationData = (initialPage = 1, initialPageSize = 10, initialSearchQ
         return response.data;
       } else {
         console.warn("Unexpected response structure:", response);
-        return { data: [], totalRows: 0 }; 
+        return { data: [], totalRows: 0 };
       }
     } catch (error) {
       console.error("Error fetching data:", error);
       throw error; // Propagate error to react-query
     }
   }, [currentPage, pageSize, searchQuery]);
-  
 
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["courseList", currentPage, pageSize, searchQuery],
@@ -49,7 +52,7 @@ const usePaginationData = (initialPage = 1, initialPageSize = 10, initialSearchQ
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   return {
@@ -58,7 +61,7 @@ const usePaginationData = (initialPage = 1, initialPageSize = 10, initialSearchQ
     isError,
     currentPage,
     pageSize,
-    totalRows: data?.totalRows || 0, 
+    totalRows: data?.totalRows || 0,
     searchQuery,
     handlePageChange,
     handlePageSizeChange,
@@ -66,6 +69,5 @@ const usePaginationData = (initialPage = 1, initialPageSize = 10, initialSearchQ
     error,
   };
 };
-
 
 export default usePaginationData;

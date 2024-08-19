@@ -6,9 +6,15 @@ const usePasswordToggle = () => {
   const [visible, setVisibility] = useState(false);
 
   const Icon = visible ? (
-    <MdVisibility className="cursor-pointer bg-transparent text-blue-900"  onClick={() => setVisibility(!visible)} />
+    <MdVisibility
+      className="cursor-pointer bg-transparent text-blue-900"
+      onClick={() => setVisibility(!visible)}
+    />
   ) : (
-    <MdOutlineVisibilityOff className="cursor-pointer bg-transparent " onClick={() => setVisibility(!visible)} />
+    <MdOutlineVisibilityOff
+      className="cursor-pointer bg-transparent "
+      onClick={() => setVisibility(!visible)}
+    />
   );
   const inputType = visible ? "text" : "password";
 
@@ -16,6 +22,3 @@ const usePasswordToggle = () => {
 };
 
 export default usePasswordToggle;
-
-
- 

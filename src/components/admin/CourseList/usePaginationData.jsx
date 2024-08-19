@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 const usePaginationData = (
   initialPage = 1,
   initialPageSize = 10,
-  initialSearchQuery = ""
+  initialSearchQuery = "",
 ) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -19,7 +19,7 @@ const usePaginationData = (
     setLoading(true);
     try {
       const response = await AdminAxiosInstance.get(
-        `api/course/get-all-course?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`
+        `api/course/get-all-course?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`,
       );
 
       console.log("response.data.data in pagination");
@@ -54,7 +54,7 @@ const usePaginationData = (
   };
 
   const handleSearchChange = (event) => {
-    console.log(event)
+    console.log(event);
     setSearchQuery(event.target.value);
     setCurrentPage(1);
   };

@@ -48,7 +48,7 @@ const GradingModal = ({
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       console.log("Grade submitted successfully", response.data);
       alert("Success");

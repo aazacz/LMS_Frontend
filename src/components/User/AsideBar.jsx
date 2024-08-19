@@ -24,7 +24,7 @@ const Asidebar = ({ course, setTutorModal, setStudentModal }) => {
 
   return (
     <>
-      <div className="relative bg-slate-200 lg:w-[30%] w-full flex flex-col ">
+      <div className="relative bg-slate-200 lg:w-[30%] w-full h-full flex flex-col ">
         <h1 className="font-Roboto text-2xl font-bold line-clamp-2 py-2 px-5">
           {course ? course.courseName : ""}
         </h1>

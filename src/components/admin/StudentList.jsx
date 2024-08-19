@@ -30,7 +30,7 @@ const StudentList = () => {
     setLoading(true);
     try {
       const response = await AdminAxiosInstance.get(
-        `api/students/getAll-students?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}&sort=${sortOrder}`
+        `api/students/getAll-students?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}&sort=${sortOrder}`,
       );
       setTotalRows(response.data.totalRows);
       setLoading(false);
@@ -151,7 +151,7 @@ const StudentList = () => {
         confirmButtonText: "Delete",
         didOpen: () => {
           const progressBar = Swal.getHtmlContainer().querySelector(
-            ".swal2-timer-progress-bar"
+            ".swal2-timer-progress-bar",
           );
           if (progressBar) {
             progressBar.style.backgroundColor = "#3085d6";
@@ -160,7 +160,7 @@ const StudentList = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           AdminAxiosInstance.delete(
-            `api/students/delete-students/${Studentid}`
+            `api/students/delete-students/${Studentid}`,
           ).then((res) => {
             console.log(res);
             refetch();
@@ -190,7 +190,7 @@ const StudentList = () => {
     console.log(blockId);
     try {
       await AdminAxiosInstance.patch(
-        `api/students/block-students/${blockId}`
+        `api/students/block-students/${blockId}`,
       ).then((response) => {
         console.log(response);
         if (response.data.status === "blocked") {
@@ -208,7 +208,7 @@ const StudentList = () => {
     console.log(blockId);
     try {
       await AdminAxiosInstance.patch(
-        `api/students/unblock-students/${blockId}`
+        `api/students/unblock-students/${blockId}`,
       ).then((response) => {
         console.log(response);
         if (response.data.status === "active") {

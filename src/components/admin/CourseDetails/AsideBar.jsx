@@ -173,6 +173,8 @@ const ModuleRow = ({
   onEditClick,
   onDeleteClick,
   setSelectedSession,
+  setSelectedModuleId,
+  setShowForm,
 }) => {
   const [showSessions, setShowSessions] = useState(false);
   return (
@@ -480,7 +482,9 @@ const Asidebar = ({ course, setTutorModal, setStudentModal, refetch }) => {
                   }}
                   onDeleteClick={handleDeleteSession}
                   setSelectedSession={setSelectedSession}
+                  setSelectedModuleId={setSelectedModuleId}
                   value={value}
+                  setShowForm={setShowForm}
                   key={value._id}
                   index={index}
                 />

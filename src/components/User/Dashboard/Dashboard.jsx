@@ -14,6 +14,7 @@ import { PiNotepadBold } from "react-icons/pi";
 import Loader from "../../reusable/Loader";
 import { axiosInstanceStudent } from "../../../routes/UserRoutes";
 import { Link } from "react-router-dom";
+import { ClockIcon } from "lucide-react";
 
 //  courseName,
 //  courseId,
@@ -37,6 +38,10 @@ const SessionCard = ({ sessionData }) => {
         <p className="flex gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white ">
           {sessionData.moduleName}
         </p>
+        <div className="flex items-center gap-2 rounded-xl p-2 text-sm font-poppins font-semibold bg-white ">
+          <ClockIcon size={"1rem"} />
+          {`${sessionData.sessionDurationHours} h ${sessionData.sessionDurationMinutes} m`}
+        </div>
         {/* <p className="flex justify-center items-center gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white">
           <FaClock />
           1Hr 30Min

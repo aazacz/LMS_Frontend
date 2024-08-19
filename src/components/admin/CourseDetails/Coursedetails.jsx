@@ -84,13 +84,16 @@ const Coursedetails = ({ edit }) => {
     );
     setActiveTab(tab);
   };
-
+  const fetchCourse = () => {
+    AdminAxiosInstance.get(`api/course/get-course/${courseId}`).then(
+      (response) => {
+        console.log(response.data);
+        SetCourse(response.data);
+      }
+    );
+  };
   useEffect(() => {
-    AdminAxiosInstance.get(`api/course/get-course/${courseId}`,
-    ).then((response) => {
-      console.log(response.data);
-      SetCourse(response.data);
-    });
+    fetchCourse();
   }, [courseId]);
 
   useEffect(() => {

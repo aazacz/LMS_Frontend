@@ -29,7 +29,7 @@ AdminAxiosInstance.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 AdminAxiosInstance.interceptors.response.use(
@@ -42,30 +42,22 @@ AdminAxiosInstance.interceptors.response.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
-
-
-
-
-
 const AdminRoutes = () => {
-  
-  
   const [showModal, setShowModal] = useState(true);
-  
+
   const handleClose = () => {
     setShowModal(false);
   };
-
 
   const user = useSelector((state) => state.AdminDetails.token);
   token = useSelector((state) => state.AdminDetails.token);
 
   return (
     <>
-    {/* {showModal && (
+      {/* {showModal && (
         <InfoModal
           Line1="I added a text editor to the course structure and course, "
           Line2="Therefore you may face error with old course and courseSturuture datas"
@@ -73,17 +65,17 @@ const AdminRoutes = () => {
           onClose={handleClose}
         />
       )} */}
-    <Routes>
-      <Route
-        path="/"
-        element={user ? <Navigate to="/admin/home" /> : <AdminLogin />}
-      />
-      <Route
-        path="/home/*"
-        element={user ? <Homepage /> : <Navigate to="/admin" />}
-      />
-      <Route path="/*" element={<ErrorPage />} />
-    </Routes>
+      <Routes>
+        <Route
+          path="/"
+          element={user ? <Navigate to="/admin/home" /> : <AdminLogin />}
+        />
+        <Route
+          path="/home/*"
+          element={user ? <Homepage /> : <Navigate to="/admin" />}
+        />
+        <Route path="/*" element={<ErrorPage />} />
+      </Routes>
     </>
   );
 };

@@ -4,9 +4,6 @@ const TopPerformer = ({best}) => {
   return (
     
 
-
-
-
     <div className="w-full  h-72 flex flex-col">
     <p className="text-sm font-semibold p-2">Top Performers in Tests</p>
     <div className="w-full  h-64  overflow-y-scroll no-scrollbar ">
@@ -32,3 +29,4 @@ const TopPerformer = ({best}) => {
 }
 
 export default TopPerformer
+

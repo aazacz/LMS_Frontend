@@ -13,7 +13,7 @@ const ReusablePagination = ({
     <div className="pagination-container mt-5 ">
       <div className="select-container ">
         <select value={pageSize} onChange={handlePageSizeChange} className="border border-gray-300 rounded-md px-3 py-2">
-          <option value="10">10</option>
+          <option value="12">12</option>
           <option value="25">25</option>
           <option value="100">100</option>
         </select>

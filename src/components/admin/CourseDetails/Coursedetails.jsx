@@ -12,6 +12,7 @@ import ReviewContent from "./ReviewContent";
 import TestsContent from "./TestsContent";
 import ListModal from "./ListModal";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
+import { PiChalkboardTeacherBold } from "react-icons/pi";
 
 const Coursedetails = ({ edit }) => {
   const baseUrl = process.env.REACT_APP_API_URL;
@@ -85,13 +86,12 @@ const Coursedetails = ({ edit }) => {
   };
 
   useEffect(() => {
-    AdminAxiosInstance.get(`api/course/get-course/${courseId}`, {
-      headers: { authorization: `Bearer ${token}` },
-    }).then((response) => {
+    AdminAxiosInstance.get(`api/course/get-course/${courseId}`,
+    ).then((response) => {
       console.log(response.data);
       SetCourse(response.data);
     });
-  }, [baseUrl, courseId, token]);
+  }, [courseId]);
 
   useEffect(() => {
     console.log(courseId);
@@ -243,7 +243,11 @@ const Coursedetails = ({ edit }) => {
                   </span>
                   <span className="flex items-center gap-x-1 text-sm font-poppins">
                     <LuTimer className="text-gray-400" />
-                    {Course && Course.trainingDuration}Hrs
+                    {Course && Course.trainingDuration}
+                  </span>
+                  <span className="flex items-center gap-x-1 text-sm font-poppins">
+                    <BiSpreadsheet className="text-gray-400" />
+                    {Course && Course.courseType}
                   </span>
                 </div>
               </div>

@@ -341,7 +341,7 @@ const AddCourseStructure = ({ view }) => {
     if (Image) {
       formData.append("image", Image);
 
-      console.log("vvalue in the formdata");
+      console.log("value in the formdata");
       console.log(formData.get("image"));
     }
     try {
@@ -413,10 +413,7 @@ const AddCourseStructure = ({ view }) => {
   };
 
   const deleteHandler = () => {
-    axios
-      .delete(`${baseURL}/api/structure/delete/${structureId}`, {
-        headers: { authorization: `Bearer ${token}` },
-      })
+    AdminAxiosInstance.delete(`/api/structure/delete/${structureId}`)
       .then((res) => {
         if (res.data.message === "Structure deleted successfully") {
           Swal.fire({
@@ -427,12 +424,17 @@ const AddCourseStructure = ({ view }) => {
             icon: "success",
           });
           navigate("/admin/home/courseStructure");
+        } else {
+          throw new Error(res.data.error || "Unknown error occurred");
         }
       })
       .catch((error) => {
-        console.warn(error);
-        console.warn(error.message);
-        throw new Error(error.message);
+        console.error("Error deleting structure:", error);
+        Swal.fire({
+          title: "Error",
+          text: error.response?.data?.error || error.message || "Failed to delete the structure",
+          icon: "error",
+        });
       });
   };
 
@@ -462,6 +464,26 @@ const AddCourseStructure = ({ view }) => {
             deleteHandler();
           }
         });
+      }
+    });
+  };
+
+  const handleCancel = () => {
+    // Reset the form to its original state or navigate back
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Any unsaved changes will be lost.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel changes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If the user confirms, navigate back or reset the form
+        navigate(-1);
+        // Alternatively, you could reset the form to its initial state:
+        // setCourse(initialCourseState);
       }
     });
   };
@@ -498,7 +520,7 @@ const AddCourseStructure = ({ view }) => {
           </h1>
           <div className="flex gap-x-4">
             <MdDelete
-              onClick={() => handleDeleteCourse}
+              onClick={() => handleDeleteCourse(structureId)}
               className="text-3xl text-red-600 cursor-pointer "
             />{" "}
             <FaEdit
@@ -509,7 +531,9 @@ const AddCourseStructure = ({ view }) => {
         </div>
       ) : (
         <h1 className="font-bold font-poppins text-xl md:text-2xl pb-6 flex items-center justify-between md:justify-start gap-x-4">
-          <button onClick={() => navigate("/admin/home/courseStructure")}><IoChevronBackCircleOutline className="text-4xl"/></button>
+          <button onClick={() => navigate("/admin/home/courseStructure")}>
+            <IoChevronBackCircleOutline className="text-4xl" />
+          </button>
           {structureId
             ? "Edit Course Structure"
             : "Create New Course Structure"}{" "}
@@ -976,25 +1000,37 @@ const AddCourseStructure = ({ view }) => {
           );
         })}
 
-        <div className="flex items-center justify-end ">
-          {!View &&
-            (structureId ? (
-              <button
-                onClick={(e) => submitHandler(e)}
-                type="submit"
-                className="px-8 py-2 bg-blue-700 hover:bg-blue-600 rounded-md text-white"
-              >
-                Update
-              </button>
-            ) : (
-              <button
-                onClick={(e) => submitHandler(e)}
-                type="submit"
-                className="px-8 py-2 bg-green-900 rounded-md text-white"
-              >
-                Submit
-              </button>
-            ))}
+        <div className="flex items-center justify-end gap-4">
+          {!View && (
+            <>
+              {structureId ? (
+                <>
+                  <button
+                    onClick={handleCancel}
+                    type="button"
+                    className="px-8 py-2 bg-gray-500 hover:bg-gray-400 rounded-md text-white"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={(e) => submitHandler(e)}
+                    type="submit"
+                    className="px-8 py-2 bg-blue-700 hover:bg-blue-600 rounded-md text-white"
+                  >
+                    Update
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={(e) => submitHandler(e)}
+                  type="submit"
+                  className="px-8 py-2 bg-green-900 rounded-md text-white"
+                >
+                  Submit
+                </button>
+              )}
+            </>
+          )}
         </div>
       </form>
     </div>

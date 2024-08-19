@@ -15,7 +15,7 @@ export default {
 
       'md': '768px',
 
-      'dm': '830px',
+      'dm': '850px',
 
       'dg': '1100px',
 

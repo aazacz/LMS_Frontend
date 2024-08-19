@@ -1,40 +1,33 @@
 // usePaginationData.js
 import { useState, useEffect, useCallback } from "react";
-import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
 import { useQuery } from "@tanstack/react-query";
+import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
 
 const usePaginationData = (
   initialPage = 1,
-  initialPageSize = 10,
+  initialPageSize = 12,
   initialSearchQuery = ""
 ) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
-  const [totalRows, setTotalRows] = useState(0);
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchData = useCallback(async () => {
-    setLoading(true);
     try {
       const response = await AdminAxiosInstance.get(
-        `api/course/get-all-course?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}`
+        `api/course/get-all-course?page=${currentPage}&pageSize=${pageSize}&search=${searchQuery}&category=${category}&sortBy=${sortBy}`
       );
+      setType(response.data.type);
 
-      console.log("response.data.data in pagination");
-      console.log(response.data.data);
-      setTotalRows(response.data.totalRows);
-      setLoading(false);
-      return response.data.data;
+      return response.data;
     } catch (error) {
       setError(error);
-      setLoading(false);
     }
-  });
+  }, [currentPage, pageSize, searchQuery]);
 
   const { data, isPending, isError, refetch } = useQuery({
-    queryKey: ["courseList"],
+    queryKey: ["courseList", currentPage, pageSize, searchQuery],
     queryFn: fetchData,
     staleTime: 1000,
     refetchInterval: 600000,
@@ -42,7 +35,7 @@ const usePaginationData = (
 
   useEffect(() => {
     refetch();
-  }, [currentPage, pageSize, searchQuery]);
+  }, [currentPage, pageSize, searchQuery, refetch]);
 
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
@@ -54,20 +47,18 @@ const usePaginationData = (
   };
 
   const handleSearchChange = (event) => {
-    console.log(event)
     setSearchQuery(event.target.value);
     setCurrentPage(1);
   };
 
   return {
-    courses: data ? data : [],
+    courses: data?.data || [],
     isPending,
     isError,
     currentPage,
     pageSize,
-    totalRows,
+    totalRows: data?.totalRows || 0,
     searchQuery,
-    loading,
     error,
     handlePageChange,
     handlePageSizeChange,

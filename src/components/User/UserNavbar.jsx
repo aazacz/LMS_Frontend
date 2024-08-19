@@ -1,13 +1,24 @@
-import React, { useEffect, useState }   from "react";
-import { useDispatch, useSelector }     from "react-redux";
-import { FaBars }                       from "react-icons/fa";
-import logo                             from "../../assets/mindsatlogo.webp";
-import { Link, useNavigate }            from "react-router-dom";
-import { motion, AnimatePresence }      from "framer-motion";
-import { LiaSignOutAltSolid }           from "react-icons/lia";
-import { clearStudentDetails }          from "../../store/reducers/StudentloginSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FaBars } from "react-icons/fa";
+import logo from "../../assets/mindsatlogo.webp";
+import { Link, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { LiaSignOutAltSolid } from "react-icons/lia";
+import { clearStudentDetails } from "../../store/reducers/StudentloginSlice";
+import "./UserNavbar.css";
 
-const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
+const UserNavbar = ({
+  toggleSidebar,
+  isSidebarOpen,
+  User,
+  coursesRef,
+  tutorRef,
+  teamRef,
+  plansRef,
+  diagnosisRef,
+  contactRef,
+}) => {
   const [Showsidebar, setShowsidebar] = useState(false);
   const [show, setShow] = useState(false);
 
@@ -15,8 +26,8 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
   const student = useSelector((state) => state.StudentDetails);
   const userName = useSelector((state) => state.StudentDetails.userName);
   const navigate = useNavigate();
-  
-  console.log(student)
+
+  console.log(student);
   // console.log(userName[0])
   const [NameLetter, SetNameLetter] = useState(userName ? userName[0] : "");
 
@@ -36,9 +47,15 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
     navigate("/");
   };
 
+  const scrollToSection = (ref) => {
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div
-      className="Test  px-8 justify-between w-full h-[12vh]
+      className="navbar-container px-8 justify-between w-full h-[12vh]
                   border-b-[1px] flex items-center  relative 
                  transition-all duration-500"
     >
@@ -62,15 +79,17 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
               <Link to={"/student/courses"}>
                 <div
                   onClick={() => setShowsidebar(false)}
-                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700"  >
+                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700"
+                >
                   Courses
                 </div>
               </Link>
-            
+
               <Link to={"/student/assignments"}>
                 <div
                   onClick={() => setShowsidebar(false)}
-                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700" >
+                  className="w-full h-[50px] bg-gray-100 hover:bg-gray-200  flex justify-center border-b-2 items-center px-5 text-xl font-Roboto font-medium text-blue-700"
+                >
                   Assignment
                 </div>
               </Link>
@@ -139,46 +158,42 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
                 !show ? "-translate-y-[1280px]" : ""
               } xl:hidden fixed top-[12vh] right-0 w-full bg-white h-max transition-transform duration-700 ease-in-out flex flex-col items-center`}
             >
-              <Link to={"/login"}>
-                <div
-                  onClick={() => setShow(false)}
-                  className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
-                >
-                  Courses
-                </div>
-              </Link>
-              <Link to={"/login"}>
-                <div
-                  onClick={() => setShow(false)}
-                  className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
-                >
-                  Tutors
-                </div>
-              </Link>
-              <Link to={"/login"}>
-                <div
-                  onClick={() => setShow(false)}
-                  className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
-                >
-                  Pricing
-                </div>
-              </Link>
-              <Link to={"/login"}>
-                <div
-                  onClick={() => setShow(false)}
-                  className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
-                >
-                  Diagnose Test
-                </div>
-              </Link>
-              <Link to={"/login"}>
-                <div
-                  onClick={() => setShow(false)}
-                  className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
-                >
-                  Contact
-                </div>
-              </Link>
+              <button
+                className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                onClick={() => scrollToSection(coursesRef)}
+              >
+                Courses
+              </button>
+              <button
+                className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                onClick={() => scrollToSection(tutorRef)}
+              >
+                Tutors
+              </button>
+              <button
+                className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                onClick={() => scrollToSection(teamRef)}
+              >
+                Team
+              </button>
+              <button
+                className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                onClick={() => scrollToSection(plansRef)}
+              >
+                Pricing
+              </button>
+              <button
+                className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                onClick={() => scrollToSection(diagnosisRef)}
+              >
+                Diagnosis Test
+              </button>
+              <button
+                className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                onClick={() => scrollToSection(contactRef)}
+              >
+                Contact
+              </button>
               <Link to={"/login"}>
                 <div
                   onClick={() => setShow(false)}
@@ -198,40 +213,48 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
             </div>
           </>
         )}
-       
-       
-       {/*Show the profile image if the user is already logged in    */}
-        {!user 
-           &&
-        (
+
+        {/*Show the profile image if the user is already logged in    */}
+        {!user && (
           <div className="hidden xl:flex xl:w-[90%] justify-end items-center h-full">
             <div className="h-1/2 flex gap-8 justify-between">
               <div className="flex gap-5">
-                <Link to={"/login"}>
-                  <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
-                    Courses
-                  </button>
-                </Link>
-                <Link to={"/login"}>
-                  <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
-                    Tutors
-                  </button>
-                </Link>
-                <Link to={"/login"}>
-                  <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
-                    Team
-                  </button>
-                </Link>
-                <Link to={"/login"}>
-                  <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
-                    Pricing
-                  </button>
-                </Link>
-                <Link to={"/login"}>
-                  <button className="px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold">
-                    Diagnose Test
-                  </button>
-                </Link>
+                <button
+                  className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                  onClick={() => scrollToSection(coursesRef)}
+                >
+                  Courses
+                </button>
+                <button
+                  className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                  onClick={() => scrollToSection(tutorRef)}
+                >
+                  Tutors
+                </button>
+                <button
+                  className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                  onClick={() => scrollToSection(teamRef)}
+                >
+                  Team
+                </button>
+                <button
+                  className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                  onClick={() => scrollToSection(plansRef)}
+                >
+                  Pricing
+                </button>
+                <button
+                  className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                  onClick={() => scrollToSection(diagnosisRef)}
+                >
+                  Diagnosis Test
+                </button>
+                <button
+                  className="text-left px-3 text-[16px] h-[35px] text-blue-700 font-poppins font-bold"
+                  onClick={() => scrollToSection(contactRef)}
+                >
+                  Contact
+                </button>
               </div>
               <div className="flex items-center gap-8 justify-center ">
                 <Link to={"/login"}>
@@ -254,7 +277,3 @@ const UserNavbar = ({ toggleSidebar, isSidebarOpen, User }) => {
 };
 
 export default UserNavbar;
-
-
-
-

@@ -57,7 +57,7 @@ const Coursedetails = () => {
               </span>
               <span className="flex items-center gap-x-1 text-sm font-poppins">
                 <LuTimer className="text-gray-400" />{" "}
-                {course?.trainingDuration || "N/A"} Hrs
+                {course?.trainingDuration || "N/A"}
               </span>
               <span className="flex items-center gap-x-1 text-sm font-poppins">
                 <PiChalkboardTeacherBold className="text-gray-400" /> Tutors:{" "}

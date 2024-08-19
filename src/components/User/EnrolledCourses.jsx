@@ -183,7 +183,7 @@ const CourseCard = ({ course }) => {
       <div className="w-full mt-4">
         <div className="min-h-[3rem]">
           <h1 className="font-poppins font-semibold text-base line-clamp-2">
-            {course.courseName}
+            {course?.courseName || "Course Name"}
           </h1>
         </div>
         <div className="flex flex-col md:flex-row md:items-center gap-x-2 ">
@@ -193,10 +193,12 @@ const CourseCard = ({ course }) => {
         </div>
         <div className="flex items-center gap-x-6 mt-2">
           <span className="flex items-center gap-x-1 text-sm font-poppins">
-            <BiSpreadsheet className="text-gray-400" /> 5 Modules
+            <BiSpreadsheet className="text-gray-400" />{" "}
+            {course?.modules?.length || 0} Modules
           </span>
           <span className="flex items-center gap-x-1 text-sm font-poppins">
-            <LuTimer className="text-gray-400" /> 60Hrs
+            <LuTimer className="text-gray-400" />{" "}
+            {course?.trainingDuration || "N/A"}
           </span>
         </div>
       </div>

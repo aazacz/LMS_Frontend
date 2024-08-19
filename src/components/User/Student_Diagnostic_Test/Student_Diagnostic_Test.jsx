@@ -14,9 +14,8 @@ const Student_Diagnostic_Test = () => {
       try {
         console.log("else execeuted");
         const response = await axiosInstanceStudent.get(
-          `api/test/diagnosis-test-active`
+          `api/diagnosis/diagnosis-test-active`
         );
-
         console.log("response");
         console.log(response);
 

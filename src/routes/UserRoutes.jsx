@@ -71,14 +71,14 @@ const UserRoutes = () => {
 
   return (
     <>
-       {showModal && (
+       {/* {showModal && (
         <InfoModal
           Line1="I added a text editor to the course structure and course, "
           Line2="Therefore you may face error with old course and courseSturuture datas"
           Line3="If error occurs create new COURSE AND COURSE STURUCTURE," 
           onClose={handleClose}
         />
-      )}
+      )} */}
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Homepage />} />

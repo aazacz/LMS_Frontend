@@ -38,7 +38,7 @@ const DiagnosisTest = () => {
     async function fetchQuestions() {
       try {
         const response = await axiosInstanceStudent.get(
-          `api/test/diagnosis-test-active`
+          `api/diagnosis/diagnosis-test-active`
         );
         const data = response.data;
         console.log("Fetched Data:", data);

@@ -21,15 +21,15 @@ const QuestionBank = () => {
   const [selectedSubmission, setSelectedSubmission] = useState(null);
   const [selectedTestId, setSelectedTestId] = useState(null);
 
-
   //useQuery function calling
   const fetchQuestions = async () => {
-    const response = await TutorAxiosInstance.get("api/test/course-tests?page=1&pageSize=10&search=");
+    const response = await TutorAxiosInstance.get(
+      "api/test/course-tests?page=1&pageSize=10&search=",
+    );
     console.log(response.data.data);
     return response.data.data;
   };
 
-  
   const { data: reviewData, isPending: reviewLoading } = useQuery({
     queryKey: ["getReviewList", selectedTestId],
     queryFn: () => fetchReviewList(selectedTestId),
@@ -38,45 +38,46 @@ const QuestionBank = () => {
     cacheTime: 1000 * 60 * 10,
   });
 
-  
   const fetchReviewList = async (testId) => {
     try {
       console.log("fetch Review List step 1");
-      const response = await TutorAxiosInstance.get(`api/test/submissions/${testId}`);
+      const response = await TutorAxiosInstance.get(
+        `api/test/submissions/${testId}`,
+      );
       console.log("fetch Review List step 2");
       console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error fetching review list:", error);
-      console.error( error.response.data.error);
+      console.error(error.response.data.error);
       // You can also throw the error again or handle it according to your needs
       return error.response.data.error;
     }
   };
-  
-  
+
   const { data: questionsData, isPending: questionsLoading } = useQuery({
     queryKey: ["fetchAllTests"],
     queryFn: fetchQuestions,
     staleTime: 1000 * 60 * 5,
     cacheTime: 1000 * 60 * 10,
   });
- 
+
   const fetchSubmissionList = async (submissionId) => {
     try {
       console.log("fetch Submission List step 1");
-      const response = await TutorAxiosInstance.get(`api/test/course-results/${submissionId}`);
+      const response = await TutorAxiosInstance.get(
+        `api/test/course-results/${submissionId}`,
+      );
       console.log("fetch Submission List step 2");
       console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error fetching review list:", error);
-      console.error( error.response.data.error);
+      console.error(error.response.data.error);
       // You can also throw the error again or handle it according to your needs
       return error.response.data.error;
     }
   };
-
 
   // const { data: submissionsData, isPending: submissionLoading } = useQuery({
   //   queryKey: ["fetchSubmissionList", selectedSubmission],
@@ -86,9 +87,6 @@ const QuestionBank = () => {
   //   cacheTime: 1000 * 60 * 10,
   // });
 
-
- 
- 
   const handleView = (data) => {
     console.log("open modal function clicked");
     setdata([data]);
@@ -97,19 +95,17 @@ const QuestionBank = () => {
   };
 
   const handleReview = (test) => {
-    console.log("review funciotn is triggered")
-    console.log(test)
+    console.log("review funciotn is triggered");
+    console.log(test);
     setSelectedTest(test);
     setSelectedTestId(test);
     setIsReviewModalOpen(true);
   };
 
-
-
   const handleSubmissionView = (submission) => {
-    console.log("submission")
-    console.log(submission)
-    console.log(submission)
+    console.log("submission");
+    console.log(submission);
+    console.log(submission);
     setSelectedSubmission(submission);
     setIsSubmissionModalOpen(true);
   };
@@ -124,32 +120,76 @@ const QuestionBank = () => {
     setIsSubmissionModalOpen(false);
   };
 
-
-
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
   const best = [
-    { name: "John Doe", email: "john.doe@example.com"     ,image:"/photo1.jpg"},
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo2.jpg"},
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo3.jpg"},
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo4.jpg"},
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo5.jpg"},
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo6.jpg"},
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo7.jpg"},
+    { name: "John Doe", email: "john.doe@example.com", image: "/photo1.jpg" },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo2.jpg",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo3.jpg",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo4.jpg",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo5.jpg",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo6.jpg",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo7.jpg",
+    },
   ];
   const least = [
-    { name: "John Doe",   email: "john.doe@example.com  " ,image:"/photo8.jpg"       },
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo7.jpg" },
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo6.jpg" },
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo5.jpg" },
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo4.jpg" },
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo3.jpg" },
-    { name: "Jane Smith", email: "jane.smith@example.com" ,image:"/photo2.jpg" },
+    { name: "John Doe", email: "john.doe@example.com  ", image: "/photo8.jpg" },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo7.jpg",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo6.jpg",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo5.jpg",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo4.jpg",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo3.jpg",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane.smith@example.com",
+      image: "/photo2.jpg",
+    },
   ];
-
-
 
   return (
     <div className="font-poppins w-full h-max flex flex-row-reverse justify-left items-left relative">
@@ -170,8 +210,8 @@ const QuestionBank = () => {
 
       {/* Aside Bar */}
       <div className="w-[320px] h-max  flex-col justify-center items-center  pl-4 gap-2 font-poppins border-l border-black hidden lg:block">
-          <TopPerformer   best={best}  />
-          <LeastPerformer least={least}  />
+        <TopPerformer best={best} />
+        <LeastPerformer least={least} />
       </div>
 
       {/* Body */}
@@ -196,7 +236,6 @@ const QuestionBank = () => {
 
             {/* Table */}
             <TestTable handleReview={handleReview} handleView={handleView} />
-        
           </div>
         </div>
       </div>

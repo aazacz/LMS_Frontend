@@ -18,7 +18,6 @@ import { PiStudentFill } from "react-icons/pi";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 const TutorSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
-  
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -178,30 +177,29 @@ const TutorSideBar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
                 ))}
               </SubMenu>
             ) : (
-              
-                <MenuItem
-                  className={`relative side-menu-item menu ${
-                    isActive(link.path)
-                      ? "bg-blue-500 text-black"
-                      : "side-menu-item"
-                  }`}
-                  icon={link.icon}
-                  onClick={() => {
-                    setIsSidebarOpen(false);
-                    navigate(link.path);
-                  }}
-                >
-                  {collapsed ? (
-                    <div className="group">
-                      <span className="absolute left-full ml-2 w-full p-2 bg-gray-800 text-white text-sm rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        {link.title}
-                      </span>
-                    </div>
-                  ) : (
-                    link.title
-                  )}
-                </MenuItem>
-            )
+              <MenuItem
+                className={`relative side-menu-item menu ${
+                  isActive(link.path)
+                    ? "bg-blue-500 text-black"
+                    : "side-menu-item"
+                }`}
+                icon={link.icon}
+                onClick={() => {
+                  setIsSidebarOpen(false);
+                  navigate(link.path);
+                }}
+              >
+                {collapsed ? (
+                  <div className="group">
+                    <span className="absolute left-full ml-2 w-full p-2 bg-gray-800 text-white text-sm rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {link.title}
+                    </span>
+                  </div>
+                ) : (
+                  link.title
+                )}
+              </MenuItem>
+            ),
           )}
           <Tooltip title="Logout" arrow placement="right">
             <button

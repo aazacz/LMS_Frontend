@@ -28,6 +28,8 @@ const UserNavbar = ({
   const navigate = useNavigate();
 
   console.log(student);
+
+  console.log(student);
   // console.log(userName[0])
   const [NameLetter, SetNameLetter] = useState(userName ? userName[0] : "");
 

@@ -6,7 +6,7 @@ const usePaginationData = (
   courseId,
   initialPage = 1,
   initialPageSize = 10,
-  initialSearchQuery = ""
+  initialSearchQuery = "",
 ) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -20,7 +20,7 @@ const usePaginationData = (
     setLoading(true);
     try {
       const response = await AdminAxiosInstance.get(
-        `api/course/student-enrolled/${courseId}`
+        `api/course/student-enrolled/${courseId}`,
       );
       console.log("Student list");
 

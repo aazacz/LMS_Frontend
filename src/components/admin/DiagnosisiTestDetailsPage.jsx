@@ -12,7 +12,7 @@ const DiagnosisiTestDetailsPage = () => {
   console.log({ diagnosisTestDetailsPage });
   useEffect(() => {
     AdminAxiosInstance.get(
-      `api/diagnosis/diagnosis-tests/${diagnosisTestDetailsPage}`
+      `api/diagnosis/diagnosis-tests/${diagnosisTestDetailsPage}`,
     ).then((res) => {
       console.log("res.data from the Diagnosis test page");
       console.log(res.data);
@@ -27,7 +27,7 @@ const DiagnosisiTestDetailsPage = () => {
           className="w-fit  p-2 bg-slate-400 rounded-md text-white"
           onClick={() => {
             navigate(
-              `/admin/home/diagnosistest/edit/${diagnosisTestDetailsPage}`
+              `/admin/home/diagnosistest/edit/${diagnosisTestDetailsPage}`,
             );
           }}
         >
@@ -73,7 +73,9 @@ const DiagnosisiTestDetailsPage = () => {
                           <li
                             key={cIndex}
                             className={` list-disc	 ${
-                              choice.isCorrect ? "text-green-600" : "text-red-600"
+                              choice.isCorrect
+                                ? "text-green-600"
+                                : "text-red-600"
                             }`}
                           >
                             {choice.choiceText}

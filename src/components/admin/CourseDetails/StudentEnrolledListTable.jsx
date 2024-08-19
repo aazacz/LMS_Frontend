@@ -1,15 +1,12 @@
-import React,{useEffect, useState} from 'react'
-import usePaginationData from './usePaginationData'
-import { Link }             from 'react-router-dom'
-import Loader               from '../../reusable/Loader'
-import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
-import { toast } from 'react-toastify'
-import Swal from 'sweetalert2'
+import React, { useEffect, useState } from "react";
+import usePaginationData from "./usePaginationData";
+import { Link } from "react-router-dom";
+import Loader from "../../reusable/Loader";
+import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
-
-const StudentEnrolledListTable = ({courseId}) => {
-
-
+const StudentEnrolledListTable = ({ courseId }) => {
   const {
     courses,
     isPending,
@@ -21,58 +18,54 @@ const StudentEnrolledListTable = ({courseId}) => {
     handlePageSizeChange,
     handleSearchChange,
     error,
-    refetch
-  } = usePaginationData(courseId)
+    refetch,
+  } = usePaginationData(courseId);
 
+  const handleDelete = async (studentId) => {
+    try {
+      console.log("studentId");
+      console.log(studentId);
 
- 
-    const handleDelete = async (studentId) => {
-        try {
-          console.log("studentId");
-          console.log(studentId);
-    
-          const response = await AdminAxiosInstance.delete(`api/course/remove-student/${courseId}/${studentId}`);
-    
-          if (response.data.message === "Student removed successfully") {
-            toast.success("Student removed successfully");
-            refetch();
-          } else if (response.data.message === "Student not found in the course") {
-            toast.error("Student not found in the course");
-          } else {
-            return;
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      };
-    
-      
-      const confirmDelete = (studentId, event) => {
-        event.preventDefault();
-    
-        Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes"
-        }).then((result) => {
-          if (result.isConfirmed) {
-            handleDelete(studentId);
-          }
-        });
-      };
+      const response = await AdminAxiosInstance.delete(
+        `api/course/remove-student/${courseId}/${studentId}`,
+      );
 
-        
-    const columns = [
-      
-        { field: 'name', headerName: 'Name' },
-        { field: 'email', headerName: 'Email' },
-        { field: 'Action', headerName: 'Action' }
-    
-    ]
+      if (response.data.message === "Student removed successfully") {
+        toast.success("Student removed successfully");
+        refetch();
+      } else if (response.data.message === "Student not found in the course") {
+        toast.error("Student not found in the course");
+      } else {
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const confirmDelete = (studentId, event) => {
+    event.preventDefault();
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDelete(studentId);
+      }
+    });
+  };
+
+  const columns = [
+    { field: "name", headerName: "Name" },
+    { field: "email", headerName: "Email" },
+    { field: "Action", headerName: "Action" },
+  ];
 
   const formatDate = (date) => {
     const options = {

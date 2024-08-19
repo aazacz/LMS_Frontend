@@ -283,7 +283,11 @@ const Coursedetails = ({ edit }) => {
                 )}
               </div>
             </div>
-            <Asidebar className="hidden lg:block" {...asidebarProps} />
+            <Asidebar
+              refetch={fetchCourse}
+              className="hidden lg:block"
+              {...asidebarProps}
+            />
           </div>
         </>
       )}

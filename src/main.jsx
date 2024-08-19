@@ -34,5 +34,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <ToastContainer />
       </PersistGate>
     </Provider>
-  </ErrorBoundary>
+  </ErrorBoundary>,
 );

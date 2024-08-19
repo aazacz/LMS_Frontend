@@ -15,6 +15,9 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Defaultcourseimage from "../../assets/Admin/Defaultcourseimage.png";
 import { TbCategory } from "react-icons/tb";
+import TextEditor from "../reusable/TextEditor";
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const AddCourseStructure = ({ view }) => {
   const navigate = useNavigate();
@@ -36,7 +39,7 @@ const AddCourseStructure = ({ view }) => {
     trainingDuration: "",
     hoursPerDay: "",
     price: "",
-    description: "",
+    description: EditorState.createEmpty(),
     modules: [
       {
         moduleName: "",
@@ -55,15 +58,29 @@ const AddCourseStructure = ({ view }) => {
     groupCourse: true,
   });
 
+
+  const onEditorStateChange = (newState) => {
+    setCourse(prevState => ({
+      ...prevState,
+      description: newState
+    }));
+  };
+  
+
+
+
   const convertCourseToFormData = (course) => {
     const formData = new FormData();
+   
+    const rawContent = convertToRaw(course.description.getCurrentContent());
 
     formData.append("courseName", course.courseName);
     formData.append("package", course.package);
     formData.append("trainingDuration", course.trainingDuration);
     formData.append("hoursPerDay", course.hoursPerDay);
     formData.append("price", course.price);
-    formData.append("description", course.description);
+    // formData.append("description", course.description);
+    formData.append('description', JSON.stringify(rawContent));
     formData.append("individualCourse", course.individualCourse);
     formData.append("groupCourse", course.groupCourse);
     formData.append("modules", JSON.stringify(course.modules));
@@ -83,7 +100,7 @@ const AddCourseStructure = ({ view }) => {
       try {
         if (structureId) {
           const response = await AdminAxiosInstance.get(
-            `/api/structure/get/${structureId}`
+            `/api/structure/get/${structureId}`,
           );
           console.log("res.data structureId", response.data);
           if (response.data) {
@@ -100,7 +117,7 @@ const AddCourseStructure = ({ view }) => {
 
   useEffect(() => {
     AdminAxiosInstance.get(
-      "/api/package/get-all-package?page=1&pageSize=10&search="
+      "/api/package/get-all-package?page=1&pageSize=10&search=",
     )
       .then((res) => {
         setPackages(res.data.data);
@@ -152,7 +169,7 @@ const AddCourseStructure = ({ view }) => {
     if (!course.price) {
       validationErrors.price = "Price is required";
     }
-    if (!course.description || !course.description.trim()) {
+    if (!course.description || !JSON.stringify(convertToRaw(course.description.getCurrentContent())) ) {
       validationErrors.description = "Description is required";
     }
 
@@ -161,6 +178,7 @@ const AddCourseStructure = ({ view }) => {
         validationErrors[`modules[${moduleIndex}].moduleName`] =
           "Module Name is required";
       }
+     
       if (!module.moduleDescription || !module.moduleDescription.trim()) {
         validationErrors[`modules[${moduleIndex}].moduleDescription`] =
           "Module Description is required";
@@ -210,7 +228,7 @@ const AddCourseStructure = ({ view }) => {
 
     setCourse((prevData) => {
       const updatedModules = prevData.modules.filter(
-        (_, index) => index !== moduleIndex
+        (_, index) => index !== moduleIndex,
       );
       return {
         ...prevData,
@@ -350,7 +368,7 @@ const AddCourseStructure = ({ view }) => {
         formData,
         {
           "Content-Type": "multipart/form-data",
-        }
+        },
       );
       if (response.data.message === "Image Updated Successfully") {
         toast.success("Image Updated Successfully");
@@ -397,7 +415,7 @@ const AddCourseStructure = ({ view }) => {
           const width = image.width;
           const height = image.height;
 
-          if (width === 300 && height === 200) {
+          if (width >= 300 && height >= 200) {
             setImage(file);
             setImageUrl(reader.result);
           } else {
@@ -776,14 +794,20 @@ const AddCourseStructure = ({ view }) => {
 
         <div className="flex flex-col relative ">
           <label className="text-sm font-semibold">Description</label>
-          <textarea
+        
+         
+          
+          <TextEditor view={view} editorState={course.description}  onEditorStateChange={onEditorStateChange}  />
+                   
+        
+          {/* <textarea
             disabled={View}
             onChange={handleInputChange}
             name="description"
             placeholder="Description"
             value={course.description}
             className="w-full md:h-20 rounded border-[1px] border-gray-500 mt-2 shadow-lg p-2"
-          />
+          /> */}
           {errors.description && (
             <p className="absolute -bottom-4 text-red-500 text-[12px]">
               {errors.description}

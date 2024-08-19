@@ -5,9 +5,7 @@ import { toast } from "react-toastify";
 
 const PaymentForTest = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    displayRazorpay();
-  }, []);
+  const [open, setOpen] = React.useState(false);
   // function loadScript(src) {
   //   try {
   //     return new Promise((resolve) => {
@@ -62,7 +60,9 @@ const PaymentForTest = () => {
           console.log(result);
           if (result.status === 200) {
             toast.success("Payment successful");
-            navigate("/student/diagnosistest/instructions");
+            navigate(`/student/diagnosistestresult`, {
+              replace: true,
+            });
           }
         },
         theme: {
@@ -73,14 +73,30 @@ const PaymentForTest = () => {
       const paymentObject = new window.Razorpay(options);
       paymentObject.open();
     } catch (error) {
+      setOpen(false);
+      if (error.response?.data?.alreadyPaid) {
+        navigate(`/student`, {
+          replace: true,
+        });
+      }
       console.log(error);
     }
   }
   return (
-    <div className="w-full my-[30vh]">
+    <div className="w-full my-[30vh] flex flex-col items-center gap-8">
       <p className="text-center text-2xl font-bold text-sky-600">
-        Preparing you for payment...
+        Pay the test fee to view your results
       </p>
+      <button
+        className="bg-sky-600 text-white mx-auto p-2"
+        onClick={() => {
+          if (open) return;
+          setOpen(true);
+          displayRazorpay();
+        }}
+      >
+        Pay now
+      </button>
     </div>
   );
 };

@@ -23,7 +23,7 @@ const CourseStructureDetails = ({ height }) => {
 
   const handleTabClick = (tab) => {
     setSlideDirection(
-      activeTab === "about" && tab === "module" ? "left" : "right"
+      activeTab === "about" && tab === "module" ? "left" : "right",
     );
     setActiveTab(tab);
   };

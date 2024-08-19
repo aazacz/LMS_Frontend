@@ -47,6 +47,7 @@ const usePaginationData = (
   };
 
   const handleSearchChange = (event) => {
+    console.log(event);
     setSearchQuery(event.target.value);
     setCurrentPage(1);
   };

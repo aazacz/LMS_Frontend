@@ -20,7 +20,7 @@ const Content = () => {
       try {
         setLoading(true);
         const response = await TutorAxiosInstance.get(
-          `api/course/get-all-course?page=1&pageSize=&search=`
+          `api/course/get-all-course?page=1&pageSize=&search=`,
         );
         if (response.status !== 200) {
           throw new Error("Failed to fetch courses");

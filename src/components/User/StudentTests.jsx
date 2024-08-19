@@ -21,7 +21,7 @@ const StudentTests = () => {
       try {
         setLoading(true);
         const response = await axiosInstanceStudent.get(
-          "api/test/Enrolledcourse-coursetestslist"
+          "api/test/Enrolledcourse-coursetestslist",
         );
         console.log("response.data", response.data.data);
         setList(response.data.data);

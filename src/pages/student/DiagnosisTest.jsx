@@ -4,7 +4,7 @@ import { PiWarningOctagonDuotone } from "react-icons/pi";
 import { Hourglass } from "react-loader-spinner";
 import Swal from "sweetalert2";
 import Loader from "../../components/reusable/Loader";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import "./DiagnosisTest.css";
 import axios from "axios";
 import Tooltip from "@mui/material/Tooltip";
@@ -25,7 +25,7 @@ const DiagnosisTest = () => {
   console.log({ selectedAnswers });
   const [questionStatuses, setQuestionStatuses] = useState({});
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
-
+  const [pageContent, setPageContent] = useState("test"); // 'test' or 'nouser'
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,9 +60,9 @@ const DiagnosisTest = () => {
           console.error("Unexpected data structure:", data);
         }
       } catch (error) {
-        if (error.response?.status === 403 && error.response?.data?.notPaid) {
-          return navigate("/diagnosistest/payment");
-        }
+        // if (error.response?.status === 403 && error.response?.data?.notPaid) {
+        //   return navigate("/diagnosistest/payment");
+        // }
         if (
           error.response?.status === 400 &&
           error.response?.data?.alreadyTaken
@@ -200,6 +200,25 @@ const DiagnosisTest = () => {
     }).then(async (result) => {
       if (!result.isConfirmed) return;
       setLoading(true);
+      // return console.log({ selectedAnswers });
+      if (!student.token) {
+        const { data } = await axiosInstanceStudent.post(
+          "api/diagnosis/save-temporarily",
+          {
+            testId,
+            selectedAnswers,
+          }
+        );
+        localStorage.setItem("tempTestId", data?.tempTestId);
+        setPageContent("nouser");
+        setLoading(false);
+        exitFullscreen();
+        document.removeEventListener(
+          "fullscreenchange",
+          handleFullscreenChange
+        );
+        return;
+      }
       const res = await axiosInstanceStudent.post("api/diagnosis/submit", {
         testId,
         selectedAnswers,
@@ -311,7 +330,7 @@ const DiagnosisTest = () => {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  return (
+  return pageContent === "test" ? (
     <>
       {loading && (
         <div className="absolute w-full h-screen bg-black bg-opacity-35 z-[99] flex justify-center items-center">
@@ -496,6 +515,27 @@ const DiagnosisTest = () => {
         </div>
       </div>
     </>
+  ) : (
+    <div className="flex flex-col gap-2 items-center my-[30vh]">
+      <h2 className="font-semibold text-xl text-sky-600 md:h-1/2 text-wrap">
+        Hey, looks like you are not logged in
+      </h2>
+      <p className="font-semibold">
+        Don't worry, you can view your results after logging in
+      </p>
+      <div className="flex gap-8">
+        <Link to="/login">
+          <button className="bg-sky-600 text-white px-4 py-2 rounded-lg">
+            Login
+          </button>
+        </Link>
+        <Link to="/signup">
+          <button className="bg-sky-600 text-white px-4 py-2 rounded-lg">
+            Signup
+          </button>
+        </Link>
+      </div>
+    </div>
   );
 };
 

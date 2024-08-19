@@ -1,159 +1,158 @@
 .satcontainer {
-    border: 2px solid #0062cc;
-    border-radius: 50px;
-    
+  border: 2px solid #0062cc;
+  border-radius: 50px;
 }
 
 .satphoto {
-    /* border: 1px solid black; */
-    display: flex;
-    margin-left: 5%;
-    align-items: center;
-    gap: 20px;
+  /* border: 1px solid black; */
+  display: flex;
+  margin-left: 5%;
+  align-items: center;
+  gap: 20px;
 }
 
 .sat-content-container {
-    /* border: 1px solid black; */
-    /* margin-left: 40px; */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-top: 20px;
+  /* border: 1px solid black; */
+  /* margin-left: 40px; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
 }
 
 .sat-content {
-    /* border: 1px solid black; */
-    font-family: 'Poppins';
-    font-size: 1.2rem;
-    font-weight: 700;
+  /* border: 1px solid black; */
+  font-family: "Poppins";
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .sat-sub-content {
-    font-family: 'Poppins';
-    font-size: 0.8rem;
-    font-weight: 600;
-    line-height: 18px;
-    /* border: 1px solid black; */
+  font-family: "Poppins";
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 18px;
+  /* border: 1px solid black; */
 }
 
 .sat-details-heading {
-    /* border: 1px solid black; */
-    display: flex;
-    justify-content: center;
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: center;
 }
 
 .sat-heading {
-    /* border: 1px solid black; */
-    display: flex;
-    width: fit-content;
-    flex-direction: column;
-    margin-top: 20px;
-    gap: 5px;
-    margin-bottom: 10px;
+  /* border: 1px solid black; */
+  display: flex;
+  width: fit-content;
+  flex-direction: column;
+  margin-top: 20px;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
 .sat-sub-heading {
-    font-family: 'Poppins';
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 28px;
-    text-align: justify;
+  font-family: "Poppins";
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 28px;
+  text-align: justify;
 }
 
 .sat-sub-sub-heading {
-    font-family: 'Poppins';
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 18px;
-    text-align: left;
-    color: #555;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: left;
+  color: #555;
 }
 
 .sat-exam p {
-    font-family: 'Poppins';
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 28px;
+  font-family: "Poppins";
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 28px;
 }
 
 .sat-date {
-    display: flex;
-    gap: 25px;
-    margin-bottom: 10px;
-    background-color: transparent;
-    border: 1px solid black;
-    outline: none;
-    height: 40px;
-    padding-left: 5px;
-    padding-right: 5px;
-    font-size: 12px;
-    border-radius: 4px;
-    box-sizing: border-box;
+  display: flex;
+  gap: 25px;
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: 1px solid black;
+  outline: none;
+  height: 40px;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 12px;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .sat-exam-given {
-    font-family: 'Poppins';
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 28px;
+  font-family: "Poppins";
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 28px;
 }
 
 .sat-radio {
-    display: flex;
-    gap: 100px;
+  display: flex;
+  gap: 100px;
 }
 
 .sat-radio label {
-    font-family: 'Poppins';
-    font-size: 12px;
-    font-weight: 500;
-    display: flex;
-    gap: 0 8px;
-    padding-bottom: 10px;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  gap: 0 8px;
+  padding-bottom: 10px;
 }
 
 .sat-request {
-    display: flex;
-    justify-content: center;
-    width: 200px;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    background-color: #0066de;
-    color: #fff;
-    border: none;
-    /* border-radius: 4px; */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: #0066de;
+  color: #fff;
+  border: none;
+  /* border-radius: 4px; */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .sat-request:hover {
-    background-color: #0062cc;
-    outline: none;
+  background-color: #0062cc;
+  outline: none;
 }
 
 @media (max-width: 680px) {
-    .sat-details-heading {
-        padding: 0 30px;
-    }
+  .sat-details-heading {
+    padding: 0 30px;
+  }
 }
 
 @media (max-width: 540px) {
-    .satphoto {
-        flex-direction: column;
-        justify-content: left;
-        display: flex;
-    }
-    .sat-content-container {
-        margin-left: 8px;
-        flex-direction: column;
-        padding-top: 5px;
-        margin-left: 15px;
-    }
+  .satphoto {
+    flex-direction: column;
+    justify-content: left;
+    display: flex;
+  }
+  .sat-content-container {
+    margin-left: 8px;
+    flex-direction: column;
+    padding-top: 5px;
+    margin-left: 15px;
+  }
 }
 
 @media (max-width: 480px) {
-    .satcontainer {
-        border: none;
-    }
+  .satcontainer {
+    border: none;
+  }
 }

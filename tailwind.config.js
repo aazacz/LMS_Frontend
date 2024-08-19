@@ -1,94 +1,96 @@
-const colors = require('tailwindcss/colors')
-export default {
-  mode: 'jit',
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ["class"],
   content: [
-    './index.html',
-    './src/**/*.{js,jsx,ts,tsx}',
+    './pages/**/*.{js,jsx}',
+    './components/**/*.{js,jsx}',
+    './app/**/*.{js,jsx}',
+    './src/**/*.{js,jsx}',
   ],
+  prefix: "",
   theme: {
-    screens: {
-      "xxs": "320px",
-
-      "xs": "451px",
-
-      'sm': '640px',
-
-      'md': '768px',
-
-      'dm': '850px',
-
-      'dg': '1100px',
-
-      'mg':  '1190px',
-
-      'lg': '1024px',
-
-      'xl': '1280px',
-
-      '2xl': '1536px',
-
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "xxs": "320px",
+  
+        "xs": "451px",
+  
+        'sm': '640px',
+  
+        'md': '768px',
+  
+        'dm': '850px',
+  
+        'dg': '1100px',
+  
+        'mg':  '1190px',
+  
+        'lg': '1024px',
+  
+        'xl': '1280px',
+  
+        '2xl': '1536px',
+  
+      },
     },
     extend: {
-
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
       keyframes: {
-
-        shinePulse: {
-          "0%": {
-            "background-position": "0% 0%",
-          },
-          "50%": {
-            "background-position": "100% 100%",
-          },
-          to: {
-            "background-position": "0% 0%",
-          },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
-        SlidefromLeft: {
-          '0%': { transform: 'translateX(-100%)', opacity: '0' },
-          '100%': { transform: 'translateX(0)', opacity: '1' }
-        },
-        SlidefromRight: {
-          '0%': { transform: 'translateX(100%)', opacity: '0' },
-          '100%': { transform: 'translateX(0)', opacity: '1' }
-        },
-        appear: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' }
-        },
-        diagonalSlide: {
-          '0%': { transform: 'translate3d(100%, 100%, 0)', opacity: '0' },
-          '10%': { transform: 'translate3d(90%, 90%, 0)', opacity: '0' },
-          '20%': { transform: 'translate3d(80%, 80%, 0)', opacity: '0' },
-          '30%': { transform: 'translate3d(70%, 70%, 0)', opacity: '0' },
-          '100%': { transform: 'translate3d(0, 0, 0)', opacity: '1' },
-        },
-        spinOpacitychange: {
-          '0%': { opacity: '0', transform: 'rotate(0deg)' },
-          '100%': { opacity: '1', transform: 'rotate(360deg)' },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
-        "spinOpacitychange": "spinOpacitychange 1s ease-in-out infinite ",
-        "SlidefromLeft": 'SlidefromLeft 1s ease-in-out',
-        "SlidefromRight": 'SlidefromRight 1s ease-in-out',
-        "HeaderfromRight": 'SlidefromRight 5s ease-in-out',
-        "appear": 'appear 1s linear',
-        "diagonalSlide": 'diagonalSlide 1s ease-in-out',
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
-    fontFamily: {
-      Roboto: ['Roboto', 'sans-serif'],
-      poppins: ['Poppins', 'sans-serif'],
-      plusjakartasans: ['"Plus Jakarta Sans"', 'sans-serif'],
-    },
-    colors: {
-      ...colors,
-      transparent: 'transparent',
-      current: 'currentColor',
-      "MediumBlue": "#E7ECFF",
-
-    },
-
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 }

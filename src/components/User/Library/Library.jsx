@@ -28,7 +28,7 @@ const Library = () => {
     const fetchCourses = async () => {
       try {
         const response = await axiosInstanceStudent.get(
-          `api/course/get-all-course?page=1&pageSize=&search`
+          `api/course/get-all-course?page=1&pageSize=&search`,
         );
         setCourses(response.data.data);
       } catch (error) {
@@ -71,7 +71,7 @@ const Library = () => {
   const handleCourseChange = (event) => {
     setSelectedCourse(event.target.value);
     let filteredData = materials?.filter(
-      ({ courseId }) => courseId === event.target.value
+      ({ courseId }) => courseId === event.target.value,
     );
     console.log("ee ", event.target.value);
 

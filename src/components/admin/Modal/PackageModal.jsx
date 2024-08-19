@@ -90,7 +90,7 @@ const PackageModal = ({ isOpen, onClose, closeModal, handleSave }) => {
       return;
     }
     const emptyFeature = features.some(
-      (feature) => !feature.description.trim()
+      (feature) => !feature.description.trim(),
     );
     if (emptyFeature) {
       setError("All feature descriptions must be filled.");
@@ -215,7 +215,7 @@ const PackageModal = ({ isOpen, onClose, closeModal, handleSave }) => {
                                 handleFeatureChange(
                                   index,
                                   "description",
-                                  e.target.value
+                                  e.target.value,
                                 )
                               }
                               className="mt-1 border-2 border-black h-8 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm px-2 rounded-md mr-2"
@@ -227,7 +227,7 @@ const PackageModal = ({ isOpen, onClose, closeModal, handleSave }) => {
                                 handleFeatureChange(
                                   index,
                                   "isActive",
-                                  e.target.value === "true"
+                                  e.target.value === "true",
                                 )
                               }
                               className="mt-1 border-2 border-black h-8 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm px-2 rounded-md mr-2"

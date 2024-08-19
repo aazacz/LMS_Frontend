@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import usePaginationData from "./usePaginationData";
 import { Link } from "react-router-dom";
 import Loader from "../../reusable/Loader";
-import "./TestTable.css"
+import "./TestTable.css";
 import { PiDotsThreeCircleVerticalDuotone } from "react-icons/pi";
 import ReusablePagination from "../../reusable/ReusablePagination";
 
@@ -20,7 +20,7 @@ const TestTable = ({ handleView, handleReview }) => {
     handlePageSizeChange,
     handleSearchChange,
     error,
-    refetch
+    refetch,
   } = usePaginationData();
 
   const columns = [
@@ -51,7 +51,7 @@ const TestTable = ({ handleView, handleReview }) => {
           <tbody>
             {isPending ? (
               <tr className="">
-                <td colSpan={columns.length } rowSpan={5}>
+                <td colSpan={columns.length} rowSpan={5}>
                   <div className="w-full flex justify-center items-center">
                     <Loader />
                   </div>
@@ -71,25 +71,26 @@ const TestTable = ({ handleView, handleReview }) => {
                   <td className=" ">{test.questions.length}</td>
                   <td className="relative">
                     <div className="action-container">
-                      <PiDotsThreeCircleVerticalDuotone 
-                        className="text-xl cursor-pointer" 
+                      <PiDotsThreeCircleVerticalDuotone
+                        className="text-xl cursor-pointer"
                         onClick={(e) => handleDropdownToggle(index, e)}
-                      /> 
+                      />
                     </div>
 
                     {activeDropdown === index && (
-
                       <div className="absolute right-0 mt-2 w-[100px] bg-white shadow-lg  rounded-md overflow-hidden z-10">
-
-                        <button  onClick={() => {
-                            console.log("test._id",test._id)
-                            console.log()
-                            handleReview(test._id)}} 
-                          className="w-full h-10 hover:bg-gray-100 text-[13px]  text-center border-b-2 border-gray-200 px-4" >
+                        <button
+                          onClick={() => {
+                            console.log("test._id", test._id);
+                            console.log();
+                            handleReview(test._id);
+                          }}
+                          className="w-full h-10 hover:bg-gray-100 text-[13px]  text-center border-b-2 border-gray-200 px-4"
+                        >
                           Review
                         </button>
-                        <button 
-                          onClick={() => handleView(test._id)} 
+                        <button
+                          onClick={() => handleView(test._id)}
                           className="w-full h-10 hover:bg-gray-100 text-[13px] text-center  px-4"
                         >
                           View
@@ -103,15 +104,14 @@ const TestTable = ({ handleView, handleReview }) => {
           </tbody>
         </table>
       </div>
-    
+
       <ReusablePagination
-            currentPage={currentPage}
-            pageSize={pageSize}
-            totalRows={totalRows}
-            handlePageChange={handlePageChange}
-            handlePageSizeChange={handlePageSizeChange}
-          />
-    
+        currentPage={currentPage}
+        pageSize={pageSize}
+        totalRows={totalRows}
+        handlePageChange={handlePageChange}
+        handlePageSizeChange={handlePageSizeChange}
+      />
     </div>
   );
 };

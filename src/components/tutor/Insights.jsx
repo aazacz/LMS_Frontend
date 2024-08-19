@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Insights = () => {
-    return <div>Hello</div>
-}
+  return <div>Hello</div>;
+};
 
-export default Insights
+export default Insights;

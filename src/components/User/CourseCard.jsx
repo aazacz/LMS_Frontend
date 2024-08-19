@@ -35,7 +35,7 @@ const CourseCard = ({ course }) => {
             Modules
           </span>
           <span className="flex items-center gap-x-1 text-sm">
-            <LuTimer className="text-gray-400" /> {course.trainingDuration}hrs
+            <LuTimer className="text-gray-400" /> {course.trainingDuration}
           </span>
         </div>
       </div>

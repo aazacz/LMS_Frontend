@@ -1,35 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaCirclePlus } from "react-icons/fa6";
-import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
-import { useSelector } from "react-redux";
+import { FaCirclePlus, FaList } from "react-icons/fa6";
 import Loader from "../../reusable/Loader";
-import { IoSearch } from "react-icons/io5";
+import { BsFillGrid1X2Fill } from "react-icons/bs";
 import CourseCard from "../CourseCard";
+import CourseStructureListTable from "./CourseStructureListTable";
 import ReusablePagination from "../../reusable/ReusablePagination";
 import { TbCategory } from "react-icons/tb";
+import SearchIcon from "@mui/icons-material/Search";
+import { CgSortAz } from "react-icons/cg";
+import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
 
 const CourseStructureList = () => {
-  const token = useSelector((state) => state.AdminDetails.token);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(12);
   const [totalRows, setTotalRows] = useState(0);
+  const [category, setCategory] = useState("");
   const [type, setType] = useState("");
-  // Getting data from backend
+  const [sortBy, setSortBy] = useState("newest");
+  const [ListModal, setListModal] = useState(false);
+  const [GridModal, setGridModal] = useState(true);
+  const [counts, setCounts] = useState({
+    all: 0,
+    individual: 0,
+    group: 0,
+    both: 0,
+  });
+
   const getdata = async () => {
     try {
       setLoading(true);
       const response = await AdminAxiosInstance.get(
-        `api/structure/all-structure?page=${currentPage}&pageSize=${pageSize}&search=${search}`,
+        `api/structure/all-structure?page=${currentPage}&pageSize=${pageSize}&search=${search}&category=${category}&sortBy=${sortBy}`
       );
-      console.log(response.type);
-      console.log(response.data.type);
       setType(response.data.type);
       setCourses(response.data.data);
       setTotalRows(response.data.totalRows);
+      setCounts(response.data.counts);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -37,144 +47,189 @@ const CourseStructureList = () => {
     }
   };
 
-  // Initial data fetch on component mount
   useEffect(() => {
     getdata();
-  }, [currentPage, pageSize]);
+  }, [currentPage, pageSize, category, sortBy]);
 
-  // Debounce the search input changes
   useEffect(() => {
     const debounce = setTimeout(() => {
       getdata();
-    }, 1000);
+    }, 300);
     return () => clearTimeout(debounce);
   }, [search]);
 
-  // Handle page change
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
   };
 
-  // Handle page size change
   const handlePageSizeChange = (event) => {
-    setPageSize(event.target.value);
-    setCurrentPage(1); // Reset to first page on page size change
+    setPageSize(parseInt(event.target.value));
+    setCurrentPage(1);
   };
 
-  const handleSearchChange = (value) => {
-    setSearch(value);
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleCategoryChange = (selectedCategory) => {
+    setCategory(selectedCategory);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+    setCurrentPage(1);
   };
 
   const CategoryDropdown = () => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleDropdown = () => {
-      setIsOpen(!isOpen);
-    };
-
     return (
       <div className="relative">
-        <div
-          className="bg-gray-100 px-2 justify-center cursor-pointer items-center rounded-md text-sm font-poppins gap-2 flex"
-          onClick={toggleDropdown}
+        <select
+          className="w-full dm:w-[230px] px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
+          onChange={(e) => handleCategoryChange(e.target.value)}
+          value={category}
         >
+          <option value="">All Courses </option>
+          <option value="individual">Individual Courses </option>
+          <option value="group">Group Courses </option>
+          <option value="both">Both Individual and Group</option>
+        </select>
+        <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[2px] h-8 pointer-events-none  rounded-lg text-gray-700">
           <TbCategory />
-          Category
         </div>
-        {isOpen && (
-          <div className="absolute mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-            <ul className="py-1">
-              <li className="px-4 py-2 text-sm hover:bg-gray-200 cursor-pointer">
-                Standard
-              </li>
-              <li className="px-4 py-2 text-sm hover:bg-gray-200 cursor-pointer">
-                Premium
-              </li>
-              <li className="px-4 py-2 text-sm hover:bg-gray-200 cursor-pointer">
-                Basic
-              </li>
-            </ul>
-          </div>
-        )}
+      </div>
+    );
+  };
+
+  const SortDropdown = () => {
+    return (
+      <div className="relative">
+        <select
+          className="w-full dm:w-[160px] px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
+          onChange={handleSortChange}
+          value={sortBy}
+        >
+          <option value="newest">Sort by Newest</option>
+          <option value="oldest">Sort by Oldest</option>
+        </select>
+        <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[2px] h-8 pointer-events-none rounded-lg text-gray-700">
+          <CgSortAz />
+        </div>
       </div>
     );
   };
 
   return (
-    <div className="p-4">
-      {/* Heading and button div */}
-      <div className="flex justify-between py-2">
-        <h1 className="font-poppins font-semibold md:text-2xl text-xl">
-          Course Structure
-        </h1>
-        <Link
-          replace
-          to={`/admin/home/courseStructure/addcoursestructure`}
-          className="bg-[#F5F1F1] hidden md:block"
-        >
-          <button className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] p-1 rounded-lg px-2 font-poppins text-sm">
-            <FaCirclePlus className="text-slate-600" /> Add Course Structure
-          </button>
-        </Link>
+    <div className="pl-3 pt-2 font-poppins w-full h-max mb-3 pr-4">
+      <div className="flex justify-between pb-5">
+        <h1 className="font-poppins font-semibold text-xl">Course Structure</h1>
       </div>
 
-      <div className="mt-2 w-full h-14">
-        <div className="flex justify-between gap-x-4">
-          <div className="w-full h-8 flex items-center bg-white rounded-lg  gap-x-3 border-[1px]  border-black">
-            <IoSearch className=" ml-1 text-2xl" />
+      {/* Heading Section  */}
+      <div className="flex flex-col mg:flex-row md:justify-between gap-4">
+        <div className="w-full mg:w-[50%] h-fit rounded-md ">
+          <div className="w-full flex items-center bg-transparent border-[1.5px] border-[#F4EFEF] rounded-lg">
             <input
-              type="search"
-              name=""
-              onChange={(e) => handleSearchChange(e.target.value)}
-              className="outline-none w-[60%] md:w-[80%] lg:w-[90%] h-full"
-              id=""
+              type="text"
+              placeholder="Search For Course Structure"
+              value={search}
+              onChange={handleSearchChange}
+              className="w-full outline-none px-2 h-12 bg-transparent placeholder:text-black text-sm font-normal"
             />
+            <button className="text-sm w-[20px] pr-5 p-2 h-10 flex items-center justify-center text-white rounded-lg mr-1">
+              <SearchIcon className="text-black h-full" />
+            </button>
           </div>
+        </div>
+        <div className="w-full flex flex-col dm:flex-row gap-4 mt-[5px]">
           <CategoryDropdown />
-        </div>
-      </div>
-
-      <div className="w-full flex py-3 justify-end md:hidden">
-        <Link
-          replace
-          to={`/admin/home/courseStructure/addcoursestructure`}
-          className=""
-        >
-          <button className="flex items-center gap-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-[#F5F1F1] p-1 rounded-lg border-slate-600 px-2 font-poppins text-sm">
-            <FaCirclePlus className="text-slate-600" /> Add Course Structure
-          </button>
-        </Link>
-      </div>
-
-      <div className="relative w-full mt-4">
-        {loading && (
-          <div className="absolute inset-0 flex items-center justify-center z-10">
-            <div className="bg-white bg-opacity-75 flex items-center justify-center w-full h-full">
-              <Loader />
-            </div>
-          </div>
-        )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {courses.map((course, index) => (
+          <SortDropdown />
+          <div className="flex justify-end md:ml-auto">
             <Link
-              key={index}
-              to={`/admin/home/coursestructure/viewcoursestructure/${course._id}`}
+              to={`/admin/home/courseStructure/addcoursestructure`}
+              className="pr-2"
             >
-              <CourseCard type={type} course={course} />
+              <button className="w-full mt-1 bg-transparent bg-[#F4F5FB] border-[1.5px] border-[#F4EFEF] px-2 h-fit p-1 justify-center cursor-pointer items-center rounded-lg text-sm font-poppins gap-2 flex">
+                <FaCirclePlus className="text-slate-600" />
+                Add Course Structure
+              </button>
             </Link>
-          ))}
+          </div>
         </div>
       </div>
 
-      <div className="mt-4">
-        <ReusablePagination
-          currentPage={currentPage}
-          pageSize={pageSize}
-          totalRows={totalRows}
-          handlePageChange={handlePageChange}
-          handlePageSizeChange={handlePageSizeChange}
-        />
+      {/* List or Grid Mode */}
+      <div className="w-full pt-4 flex justify-end pr-3">
+        <div className="w-[80px] flex items-center">
+          <div
+            onClick={() => {
+              setListModal(true);
+              setGridModal(false);
+            }}
+            className={`${
+              ListModal ? "text-blue-700" : "text-gray-500"
+            } cursor-pointer w-1/2 h-full flex justify-center border-r-[2px] border-gray-600`}
+          >
+            <FaList className="text-lg" />
+          </div>
+
+          <div
+            onClick={() => {
+              setListModal(false);
+              setGridModal(true);
+            }}
+            className={`${
+              GridModal ? "text-blue-700" : "text-gray-500"
+            } cursor-pointer w-1/2 h-full flex justify-center`}
+          >
+            <BsFillGrid1X2Fill />
+          </div>
+        </div>
       </div>
+
+      {/* Course Structure Cards or Table */}
+      {loading ? (
+        <div className="w-full h-screen flex flex-1 bg-white justify-center items-center">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          {GridModal && (
+            <div className="relative w-full mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {courses.map((course, index) => (
+                  <Link
+                    key={index}
+                    to={`/admin/home/coursestructure/viewcoursestructure/${course._id}`}
+                  >
+                    <CourseCard type={type} course={course} />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {ListModal && (
+            <div className="w-full flex flex-col justify-center mt-4">
+              <CourseStructureListTable 
+                data={courses} 
+                isPending={loading} 
+                currentPage={currentPage}
+                pageSize={pageSize}
+              />
+            </div>
+          )}
+
+          <ReusablePagination
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalRows={totalRows}
+            handlePageChange={handlePageChange}
+            handlePageSizeChange={handlePageSizeChange}
+          />
+        </>
+      )}
     </div>
   );
 };

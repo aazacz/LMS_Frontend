@@ -2,32 +2,85 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaCirclePlus, FaList } from "react-icons/fa6";
 import Loader from "../../reusable/Loader";
-import { IoSearch } from "react-icons/io5";
+import SearchIcon from "@mui/icons-material/Search";
 import { BsFillGrid1X2Fill } from "react-icons/bs";
 import CourseCard from "../CourseCard";
 import CourseListTable from "./CourseListTable";
 import ReusablePagination from "../../reusable/ReusablePagination";
-import usePaginationData from "./usePaginationData";
 import { TbCategory } from "react-icons/tb";
-import SearchIcon from "@mui/icons-material/Search";
 import { CgSortAz } from "react-icons/cg";
+import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
 
 const CourseList = () => {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(12);
+  const [totalRows, setTotalRows] = useState(0);
+  const [category, setCategory] = useState("");
+  const [type, setType] = useState("");
+  const [sortBy, setSortBy] = useState("newest");
   const [ListModal, setListModal] = useState(false);
   const [GridModal, setGridModal] = useState(true);
-  const {
-    courses,
-    isPending,
-    isError,
-    currentPage,
-    pageSize,
-    totalRows,
-    searchQuery,
-    handlePageChange,
-    handlePageSizeChange,
-    handleSearchChange,
-    error,
-  } = usePaginationData();
+  const [counts, setCounts] = useState({
+    all: 0,
+    individual: 0,
+    group: 0,
+  });
+
+  const getdata = async () => {
+    try {
+      setLoading(true);
+      const response = await AdminAxiosInstance.get(
+        `api/course/get-all-course?page=${currentPage}&pageSize=${pageSize}&search=${search}&category=${category}&sortBy=${sortBy}`
+      );
+      setType(response.data.type);
+      setCourses(response.data.data);
+      setTotalRows(response.data.totalRows);
+      setCounts(response.data.counts);
+      setLoading(false);
+    } catch (err) {
+      console.log('Error fetching course data:', err.response?.data || err.message);
+      setLoading(false);
+    }
+  };
+  
+
+  useEffect(() => {
+    getdata();
+  }, [currentPage, pageSize, category, sortBy]);
+
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      getdata();
+    }, 300);
+    return () => clearTimeout(debounce);
+  }, [search]);
+
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
+
+  const handlePageSizeChange = (event) => {
+    setPageSize(parseInt(event.target.value));
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleCategoryChange = (selectedCategory) => {
+    setCategory(selectedCategory);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="pl-3 pt-2 font-poppins w-full h-max mb-3">
@@ -42,7 +95,7 @@ const CourseList = () => {
             <input
               type="text"
               placeholder="Search For Courses"
-              value={searchQuery}
+              value={search}
               onChange={handleSearchChange}
               className="w-full outline-none px-2 h-12 bg-transparent placeholder:text-black text-sm font-normal"
             />
@@ -52,16 +105,38 @@ const CourseList = () => {
           </div>
         </div>
         <div className="w-full flex flex-col justify-evenly sm:flex-row gap-4 mt-1">
-          <div className="bg-transparent border-[1.5px] border-[#F4EFEF] h-fit p-2 px-2 justify-center cursor-pointer items-center rounded-lg text-sm font-poppins gap-2 flex">
-            <TbCategory />
-            Category
+          <div className="relative">
+            <select
+              className="w-full dm:w-[230px] px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
+              onChange={(e) => handleCategoryChange(e.target.value)}
+              value={category}
+            >
+              <option value="">All Courses </option>
+              <option value="individual">Individual Courses </option>
+              <option value="group">Group Courses </option>
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[2px] h-8 pointer-events-none  rounded-lg text-gray-700">
+              <TbCategory />
+            </div>
           </div>
-          <div className="bg-transparent border-[1.5px] border-[#F4EFEF] px-2 h-fit p-2 justify-center cursor-pointer items-center rounded-lg text-sm font-poppins gap-2 flex">
-            <CgSortAz />
-            Sort By Recent
+          <div className="relative">
+            <select
+              className="w-full dm:w-[160px] px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
+              onChange={handleSortChange}
+              value={sortBy}
+            >
+              <option value="newest">Sort by Newest</option>
+              <option value="oldest">Sort by Oldest</option>
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[2px] h-8 pointer-events-none rounded-lg text-gray-700">
+              <CgSortAz />
+            </div>
           </div>
           <div className="flex justify-end md:ml-auto">
-            <Link replace to={`/admin/home/courses/addcourse`} className="pr-2">
+            <Link 
+              to={`/admin/home/courses/addcourse`} 
+              className="pr-2"
+            >
               <button className="w-full bg-transparent border-[1.5px] border-[#F4EFEF] px-2 h-fit p-2 justify-center cursor-pointer items-center rounded-lg text-sm font-poppins gap-2 flex">
                 <FaCirclePlus className="text-slate-600" />
                 Add Course
@@ -81,7 +156,7 @@ const CourseList = () => {
             }}
             className={`${
               ListModal ? "text-blue-700" : "text-gray-500"
-            } cursor-pointer w-1/2 h-full flex justify-center border-r-[2px] border-gray-600 `}
+              } cursor-pointer w-1/2 h-full flex justify-center border-r-[2px] border-gray-600 `}
           >
             <FaList className="text-lg " />{" "}
           </div>
@@ -91,9 +166,8 @@ const CourseList = () => {
               setListModal(false);
               setGridModal(true);
             }}
-            className={`${
-              GridModal ? "text-blue-700" : "text-gray-500"
-            } cursor-pointer w-1/2 h-full flex justify-center `}
+            className={`${GridModal ? "text-blue-700" : "text-gray-500"
+              } cursor-pointer w-1/2 h-full flex justify-center `}
           >
             {" "}
             <BsFillGrid1X2Fill />
@@ -101,37 +175,40 @@ const CourseList = () => {
         </div>
       </div>
 
-      {isPending ? (
-        <div className="w-full h-screen flex flex-1 bg-gray-200 justify-center items-center">
+      {loading ? (
+        <div className="w-full h-screen flex flex-1 bg-white justify-center items-center">
           <Loader />
-        </div>
-      ) : isError ? (
-        <div className="w-full h-screen flex flex-1 bg-gray-200 justify-center items-center">
-          <p>Error loading courses: {error.message} </p>
         </div>
       ) : (
         <>
           {GridModal && (
-            <div className="pr-3 grid grid-cols-1 mt-4 sm:grid-cols-2 md:grid-cols-3 mg:grid-cols-4 2xl:grid-cols-6 gap-4">
-              {courses?.map((course, index) => (
-                <Link
-                  key={index}
-                  to={`/admin/home/courses/${course._id}/${course.courseType}/true/a`}
-                >
-                  <CourseCard course={course} />
-                </Link>
-              ))}
+            <div className="relative w-full mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {courses?.map((course, index) => (
+                  <Link
+                    key={index}
+                    to={`/admin/home/courses/${course._id}/${course.courseType}/true/a`}
+                  >
+                    <CourseCard course={course} />
+                  </Link>
+                ))}
+              </div>
             </div>
           )}
 
           {ListModal && (
-            <div className="w-full flex justify-center ">
-              {" "}
-              <CourseListTable data={courses} isPending={isPending} />{" "}
+            <div className="w-full flex flex-col justify-center mt-4">
+              <CourseListTable 
+                data={courses}
+                courses={courses} 
+                isPending={loading} 
+                currentPage={currentPage}
+                pageSize={pageSize}
+              />
             </div>
           )}
 
-          <ReusablePagination
+         <ReusablePagination
             currentPage={currentPage}
             pageSize={pageSize}
             totalRows={totalRows}

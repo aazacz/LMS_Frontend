@@ -168,7 +168,7 @@ const Coursedetails = ({ edit }) => {
                   </span>
                   <span className="flex items-center gap-x-1 text-sm font-poppins">
                     <LuTimer className="text-gray-400" />
-                    {Course && Course.trainingDuration}Hrs
+                    {Course && Course.trainingDuration}
                   </span>
                 </div>
               </div>

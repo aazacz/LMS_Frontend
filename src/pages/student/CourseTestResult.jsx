@@ -8,15 +8,14 @@ import { get } from "react-hook-form";
 import Loader from "../../components/reusable/Loader";
 import { useNavigate } from "react-router-dom";
 const CourseTestResult = () => {
-
   const baseURL = process.env.REACT_APP_API_URL;
   const [testResult, setTestResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const topRef = useRef(null);
 
   const { resultId } = useParams();
-  console.log(resultId)
-   const navigate = useNavigate()
+  console.log(resultId);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTestDetails = async () => {
@@ -25,11 +24,11 @@ const CourseTestResult = () => {
         const response = await axiosInstanceStudent.get(
           `api/diagnosis/result/66b3bf171fdd83b5b2bd5b1a`
         );
-        console.log("response.data")
-        console.log(response.data)
+        console.log("response.data");
+        console.log(response.data);
         setTestResult(response.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
         // if (error.response?.status === 404) {
         //   return navigate("/diagnosistest");
         // }

@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Calendar from 'react-calendar'; // or your preferred calendar library
-import 'react-calendar/dist/Calendar.css'; // Ensure calendar styles are included
-import './Dashboard.css'; // Import custom CSS for modal styling
+import React from "react";
+import ReactDOM from "react-dom";
+import Calendar from "react-calendar"; // or your preferred calendar library
+import "react-calendar/dist/Calendar.css"; // Ensure calendar styles are included
+import "./Dashboard.css"; // Import custom CSS for modal styling
 
 const CalendarModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -18,7 +18,7 @@ const CalendarModal = ({ isOpen, onClose }) => {
         </div>
       </div>
     </div>,
-    document.body
+    document.body,
   );
 };
 

@@ -6,7 +6,6 @@
   border: none;
 }
 
-
 .responsive-Testtable td.title-column {
   max-width: 150px; /* Adjust this value as needed */
   white-space: nowrap;
@@ -43,7 +42,7 @@
 }
 
 .responsive-Testtable th {
-  background-color: #E6F0FC;
+  background-color: #e6f0fc;
   font-weight: 500;
   color: black;
   height: 50px; /* Adjusted header height */

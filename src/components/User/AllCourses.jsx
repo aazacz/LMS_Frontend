@@ -17,7 +17,7 @@ const AllCourses = () => {
 
   const getEnrolledList = async () => {
     const response = await axiosInstanceStudent.get(
-      "api/student-course/enrolled-courses"
+      "api/student-course/enrolled-courses",
     );
     SetEnrolledCourse(response.data);
     // return response.data;
@@ -26,7 +26,7 @@ const AllCourses = () => {
     try {
       console.log("useQuery funciton hitted");
       const response = await axiosInstanceStudent.get(
-        `api/student-course/all-active-courses`
+        `api/student-course/all-active-courses`,
       );
       console.log("response.data");
       console.log(response.data);

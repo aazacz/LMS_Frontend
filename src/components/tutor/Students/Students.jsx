@@ -88,7 +88,7 @@ const Students = () => {
             limit: pageSize,
             studentName: searchQuery, // pass search query to the backend
           },
-        }
+        },
       );
 
       const students = response.data.data.flatMap((course) => course.students);

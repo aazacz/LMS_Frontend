@@ -87,13 +87,13 @@ const UserRoutes = () => {
           element={user.token ? <Navigate to="/student" /> : <Login />}
         />
         <Route path="/student/*" element={studentNavigate()} />
-        <Route path="/coursetest/*"        element={<CourseTestRoute/>}  />
+        <Route path="/coursetest/*" element={<CourseTestRoute />} />
         <Route path="/signup/*" element={<SignupRoute />} />
 
         <Route
           path="/diagnosistest/*"
           element={
-            user.isDiagnosticTestTaken ? (
+            user.token && user.isDiagnosticTestTaken ? (
               <Navigate to="/student" />
             ) : (
               <DiagnosisTestRoute />

@@ -3,32 +3,27 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 import { persistStore } from "redux-persist";
-import StudentDetailsSlice from "./reducers/StudentloginSlice"
-import AdminDetailsSlice from './reducers/AdminloginSlice'
-import TutorDetailsSlice from './reducers/TutorloginSlice'
+import StudentDetailsSlice from "./reducers/StudentloginSlice";
+import AdminDetailsSlice from "./reducers/AdminloginSlice";
+import TutorDetailsSlice from "./reducers/TutorloginSlice";
 
-//Root Reducer function for Persisting 
+//Root Reducer function for Persisting
 const rootReducer = combineReducers({
- 
-      StudentDetails: StudentDetailsSlice,
-      AdminDetails:AdminDetailsSlice,
-      TutorDetails:TutorDetailsSlice
-  
-  });
-
+  StudentDetails: StudentDetailsSlice,
+  AdminDetails: AdminDetailsSlice,
+  TutorDetails: TutorDetailsSlice,
+});
 
 const persistConfig = {
-    key: "root",
-    version: 1,
-    storage,
-  };
-
+  key: "root",
+  version: 1,
+  storage,
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-
 export const store = configureStore({
-    reducer: persistedReducer,
-  });
+  reducer: persistedReducer,
+});
 
-  export const persistor = persistStore(store);
+export const persistor = persistStore(store);

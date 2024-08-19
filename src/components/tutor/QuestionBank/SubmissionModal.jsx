@@ -1,7 +1,6 @@
-import React from 'react';
+import React from "react";
 
 const SubmissionModal = ({ submission, isOpen, onClose }) => {
-  
   if (!isOpen || !submission) return null;
 
   const { studentId, submittedAt, tests } = submission;
@@ -10,10 +9,17 @@ const SubmissionModal = ({ submission, isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg w-3/4 max-h-3/4 overflow-y-auto">
         <h2 className="text-xl font-bold mb-4">Submission Details</h2>
-        <p><strong>Student:</strong> {studentId.name}</p>
-        <p><strong>Email:</strong> {studentId.email}</p>
-        <p><strong>Submitted At:</strong> {new Date(submittedAt).toLocaleString()}</p>
-        
+        <p>
+          <strong>Student:</strong> {studentId.name}
+        </p>
+        <p>
+          <strong>Email:</strong> {studentId.email}
+        </p>
+        <p>
+          <strong>Submitted At:</strong>{" "}
+          {new Date(submittedAt).toLocaleString()}
+        </p>
+
         <h3 className="font-bold mt-4 mb-2">Test Results:</h3>
         {tests.map((test, testIndex) => (
           <div key={testIndex}>
@@ -32,7 +38,9 @@ const SubmissionModal = ({ submission, isOpen, onClose }) => {
                   <tr key={index}>
                     <td className="px-4 py-2">{question.question}</td>
                     <td className="px-4 py-2">{question.answer}</td>
-                    <td className="px-4 py-2">{question.isCorrect ? "Yes" : "No"}</td>
+                    <td className="px-4 py-2">
+                      {question.isCorrect ? "Yes" : "No"}
+                    </td>
                     <td className="px-4 py-2">{question.reason}</td>
                   </tr>
                 ))}
@@ -40,7 +48,7 @@ const SubmissionModal = ({ submission, isOpen, onClose }) => {
             </table>
           </div>
         ))}
-        
+
         <button
           onClick={onClose}
           className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md"

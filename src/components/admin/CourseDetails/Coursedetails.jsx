@@ -83,14 +83,16 @@ const Coursedetails = ({ edit }) => {
     );
     setActiveTab(tab);
   };
-
-  useEffect(() => {
+  const fetchCourse = () => {
     AdminAxiosInstance.get(`api/course/get-course/${courseId}`, {
       headers: { authorization: `Bearer ${token}` },
     }).then((response) => {
       console.log(response.data);
       SetCourse(response.data);
     });
+  };
+  useEffect(() => {
+    fetchCourse();
   }, [baseUrl, courseId, token]);
 
   useEffect(() => {
@@ -279,7 +281,11 @@ const Coursedetails = ({ edit }) => {
                 )}
               </div>
             </div>
-            <Asidebar className="hidden lg:block" {...asidebarProps} />
+            <Asidebar
+              refetch={fetchCourse}
+              className="hidden lg:block"
+              {...asidebarProps}
+            />
           </div>
         </>
       )}

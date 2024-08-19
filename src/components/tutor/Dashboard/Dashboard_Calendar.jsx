@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import Calendar from 'react-calendar'; // or your preferred calendar library
-import 'react-calendar/dist/Calendar.css';
-import Modal from './Calendar_Modal'; // Import the Modal component
-import { GoPerson } from 'react-icons/go';
-import { IoMdTime } from 'react-icons/io';
-import { IoBookOutline } from 'react-icons/io5';
-import { CiLocationOn, CiCalendar } from 'react-icons/ci';
-import { TutorAxiosInstance } from '../../../routes/TutorRoutes';
+import React, { useEffect, useState } from "react";
+import Calendar from "react-calendar"; // or your preferred calendar library
+import "react-calendar/dist/Calendar.css";
+import Modal from "./Calendar_Modal"; // Import the Modal component
+import { GoPerson } from "react-icons/go";
+import { IoMdTime } from "react-icons/io";
+import { IoBookOutline } from "react-icons/io5";
+import { CiLocationOn, CiCalendar } from "react-icons/ci";
+import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
 import "./Dashboard_Calendar.css";
-import TableModal from './TableModal'; // Import the TableModal component
+import TableModal from "./TableModal"; // Import the TableModal component
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const Dashboard_Calendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,11 +30,32 @@ const Dashboard_Calendar = () => {
       );
       console.log(response.data.tutorSessions);
 
-      if (response.data.tutorSessions && response.data.tutorSessions.length > 0) {
+      if (
+        response.data.tutorSessions &&
+        response.data.tutorSessions.length > 0
+      ) {
         setData(response.data.tutorSessions);
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const addSessionLink = async (courseId, sessionId, sessionLink) => {
+    try {
+      console.log({ courseId, sessionId, sessionLink });
+      const response = await TutorAxiosInstance.patch(
+        `api/courseTutor/add-session-link/${courseId}/${sessionId}`,
+        {
+          sessionLink,
+        }
+      );
+      console.log(response.data);
+      toast.success("Updated session link successfully");
+      fetchAllSessionList();
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to update session link");
     }
   };
 
@@ -64,7 +87,12 @@ const Dashboard_Calendar = () => {
         </div>
         <div className="w-[100%] h-52 overflow-y-scroll snap-y snap-mandatory border-gray-400 max-h-200   scroll pb-0 p-2">
           {Data.map((item, index) => (
-            <ClassCard key={item.sessionId} item={item} index={index} />
+            <ClassCard
+              addSessionLink={addSessionLink}
+              key={item.sessionId}
+              item={item}
+              index={index}
+            />
           ))}
         </div>
       </div>
@@ -72,14 +100,20 @@ const Dashboard_Calendar = () => {
       <Modal isOpen={isModalOpen} onClose={closeModal} />
 
       {/* Table Modal Component */}
-      <TableModal isOpen={isTableModalOpen} onClose={closeTableModal} data={Data} />
+      <TableModal
+        isOpen={isTableModalOpen}
+        onClose={closeTableModal}
+        data={Data}
+      />
     </div>
   );
 };
 
 export default Dashboard_Calendar;
 
-const ClassCard = ({ item, index }) => {
+const ClassCard = ({ item, index, addSessionLink }) => {
+  console.log({ item });
+  const [sessionLink, setSessionLink] = useState(item.sessionLink || "");
   return (
     <div
       key={item.sessionId} // Using sessionId as key
@@ -106,7 +140,9 @@ const ClassCard = ({ item, index }) => {
         </p>
         <p className="font-poppins text-xs text-gray-500 flex justify-center items-center gap-2">
           <IoMdTime className="text-gray-500 font-sm" />
-          {item.sessionDateTime ? new Date(item.sessionDateTime).toLocaleString() : 'N/A'}
+          {item.sessionDateTime
+            ? new Date(item.sessionDateTime).toLocaleString()
+            : "N/A"}
         </p>
       </div>
       <div className="w-[90%] p-1 flex justify-between items-center">
@@ -116,26 +152,61 @@ const ClassCard = ({ item, index }) => {
         </p>
         <p className="font-poppins text-xs text-gray-500 flex justify-center items-center gap-2">
           <CiLocationOn className="text-gray-500 font-sm" />
-          {item.sessionLink ? <a href={item.sessionLink} target="_blank" rel="noopener noreferrer">Join Session</a> : 'Location N/A'}
+          {item.sessionLink ? (
+            <a
+              href={item.sessionLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Join Session
+            </a>
+          ) : (
+            "Location N/A"
+          )}
         </p>
       </div>
 
-      <div className="flex w-full gap-x-2 px-2 left-1/2 -translate-x-1/2 absolute bottom-1">
+      <div className="flex items-center w-full gap-x-2 px-2 left-1/2 -translate-x-1/2 absolute bottom-1">
         <input
           type="text"
           name=""
-          className="placeholder:text-xs border-2 placeholder:pl-2 font-poppins italic rounded-lg"
+          className="text-xs border-2 p-2 placeholder:pl-2 font-poppins italic rounded-lg"
           placeholder="GMeet Link Here"
           id=""
-          value={item.sessionLink || ''}
-          readOnly
+          value={sessionLink}
+          onChange={(e) => setSessionLink(e.target.value)}
         />
-        <button className="w-[40%] px-2 h-6 rounded-sm font-poppins text-xs text-white bg-blue-600">
+        <button
+          disabled={!sessionLink || sessionLink === item.sessionLink}
+          onClick={() =>
+            addSessionLink(item.courseId, item.sessionId, sessionLink)
+          }
+          className="disabled:cursor-not-allowed disabled:bg-gray-400 px-2 h-6 rounded-sm font-poppins text-xs text-white bg-blue-600 w-fit"
+        >
           Schedule
         </button>
-        <button className="w-[40%] px-2 h-6 rounded-sm font-poppins text-xs text-white bg-blue-600">
-          Start Class
-        </button>
+        {item.sessionLink ? (
+          <a
+            href={
+              sessionLink.startsWith("http")
+                ? sessionLink
+                : `https://${sessionLink}`
+            }
+            target="_blank"
+            className="w-fit"
+          >
+            <button className="px-2 h-6 rounded-sm font-poppins text-xs text-white bg-blue-600">
+              Start Class
+            </button>
+          </a>
+        ) : (
+          <button
+            disabled
+            className="px-2 h-6 disabled:cursor-not-allowed disabled:bg-gray-400 rounded-sm font-poppins text-xs text-white"
+          >
+            Start Class
+          </button>
+        )}
       </div>
     </div>
   );

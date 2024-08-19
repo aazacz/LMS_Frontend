@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 import { axiosInstanceStudent } from "../../../routes/UserRoutes";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; 
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const PasswordModal = ({ isOpen, onClose }) => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -30,7 +30,7 @@ const PasswordModal = ({ isOpen, onClose }) => {
     try {
       const response = await axiosInstanceStudent.put(
         "/api/settings/change-password",
-        { currentPassword, newPassword, confirmPassword }
+        { currentPassword, newPassword, confirmPassword },
       );
 
       if (response.status === 200) {
@@ -41,7 +41,7 @@ const PasswordModal = ({ isOpen, onClose }) => {
       }
     } catch (error) {
       toast.error(
-        error.response?.data?.message || "An error occurred. Please try again."
+        error.response?.data?.message || "An error occurred. Please try again.",
       );
     }
 

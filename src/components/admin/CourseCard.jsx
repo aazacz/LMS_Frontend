@@ -4,7 +4,7 @@ import { LuTimer } from "react-icons/lu";
 import coursephoto from "../../assets/Admin/coursephoto.jpeg";
 import { PiChalkboardTeacherBold } from "react-icons/pi";
 
-const CourseCard = ({ course,type }) => {
+const CourseCard = ({ course, type }) => {
   return (
     <div className="bg-[#F4F5FB] md:p-4 h-[280px] rounded-2xl flex flex-col items-center overflow-hidden p-3">
       <div className="w-full flex justify-center object-cover items-center rounded-xl overflow-hidden">

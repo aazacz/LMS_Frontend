@@ -24,9 +24,6 @@ import MarksGrading from "../../components/tutor/MarksGrading";
 import AllMaterials from "../../components/tutor/AllMaterials";
 import TextEditor from "../../components/reusable/TextEditor";
 
-
-
-
 const Homepage = () => {
   const queryClient = new QueryClient();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

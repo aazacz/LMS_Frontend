@@ -23,7 +23,7 @@
   .responsive-tablee thead {
     display: none;
   }
-  
+
   .responsive-tablee,
   .responsive-tablee tbody,
   .responsive-tablee tr,
@@ -31,16 +31,16 @@
     display: block;
     width: 100%;
   }
-  
+
   .responsive-tablee tr {
     margin-bottom: 15px;
   }
-  
+
   .responsive-tablee td {
     text-align: left;
     position: relative;
   }
-  
+
   .responsive-tablee td::before {
     content: attr(data-label);
     position: absolute;

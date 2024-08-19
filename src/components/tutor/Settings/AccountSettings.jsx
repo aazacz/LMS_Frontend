@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Modal from "./PasswordModal";
-import "./DeleteAccount.css"
-import Loader from "../../reusable/Loader"
+import "./DeleteAccount.css";
+import Loader from "../../reusable/Loader";
 import { TutorAxiosInstance } from "../../../routes/TutorRoutes";
 
 const AccountSettings = () => {
@@ -13,14 +13,14 @@ const AccountSettings = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchTutorDetails = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
         const response = await TutorAxiosInstance.get(
-          "api/tutorsettings/tutor-details"
+          "api/tutorsettings/tutor-details",
         );
         console.log(response.data);
         const { tutorDetails } = response.data;
@@ -28,7 +28,7 @@ const AccountSettings = () => {
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     };
 
@@ -38,7 +38,7 @@ const AccountSettings = () => {
   const handleDeleteAccount = async () => {
     try {
       const response = await TutorAxiosInstance.put(
-        "api/tutorsettings/change-tutor-status"
+        "api/tutorsettings/change-tutor-status",
       );
       if (response.status === 200) {
         toast.success("Account deleted successfully!");
@@ -49,7 +49,7 @@ const AccountSettings = () => {
     } catch (error) {
       toast.error(
         error.response?.data?.message ||
-          "An error occurred. Please try again later."
+          "An error occurred. Please try again later.",
       );
     }
   };

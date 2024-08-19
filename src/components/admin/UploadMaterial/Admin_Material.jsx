@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Admin_Material.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -30,7 +30,7 @@ const Material = () => {
     const fetchCourses = async () => {
       try {
         const response = await AdminAxiosInstance.get(
-          `api/course/get-all-course-name?page=1&pageSize=&search=`
+          `api/course/get-all-course-name?page=1&pageSize=&search=`,
         );
         if (response.status !== 200) {
           throw new Error("Failed to fetch courses");
@@ -66,14 +66,14 @@ const Material = () => {
     setFileError("");
   };
 
-    const handleThumbnailChange = (e) => {
-      settFile(e.target.files[0]);
-      settFileName(e.target.files[0].name);
-      settFileError("");
-    };
+  const handleThumbnailChange = (e) => {
+    settFile(e.target.files[0]);
+    settFileName(e.target.files[0].name);
+    settFileError("");
+  };
 
   const handleSubmit = async (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     let valid = true;
     if (!materialName) {

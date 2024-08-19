@@ -100,7 +100,7 @@ const AddCourseStructure = ({ view }) => {
       try {
         if (structureId) {
           const response = await AdminAxiosInstance.get(
-            `/api/structure/get/${structureId}`
+            `/api/structure/get/${structureId}`,
           );
           console.log("res.data structureId", response.data);
           if (response.data) {
@@ -117,7 +117,7 @@ const AddCourseStructure = ({ view }) => {
 
   useEffect(() => {
     AdminAxiosInstance.get(
-      "/api/package/get-all-package?page=1&pageSize=10&search="
+      "/api/package/get-all-package?page=1&pageSize=10&search=",
     )
       .then((res) => {
         setPackages(res.data.data);
@@ -228,7 +228,7 @@ const AddCourseStructure = ({ view }) => {
 
     setCourse((prevData) => {
       const updatedModules = prevData.modules.filter(
-        (_, index) => index !== moduleIndex
+        (_, index) => index !== moduleIndex,
       );
       return {
         ...prevData,
@@ -368,7 +368,7 @@ const AddCourseStructure = ({ view }) => {
         formData,
         {
           "Content-Type": "multipart/form-data",
-        }
+        },
       );
       if (response.data.message === "Image Updated Successfully") {
         toast.success("Image Updated Successfully");
@@ -527,7 +527,9 @@ const AddCourseStructure = ({ view }) => {
         </div>
       ) : (
         <h1 className="font-bold font-poppins text-xl md:text-2xl pb-6 flex items-center justify-between md:justify-start gap-x-4">
-          <button onClick={() => navigate("/admin/home/courseStructure")}><IoChevronBackCircleOutline className="text-4xl"/></button>
+          <button onClick={() => navigate("/admin/home/courseStructure")}>
+            <IoChevronBackCircleOutline className="text-4xl" />
+          </button>
           {structureId
             ? "Edit Course Structure"
             : "Create New Course Structure"}{" "}

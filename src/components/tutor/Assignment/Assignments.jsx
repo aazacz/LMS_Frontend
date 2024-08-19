@@ -17,7 +17,6 @@ const Assignments = () => {
   const [fileName, setfileName] = useState("");
   const [dueDate, setDueDate] = useState({ value: "", error: null });
   const [totalMarks, setTotalMark] = useState({ error: null });
-  
 
   const [nameError, setNameError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
@@ -41,7 +40,7 @@ const Assignments = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${baseURL}api/course/get-course/${courseId}`
+          `${baseURL}api/course/get-course/${courseId}`,
         );
         setCourse(response.data);
         setLoading(false);
@@ -106,7 +105,7 @@ const Assignments = () => {
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
-        }
+        },
       );
       if (response?.data?.success) {
         Swal.fire({

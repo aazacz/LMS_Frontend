@@ -11,6 +11,20 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.react-calendar-custom {
+  padding: 5px;
+  width: 12rem;
+  gap: 0;
+  font-size: 0.8rem;
+}
+.react-calendar__tile {
+  padding: 0;
+  width: 80% !important;
+  height: fit-content;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .stats-member {
   display: flex;
   flex-direction: column;

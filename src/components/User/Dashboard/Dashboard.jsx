@@ -119,7 +119,7 @@ const Dashboard = () => {
       const { data } = await axiosInstanceStudent.get(
         "api/student-course/upcoming-sessions"
       );
-      setSessions(data);
+      setSessions(data.sessions);
     } catch (error) {
       console.log(error);
     } finally {
@@ -129,6 +129,7 @@ const Dashboard = () => {
   useEffect(() => {
     fetchSessions();
   }, []);
+  console.log({sessions})
   const ConstData = ({ heading, module }) => {
     return (
       <div className="stats-member">

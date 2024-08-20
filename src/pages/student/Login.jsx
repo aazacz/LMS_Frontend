@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import usePasswordToggle from "../../hooks/usePasswordToggle";
@@ -130,9 +130,8 @@ const StudentLogin = () => {
               <button
                 disabled={isSubmitting}
                 type="submit"
-                className={`w-full ${
-                  isSubmitting ? "bg-gray-600" : "bg-[#0066de]"
-                }
+                className={`w-full ${isSubmitting ? "bg-gray-600" : "bg-[#0066de]"
+                  }
                     flex justify-center py-2 mt-5 px-4 border border-transparent rounded-md 
                     shadow-sm text-sm font-medium text-white hover:bg-blue-700 
                     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}

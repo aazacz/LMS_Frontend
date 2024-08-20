@@ -10,12 +10,12 @@ import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { ChevronDown, ChevronUp, Edit, Trash } from "lucide-react";
-import session from "redux-persist/lib/storage/session";
 
 const SessionForm = ({ onSubmit, session, onClose }) => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm(
     session
@@ -24,12 +24,21 @@ const SessionForm = ({ onSubmit, session, onClose }) => {
             sessionName: session.sessionName,
             sessionDescription: session.sessionDescription,
             sessionLink: session.sessionLink,
-            sessionDate: new Date(session.sessionDateTime),
-            sessionTime: new Date(session.sessionDateTime),
+            sessionDate: new Date(session.sessionDateTime)
+              .toISOString()
+              .split("T")[0],
+            sessionTime: new Date(session.sessionDateTime)
+              .toTimeString()
+              .slice(0, 5),
+            sessionDurationHours: session.sessionDurationHours,
+            sessionDurationMinutes: session.sessionDurationMinutes,
           },
         }
-      : {}
+      : {
+          defaultValues: { sessionDurationHours: 0, sessionDurationMinutes: 0 },
+        }
   );
+  const sessionDurationMinutes = watch("sessionDurationMinutes");
 
   return (
     <div>
@@ -150,7 +159,48 @@ const SessionForm = ({ onSubmit, session, onClose }) => {
             <span className="text-red-500">{errors.sessionTime.message}</span>
           )}
         </div>
-        <div className="flex gap-4">
+        <div className="flex-flex-col gap-2">
+          <label htmlFor="" className="font-semibold">
+            Session duration
+          </label>
+          <div className="flex items-center gap-2">
+            <select
+              {...register("sessionDurationHours", {
+                required: "Session duration is required",
+                validate: (value) => {
+                  const selectedHours = parseInt(value);
+                  const selectedMinutes = parseInt(sessionDurationMinutes);
+                  if (selectedHours === 0 && selectedMinutes === 0) {
+                    return "Duration must be greater than 0";
+                  }
+                  return true;
+                },
+              })}
+            >
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+            <span className="font-semibold text-slate-400">hr</span>
+            <select {...register("sessionDurationMinutes")}>
+              <option value="0">00</option>
+              <option value="15">15</option>
+              <option value="30">30</option>
+              <option value="45">45</option>
+            </select>
+            <span className="font-semibold text-slate-400">min</span>
+          </div>
+          {errors.sessionDurationHours && (
+            <span className="text-red-500">
+              {errors.sessionDurationHours.message}
+            </span>
+          )}
+        </div>
+        <div className="flex gap-4 mt-4">
           <button
             type="button"
             onClick={onClose}
@@ -173,6 +223,8 @@ const ModuleRow = ({
   onEditClick,
   onDeleteClick,
   setSelectedSession,
+  setSelectedModuleId,
+  setShowForm,
 }) => {
   const [showSessions, setShowSessions] = useState(false);
   return (
@@ -351,6 +403,8 @@ const Asidebar = ({ course, setTutorModal, setStudentModal, refetch }) => {
 
   const addSession = async (values) => {
     try {
+      // console.log(values);
+      // return;
       const combinedDateAndTime = new Date(
         `${values.sessionDate}T${values.sessionTime}:00`
       );
@@ -362,6 +416,8 @@ const Asidebar = ({ course, setTutorModal, setStudentModal, refetch }) => {
           sessionDescription: values.sessionDescription,
           sessionLink: values.sessionLink,
           sessionDateTime: combinedDateAndTime,
+          sessionDurationHours: Number(values.sessionDurationHours),
+          sessionDurationMinutes: Number(values.sessionDurationMinutes),
         },
       });
       refetch();
@@ -387,6 +443,8 @@ const Asidebar = ({ course, setTutorModal, setStudentModal, refetch }) => {
           sessionDescription: values.sessionDescription,
           sessionLink: values.sessionLink,
           sessionDateTime: combinedDateAndTime,
+          sessionDurationHours: values.sessionDurationHours,
+          sessionDurationMinutes: values.sessionDurationMinutes,
         },
       });
       refetch();
@@ -429,7 +487,7 @@ const Asidebar = ({ course, setTutorModal, setStudentModal, refetch }) => {
   };
 
   return (
-    <div className="relative bg-slate-200 lg:w-[45%] w-full h-screen flex flex-col">
+    <div className="relative bg-slate-200 lg:w-[45%] w-full h-fit flex flex-col pb-8 min-h-screen">
       {/* Adding student and tutor */}
       <div className="w-full relative flex justify-evenly h-max p-4">
         <div
@@ -480,7 +538,9 @@ const Asidebar = ({ course, setTutorModal, setStudentModal, refetch }) => {
                   }}
                   onDeleteClick={handleDeleteSession}
                   setSelectedSession={setSelectedSession}
+                  setSelectedModuleId={setSelectedModuleId}
                   value={value}
+                  setShowForm={setShowForm}
                   key={value._id}
                   index={index}
                 />

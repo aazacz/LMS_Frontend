@@ -36,30 +36,30 @@ textarea {
 .responsive-table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px;
+  border-spacing: 0 0;
 }
 
 .responsive-table th {
   border: none;
   background-color: #e6f0fc;
   color: black;
-  padding: 10px;
+  /* padding: 10px; */
   text-align: center;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 14px;
   /* white-space: nowrap; */
-  width: 150px;
+  width: 120px;
 }
 
 .responsive-table td {
   border: none;
   color: black;
-  padding: 5px;
+  /* padding: 5px; */
   text-align: center;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 12px;
   /* white-space: nowrap; */
-  width: 150px;
+  width: 120px;
 }
 
 .responsive-table tbody tr:nth-child(even) {

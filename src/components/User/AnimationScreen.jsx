@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import kidLeft1 from "../../assets/Student/Group1.png";
 import kidLeft2 from "../../assets/Student/Group2.png";
 import Animation_ReviewPage1 from "./Animation_ReviewPage/Animation_ReviewPage";
@@ -11,15 +11,22 @@ import HomePageDiagnosis from "./HomePageDiagnosis/HomePageDiagnosis";
 import HomePagePlans from "./HomePagePlans/HomePagePlans";
 import Background from "../reusable/Background";
 
-const AnimationScreen = () => {
+const AnimationScreen = ({
+  coursesRef,
+  tutorRef,
+  teamRef,
+  plansRef,
+  diagnosisRef,
+  contactRef,
+}) => {
   return (
     <>
-      <div className="w-[100%] h-screen relative  flex flex-col justify-center items-center  Test">
+      <div className="w-[100%] min-h-screen relative flex flex-col justify-center items-center Test">
         <div className="fixed -z-20">
           <Background />
         </div>
         <div className="w-[100%] h-screen ">
-          <div className="md:w-[70%] md:h-[50vh] h-[50%]   md:pt-0  flex flex-col gap-4 justify-center i ">
+          <div className="md:w-[70%] md:h-[60vh] h-[50%]   md:pt-0  flex flex-col gap-4 justify-center i ">
             <div className="w-full flex flex-col md:flex-row gap-x-4 px-8 md:px-12">
               <h1 className="text-left text-[40px] md:text-5xl  font-poppins font-black text-[#0066de] ">
                 1600/1600 Can Be Achieved
@@ -75,15 +82,27 @@ const AnimationScreen = () => {
             </div>
           </div>
 
-          <div>
+          <div className="pb-2">
             <Animation_ReviewPage1 />
-            <Animation_Courses />
-            <Animation_Tutor />
+            <div ref={coursesRef}>
+              <Animation_Courses />
+            </div>
+            <div ref={tutorRef}>
+              <Animation_Tutor />
+            </div>
             <Animation_Methodolgy />
-            <HomePageTeam />
-            <HomePageDiagnosis />
-            <HomePagePlans />
-            <HomePageContact />
+            <div ref={plansRef}>
+              <HomePagePlans />
+            </div>
+            <div ref={diagnosisRef}>
+              <HomePageDiagnosis />
+            </div>
+            <div ref={teamRef}>
+              <HomePageTeam />
+            </div>
+            <div ref={contactRef}>
+              <HomePageContact />
+            </div>
           </div>
         </div>
       </div>

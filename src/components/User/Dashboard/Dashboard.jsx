@@ -65,7 +65,7 @@ const SessionCard = ({ sessionData }) => {
               >
                 <button
                   type="button"
-                  className="bg-[#13bf78] w-fit text-white font-medium rounded-lg p-1 w-[45%] border border-black"
+                  className="bg-[#13bf78] text-white font-medium rounded-lg p-1 w-[45%] border border-black"
                 >
                   Join Now
                 </button>

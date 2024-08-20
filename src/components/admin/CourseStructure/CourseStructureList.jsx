@@ -86,7 +86,7 @@ const CourseStructureList = () => {
     return (
       <div className="relative">
         <select
-          className="w-full dm:w-[230px] px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
+          className="px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
           onChange={(e) => handleCategoryChange(e.target.value)}
           value={category}
         >
@@ -106,7 +106,7 @@ const CourseStructureList = () => {
     return (
       <div className="relative">
         <select
-          className="w-full dm:w-[160px] px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
+          className="w-full  px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
           onChange={handleSortChange}
           value={sortBy}
         >
@@ -127,7 +127,7 @@ const CourseStructureList = () => {
       </div>
 
       {/* Heading Section  */}
-      <div className="flex flex-col mg:flex-row md:justify-between gap-4">
+      <div className="flex mg:flex-row md:justify-between gap-4 border-2 border-red-800">
         <div className="w-full mg:w-[50%] h-fit rounded-md ">
           <div className="w-full flex items-center bg-transparent border-[1.5px] border-[#F4EFEF] rounded-lg">
             <input

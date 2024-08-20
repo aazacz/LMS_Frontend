@@ -141,7 +141,7 @@ const Library = () => {
         </div>
       )}
 
-      <div className="w-full px-5 flex lg:flex-row justify-between flex-wrap items-center p-2 pb-5">
+      <div className="w-full px-5 flex lg:flex-row justify-between flex-wrap items-center p-2 pb-5 ">
         <div className="w-full lg:w-auto flex lg:flex-row justify-center flex-wrap gap-5 items-center">
           <div className="text-lg font-poppins mt-6 font-bold">
             Choose Course

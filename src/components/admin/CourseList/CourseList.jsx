@@ -83,13 +83,13 @@ const CourseList = () => {
   };
 
   return (
-    <div className="pl-3 pt-2 font-poppins w-full h-max mb-3">
-      <div className="flex justify-between pb-5">
+    <div className="pl-3 pt-2 font-poppins w-full h-max mb-">
+      <div className="flex justify-between pb-5 ">
         <h1 className="font-poppins font-semibold text-xl ">Courses</h1>
       </div>
 
       {/* Search Button  */}
-      <div className="flex flex-col dg:flex-row md:justify-between gap-4 pr-2">
+      <div className="flex flex-col dm:flex-row justify-between gap-4 tab pr-2  ">
         <div className="w-full md:w-[50%] h-fit rounded-md">
           <div className="w-full flex items-center bg-transparent border-[1.5px] border-[#F4EFEF] rounded-lg">
             <input
@@ -104,10 +104,10 @@ const CourseList = () => {
             </button>
           </div>
         </div>
-        <div className="w-full flex flex-col justify-evenly sm:flex-row gap-4 mt-1">
+        <div className="w-full flex flex-col justify-evenly sm:flex-row gap-4 mt-[5px]">
           <div className="relative">
             <select
-              className="w-full dm:w-[230px] px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
+              className="w-full dm:w-[140px] px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
               onChange={(e) => handleCategoryChange(e.target.value)}
               value={category}
             >
@@ -115,20 +115,20 @@ const CourseList = () => {
               <option value="individual">Individual Courses </option>
               <option value="group">Group Courses </option>
             </select>
-            <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[2px] h-8 pointer-events-none  rounded-lg text-gray-700">
+            <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[3px] h-8 pointer-events-none  rounded-lg text-gray-700">
               <TbCategory />
             </div>
           </div>
           <div className="relative">
             <select
-              className="w-full dm:w-[160px] px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
+              className="w-full lg:w-[140px] px-2 py-2 appearance-none outline-none bg-transparent border-[1.5px] border-[#F4EFEF] rounded-md text-sm font-poppins"
               onChange={handleSortChange}
               value={sortBy}
             >
               <option value="newest">Sort by Newest</option>
               <option value="oldest">Sort by Oldest</option>
             </select>
-            <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[2px] h-8 pointer-events-none rounded-lg text-gray-700">
+            <div className="absolute inset-y-0 right-0 flex items-center p-2 mt-[3px] h-8 pointer-events-none rounded-lg text-gray-700">
               <CgSortAz />
             </div>
           </div>

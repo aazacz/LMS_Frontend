@@ -16,7 +16,6 @@ const Student_Diagnostic_Test = () => {
         const response = await axiosInstanceStudent.get(
           `api/diagnosis/diagnosis-test-active`
         );
-
         console.log("response");
         console.log(response);
 

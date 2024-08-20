@@ -95,14 +95,72 @@ const SessionCard = ({ sessionData }) => {
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [sessions, setSessions] = useState([]);
+  const [testStats, setTestStats] = useState({
+    completedTests: 0,
+    totalTests: 0,
+  });
+  const [assignmentStats, setAssignmentStats] = useState({
+    totalAssignments: 0,
+    completedAssignments: 0,
+  });
+  const [sessionCount, setSessionCount] = useState(0);
+
+  const fetchTestStats = async () => {
+    try {
+      const { data } = await axiosInstanceStudent.get("api/test/student-stats");
+      setTestStats(data.stats); // Assuming the structure { stats: { totalTests, completedTests, remainingTests } }
+    } catch (error) {
+      console.error(error);
+      Swal.fire(
+        "Oops!",
+        "Failed to load test stats. Please try again.",
+        "error"
+      );
+    }
+  };
+
+  const fetchAssignmentStats = async () => {
+    try {
+      const { data } = await axiosInstanceStudent.get(
+        "api/assignments/student-all-assignments"
+      );
+      console.log("API Response Data:", data); // Check the response
+
+      if (data.success && data.data) {
+        setAssignmentStats({
+          totalAssignments: data.data.totalAssignments || 0,
+          completedAssignments: data.data.completedAssignmentsCount || 0,
+        });
+      } else {
+        console.error("Unexpected API response:", data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch assignment stats:", error);
+      Swal.fire(
+        "Oops!",
+        "Failed to load assignment stats. Please try again.",
+        "error"
+      );
+    }
+  };
+
+  // Check assignmentStats values in render
+  console.log("Assignment Stats in Render:", assignmentStats);
+
+  useEffect(() => {
+    fetchSessions();
+    fetchTestStats(); // Fetch test stats on component mount
+    fetchAssignmentStats(); // Fetch assignment stats on component mount
+  }, []);
+
   const Stats = [
     {
       heading: "Classes",
-      module: "05",
+      module: `${sessionCount}`,
     },
     {
       heading: "Tests",
-      module: "04/05",
+      module: `${testStats.completedTests}/${testStats.totalTests}`, // Dynamically set the test stats
     },
     {
       heading: "Quiz Won",
@@ -110,25 +168,40 @@ const Dashboard = () => {
     },
     {
       heading: "Assignments",
-      module: "00/03",
+      module: `${assignmentStats.completedAssignments || 0}/${assignmentStats.totalAssignments || 0}`,
     },
   ];
+
   const fetchSessions = async () => {
     try {
       setLoading(true);
       const { data } = await axiosInstanceStudent.get(
         "api/student-course/upcoming-sessions"
       );
-      setSessions(data);
+
+      // Validate if data.sessions is an array
+      if (Array.isArray(data.sessions)) {
+        setSessions(data.sessions);
+        setSessionCount(data.totalCount || 0);
+      } else {
+        console.error(
+          "Expected data.sessions to be an array but got:",
+          data.sessions
+        );
+        setSessions([]);
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching sessions:", error);
+      setSessions([]); // Ensure sessions is an empty array on error
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchSessions();
   }, []);
+
   const ConstData = ({ heading, module }) => {
     return (
       <div className="stats-member">

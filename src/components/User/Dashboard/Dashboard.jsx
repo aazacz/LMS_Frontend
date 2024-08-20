@@ -15,6 +15,8 @@ import Loader from "../../reusable/Loader";
 import { axiosInstanceStudent } from "../../../routes/UserRoutes";
 import { Link } from "react-router-dom";
 import { ClockIcon } from "lucide-react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 //  courseName,
 //  courseId,
@@ -27,7 +29,7 @@ import { ClockIcon } from "lucide-react";
 
 const SessionCard = ({ sessionData }) => {
   return (
-    <div className="left-sub-content2 mr-1 pt-2 flex flex-col bg-[#f4f5fb] h-fit px-4 rounded-xl p-2  w-full  lg:w-[80%] pb-4">
+    <div className="left-sub-content2 mr-1 pt-2 flex flex-col bg-[#f4f5fb] h-fit px-4 rounded-xl p-2  w-full pb-4">
       <h1 className="text-xl font-semibold my-4">{sessionData.courseName}</h1>
       <img
         src={sessionData.courseImage || classroomimage}
@@ -42,6 +44,10 @@ const SessionCard = ({ sessionData }) => {
           <ClockIcon size={"1rem"} />
           {`${sessionData.sessionDurationHours} h ${sessionData.sessionDurationMinutes} m`}
         </div>
+        <p className="flex justify-center items-center gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white">
+          <FaCalendarAlt />
+          {new Date(sessionData.sessionDateTime).toDateString()}
+        </p>
         {/* <p className="flex justify-center items-center gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white">
           <FaClock />
           1Hr 30Min
@@ -100,6 +106,7 @@ const SessionCard = ({ sessionData }) => {
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [sessions, setSessions] = useState([]);
+  const [filteredSessions, setFilteredSessions] = useState([]);
   const Stats = [
     {
       heading: "Classes",
@@ -118,6 +125,7 @@ const Dashboard = () => {
       module: "00/03",
     },
   ];
+  const [selectedDate, setSelectedDate] = useState();
   const fetchSessions = async () => {
     try {
       setLoading(true);
@@ -134,6 +142,27 @@ const Dashboard = () => {
   useEffect(() => {
     fetchSessions();
   }, []);
+  useEffect(() => {
+    if (selectedDate) {
+      const date = new Date(selectedDate);
+      const filtered = sessions.filter((session) => {
+        const sessionDate = new Date(session.sessionDateTime);
+        return (
+          sessionDate.getFullYear() === date.getFullYear() &&
+          sessionDate.getMonth() === date.getMonth() &&
+          sessionDate.getDate() === date.getDate()
+        );
+      });
+      setFilteredSessions(filtered);
+    }
+  }, [selectedDate]);
+  let datesWithSessions = new Set();
+  const getDatesWithSessions = () => {
+    sessions.forEach((session) => {
+      datesWithSessions.add(new Date(session.sessionDateTime).toDateString());
+    });
+  };
+  getDatesWithSessions();
   const ConstData = ({ heading, module }) => {
     return (
       <div className="stats-member">
@@ -144,6 +173,7 @@ const Dashboard = () => {
       </div>
     );
   };
+  console.log({ datesWithSessions });
 
   return (
     <div className="w-full pl-[8px] font-poppins">
@@ -161,8 +191,22 @@ const Dashboard = () => {
           <FaCalendarAlt className="text-[#0066DE]" />
         </span>
       </div>
-      <div className="content-container flex">
-        <div className="w-full  pt-3 pr-2 pl-2 gap-5 flex flex-wrap h-max justify-evenly">
+      <div className="content-container flex justify-evenly">
+        <div className="flex flex-col">
+          <p className="font-semibold mb-2">Select a date</p>
+          <Calendar
+            value={selectedDate}
+            onChange={setSelectedDate}
+            className="react-calendar-custom"
+            tileContent={({ activeStartDate, date, view }) => {
+              return view === "month" &&
+                datesWithSessions.has(date.toDateString()) ? (
+                <div className="border-2 rounded-full w-1/2 mx-auto border-green-500"></div>
+              ) : null;
+            }}
+          />
+        </div>
+        <div className="  pt-3 pr-2 pl-2 gap-5 flex flex-col w-fit  h-max justify-evenly">
           {/* <div className="left-sub-content1 mr-1 bg-[#f4f5fb] w-full lg:w-[40%] p-2  ">
             <div className="font-poppins font-bold p-2 flex-wrap gap-2 flex justify-between text-sm md:text-base">
               <p className="">
@@ -198,11 +242,17 @@ const Dashboard = () => {
               />
             </div>
           </div> */}
-          {sessions.map((session) => {
-            return (
-              <SessionCard sessionData={session} key={session.sessionId} />
-            );
-          })}
+          {filteredSessions.length > 0 ? (
+            filteredSessions.map((session) => {
+              return (
+                <SessionCard sessionData={session} key={session.sessionId} />
+              );
+            })
+          ) : (
+            <p className="font-semibold text-center text-slate-400 w-[25rem] mt-32">
+              No tests on selected date
+            </p>
+          )}
         </div>
         <div className="pr-5 pl-5 pb-5 pt-3 flex flex-col right-content md:flex">
           <div className="rounded-lg bg-white p-5 right-stats">

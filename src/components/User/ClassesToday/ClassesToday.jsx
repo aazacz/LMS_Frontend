@@ -20,7 +20,7 @@ const ClassesToday = () => {
           `${baseURL}api/tutor/tutors?page=1&pageSize=&search`,
           {
             "user-agent": navigator.userAgent,
-          }
+          },
         );
         setTutorList(response.data.data);
         setProgress(35);

@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react'
-import usePaginationDataAdmin from './usePaginationDataAdmin'
-import ReusablePagination from '../../reusable/ReusablePagination'
-import { Link } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import Loader from '../../reusable/Loader'
-import { toast } from 'react-toastify'
-import Swal from 'sweetalert2'
-import { AdminAxiosInstance } from '../../../routes/AdminRoutes'
-
+import React, { useEffect } from "react";
+import usePaginationDataAdmin from "./usePaginationDataAdmin";
+import ReusablePagination from "../../reusable/ReusablePagination";
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../../reusable/Loader";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { AdminAxiosInstance } from "../../../routes/AdminRoutes";
 
 const AdminListTable = ({ courseId }) => {
-
   const {
     courses,
     isPending,
@@ -23,26 +21,22 @@ const AdminListTable = ({ courseId }) => {
     handlePageSizeChange,
     handleSearchChange,
     error,
-    refetch
-  } = usePaginationDataAdmin(courseId)
-
+    refetch,
+  } = usePaginationDataAdmin(courseId);
 
   const columns = [
-
-    { field: 'name', headerName: 'Name' },
-    { field: 'email', headerName: 'Email' },
-    { field: 'Action', headerName: 'Action' }
-
-  ]
-
-
-
+    { field: "name", headerName: "Name" },
+    { field: "email", headerName: "Email" },
+    { field: "Action", headerName: "Action" },
+  ];
 
   const handleDelete = async (TutortId) => {
     try {
-      console.log("TutortId in ")
-      console.log(TutortId)
-      const response = await AdminAxiosInstance.delete(`api/course/remove-teacher/${courseId}/${TutortId}`);
+      console.log("TutortId in ");
+      console.log(TutortId);
+      const response = await AdminAxiosInstance.delete(
+        `api/course/remove-teacher/${courseId}/${TutortId}`,
+      );
 
       if (response.data.message === "Tutor removed successfully") {
         toast.success("Tutor removed successfully");
@@ -59,8 +53,8 @@ const AdminListTable = ({ courseId }) => {
 
   const confirmDelete = (TutortId, event) => {
     event.preventDefault();
-    console.log("TutortId sdvgsfgrgfrfedg")
-    console.log(TutortId)
+    console.log("TutortId sdvgsfgrgfrfedg");
+    console.log(TutortId);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -68,7 +62,7 @@ const AdminListTable = ({ courseId }) => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes"
+      confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
         handleDelete(TutortId);
@@ -78,29 +72,21 @@ const AdminListTable = ({ courseId }) => {
 
   const formatDate = (date) => {
     const options = {
-      timeZone: 'Asia/Kolkata',
+      timeZone: "Asia/Kolkata",
       hour12: true,
-      hour: 'numeric',
-      minute: '2-digit',
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    }
+      hour: "numeric",
+      minute: "2-digit",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    };
 
-    const formattedDate = new Date(date).toLocaleString('en-IN', options)
-    return formattedDate
-  }
-
-
-
-
-
-
-
-
+    const formattedDate = new Date(date).toLocaleString("en-IN", options);
+    return formattedDate;
+  };
 
   return (
-    <div className='w-full'>
+    <div className="w-full">
       <div className="table-container">
         <table className="responsive-table">
           <thead>
@@ -117,44 +103,34 @@ const AdminListTable = ({ courseId }) => {
               </div>
             ) : (
               courses?.map((row, indexrow) => (
-
                 <tr key={indexrow}>
                   {console.log(row)}
                   {columns.map((column, index) => (
                     <td key={index}>
-
-
-                      {column.field === 'name' ? (
-
+                      {column.field === "name" ? (
                         <span className="action-container text-sm font-semibold">
                           {row.name}
                         </span>
-
                       ) : null}
 
-                      {column.field === 'email' ? (
-
+                      {column.field === "email" ? (
                         <span className="action-container text-sm font-semibold">
                           {row.email}
                         </span>
-
                       ) : null}
 
-
-
-
-
-                      {column.field === 'Action' ? (
+                      {column.field === "Action" ? (
                         <div className="action-container">
                           <div className="font-poppins text-sm  cursor-pointer hover:bg-slate-200 flex justify-center items-center">
                             <button
                               onClick={(event) => confirmDelete(row._id, event)}
-                              className='text-white  bg-red-500 px-2'>Remove </button>
+                              className="text-white  bg-red-500 px-2"
+                            >
+                              Remove{" "}
+                            </button>
                           </div>
                         </div>
                       ) : null}
-
-
                     </td>
                   ))}
                 </tr>
@@ -162,12 +138,9 @@ const AdminListTable = ({ courseId }) => {
             )}
           </tbody>
         </table>
-
       </div>
-
-
     </div>
-  )
-}
+  );
+};
 
-export default AdminListTable
+export default AdminListTable;

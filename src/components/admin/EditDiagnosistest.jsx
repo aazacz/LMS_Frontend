@@ -46,7 +46,7 @@ const EditDiagnosistest = () => {
   const fetchDiagnosistest = async () => {
     try {
       const res = await AdminAxiosInstance.get(
-        "api/diagnosis/diagnosis-tests/" + testId
+        "api/diagnosis/diagnosis-tests/" + testId,
       );
       // if (!res.status !== 200) return navigate("/admin/home/diagnosistest");
       setTest(res.data);
@@ -112,7 +112,7 @@ const EditDiagnosistest = () => {
     const updatedQuestions = [...test.questions];
 
     const correctIndex = updatedQuestions[questionIndex].choices.findIndex(
-      (choice) => choice.isCorrect
+      (choice) => choice.isCorrect,
     );
     console.log(correctIndex);
 
@@ -344,7 +344,7 @@ const EditDiagnosistest = () => {
                     handleIsCorrectChange(choice.isCorrect, qIndex, cIndex)
                   }
                   className={`flex w-20 h-9 items-center cursor-pointer  justify-center text-center shadow-[0_3px_10px_rgb(0,0,0,0.2)] ${getBackgroundColor(
-                    choice.isCorrect
+                    choice.isCorrect,
                   )} px-2 rounded-sm `}
                 >
                   {choice.isCorrect ? "True" : "False"}

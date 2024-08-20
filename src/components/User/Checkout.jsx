@@ -5,7 +5,7 @@ import { axiosInstanceStudent } from "../../routes/UserRoutes";
 import axios from "axios";
 
 const Checkout = () => {
-  const { courseType, courseId } = useParams();
+  const { courseType, courseId, tutorId } = useParams();
   const [Course, setCourse] = useState(null);
   const navigate = useNavigate();
 
@@ -51,7 +51,9 @@ const Checkout = () => {
 
   useEffect(() => {
     const loadRazorpayScript = async () => {
-      const result = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+      const result = await loadScript(
+        "https://checkout.razorpay.com/v1/checkout.js"
+      );
       if (!result) {
         console.error("Failed to load Razorpay script");
       }
@@ -60,7 +62,9 @@ const Checkout = () => {
     loadRazorpayScript();
 
     return () => {
-      const script = document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]');
+      const script = document.querySelector(
+        'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
+      );
       if (script) {
         script.remove();
       }
@@ -77,13 +81,14 @@ const Checkout = () => {
       description: "MindSAT Payment",
       handler: async function (response) {
         let responseData = {
+          tutorId,
           courseStructureId: courseId,
           paymentId: response.razorpay_payment_id,
           amount: Course.price,
         };
-      console.log(responseData)
-      console.log(courseType)
-      console.log("courseType")
+        console.log(responseData);
+        console.log(courseType);
+        console.log("courseType");
         try {
           let apiResponse;
           if (courseType === "individual") {
@@ -92,17 +97,15 @@ const Checkout = () => {
               responseData
             );
 
-
-            console.log("individual course bought")
+            console.log("individual course bought");
             navigate("/student/success");
-
           } else if (courseType === "group") {
             responseData.courseId = courseId;
             apiResponse = await axiosInstanceStudent.post(
               "api/student-course/enroll-group-course",
               responseData
             );
-            console.log("group course bought")
+            console.log("group course bought");
             navigate("/student/success");
           }
         } catch (error) {
@@ -202,6 +205,5 @@ const Checkout = () => {
     </>
   );
 };
-
 
 export default Checkout;

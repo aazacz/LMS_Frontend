@@ -6,10 +6,9 @@ import axios from "axios";
 import usePasswordToggle from "../../hooks/usePasswordToggle";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setAdminDetails } from '../../store/reducers/AdminloginSlice';
-import adminBg from "../../assets/Admin/adminBg.jpg"
-import Logo from "../../assets/Admin/Logoo.png"
-
+import { setAdminDetails } from "../../store/reducers/AdminloginSlice";
+import adminBg from "../../assets/Admin/adminBg.jpg";
+import Logo from "../../assets/Admin/Logoo.png";
 
 const AdminLogin = () => {
   const {
@@ -31,14 +30,12 @@ const AdminLogin = () => {
     try {
       setIsSubmitting(true);
 
-            const res = await axios.post(`${baseURL}api/admin/login`, data,
-                {
-                    "user-agent": navigator.userAgent,
-                },
-            )
+      const res = await axios.post(`${baseURL}api/admin/login`, data, {
+        "user-agent": navigator.userAgent,
+      });
 
       if (res.data.role === "admin") {
-        dispatch(setAdminDetails(res.data || []))
+        dispatch(setAdminDetails(res.data || []));
         navigate("/admin/home");
       }
     } catch (error) {

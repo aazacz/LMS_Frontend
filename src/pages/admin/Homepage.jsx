@@ -25,7 +25,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import DiagnosisiTestDetailsPage from "../../components/admin/DiagnosisiTestDetailsPage";
 // import Settings from "../../components/admin/Settings/Settings";
-import Settings from "../../components/admin/Settings/Settings"
+import Settings from "../../components/admin/Settings/Settings";
 import Package from "../../components/admin/Package";
 import Report from "../../components/admin/Report/Report";
 import EditDiagnosistest from "../../components/admin/EditDiagnosistest";

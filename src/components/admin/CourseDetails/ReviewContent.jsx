@@ -1,10 +1,7 @@
-import { useState } from "react"
-
-
+import { useState } from "react";
 
 const ReviewContent = () => {
-    return <div className="bg-yellow-300">Review Content</div>
-}
+  return <div className="bg-yellow-300">Review Content</div>;
+};
 
-
-export default ReviewContent
+export default ReviewContent;

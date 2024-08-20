@@ -141,7 +141,7 @@ const AdminSidebar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
                            ? ""
                            : " -translate-x-full md:translate-x-0"
                        }
-                         transition-all duration-500  font-poppins text-sm font-medium `}
+                         transition-all duration-500  font-poppins text-sm font-medium shadow-[5px_2px_9px_0px_#00000024]`}
     >
       <Sidebar collapsed={collapsed} backgroundColor="#fff" width="210px">
         <Menu
@@ -219,7 +219,7 @@ const AdminSidebar = ({ isOpen, isSidebarOpen, setIsSidebarOpen }) => {
                   link.title
                 )}
               </MenuItem>
-            )
+            ),
           )}
 
           <button

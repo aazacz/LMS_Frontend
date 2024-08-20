@@ -9,7 +9,9 @@ import useDebounce from "../../hooks/useDebounce";
 import { AdminAxiosInstance } from "../../routes/AdminRoutes";
 import { useQuery } from "@tanstack/react-query";
 
-const apiURL = process.env.REACT_APP_API_URL + "api/diagnosis/get-diagnosis?page=1&pageSize=5&search";
+const apiURL =
+  process.env.REACT_APP_API_URL +
+  "api/diagnosis/get-diagnosis?page=1&pageSize=5&search";
 
 const DiagnosisTest = () => {
   const {
@@ -47,7 +49,7 @@ const DiagnosisTest = () => {
   const fetchDiagnosisData = async () => {
     try {
       const response = await AdminAxiosInstance.get(
-        `api/diagnosis/diagnosis-tests?page=1&pageSize=&search`
+        `api/diagnosis/diagnosis-tests?page=1&pageSize=&search`,
       );
       console.log(response.data);
       return response.data;

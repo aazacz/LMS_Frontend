@@ -1,17 +1,14 @@
+// export default Library;
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Pdflogo from "./Pdflogo";
-import { MdFileDownload, MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
-import Swal from "sweetalert2"; // Import SweetAlert
+import { MdFileDownload } from "react-icons/md";
+import Swal from "sweetalert2";
 import ReusablePagination from "../../reusable/ReusablePagination";
 import { Link } from "react-router-dom";
-import { BsFillFileEarmarkPdfFill, BsTrash2 } from "react-icons/bs";
-import { FaCirclePlus } from "react-icons/fa6";
-import { Delete } from "@mui/icons-material";
-import { axiosInstanceStudent } from "../../../routes/UserRoutes";
+import { BsFillFileEarmarkPdfFill } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import { axiosInstanceStudent } from "../../../routes/UserRoutes";
 
 const Library = () => {
   const [courses, setCourses] = useState([]);
@@ -19,123 +16,121 @@ const Library = () => {
   const [materials, setMaterials] = useState([]);
   const [filteredMaterials, setFilteredMaterials] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Default page size
-  const [totalRows, setTotalRows] = useState(0); // Total rows for pagination
-  const [Modal, setModal] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalRows, setTotalRows] = useState(0);
+  const [modal, setModal] = useState(false);
+  const [materialURL, setMaterialURL] = useState(null);
 
-  // Fetch all courses on component mount
+  // Fetch all courses
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const response = await axiosInstanceStudent.get(
-          `api/course/get-all-course?page=1&pageSize=&search`
+          `api/course/student-enroll-courses`
         );
+        console.log("Courses Data:", response.data.data); // Check the structure of the courses data
         setCourses(response.data.data);
       } catch (error) {
-        console.log("Error fetching courses:", error);
+        console.error("Error fetching courses:", error);
       }
     };
 
     fetchCourses();
   }, []);
 
-  // Fetch materials initially and when selectedCourse or pagination changes
+  // Fetch materials based on currentPage and pageSize
   useEffect(() => {
     const fetchMaterials = async () => {
       try {
-        let response;
-        if (selectedCourse !== "") {
-          //   response = await AdminAxiosInstance.get(
-          //     `api/library/get-course/${selectedCourse}?page=${currentPage}&pageSize=${pageSize}`
-          //   );
-          response = await axiosInstanceStudent.get(`api/library/all-books`);
-        } else {
-          response = await axiosInstanceStudent.get(`api/library/all-books`);
-          //   response = await AdminAxiosInstance.get(
-          //     `api/library/get-all-assignment?page=${currentPage}&pageSize=${pageSize}`
-          //   );
-        }
+        const response = await axiosInstanceStudent.get(
+          `api/library/all-books`
+        );
+        console.log("Fetched materials:", response.data.books); // Debug: Check fetched materials
         setMaterials(response.data.books);
-        setFilteredMaterials(response.data.books);
-        setTotalRows(response.data.books.length);
+        setTotalRows(response.data.totalCount); // Ensure totalCount is accurate
       } catch (error) {
-        console.log("Error fetching materials:", error);
+        console.error("Error fetching materials:", error);
       }
     };
 
     fetchMaterials();
-  }, []);
-  //   }, [selectedCourse, currentPage, pageSize]);
+  }, [currentPage, pageSize]);
 
-  // Function to handle course selection
-  const handleCourseChange = (event) => {
-    setSelectedCourse(event.target.value);
-    let filteredData = materials?.filter(
-      ({ courseId }) => courseId === event.target.value
-    );
-    console.log("ee ", event.target.value);
-
-    console.log("filteredData", filteredData);
-    if (event.target.value) {
-      setFilteredMaterials(filteredData);
+  useEffect(() => {
+    console.log("Selected Course ID:", selectedCourse); // Debug: Check selectedCourse
+    if (selectedCourse) {
+      const filtered = materials.filter((material) => {
+        const materialCourseId = String(material.courseId); // Convert to string
+        console.log(`Comparing ${materialCourseId} with ${selectedCourse}`); // Debug: Check the comparison
+        return materialCourseId === selectedCourse;
+      });
+      console.log("Filtered Materials:", filtered); // Debug: Check filtered materials
+      setFilteredMaterials(filtered);
     } else {
       setFilteredMaterials(materials);
     }
-    setCurrentPage(1);
+  }, [materials, selectedCourse]);
+
+  // Handle course selection
+  const handleCourseChange = (event) => {
+    const selectedCourseId = event.target.value;
+    setSelectedCourse(selectedCourseId);
+    setCurrentPage(1); // Reset to the first page on course change
+    console.log("Selected Course ID:", selectedCourseId); // This should log the course ID
   };
 
-  //Download Material
+  // Download Material
   const handleDownloadMaterial = async (materialId, bookId) => {
     try {
-      const data = await axiosInstanceStudent
-        .get(`api/library/download-book/${materialId}/${bookId}`, {
+      const response = await axiosInstanceStudent.get(
+        `api/library/download-book/${materialId}/${bookId}`,
+        {
           responseType: "blob",
           headers: {
             Accept: "application/pdf",
           },
-        })
-        .then((res) => {
-          console.log({ res });
-          console.log("res.data in then block");
-          console.log(res.data);
-        });
+        }
+      );
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${bookId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     } catch (error) {
       console.error("Error downloading file:", error);
       Swal.fire("Error!", "Failed to download file.", "error");
     }
   };
 
-  // Function to handle page change
+  // Handle page change
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
   };
 
-  // Function to handle page size change
+  // Handle page size change
   const handlePageSizeChange = (event) => {
     setPageSize(parseInt(event.target.value, 10));
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset to first page on page size change
   };
 
-  const [Material, setMaterial] = useState(null);
-  // Function to open and close a modal
+  // Open PDF modal
   const openModal = (material) => {
-    console.log("https://mindsat.onrender.com/" + material.filePath);
-    setMaterial("https://mindsat.onrender.com/" + material.filePath);
+    setMaterialURL(`https://mindsat.onrender.com/${material.filePath}`);
     setModal(true);
   };
 
   return (
     <div
       onClick={() => setModal(false)}
-      className={`w-full h-[100dvh]  relative flex flex-col font-poppins items-center ${
-        Modal ? " bg-gray-200" : " "
-      }`}
+      className={`w-full h-[100dvh] relative flex flex-col font-poppins items-center ${modal ? "bg-gray-200" : ""}`}
     >
-      {Modal && (
-        <div className="w-[90%] z-[99] h-full flex justify-center items-center absolute  left-0 top-0  ">
-          <div className="w-full h-full   ">
+      {modal && (
+        <div className="w-[90%] z-[99] h-full flex justify-center items-center absolute left-0 top-0">
+          <div className="w-full h-full">
             <object
-              data={Material}
+              data={materialURL}
               type="application/pdf"
               width="100%"
               height="100%"
@@ -157,7 +152,7 @@ const Library = () => {
             value={selectedCourse}
           >
             <option value="">All Courses</option>
-            {courses?.map((course) => (
+            {courses.map((course) => (
               <option key={course._id} value={course._id}>
                 {course.courseName}
               </option>
@@ -167,30 +162,29 @@ const Library = () => {
       </div>
 
       <div className="w-full pr-2">
-        <div className="w-full px-2  md:px-0 justify-center spac grid  grid-flow-row place-content-center xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6  md:gap-x-4">
-          {filteredMaterials && filteredMaterials.length ? (
-            filteredMaterials?.map((material) => (
+        <div className="w-full px-2 md:px-0 justify-center grid grid-flow-row place-content-center xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 md:gap-x-4">
+          {filteredMaterials.length ? (
+            filteredMaterials.map((material) => (
               <React.Fragment key={material._id}>
-                {material?.books?.map((book) => (
+                {material.books.map((book) => (
                   <div
-                    key={book._id} // It's better to use a unique key for the inner elements.
+                    key={book._id}
                     onClick={(e) => {
                       e.stopPropagation();
-                      // openModal(book);
+                      openModal(book);
                     }}
-                    className="md:w-[180px]  bg-[#F5F1F1] flex flex-col justify-center items-center px-2 py-3 m-4 rounded-md"
+                    className="md:w-[180px] bg-[#F5F1F1] flex flex-col justify-center items-center px-2 py-3 m-4 rounded-md"
                   >
                     <div>
-                      {/* <Pdflogo /> */}
                       <BsFillFileEarmarkPdfFill className="text-6xl text-red-700" />
                     </div>
                     <div className="flex justify-between mt-4 gap-5 px-2 items-center w-full relative">
                       <h1
                         data-tooltip-id="PdfName"
-                        data-tooltip-content={book?.fileName?.split(".pdf")[0]}
+                        data-tooltip-content={book.fileName.split(".pdf")[0]}
                         className="w-[90%] line-clamp-1 text-center font-poppins font-semibold text-xs line-clamp-1d uppercase"
                       >
-                        {book?.fileName?.split(".pdf")[0]}
+                        {book.fileName.split(".pdf")[0]}
                       </h1>
                       <Tooltip
                         id="PdfName"
@@ -199,10 +193,14 @@ const Library = () => {
                         effect="solid"
                       />
                       <div className="w-[10%]">
-                        <Link to={book.filePath} target="_blank">
+                        <Link
+                          to={book.filePath}
+                          target="_blank"
+                          className="cursor-pointer"
+                        >
                           <MdFileDownload
-                            // onClick={() => handleDownload(material._id, book._id)}
-                            className="text-2xl cursor-pointer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-lg text-blue-700"
                           />
                         </Link>
                       </div>
@@ -212,18 +210,18 @@ const Library = () => {
               </React.Fragment>
             ))
           ) : (
-            <div className="w-full text-center mt-4">
-              <h1 className=" text-center w-full">No materials found!</h1>
-            </div>
+            <div>No materials found for the selected course</div>
           )}
         </div>
-        {/* <ReusablePagination
-          currentPage={currentPage}
-          pageSize={pageSize}
-          totalRows={totalRows}
-          handlePageChange={handlePageChange}
-          handlePageSizeChange={handlePageSizeChange}
-        /> */}
+      </div>
+
+      <div className="w-full flex justify-center mt-5">
+        <ReusablePagination
+          count={Math.ceil(totalRows / pageSize)}
+          page={currentPage}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
       </div>
     </div>
   );

@@ -50,7 +50,7 @@ const TestCompoenent = () => {
     try {
       setLoading(true);
       const response = await axiosInstanceStudent.get(
-        `api/test/course-tests/${row._id}`
+        `api/test/course-tests/${row._id}`,
       );
       console.log(response.data);
       if (response.data) {

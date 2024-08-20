@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Route,
   Routes,
@@ -17,6 +17,7 @@ import DiagnosisTestRoute from "./DiagnosisTestRoute";
 import { AnimatePresence, motion } from "framer-motion";
 import ViewAllCourses from "../components/User/ViewAllCourses";
 import CourseTestRoute from "./CourseTestRoute";
+import InfoModal from "./InfoModal";
 
 let token;
 const baseURL = process.env.REACT_APP_API_URL;
@@ -51,6 +52,12 @@ axiosInstanceStudent.interceptors.response.use(
 );
 
 const UserRoutes = () => {
+  const [showModal, setShowModal] = useState(true);
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
   const user = useSelector((state) => state.StudentDetails);
 
   token = useSelector((state) => state.StudentDetails.token);
@@ -61,29 +68,38 @@ const UserRoutes = () => {
   };
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Homepage />} />
-        <Route
-          path="/login"
-          element={user.token ? <Navigate to="/student" /> : <Login />}
+    <>
+      {/* {showModal && (
+        <InfoModal
+          Line1="I added a text editor to the course structure and course, "
+          Line2="Therefore you may face error with old course and courseSturuture datas"
+          Line3="If error occurs create new COURSE AND COURSE STURUCTURE," 
+          onClose={handleClose}
         />
-        <Route path="/student/*" element={studentNavigate()} />
-        <Route path="/coursetest/*"        element={<CourseTestRoute/>}  />
-        <Route path="/signup/*" element={<SignupRoute />} />
+      )} */}
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Homepage />} />
+          <Route
+            path="/login"
+            element={user.token ? <Navigate to="/student" /> : <Login />}
+          />
+          <Route path="/student/*" element={studentNavigate()} />
+          <Route path="/coursetest/*" element={<CourseTestRoute />} />
+          <Route path="/signup/*" element={<SignupRoute />} />
 
-        <Route
-          path="/diagnosistest/*"
-          element={
-            user.isDiagnosticTestTaken ? (
-              <Navigate to="/student" />
-            ) : (
-              <DiagnosisTestRoute />
-            )
-          }
-        />
+          <Route
+            path="/diagnosistest/*"
+            element={
+              user.token && user.isDiagnosticTestTaken ? (
+                <Navigate to="/student" />
+              ) : (
+                <DiagnosisTestRoute />
+              )
+            }
+          />
 
-        {/* <Route path="*"
+          {/* <Route path="*"
         element={
           <div className="w-screen h-screen">
             {" "}
@@ -91,8 +107,9 @@ const UserRoutes = () => {
           </div>
         }
       /> */}
-      </Routes>
-    </AnimatePresence>
+        </Routes>
+      </AnimatePresence>
+    </>
   );
 };
 

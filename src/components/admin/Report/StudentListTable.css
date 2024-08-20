@@ -1,12 +1,12 @@
 .no-arrow {
-    -moz-appearance: textfield;
-    -webkit-appearance: none;
-    margin: 0;
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* For hiding the arrows in WebKit browsers */
 .no-arrow::-webkit-inner-spin-button,
 .no-arrow::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }

@@ -10,9 +10,8 @@
     background-image: conic-gradient(from 0deg at 50% 50%, #A07CFE00 1%, #8558FBFF 4%, #FC3175FF 38%, #FA9B3DFF 76%, #FE8FB500 88%);
     animation: spin 5s linear infinite;
 } */
-.grad{
-    
-    /* animation: spin 2s linear infinite; */
+.grad {
+  /* animation: spin 2s linear infinite; */
 }
 
 /* @keyframes spin {

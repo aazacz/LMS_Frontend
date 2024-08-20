@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import SearchIcon from "@mui/icons-material/Search";
 import classroomimage from "../../../assets/ClassesToday/classestoday.png";
@@ -12,17 +12,167 @@ import { FaClock } from "react-icons/fa6";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { PiNotepadBold } from "react-icons/pi";
 import Loader from "../../reusable/Loader";
+import { axiosInstanceStudent } from "../../../routes/UserRoutes";
+import { Link } from "react-router-dom";
+import { ClockIcon } from "lucide-react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+
+//  courseName,
+//  courseId,
+//   courseImage,
+//   sessionId,
+//   moduleName,
+//   sessionName,
+//   sessionDescription,
+//   sessionLink,
+
+const SessionCard = ({ sessionData }) => {
+  return (
+    <div className="left-sub-content2 mr-1 pt-2 flex flex-col bg-[#f4f5fb] h-fit px-4 rounded-xl p-2  w-full pb-4">
+      <h1 className="text-xl font-semibold my-4">{sessionData.courseName}</h1>
+      <img
+        src={sessionData.courseImage || classroomimage}
+        alt="classroom"
+        className="h-[15rem] rounded-xl p-1 object-cover"
+      />
+      <div className="left-sub-content-box2 justify-evenly flex flex-wrap gap-[10px] p-2 ">
+        <p className="flex gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white ">
+          {sessionData.moduleName}
+        </p>
+        <div className="flex items-center gap-2 rounded-xl p-2 text-sm font-poppins font-semibold bg-white ">
+          <ClockIcon size={"1rem"} />
+          {`${sessionData.sessionDurationHours} h ${sessionData.sessionDurationMinutes} m`}
+        </div>
+        <p className="flex justify-center items-center gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white">
+          <FaCalendarAlt />
+          {new Date(sessionData.sessionDateTime).toDateString()}
+        </p>
+        {/* <p className="flex justify-center items-center gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white">
+          <FaClock />
+          1Hr 30Min
+        </p> */}
+        <Link
+          to={`/student/courses/${sessionData.courseId}`}
+          className="flex justify-center items-center gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white"
+        >
+          View course <FaArrowRightLong />
+        </Link>
+      </div>
+      <div>
+        <div className="flex w-full justify-between">
+          <h1 className="font-poppins p-2 text-left text-lg font-bold">
+            {sessionData.sessionName}
+          </h1>
+          <div className="flex font-poppins text-sm p-3 rounded-lg ">
+            {sessionData.sessionLink ? (
+              <Link
+                className="w-fit"
+                to={
+                  sessionData.sessionLink.startsWith("https")
+                    ? sessionData.sessionLink
+                    : `https://${sessionData.sessionLink}`
+                }
+              >
+                <button
+                  type="button"
+                  className="bg-[#13bf78] w-fit text-white font-medium rounded-lg p-1 w-[45%] border border-black"
+                >
+                  Join Now
+                </button>
+              </Link>
+            ) : (
+              <div className="flex flex-col items-center">
+                <button
+                  disabled
+                  type="button"
+                  className="bg-slate-400 w-fit cursor-not-allowed text-white font-medium rounded-lg p-1 border "
+                >
+                  Join Now
+                </button>
+                <p className="my-2 text-xs">Meeting link not provided</p>
+              </div>
+            )}
+          </div>
+        </div>
+        <p className="font-poppins text-xs leading-6 text-left pl-2 ">
+          {sessionData.sessionDescription}
+        </p>
+      </div>
+    </div>
+  );
+};
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
+  const [sessions, setSessions] = useState([]);
+  const [filteredSessions, setFilteredSessions] = useState([]);
+  const [testStats, setTestStats] = useState({
+    completedTests: 0,
+    totalTests: 0,
+  });
+  const [assignmentStats, setAssignmentStats] = useState({
+    totalAssignments: 0,
+    completedAssignments: 0,
+  });
+  const [sessionCount, setSessionCount] = useState(0);
+
+  const fetchTestStats = async () => {
+    try {
+      const { data } = await axiosInstanceStudent.get("api/test/student-stats");
+      setTestStats(data.stats); // Assuming the structure { stats: { totalTests, completedTests, remainingTests } }
+    } catch (error) {
+      console.error(error);
+      Swal.fire(
+        "Oops!",
+        "Failed to load test stats. Please try again.",
+        "error"
+      );
+    }
+  };
+
+  const fetchAssignmentStats = async () => {
+    try {
+      const { data } = await axiosInstanceStudent.get(
+        "api/assignments/student-all-assignments"
+      );
+      console.log("API Response Data:", data); // Check the response
+
+      if (data.success && data.data) {
+        setAssignmentStats({
+          totalAssignments: data.data.totalAssignments || 0,
+          completedAssignments: data.data.completedAssignmentsCount || 0,
+        });
+      } else {
+        console.error("Unexpected API response:", data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch assignment stats:", error);
+      Swal.fire(
+        "Oops!",
+        "Failed to load assignment stats. Please try again.",
+        "error"
+      );
+    }
+  };
+
+  // Check assignmentStats values in render
+  console.log("Assignment Stats in Render:", assignmentStats);
+
+  useEffect(() => {
+    fetchSessions();
+    fetchTestStats(); // Fetch test stats on component mount
+    fetchAssignmentStats(); // Fetch assignment stats on component mount
+  }, []);
+
   const Stats = [
     {
       heading: "Classes",
-      module: "05",
+      module: `${sessionCount}`,
     },
     {
       heading: "Tests",
-      module: "04/05",
+      module: `${testStats.completedTests}/${testStats.totalTests}`, // Dynamically set the test stats
     },
     {
       heading: "Quiz Won",
@@ -30,17 +180,61 @@ const Dashboard = () => {
     },
     {
       heading: "Assignments",
-      module: "00/03",
+      module: `${assignmentStats.completedAssignments || 0}/${assignmentStats.totalAssignments || 0}`,
     },
   ];
+  const [selectedDate, setSelectedDate] = useState();
 
-  const assignments1 = [
-    { id: 1, name: "SAT Assignment 1", feedbackLink: "#", score: "25/35" },
-    { id: 2, name: "SAT Assignment 2", feedbackLink: "#", score: "30/35" },
-    { id: 3, name: "SAT Assignment 3", feedbackLink: "#", score: "28/35" },
-    { id: 4, name: "SAT Assignment 4", feedbackLink: "#", score: "27/35" },
-    { id: 5, name: "SAT Assignment 5", feedbackLink: "#", score: "26/35" },
-  ];
+  const fetchSessions = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axiosInstanceStudent.get(
+        "api/student-course/upcoming-sessions"
+      );
+
+      // Validate if data.sessions is an array
+      if (Array.isArray(data.sessions)) {
+        setSessions(data.sessions);
+        setSessionCount(data.totalCount || 0);
+      } else {
+        console.error(
+          "Expected data.sessions to be an array but got:",
+          data.sessions
+        );
+        setSessions([]);
+      }
+    } catch (error) {
+      console.error("Error fetching sessions:", error);
+      setSessions([]); // Ensure sessions is an empty array on error
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSessions();
+  }, []);
+  useEffect(() => {
+    if (selectedDate) {
+      const date = new Date(selectedDate);
+      const filtered = sessions.filter((session) => {
+        const sessionDate = new Date(session.sessionDateTime);
+        return (
+          sessionDate.getFullYear() === date.getFullYear() &&
+          sessionDate.getMonth() === date.getMonth() &&
+          sessionDate.getDate() === date.getDate()
+        );
+      });
+      setFilteredSessions(filtered);
+    }
+  }, [selectedDate]);
+  let datesWithSessions = new Set();
+  const getDatesWithSessions = () => {
+    sessions.forEach((session) => {
+      datesWithSessions.add(new Date(session.sessionDateTime).toDateString());
+    });
+  };
+  getDatesWithSessions();
 
   const ConstData = ({ heading, module }) => {
     return (
@@ -52,6 +246,7 @@ const Dashboard = () => {
       </div>
     );
   };
+  console.log({ datesWithSessions });
 
   return (
     <div className="w-full pl-[8px] font-poppins">
@@ -69,9 +264,23 @@ const Dashboard = () => {
           <FaCalendarAlt className="text-[#0066DE]" />
         </span>
       </div>
-      <div className="content-container flex">
-        <div className="w-full  pt-3 pr-2 pl-2 gap-5 flex flex-wrap h-max justify-evenly">
-          <div className="left-sub-content1 mr-1 bg-[#f4f5fb] w-full lg:w-[40%] p-2  ">
+      <div className="content-container flex justify-evenly">
+        <div className="flex flex-col">
+          <p className="font-semibold mb-2">Select a date</p>
+          <Calendar
+            value={selectedDate}
+            onChange={setSelectedDate}
+            className="react-calendar-custom"
+            tileContent={({ activeStartDate, date, view }) => {
+              return view === "month" &&
+                datesWithSessions.has(date.toDateString()) ? (
+                <div className="border-2 rounded-full w-1/2 mx-auto border-green-500"></div>
+              ) : null;
+            }}
+          />
+        </div>
+        <div className="  pt-3 pr-2 pl-2 gap-5 flex flex-col w-fit  h-max justify-evenly">
+          {/* <div className="left-sub-content1 mr-1 bg-[#f4f5fb] w-full lg:w-[40%] p-2  ">
             <div className="font-poppins font-bold p-2 flex-wrap gap-2 flex justify-between text-sm md:text-base">
               <p className="">
                 Introduction to basic <br /> DSAT & MAT
@@ -105,45 +314,18 @@ const Dashboard = () => {
                 placeholder="Select Training Dates"
               />
             </div>
-          </div>
-          <div className="left-sub-content2 mr-1 pt-2 flex flex-col bg-[#f4f5fb] rounded-xl p-2  w-full  lg:w-[55%]">
-            <img
-              src={classroomimage}
-              alt="classroom"
-              className="w-full h-[40%] rounded-xl p-1"
-            />
-            <div className="left-sub-content-box2 justify-evenly flex flex-wrap gap-[10px] p-2 ">
-              <p className="flex gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white ">
-                Module 2
-              </p>
-              <p className="flex justify-center items-center gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white">
-                <FaClock />
-                1Hr 30Min
-              </p>
-              <p className="flex justify-center items-center gap-[10px] rounded-xl p-2 text-sm font-poppins font-semibold bg-white">
-                View course <FaArrowRightLong />
-              </p>
-            </div>
-            <div>
-              <h1 className="font-poppins p-2 text-left font-bold">
-                David Beckham
-              </h1>
-              <p className="font-poppins text-xs leading-6 text-left pl-2 ">
-                The community's need for applications that can facilitate dailty
-                activities is increasing as technology advaces.Currently,The
-                community's need for applications that can facilitate daily
-                activities is increasing as technology advances,Currently.
-              </p>
-            </div>
-            <div className="flex font-poppins text-sm p-3 rounded-lg ">
-              <button
-                type="button"
-                className="bg-[#13bf78] text-white font-medium rounded-lg p-1 w-[45%] border border-black"
-              >
-                Join Now
-              </button>
-            </div>
-          </div>
+          </div> */}
+          {filteredSessions.length > 0 ? (
+            filteredSessions.map((session) => {
+              return (
+                <SessionCard sessionData={session} key={session.sessionId} />
+              );
+            })
+          ) : (
+            <p className="font-semibold text-center text-slate-400 w-[25rem] mt-32">
+              No tests on selected date
+            </p>
+          )}
         </div>
         <div className="pr-5 pl-5 pb-5 pt-3 flex flex-col right-content md:flex">
           <div className="rounded-lg bg-white p-5 right-stats">
@@ -180,7 +362,7 @@ const Dashboard = () => {
                 </button>
               </div>
             </div>
-            <div className="mb-2">
+            {/* <div className="mb-2">
               <h1 className="font-poppins font-semibold text-xl pt-3 pb-3">
                 Assignment Grading
               </h1>
@@ -207,7 +389,7 @@ const Dashboard = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

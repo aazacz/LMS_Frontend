@@ -7,7 +7,7 @@ import Loader from "../../reusable/Loader";
 
 const CourseListTable = ({ data, isPending }) => {
   useEffect(() => {
-    console.log("data");
+
     console.log(data);
   }, [data]);
 
@@ -23,10 +23,6 @@ const CourseListTable = ({ data, isPending }) => {
 
   const formatDate = (date) => {
     const options = {
-      timeZone: "Asia/Kolkata",
-      hour12: true,
-      hour: "numeric",
-      minute: "2-digit",
       day: "2-digit",
       month: "2-digit",
       year: "numeric",

@@ -38,12 +38,10 @@ const SignupRoute = () => {
     <>
       <div className="relative w-screen h-screen ">
         <div className="absolute  -z-20">
-
           <Background />
         </div>
 
         <div className="bg-white">
-
           <UserNavbar />
         </div>
         <div className="w-screen absolute top-[12vh] inset-0  flex justify-center items-center ">

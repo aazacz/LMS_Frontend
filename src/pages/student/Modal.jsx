@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { axiosInstanceStudent } from "../../routes/UserRoutes";
 import "./Modal.css";
 
-const Modal = ({ isOpen, onClose,closeModal, assignmentId, onSubmit }) => {
+const Modal = ({ isOpen, onClose, closeModal, assignmentId, onSubmit }) => {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState("");
   const [assignmentDetails, setAssignmentDetails] = useState(null);

@@ -15,6 +15,9 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Defaultcourseimage from "../../assets/Admin/Defaultcourseimage.png";
 import { TbCategory } from "react-icons/tb";
+import TextEditor from "../reusable/TextEditor";
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const AddCourseStructure = ({ view }) => {
   const navigate = useNavigate();
@@ -36,7 +39,7 @@ const AddCourseStructure = ({ view }) => {
     trainingDuration: "",
     hoursPerDay: "",
     price: "",
-    description: "",
+    description: EditorState.createEmpty(),
     modules: [
       {
         moduleName: "",
@@ -55,15 +58,29 @@ const AddCourseStructure = ({ view }) => {
     groupCourse: true,
   });
 
+
+  const onEditorStateChange = (newState) => {
+    setCourse(prevState => ({
+      ...prevState,
+      description: newState
+    }));
+  };
+  
+
+
+
   const convertCourseToFormData = (course) => {
     const formData = new FormData();
+   
+    const rawContent = convertToRaw(course.description.getCurrentContent());
 
     formData.append("courseName", course.courseName);
     formData.append("package", course.package);
     formData.append("trainingDuration", course.trainingDuration);
     formData.append("hoursPerDay", course.hoursPerDay);
     formData.append("price", course.price);
-    formData.append("description", course.description);
+    // formData.append("description", course.description);
+    formData.append('description', JSON.stringify(rawContent));
     formData.append("individualCourse", course.individualCourse);
     formData.append("groupCourse", course.groupCourse);
     formData.append("modules", JSON.stringify(course.modules));
@@ -83,7 +100,7 @@ const AddCourseStructure = ({ view }) => {
       try {
         if (structureId) {
           const response = await AdminAxiosInstance.get(
-            `/api/structure/get/${structureId}`
+            `/api/structure/get/${structureId}`,
           );
           console.log("res.data structureId", response.data);
           if (response.data) {
@@ -100,7 +117,7 @@ const AddCourseStructure = ({ view }) => {
 
   useEffect(() => {
     AdminAxiosInstance.get(
-      "/api/package/get-all-package?page=1&pageSize=10&search="
+      "/api/package/get-all-package?page=1&pageSize=10&search=",
     )
       .then((res) => {
         setPackages(res.data.data);
@@ -152,7 +169,7 @@ const AddCourseStructure = ({ view }) => {
     if (!course.price) {
       validationErrors.price = "Price is required";
     }
-    if (!course.description || !course.description.trim()) {
+    if (!course.description || !JSON.stringify(convertToRaw(course.description.getCurrentContent())) ) {
       validationErrors.description = "Description is required";
     }
 
@@ -161,6 +178,7 @@ const AddCourseStructure = ({ view }) => {
         validationErrors[`modules[${moduleIndex}].moduleName`] =
           "Module Name is required";
       }
+     
       if (!module.moduleDescription || !module.moduleDescription.trim()) {
         validationErrors[`modules[${moduleIndex}].moduleDescription`] =
           "Module Description is required";
@@ -210,7 +228,7 @@ const AddCourseStructure = ({ view }) => {
 
     setCourse((prevData) => {
       const updatedModules = prevData.modules.filter(
-        (_, index) => index !== moduleIndex
+        (_, index) => index !== moduleIndex,
       );
       return {
         ...prevData,
@@ -341,7 +359,7 @@ const AddCourseStructure = ({ view }) => {
     if (Image) {
       formData.append("image", Image);
 
-      console.log("vvalue in the formdata");
+      console.log("value in the formdata");
       console.log(formData.get("image"));
     }
     try {
@@ -350,7 +368,7 @@ const AddCourseStructure = ({ view }) => {
         formData,
         {
           "Content-Type": "multipart/form-data",
-        }
+        },
       );
       if (response.data.message === "Image Updated Successfully") {
         toast.success("Image Updated Successfully");
@@ -397,7 +415,7 @@ const AddCourseStructure = ({ view }) => {
           const width = image.width;
           const height = image.height;
 
-          if (width === 300 && height === 200) {
+          if (width >= 300 && height >= 200) {
             setImage(file);
             setImageUrl(reader.result);
           } else {
@@ -413,10 +431,7 @@ const AddCourseStructure = ({ view }) => {
   };
 
   const deleteHandler = () => {
-    axios
-      .delete(`${baseURL}/api/structure/delete/${structureId}`, {
-        headers: { authorization: `Bearer ${token}` },
-      })
+    AdminAxiosInstance.delete(`/api/structure/delete/${structureId}`)
       .then((res) => {
         if (res.data.message === "Structure deleted successfully") {
           Swal.fire({
@@ -427,12 +442,17 @@ const AddCourseStructure = ({ view }) => {
             icon: "success",
           });
           navigate("/admin/home/courseStructure");
+        } else {
+          throw new Error(res.data.error || "Unknown error occurred");
         }
       })
       .catch((error) => {
-        console.warn(error);
-        console.warn(error.message);
-        throw new Error(error.message);
+        console.error("Error deleting structure:", error);
+        Swal.fire({
+          title: "Error",
+          text: error.response?.data?.error || error.message || "Failed to delete the structure",
+          icon: "error",
+        });
       });
   };
 
@@ -462,6 +482,26 @@ const AddCourseStructure = ({ view }) => {
             deleteHandler();
           }
         });
+      }
+    });
+  };
+
+  const handleCancel = () => {
+    // Reset the form to its original state or navigate back
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Any unsaved changes will be lost.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel changes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If the user confirms, navigate back or reset the form
+        navigate(-1);
+        // Alternatively, you could reset the form to its initial state:
+        // setCourse(initialCourseState);
       }
     });
   };
@@ -498,7 +538,7 @@ const AddCourseStructure = ({ view }) => {
           </h1>
           <div className="flex gap-x-4">
             <MdDelete
-              onClick={() => handleDeleteCourse}
+              onClick={() => handleDeleteCourse(structureId)}
               className="text-3xl text-red-600 cursor-pointer "
             />{" "}
             <FaEdit
@@ -509,7 +549,9 @@ const AddCourseStructure = ({ view }) => {
         </div>
       ) : (
         <h1 className="font-bold font-poppins text-xl md:text-2xl pb-6 flex items-center justify-between md:justify-start gap-x-4">
-          <button onClick={() => navigate("/admin/home/courseStructure")}><IoChevronBackCircleOutline className="text-4xl"/></button>
+          <button onClick={() => navigate("/admin/home/courseStructure")}>
+            <IoChevronBackCircleOutline className="text-4xl" />
+          </button>
           {structureId
             ? "Edit Course Structure"
             : "Create New Course Structure"}{" "}
@@ -752,14 +794,20 @@ const AddCourseStructure = ({ view }) => {
 
         <div className="flex flex-col relative ">
           <label className="text-sm font-semibold">Description</label>
-          <textarea
+        
+         
+          
+          <TextEditor view={view} editorState={course.description}  onEditorStateChange={onEditorStateChange}  />
+                   
+        
+          {/* <textarea
             disabled={View}
             onChange={handleInputChange}
             name="description"
             placeholder="Description"
             value={course.description}
             className="w-full md:h-20 rounded border-[1px] border-gray-500 mt-2 shadow-lg p-2"
-          />
+          /> */}
           {errors.description && (
             <p className="absolute -bottom-4 text-red-500 text-[12px]">
               {errors.description}
@@ -976,25 +1024,37 @@ const AddCourseStructure = ({ view }) => {
           );
         })}
 
-        <div className="flex items-center justify-end ">
-          {!View &&
-            (structureId ? (
-              <button
-                onClick={(e) => submitHandler(e)}
-                type="submit"
-                className="px-8 py-2 bg-blue-700 hover:bg-blue-600 rounded-md text-white"
-              >
-                Update
-              </button>
-            ) : (
-              <button
-                onClick={(e) => submitHandler(e)}
-                type="submit"
-                className="px-8 py-2 bg-green-900 rounded-md text-white"
-              >
-                Submit
-              </button>
-            ))}
+        <div className="flex items-center justify-end gap-4">
+          {!View && (
+            <>
+              {structureId ? (
+                <>
+                  <button
+                    onClick={handleCancel}
+                    type="button"
+                    className="px-8 py-2 bg-gray-500 hover:bg-gray-400 rounded-md text-white"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={(e) => submitHandler(e)}
+                    type="submit"
+                    className="px-8 py-2 bg-blue-700 hover:bg-blue-600 rounded-md text-white"
+                  >
+                    Update
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={(e) => submitHandler(e)}
+                  type="submit"
+                  className="px-8 py-2 bg-green-900 rounded-md text-white"
+                >
+                  Submit
+                </button>
+              )}
+            </>
+          )}
         </div>
       </form>
     </div>

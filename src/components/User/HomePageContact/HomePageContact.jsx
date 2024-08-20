@@ -1,7 +1,6 @@
 import React from "react";
 import "./HomePageContact.css";
 
-
 const HomePageContact = () => {
   return (
     <div className="HomePageContact-main-main-container">
@@ -94,4 +93,3 @@ const HomePageContact = () => {
 };
 
 export default HomePageContact;
-

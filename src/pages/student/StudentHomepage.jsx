@@ -78,7 +78,7 @@ const StudentHomepage = () => {
 
         <div className=" fixed  flex  w-full h-[90dvh] overflow-hidden ">
           {/* Side Bar component  */}
-          <div className="">
+          <div className="h-full">
             <UserSidebar
               isSidebarOpen={isSidebarOpen}
               setIsSidebarOpen={setIsSidebarOpen}
@@ -90,12 +90,18 @@ const StudentHomepage = () => {
             <div className="w-full   ">
               <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
-                  <Route path="/*"                        element={<Dashboard />} />
-                  <Route path="/diagnosistestresult"      element={<DiagnosisTestResult />}/>
-                  <Route path="/success"                  element={<PaymentSuccess />} />
-                  <Route path="/courses"                  element={<CourseList />} />
-                  <Route path="/courses/allcourses"       element={<AllCourses />} />
-                  <Route path="/courses/enrolledcourses"  element={<EnrolledCourses />} />
+                  <Route path="/*" element={<Dashboard />} />
+                  <Route
+                    path="/diagnosistestresult"
+                    element={<DiagnosisTestResult />}
+                  />
+                  <Route path="/success" element={<PaymentSuccess />} />
+                  <Route path="/courses" element={<CourseList />} />
+                  <Route path="/courses/allcourses" element={<AllCourses />} />
+                  <Route
+                    path="/courses/enrolledcourses"
+                    element={<EnrolledCourses />}
+                  />
 
                   <Route
                     path="/tests"
@@ -113,43 +119,53 @@ const StudentHomepage = () => {
                     }
                   />
 
-
-                <Route path="/courses/:courseId/:courseType/:enrolled/:role"  element={
-                        <motion.div
-                          initial="initial"
-                          animate="in"
-                          exit="out"
-                          variants={pageVariants}
-                          transition={pageTransition} >
-
-                         <Coursedetails />
-
-                        </motion.div>
+                  <Route
+                    path="/courses/:courseId/:courseType/:enrolled/:role"
+                    element={
+                      <motion.div
+                        initial="initial"
+                        animate="in"
+                        exit="out"
+                        variants={pageVariants}
+                        transition={pageTransition}
+                      >
+                        <Coursedetails />
+                      </motion.div>
                     }
                   />
 
-                <Route path="/assignments" element={
-                  <motion.div
-                      initial="initial"
-                      animate="in"
-                      exit="out"
-                      variants={pageVariants}
-                      transition={pageTransition}>
-                        
-                         <Assignments />
-                  </motion.div>} />
-                
-                <Route path="/tutors" element={ <ClassesToday />} />
-                <Route path="/library" element={<Library />} />
-                <Route path="/classestoday" element={<ClassesToday />} />
-                <Route path="/settings/*" element={<Settings />} />
-                {/* <Route path="/courses/cart" element={<ShoppingCart />} /> */}
-                {/* <Route path="/courses/checkout" element={<Checkout />} /> */}
-                <Route path="/courses/checkout/:courseType/:courseId" element={<Checkout />} />
-                <Route path="/courses/test/:testId/*" element={<DiagnosisTestRoute />} />
-                {/* <Route path="/courses/test/:testId" element={<DiagnosisTestRoute />} /> */}
-                <Route path="*" element={<ErrorPage />} />
-              </Routes>
+                  <Route
+                    path="/assignments"
+                    element={
+                      <motion.div
+                        initial="initial"
+                        animate="in"
+                        exit="out"
+                        variants={pageVariants}
+                        transition={pageTransition}
+                      >
+                        <Assignments />
+                      </motion.div>
+                    }
+                  />
+
+                  <Route path="/tutors" element={<ClassesToday />} />
+                  <Route path="/library" element={<Library />} />
+                  <Route path="/classestoday" element={<ClassesToday />} />
+                  <Route path="/settings/*" element={<Settings />} />
+                  {/* <Route path="/courses/cart" element={<ShoppingCart />} /> */}
+                  {/* <Route path="/courses/checkout" element={<Checkout />} /> */}
+                  <Route
+                    path="/courses/checkout/:courseType/:courseId/:tutorId"
+                    element={<Checkout />}
+                  />
+                  <Route
+                    path="/courses/test/:testId/*"
+                    element={<DiagnosisTestRoute />}
+                  />
+                  {/* <Route path="/courses/test/:testId" element={<DiagnosisTestRoute />} /> */}
+                  <Route path="*" element={<ErrorPage />} />
+                </Routes>
               </AnimatePresence>
             </div>
           </div>

@@ -1,9 +1,7 @@
-import { useState } from "react"
+import { useState } from "react";
 
+const AboutContent = ({ about }) => {
+  return <div className="font-poppins">{about}</div>;
+};
 
-
-const AboutContent =( {about}) => {
-    return <div className="font-poppins">{about}</div>
-}
-
-export default AboutContent
+export default AboutContent;

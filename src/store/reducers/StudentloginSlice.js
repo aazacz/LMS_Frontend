@@ -18,7 +18,7 @@ const StudentDetailsSlice = createSlice({
       state.userName = name;
       state.email = email;
       state.token = token;
-      state.userImg =profile;
+      state.userImg = profile;
       state.isDiagnosisTestTaken = isDiagnosisTestTaken;
     },
     clearStudentDetails: (state) => {

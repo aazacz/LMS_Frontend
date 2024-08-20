@@ -23,21 +23,21 @@ const CourseTest = () => {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [questionStatuses, setQuestionStatuses] = useState({});
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
- 
+
   const navigate = useNavigate();
-  const {courseId, testid } = useParams()
+  const { courseId, testid } = useParams();
 
   useEffect(() => {
     console.log(selectedAnswers);
   }, [selectedAnswers]);
-
 
   useEffect(() => {
     console.log("use Effect running");
 
     async function fetchQuestions() {
       try {
-        const response = await axiosInstanceStudent.get(`api/test/one-course-tests/${courseId}/${testid}`
+        const response = await axiosInstanceStudent.get(
+          `api/test/one-course-tests/${courseId}/${testid}`
         );
         const data = response.data;
         console.log("Fetched Data:", data);
@@ -59,9 +59,9 @@ const CourseTest = () => {
           console.error("Unexpected data structure:", data);
         }
       } catch (error) {
-        if (error.response?.status === 403 && error.response?.data?.notPaid) {
-          return navigate("/diagnosistest/payment");
-        }
+        // if (error.response?.status === 403 && error.response?.data?.notPaid) {
+        //   return navigate("/diagnosistest/payment");
+        // }
         if (
           error.response?.status === 400 &&
           error.response?.data?.alreadyTaken
@@ -71,8 +71,6 @@ const CourseTest = () => {
         console.error("Error fetching data", error);
       }
     }
-
-
 
     fetchQuestions();
   }, []);
@@ -179,21 +177,24 @@ const CourseTest = () => {
   const handleTestExit = async (message) => {
     try {
       setLoading(true);
-      const res = await axiosInstanceStudent.post("api/test/submit-course-test", {
-        testId,
-        selectedAnswers,
-      });
-  
+      const res = await axiosInstanceStudent.post(
+        "api/test/submit-course-test",
+        {
+          testId,
+          selectedAnswers,
+        }
+      );
+
       dispatch(setStudentDetails({ ...student, isDiagnosisTestTaken: true }));
       exitFullscreen();
-  
+
       await Swal.fire({
         title: "Test Exit",
         text: message,
         icon: "info",
         confirmButtonText: "OK",
       });
-  
+
       navigate("/coursetest/CourseTestResult/" + res.data?._id);
     } catch (error) {
       console.error("Error submitting test:", error);
@@ -210,7 +211,8 @@ const CourseTest = () => {
   const handleSubmit = async () => {
     try {
       const result = await Swal.fire({
-        title: "Do you want to submit the answers? You will not be able to continue this later.",
+        title:
+          "Do you want to submit the answers? You will not be able to continue this later.",
         showDenyButton: true,
         confirmButtonText: "Yes",
         denyButtonText: "No",
@@ -220,18 +222,20 @@ const CourseTest = () => {
           denyButton: "my-deny-button",
         },
       });
-  
+
       if (!result.isConfirmed) return;
-  
+
       setLoading(true);
-      const res = await axiosInstanceStudent.post("api/test/submit-course-test", {
-        testId,
-        selectedAnswers,
-      });
-  
-       
+      const res = await axiosInstanceStudent.post(
+        "api/test/submit-course-test",
+        {
+          testId,
+          selectedAnswers,
+        }
+      );
+
       exitFullscreen();
-  
+
       await Swal.fire({
         icon: "success",
         title: "Submitted!",
@@ -240,7 +244,7 @@ const CourseTest = () => {
           confirmButton: "my-toast-confirm-button",
         },
       });
-  
+
       navigate("/coursetest/CourseTestResult/" + res.data?._id);
     } catch (error) {
       console.error("Error submitting test:", error);
@@ -273,18 +277,18 @@ const CourseTest = () => {
     const currentQuestion = questions[currentQuestionIndex];
     const newAnswer = {
       questionId: currentQuestion.questionId,
-      selectedOptionIndex: optionIndex
+      selectedOptionIndex: optionIndex,
     };
-  
-    setSelectedAnswers(prevAnswers => {
+
+    setSelectedAnswers((prevAnswers) => {
       // Create a copy of the previous answers
       const updatedAnswers = [...prevAnswers];
-      
+
       // Find if an answer for this question already exists
       const existingAnswerIndex = updatedAnswers.findIndex(
-        answer => answer.questionId === currentQuestion.questionId
+        (answer) => answer.questionId === currentQuestion.questionId
       );
-  
+
       if (existingAnswerIndex !== -1) {
         // If it exists, update it
         updatedAnswers[existingAnswerIndex] = newAnswer;
@@ -292,10 +296,10 @@ const CourseTest = () => {
         // If it doesn't exist, add it
         updatedAnswers.push(newAnswer);
       }
-  
+
       return updatedAnswers;
     });
-  
+
     const updatedStatuses = { ...questionStatuses };
     updatedStatuses[currentQuestionIndex] = "answered";
     setQuestionStatuses(updatedStatuses);

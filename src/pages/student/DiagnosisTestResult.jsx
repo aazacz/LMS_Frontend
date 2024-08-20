@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { React, useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import DoughnutChart from "./DoughnutChart";
@@ -11,22 +12,26 @@ const DiagnosisTestResult = () => {
   const [testResult, setTestResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const topRef = useRef(null);
-  const { resultId } = useParams();
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchTestDetails = async () => {
       try {
-        const response = await axiosInstanceStudent.get(
-          `api/diagnosis/result/${resultId}`
-        );
+        const response = await axiosInstanceStudent.get(`api/diagnosis/result`);
         console.log({
           response: response.data,
         });
         setTestResult(response.data);
       } catch (error) {
-        if (error.response?.status === 404) {
+        if (
+          error.response?.status === 404 &&
+          error.response?.data?.testNotFound
+        ) {
           return navigate("/diagnosistest");
         }
+        if (error.response?.status === 403 && error.response?.data?.notPaid) {
+          return navigate("/diagnosistest/payment");
+        }
+        navigate("/login");
         console.error("Error fetching test details:", error);
       } finally {
         setLoading(false);
@@ -74,7 +79,7 @@ const DiagnosisTestResult = () => {
   };
 
   return testResult ? (
-    <div className="Test  w-screen h-screen overflow-y-scroll p-2 relative">
+    <div className="Test  w-full h-screen overflow-y-scroll p-2 relative">
       <div className="fixed top-0 left-0 -z-10">
         <Background />
       </div>
@@ -93,12 +98,12 @@ const DiagnosisTestResult = () => {
           </h1>
           {/*  Button  */}
           <div className="w-full flex justify-center items-center px-2 flex-wrap  gap-x-8">
-            <Link to="/student">
+            {/* <Link to="/student">
               <button className="text-[#0066DE] rounded-md my-2 text-sm border-[1px] border-[#0066DE] px-5 py-4 md:text-lg font-poppins font-semibold">
                 {" "}
                 Go to Dashboard
               </button>
-            </Link>
+            </Link> */}
             <button
               className="bg-[#0066DE] rounded-md my-2 px-5 py-4 text-white font-semibold font-poppins"
               onClick={handleScrollToTop}

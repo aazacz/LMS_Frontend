@@ -76,7 +76,7 @@ const SessionCard = ({ sessionData }) => {
               >
                 <button
                   type="button"
-                  className="bg-[#13bf78] w-fit text-white font-medium rounded-lg p-1 w-[45%] border border-black"
+                  className="bg-[#13bf78] text-white font-medium rounded-lg p-1 w-[45%] border border-black"
                 >
                   Join Now
                 </button>
@@ -192,6 +192,7 @@ const Dashboard = () => {
         "api/student-course/upcoming-sessions"
       );
 
+
       // Validate if data.sessions is an array
       if (Array.isArray(data.sessions)) {
         setSessions(data.sessions);
@@ -214,6 +215,7 @@ const Dashboard = () => {
   useEffect(() => {
     fetchSessions();
   }, []);
+
   useEffect(() => {
     if (selectedDate) {
       const date = new Date(selectedDate);
